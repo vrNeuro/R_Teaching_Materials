@@ -1,0 +1,13 @@
+---
+title: "Unit1"
+format: html
+---
+
+We can use R to check variable types, change them, create descriptive statistics, and visualise data.
+
+
+``` {r}
+
+data <- read.csv("./Presessional/ChildReinforcement.csv")
+```
+
