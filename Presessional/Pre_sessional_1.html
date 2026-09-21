@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Pre_sessional_1</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Pre_sessional_1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Pre_sessional_1_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Pre_sessional_1_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Pre_sessional_1_files/libs/quarto-html/popper.min.js"></script>
+<script src="Pre_sessional_1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Pre_sessional_1_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Pre_sessional_1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Pre_sessional_1_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Pre_sessional_1_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Pre_sessional_1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Pre_sessional_1_files/libs/bootstrap/bootstrap-215b371544c282197b31c8aa00ce3677.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Pre_sessional_1</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="quarto" class="level2">
+<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
+<p>This document was built using Quarto. Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <a href="https://quarto.org" class="uri">https://quarto.org</a>.</p>
+<p>Below is a snippit of R code that is executed when the document is created.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>You can copy these code snippits into your own RStudio to begin to build you own analyses. As you go through the document create a new R script in RStudio and add the code section one after another. By then of this each section you will have built an analysis pipeline for each type of design. You can then use this as a basis for future analyses.</p>
+</section>
+<section id="between-subjects-design" class="level2">
+<h2 class="anchored" data-anchor-id="between-subjects-design">BETWEEN SUBJECTS DESIGN</h2>
+<p>This study looks at the effects of verbal reinforcement on the performance of 8 year old children given a series of fairly simple problems to solve. The independent variable (IV) of verbal reinforcement consisted of three (treatment) levels: positive (praise) for correct responses; negative (criticism) for incorrect responses; and silence regardless of response. The dependent variable (DV) was a measure of the number of simple problems correctly solved before the child decided not to continue. The researcher believed that the different types of reinforcement would differentially influence the number of problems solved by the children. A random sample of 30 eight year old children were selected and randomly assigned to one of the three treatments to form groups of equal size (n=10).</p>
+<p>The first thing we need to do is to read the data into R’s memory.</p>
+<p>The data is stored in a .csv file which is a common way to store data in psychology. We can use a function called <strong>read.csv</strong> to read the data from the csv file and assign it to a variable in R’s memory using the assign operator <strong>&lt;-</strong>. I’ve called this variable <strong>data</strong>, but you could call it whatever you want. However, the important thing to remember is that whatever you call it you will need to refer to it by the same name whenever we want to use it later in our analysis.</p>
+<p>In this case I am reading the file from somewhere on the internet (a Github account), however, if you were reading a file on your computer you would just replace the web address with the file name.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/vrNeuro/R_Teaching_Materials/refs/heads/main/Presessional/ChildReinforcement.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>When the data is loaded into R, it is stored as a type of object called a <strong>dataframe</strong>. This stores data like an excel sheet would do with multiple rows and columns. How this data is organised is an important for how we want to conduct analysis. We will discuss how to change this organisation later. For now let’s look at the top 5 rows of the data using the <strong>head</strong> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Positive Negative Silence
+1       12       11       7
+2        9        8       8
+3       11        9       6
+4       10       10       9
+5       13       12       6
+6       10       10       9</code></pre>
+</div>
+</div>
+<p>Notice that for the <strong>head</strong> function and with <strong>read.csv</strong> earlier we put the name of the function and then a pair of brackets <strong>()</strong>. These () are technically called parentheses to differentiate them from other types of brackets we will come across later. Inside those brackets we put the object or variable that we want the function to operate on, this is called the <strong>input</strong> to a function. So to use the <strong>head</strong> function on the input object <strong>data</strong> we put <strong>head(data)</strong>.</p>
+<p>We can see that we currently have 3 columns, <strong>Positive</strong>, <strong>Negative</strong>, and <strong>Silence</strong> with numbers in each column representing how many problems a different child receiving that form of feedback solved.</p>
+<p>Normally when analysing and organising our data, every row is what we know about one participant, and every column is a separate bit of information about that participant (called a <strong>variable</strong>). So the current way this data is organised would be typically of a <strong>within-subjects</strong> design, in which we had 10 children who each took part in all 3 conditions. However, in the current experiment we have 30 children and each child was only taken part in one condition (randomly assigned). This is called a <strong>between-subjects</strong> design.</p>
+<p>For this design, we know two things about each participant:<br>
+• What type of reinforcement they received<br>
+• How many problems were correctly solved<br>
+</p>
+<p>We therefore need two columns:<br>
+• Condition (reinforcement type)<br>
+• Number of problems<br>
+</p>
+<p>Therefore we want to reorganise our data. The basic installation of R and RStudio comes with a thousands of functions. However, we can add to those functions by adding additional <strong>packages</strong>. You can think of <strong>base</strong> R as having a mobile phone, it can do some useful things, but to add extra functionality we need to install and load apps.</p>
+<p>If we need to install a new package we use the <strong>install.packages()</strong> function and then give the name of the package we want to install. If we already have a package installed and we want to use it, we need to tell R to load the package and its functions into its list of functions available, just like we need to open and app to use it on our phone. We do this using the <strong>library()</strong> function, with the name of the package as the input. One extremely useful package for data organisation is called <strong>tidyr</strong>, so below is the way we load that package.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The <strong>tidyr</strong> package contains a function called <strong>pivot_longer</strong> that will do what we want. Like before we will need to give it our data as an input, but we also need to give it some other instructions about how we want it to process our input. All of these inputs are called <strong>input arguments</strong> and functions in R often take multiple of them which control how the input will be processed.</p>
+<p>The first input argument is our data. The second tells it to use all of the columns of our data. The third tells it to take the names of the variables and create a new variable called condition that contains where each bit of data came from. The fourth tells it to get the value for each bit of data and put it in a column called value.</p>
+<p>Don’t worry if this seems a lot to handle at the moment, you will get used to this as we use R more.</p>
+<p>After reorganising the data we then use the <strong>head()</strong> function we used earlier to inspect the new arrangement.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dataLong <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(data, <span class="at">cols =</span> <span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"condition"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dataLong)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  condition value
+  &lt;chr&gt;     &lt;int&gt;
+1 Positive     12
+2 Negative     11
+3 Silence       7
+4 Positive      9
+5 Negative      8
+6 Silence       8</code></pre>
+</div>
+</div>
+<p>We can see that the first three rows of the new data now correspond to the first row of the old data.</p>
+<p>Another thing to notice is that for the <strong>head()</strong> function we didn’t have a <strong>&lt;-</strong> to the left of it. That is because we just want the function to print something to the screen. However, for the <strong>pivot_longer()</strong> function we want to use the output of this later. This means we need to assign this output to a variable. So above we have assigned the output of the <strong>pivot_longer()</strong> to a new variable called <strong>dataLong</strong> using the assign operator <strong>&lt;-</strong>. Then when we wanted to use the new variable in the <strong>head()</strong> function we used it’s name as the input to that function.</p>
+<p>One other important thing about data is what type of data we have. In our dataset we have two types: • Condition (reinforcement type) - this is a categorical type<br>
+• Number of problems - this is a continuous type<br>
+</p>
+<p>We can’t assume that R will know what these are and we need to check and recode them as the correct types. One way to do this is one column at a time, so we need to access a single column of data within our <strong>dataLong</strong> object.</p>
+<p>The way to do this is to use the <code>$</code> symbol. So if we want to access only the <strong>condition</strong> column in <strong>dataLong</strong> we would write <code>dataLong$condition</code>. We can then pass just this column as a variable to a function called <strong>class()</strong> that tells us what type of data it is (also called the class of data):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dataLong<span class="sc">$</span>condition)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+<p>This tells us that is of the data class “character”, this is because it consists of letters instead of numbers. If we check the class of the value column we find it is of a class called <strong>integer</strong>, which means it is numbers, but only whole numbers with no decimal places.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dataLong<span class="sc">$</span>value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "integer"</code></pre>
+</div>
+</div>
+<p>Understanding what type of data we have is important as some functions won’t work or wouldn’t make sense to use on certain data types. For example we can use the function <strong>mean()</strong> to calculate the mean of some numeric data like this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dataLong<span class="sc">$</span>value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.6</code></pre>
+</div>
+</div>
+<p>However, if we try this with the character data then we will get a warning and the function will return a value <strong>NA</strong>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dataLong<span class="sc">$</span>condition)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in mean.default(dataLong$condition): argument is not numeric or
+logical: returning NA</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+<p><strong>NA</strong> represents <strong>Not Available</strong> and is what R uses to represent missing value or invalid values. We will discuss these more later on.</p>
+<p>Although the <strong>condition</strong> column is listed as characters we need to be a bit more specific to let R know that it is a categorical variable instead of just a list of different words that have no relationship to each other. In R categorical data is known as a <strong>factor</strong>.</p>
+<p>We can use a function called <strong>factor()</strong> to change our condition variable into a factor, importantly doing it this way overwrites the existing condition column with the new factor version. We can then re-check the class of the variable to check it has changed and the <strong>levels()</strong> function to check that we correctly have our three categories.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dataLong<span class="sc">$</span>condition <span class="ot">&lt;-</span> <span class="fu">factor</span>(dataLong<span class="sc">$</span>condition)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dataLong<span class="sc">$</span>condition)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dataLong<span class="sc">$</span>condition)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Negative" "Positive" "Silence" </code></pre>
+</div>
+</div>
+<p>A useful function for getting a quick summary of the data we have is the <strong>summary()</strong> function:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dataLong)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    condition      value      
+ Negative:10   Min.   : 6.00  
+ Positive:10   1st Qu.: 8.25  
+ Silence :10   Median :10.00  
+               Mean   : 9.60  
+               3rd Qu.:11.00  
+               Max.   :14.00  </code></pre>
+</div>
+</div>
+<p>For numeric variables it produces various descriptive statistics and for categorical variables is produces the counts in each category.</p>
+<p>Often we want to get the descriptive statistics separately for each group, to do this we can use a function called <strong>by()</strong>, this is a powerful function that allows us to apply another function such as <strong>summary()</strong> separately for each group.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(dataLong, dataLong<span class="sc">$</span>condition, summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dataLong$condition: Negative
+    condition      value      
+ Negative:10   Min.   : 7.00  
+ Positive: 0   1st Qu.: 9.00  
+ Silence : 0   Median :10.00  
+               Mean   : 9.70  
+               3rd Qu.:10.75  
+               Max.   :12.00  
+------------------------------------------------------------ 
+dataLong$condition: Positive
+    condition      value     
+ Negative: 0   Min.   : 9.0  
+ Positive:10   1st Qu.:10.0  
+ Silence : 0   Median :11.0  
+               Mean   :11.2  
+               3rd Qu.:12.0  
+               Max.   :14.0  
+------------------------------------------------------------ 
+dataLong$condition: Silence
+    condition      value     
+ Negative: 0   Min.   : 6.0  
+ Positive: 0   1st Qu.: 7.0  
+ Silence :10   Median : 8.0  
+               Mean   : 7.9  
+               3rd Qu.: 9.0  
+               Max.   :10.0  </code></pre>
+</div>
+</div>
+<p>Here we ask it to apply the <strong>summary()</strong> function to the data after separating the data into the different groups specified by the <strong>dataLong$condition</strong> variable.</p>
+<p>Another important way of describing data is to visualise it. <strong>R</strong> is capable of producing some very beautiful plots such as those that can be seen here <a href="https://r-graph-gallery.com/" class="uri">https://r-graph-gallery.com/</a>. However, these mostly use other packages that extend the base R functions. We will use these later on but for now we can use the base R functions.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(value <span class="sc">~</span> condition, dataLong)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Pre_sessional_1_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notice that to create the boxplot we did something new, we specified how we wanted the plot to be created using something called a <strong>formula</strong>. We will discuss these more in future, particularly when we come to regression, but many R functions can take forumala as inputs.</p>
+<p>The way these work is that we put the dependent variable(s) on the left hand side of the tilde <code>~</code> symbol and the independent variable(s) on the right hand side. So in this case our formula of <code>value ~ condition</code> is asking how does the <strong>value</strong> variable change as we change the <strong>condition</strong> variable. We then provide a second input argument to the <strong>boxplot()</strong> function which is the data set that we want to check this relationship in.</p>
+<p>We can also provide the <strong>boxplot()</strong> function with other input arguments to change the way the plot appears such as adding a title or changing the colours of the bars, below is an example but please play around with the different options yourself in your own code. The best way to understand what different options there are for a function is to look at the <strong>help</strong> documentation for that function. In R we can do this putting a <strong>?</strong> and then the function name, so in this case <code>?boxplot</code></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(value <span class="sc">~</span> condition, dataLong, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"lightgreen"</span>, <span class="st">"pink"</span>, <span class="st">"lightblue"</span>), </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Boxplot of Problems Solved Grouped by Verbal Reinforcement"</span>,  </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Reinforcement Type"</span>, <span class="at">ylab =</span> <span class="st">"Problems Solved"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Pre_sessional_1_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="within-subjects-design" class="level2">
+<h2 class="anchored" data-anchor-id="within-subjects-design">Within Subjects Design</h2>
+<p>The data in the previous example was a <strong>Between Subjects</strong> design, where each participant (also called a subject in some terms) only took part in a single condition. We can also analyse data in which participant takes part in multiple conditions.</p>
+<p>In this data set a researcher was investigating the effect of caffeine on learning nouns. On 3 consecutive days, participants were given a different dose of caffeine, asked to study a list of 20 new nouns, and then recall them after 15 minutes. The order of caffeine dosing was counterbalanced and testing took place at the same time on separate days. The number of nouns correctly recalled is saved into a csv file that looks like this:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>0</th>
+<th>30</th>
+<th>60</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10</td>
+<td>14</td>
+<td>16</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td>17</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>15</td>
+<td>17</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>14</td>
+<td>15</td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td>12</td>
+<td>17</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td>11</td>
+<td>14</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>15</td>
+<td>13</td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td>13</td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>10</td>
+<td>18</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>9</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<p>Before we start to analyse a new data set it is a good idea to clear R’s memory of previous data so we have a clean slate. We can do this using this command:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>If you are using RStudio, this can also be achieved manually by clicking on the little brush icon at the top of the <strong>Environment</strong> panel where the variables are listed. However, it is a good idea to learn how to do this with code so that we can build this functionality into our analysis scripts in future.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/vrNeuro/R_Teaching_Materials/refs/heads/main/Presessional/CaffeineWords.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Here you can see that I have decided to call the <strong>dataframe</strong> that have assigned the data to <strong>df</strong>. The choice of variable name is completely up to you and you will often seen <strong>df</strong> used in example code online or produced by AI. When naming a variable ideally the name should be:</p>
+<ul>
+<li>short (so you don’t have to type a long word a lot or create really long lines of code when you use more complex functions)</li>
+<li>somewhat meaningful (so you can understand what it represents)</li>
+<li>it must start with a letter</li>
+<li>it can contain numbers</li>
+<li>R is case sensitive so DF and df are two different variables</li>
+<li>it should not be named the same as a function, so avoid things like mean</li>
+</ul>
+<p>However, the important thing is that whatever you name it, to always use this name when referring to it in your code. A good way to prevent spelling mistakes is to use RStudio’s auto-complete ability, once you start typing a word that it recognises as a function, variable, or file name it will give you a list of options to automatically complete that word.</p>
+<p>You can see here that since we have a withing-subjects design with 3 bits of information about each participant our data is already organised correctly. Each row represents one participant with the three columns being the three bits of information we have about them.</p>
+<p>We can use the same code as we used before to summarise the data, since we have our data arranged as separate columns we don’t need to use the <strong>by()</strong> function this time to split them into groups.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       X0             X30             X60       
+ Min.   : 8.00   Min.   : 9.00   Min.   :11.00  
+ 1st Qu.:10.00   1st Qu.:11.25   1st Qu.:13.25  
+ Median :11.00   Median :13.50   Median :14.50  
+ Mean   :10.90   Mean   :13.00   Mean   :14.70  
+ 3rd Qu.:11.75   3rd Qu.:14.75   3rd Qu.:16.75  
+ Max.   :14.00   Max.   :17.00   Max.   :18.00  </code></pre>
+</div>
+</div>
+<p>If we also to know the standard deviation for each dose of caffeine we can use the <strong>sd()</strong> function and do <code>sd(df$X0)</code> to get the standard deviation of the <strong>X0</strong> column for example. However, we can use a function <strong>sapply()</strong> so apply the <strong>sd()</strong> function separately to each column and get the answers in one go:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(df,sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      X0      X30      X60 
+1.791957 2.494438 2.311805 </code></pre>
+</div>
+</div>
+<p>Similarly to when we used <strong>by()</strong> earlier, the <strong>sapply()</strong> function takes the data we want to work on as the first input argument (in this case <strong>df</strong>) and then for a second input argument it takes the name of the function we want to apply (in this case <strong>sd()</strong>).</p>
+<p>A common way of plotting data is to use a line plot in which the line represents the mean of each variable and we then place error bars around this to represent the standard error of the mean (the <strong>SEM</strong>). There are simpler ways to do this in R using other packages but in base R we can do this like this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#first get mean and standard deviation of each column and assign to variables</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>col_means <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(df) <span class="co"># there is a special function for this but we could use sapply</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>col_sds <span class="ot">&lt;-</span> <span class="fu">sapply</span>(df,sd)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(col_means, <span class="at">type =</span> <span class="st">"b"</span>,             <span class="co">#type b means a point and lines connecting them</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,                        <span class="co">#don't plot a x axis yet, we will add later</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Caffeine Dose (mg)"</span>,       <span class="co">#x-axis label</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Mean words recalled"</span>,      <span class="co">#y-axis label</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Mean Word Recall by Dose"</span>, <span class="co">#main title</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>,                          <span class="co">#point size</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">20</span>))                    <span class="co">#limits of the y axis</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co">#add the x axis and labels for each of the doses</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq_along</span>(col_means), <span class="at">labels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">30</span>,<span class="dv">60</span>))</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="co">#now calculate the SEM</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df) <span class="co">#get the number of rows (participants)</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> col_sds <span class="sc">/</span> <span class="fu">sqrt</span>(n) <span class="co">#calculate SEM using SD divided by squareroot(N)</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="co">#add the error bars using the arrows() function, these are mean+-SEM</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="at">x0 =</span> <span class="fu">seq_along</span>(col_means), <span class="at">y0 =</span> col_means <span class="sc">-</span> se,</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">x1 =</span> <span class="fu">seq_along</span>(col_means), <span class="at">y1 =</span> col_means <span class="sc">+</span> se,</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">code =</span> <span class="dv">3</span>, <span class="at">length =</span> <span class="fl">0.05</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Pre_sessional_1_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The code here looks more complex but by using the <code>#</code> character I have added <strong>comments</strong> to it. These are bits of text that are not executed when the code runs so they can be used to explain what is happening and why. It is very good practice to add these throughout your code, partly so other people can read it more easily but also so you can understand it when you come back to it in a few months or years time! Comments appear in a different colour to the code so they are easy to spot.</p>
+</section>
+<section id="mixed-designs" class="level2">
+<h2 class="anchored" data-anchor-id="mixed-designs">MIXED DESIGNS</h2>
+<p>The caffeine study above was extended, to look at whether gender also had an impact. In this new study, there are therefore two IVs: &nbsp; IV1 – Gender (2 levels: male/female) &nbsp; IV2 – Caffeine (3 doses: 0/30/60mg) &nbsp; DV – number of nouns correctly recalled &nbsp;</p>
+<p>We now have two types of IV: &nbsp; Between – gender, as participants are allocated to one group only. &nbsp; Within – dosage, as participants are measured after all 3 doses. &nbsp;</p>
+<p>We could just add a gender column to our existing <code>df</code> dataframe. However, as mentioned before it is best to start with a fresh environment at the start of a new analyses. Therefore we will use the command we learnt earlier to clear the environment and then use the code for loading the data set that we used earlier again to re-load the data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())    <span class="co">#clear the environment</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"CaffeineWords.csv"</span>) <span class="co">#load the data as a dataframe called df</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now we need to add a gender variable. We can create this using the <strong>c()</strong> function which you might have already spotted being used in a few places earlier. <strong>c()</strong> is short for concatenate which just means to stick stuff together. It can be used to stick numbers, characters, or many other things. In this case we are going to use it to stick a characters that represent the gender of the participants in this study and create a new variable called <strong>gender</strong> that contains them. (We are using only two genders here for simplicity of the statistics, not because of any particular point of view about the real world).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>gender <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"M"</span>,<span class="st">"F"</span>,<span class="st">"F"</span>,<span class="st">"F"</span>,<span class="st">"M"</span>,<span class="st">"M"</span>,<span class="st">"F"</span>,<span class="st">"M"</span>,<span class="st">"M"</span>,<span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>It is important before we try and add this data as a new column to our existing data that we check it is the right length, in case we made a mistake when typing it out by hand. Two functions are useful here, <strong>length()</strong> can be used to find the length of a character vector (or other types of vector or list). A vector is a series of things held together, which has either one row or one column. However, if we apply this to our dataframe <code>df</code> we will see that it only counts the number of columns.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+<p>In our data each row is a separate participant so it isn’t the number of columns in <code>df</code> that need to match the length of <code>gender</code> it is the number of rows. To find this out we can use the <strong>nrow()</strong> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+<p>We can see that we have the same number of rows in <code>df</code> as we do genders in our gender vector so they are compatible to be stuck together. If these dimensions did not match then we would get an error when we try to concatenate them. We can do this by assigning our <code>gender</code> vector to a new column in <code>df</code>. We previously used the <code>$</code> symbol to get data out of a dataframe but we can also use it to assign values to a column in a dataframe like this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>gender <span class="ot">&lt;-</span> gender</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now we can check the number of rows and columns of our <code>df</code> dataframe using a function called <strong>dim()</strong>, we could do this separately for rows and columns using <strong>nrow()</strong> and <strong>ncol()</strong> separately as well.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df) <span class="co">#returns both number of rows and columns</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10  4</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(df) <span class="co"># returns number of rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(df) <span class="co">#returns number of columns</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>You should also be able to check this visually in the Environment panel where <code>df</code> will be listed as having ‘10 obs. of 4 variables’, however, it is good for us to get used to using code to do things so we can build reproducible analysis scripts.</p>
+<p>Now we want to calculate the mean word recalled for each dose (our within subjects IV), but this time we want to do this split by gender (our between subjects IV). However, like in the first between subjects analysis we did, we first need to tell R that the gender variable we have just added to <code>df</code> is a factor and not just a list of unconnected characters.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can use the <strong>table()</strong> function to count the numbers of values in each level of our factor like this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+F M 
+5 5 </code></pre>
+</div>
+</div>
+<p>Previously when calculating means split by a grouping variable we used the <code>by()</code> function to apply a function to a dataframe after taking into account different levels of a factor. We can do the same here and apply the <code>colMeans()</code> function split by gender.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(df,df<span class="sc">$</span>gender, colMeans)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `FUN()`:
+! 'x' must be numeric</code></pre>
+</div>
+</div>
+<p>However, this produces an <strong>error</strong>. If we look at the <strong>error message</strong> it tells us important information about what went wrong. In general as you learn to write code learning how to spot and interpret common errors is one of the main skills, do not see these as a failure on your part, instead they are an opportunity to learn! The error message here tells us that “‘x’ must be numeric”. This is because the <code>colMeans()</code> function only knows how to calculate a mean value of numeric data.</p>
+<p>Therefore we only want to get the column means of the numeric data and not our gender variable which is a factor. We can check how our columns are arranged in our <code>df</code> in multiple ways but one is to use <code>sapply()</code> again like before and combine it with the <code>class()</code> function to find the class of each variable in <code>df</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(df,class)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       X0       X30       X60    gender 
+"integer" "integer" "integer"  "factor" </code></pre>
+</div>
+</div>
+<p>We can see that the numeric data is only in the first 3 columns of <code>df</code>, with the factor variable gender in the fourth. So how can we only get the first three columns of <code>df</code> and pass that as an input to <code>colMeans()</code>. Getting specific bits of data out of objects is called <strong>indexing</strong> and we will come to more on this later. The way to <strong>index</strong> into a data frame in <strong>R</strong> is to use square brackets <strong>[]</strong>. Inside the square brackets we put numbers to indicate the position of the data we want to extract. In this case we want the first three columns and data from all the rows so we would use <code>[,1:3]</code>. The empty space before the comma tells <strong>R</strong> to get all the rows, and the <code>1:3</code> after the comma tells R to get the columns 1 to 3. Don’t worry if this seems confusing at first you will get more comfortable with this with practice and exposure but learning to index is a key skill in coding in any programming language.</p>
+<p>So we can combine this indexing technique to overcome the error we had earlier:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], df<span class="sc">$</span>gender, colMeans) <span class="co">#get column means of columns 1,2, and 3 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>df$gender: F
+  X0  X30  X60 
+11.0 14.0 14.4 
+------------------------------------------------------------ 
+df$gender: M
+  X0  X30  X60 
+10.8 12.0 15.0 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co">#in df split by the gender factor</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Finally we want to create a graph similar to earlier where we produce a line plot with error bars (representing the SEM), but this time we want to have two separate lines. One for each gender. This is possible to do in base R code as shown below, it is only slightly more complex that the previous graph we built.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>mus <span class="ot">&lt;-</span> <span class="fu">by</span>(df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], df<span class="sc">$</span>gender, colMeans)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co">#this has to be a bit more complicated sd() can't deal with multiple columns</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>sds <span class="ot">&lt;-</span> <span class="fu">by</span>(df[, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], df<span class="sc">$</span>gender, <span class="cf">function</span>(x) <span class="fu">sapply</span>(x, sd)) </span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate the SEMs, sum(df$gender=="F") means to count the number of Fs</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>semF <span class="ot">&lt;-</span> sds<span class="sc">$</span>F<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">sum</span>(df<span class="sc">$</span>gender<span class="sc">==</span><span class="st">"F"</span>))</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>semM <span class="ot">&lt;-</span> sds<span class="sc">$</span>M<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">sum</span>(df<span class="sc">$</span>gender<span class="sc">==</span><span class="st">"M"</span>))</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mus<span class="sc">$</span>F, <span class="at">type =</span> <span class="st">"b"</span>,             <span class="co">#type b means a point and lines connecting them</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,                        <span class="co">#don't plot a x axis yet, we will add later</span></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Caffeine Dose (mg)"</span>,       <span class="co">#x-axis label</span></span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Mean words recalled"</span>,      <span class="co">#y-axis label</span></span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Mean Word Recall by Dose"</span>, <span class="co">#main title</span></span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>,                          <span class="co">#point size</span></span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">20</span>),                    <span class="co">#limits of the y axis</span></span>
+<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"red"</span>)   </span>
+<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a><span class="co"># add the male line to the same plot</span></span>
+<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, mus<span class="sc">$</span>M, <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">pch =</span> <span class="dv">17</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a><span class="co">#add the x axis and labels for each of the doses</span></span>
+<span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq_along</span>(mus<span class="sc">$</span>F), <span class="at">labels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">30</span>,<span class="dv">60</span>))</span>
+<span id="cb60-22"><a href="#cb60-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-23"><a href="#cb60-23" aria-hidden="true" tabindex="-1"></a><span class="co"># add SEM error bars for each group</span></span>
+<span id="cb60-24"><a href="#cb60-24" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, mus<span class="sc">$</span>M <span class="sc">-</span> semM, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, mus<span class="sc">$</span>M <span class="sc">+</span> semM,</span>
+<span id="cb60-25"><a href="#cb60-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">code =</span> <span class="dv">3</span>, <span class="at">length =</span> <span class="fl">0.05</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb60-26"><a href="#cb60-26" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, mus<span class="sc">$</span>F <span class="sc">-</span> semF, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, mus<span class="sc">$</span>F <span class="sc">+</span> semF,</span>
+<span id="cb60-27"><a href="#cb60-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">code =</span> <span class="dv">3</span>, <span class="at">length =</span> <span class="fl">0.05</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb60-28"><a href="#cb60-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-29"><a href="#cb60-29" aria-hidden="true" tabindex="-1"></a><span class="co">#add a legend</span></span>
+<span id="cb60-30"><a href="#cb60-30" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"F"</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>),</span>
+<span id="cb60-31"><a href="#cb60-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">17</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">title =</span> <span class="st">"Gender"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Pre_sessional_1_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
