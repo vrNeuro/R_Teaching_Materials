@@ -1,0 +1,252 @@
+---
+title: "Pre_sessional_3"
+format: html
+---
+
+## Quarto
+
+This document was built using Quarto. Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+Below is a snippit of R code that is executed when the document is created.
+
+```{r}
+1 + 1
+```
+
+You can copy these code snippits into your own RStudio to begin to build you own analyses. As you go through the document create a new R script in RStudio and add the code section one after another. By then of this each section you will have built an analysis pipeline for each type of design. You can then use this as a basis for future analyses.
+
+## INDEPENDENT SAMPLES T-TESTS
+
+
+The data below come from two groups of participants taking part in an experiment in which they are presented with a sequence of images. On each trial the participant had to choose one of two options for the next image in the sequence, one option was the correct answer and the other incorrect. This means that performance at the level of chance is 50%. Each subject takes part in the experiment only once and was randomly allocated to one of the groups. The ‘Subjective Random’ group had a hidden pattern in the sequences that the researcher believes will alter the number of correct responses. The scores represent the percentage of correctly answered trials for each participant. 
+
+Below is some code loading the dataset and doing a basic inspection:
+
+```{r}
+rm(list = ls()) # clear the environment of variables
+df <- read.csv("https://raw.githubusercontent.com/vrNeuro/R_Teaching_Materials/refs/heads/main/Presessional/ImagePrediction.csv")
+head(df) #display the top 6 rows
+summary(df)
+```
+
+As we have seen before, **R** doesn't know that out `df$group` variable is actually a catgorical variable so let's change that and recheck the `summary(df)` output.
+
+```{r}
+df$Group <- factor(df$Group)
+summary(df)
+```
+
+We can now see that it correctly summarises the `Group` variable as a categorical variables with 2 categories.
+
+Like we before we can use the `by()` function to get summary statistics for each group. We also saw in *Tutorial 1*, that to use the `sd()` function within `by()` we needed to only get standard deviations of numerical data by selecting certain columns.
+
+```{r}
+by(df, df$Group, summary)
+by(df$Score, df$Group,sd) 
+```
+
+Look at the descriptive statistics, do they at first glance indicate any differences between the groups?
+
+::: {.callout-note collapse="true" title="Show answer"}
+The Subjective Random group appear to have higher scores on average than the True Random group. It is also good to note that there are more subjects in the True Random Group and that the variability in the Subjective Random group is greater.
+:::
+
+Now we want to visualise this using a boxplot. We previously learnt how to generate boxplots using a type of input called a **formula**. See *Tutorial 1* if you need a refresher.
+
+What would be the formula we would need to give to `boxplot()` to create a plot of `Score` split by `Group`?
+
+::: {.callout-note collapse="true" title="Show answer"}
+Score ~ Group
+:::
+
+We now want to test if there is a statistically significant difference between the scores for the two groups. Since we have two **independent** groups, with no participant appearing in both groups, the most appropriate test here is an **independent samples t-test**. The function for conducting **t-tests** in **R** is called **t.test()**, by controlling various of the input arguments we can ask it to carry out various different types. 
+
+Happily, the two main input arguments that the `t-test()` function needs are the same as the `boxplot()` function, it first needs at formula and then the data to apply it to. Since we are going to use this formula for both the functions, it is worth us getting **R** so save it as a separate variable. We can do this using the `<-` operator like we have for any other variable. In general in programming if you are going to use something more than once it is good practice to assign it to a variable. This saves you typing everything out repeatedly but also makes your code a bit more flexible and reusable. 
+
+
+
+```{r}
+myFormula <- Score ~ Group #define the formula
+class(myFormula) #formula are a separate class of variable in R
+boxplot(myFormula,df) #use this formula object to create a boxplot
+t.test(myFormula,df) #use the formula to perform a t-test
+
+```
+ 
+The output of the `t.test()` function contains all of the bit of information we would need to report the results for a paper or a report.
+
+Here is a basic statistical report in APA format for this test:
+
+A Welch two-sample t-test indicated a significant difference between the mean scores in the two groups (*t*(36.06) = 2.96, *p* = .006), with the Subjective Random group displaying a higher mean (54.7) than the True Random group (48.2).
+
+There is a crucial bit of information in this output that might have been missed. This is that the test used was a **Welch** two sample t-test. This particular test is designed to be used when the **variance** in our two groups is unequal. Checking **assumptions** such as this an important aspect of deciding if a statistical test is valid for our particular data and we will cover this in later lessons. For now we are going to pretend that the variance in our two groups is equal and in that case the best test to use is the standard **Student's** two sample t-test. As with other function we have seen we can change the behaviour of a function like `t.test()` by adding additional input arguments and the best way to find out what these are is by checking the help for that function by running  `help(t.test)` or `?t.test` in our console. 
+
+Here to perform the students two sample we want to tell it that the variances are equal:
+```{r}
+t.test(myFormula,df, var.equal = TRUE)
+```
+
+The results are similar to before but there are a few changes. Write out the results in a standard format like before but using the results of the students t-test.
+
+::: {.callout-note collapse="true" title="Show answer"}
+A Students two-sample t-test indicated a significant difference between the mean scores in the two groups (*t*(42) = 2.96, *p* = .005), with the Subjective Random group displaying a higher mean (54.7) than the True Random group (48.2).
+:::
+
+## ONE SAMPLE T-TESTS
+
+The researcher in this study also wanted to check if performance in the **SUBJECTIVE RANDOM** group was significantly **better** than the chance level of performance of 50%.
+
+First we need to get only the scores from this particular group. In *Tutorial 1* we saw how we could use square brackets `[]` to index and select specific bits of data from a larger set. In *Tutorial 2* we saw how we could check if things we `>` or `<` a number and **R** would return **LOGICAL** values. We can combine these approaches to select only the `df$Score` values that belong to the participants who were part of the `df$Group` with values of SUBJECTIVE RANDOM. Here we aren't asking if something is less than or greater than something else, but instead checking for **equivalence**, in other words does something equal something else. The syntax to do this in **R** is **==**. 
+
+```{r}
+#create a new variable with only the scores from the subjective random group
+subj_scores <- df$Score[df$Group == "SUBJECTIVE RANDOM"]
+```
+
+Now we can use our new `subj_scores` variable in the `t.test()` function. However, there are a couple of other bits of information we need to supply. First is what the value we are testing against is. By default `t.test()` will test our data against a mean value of 0, however, here we want to test against a value of 50 as this is the chance level. The second thing is that we need to specify that in this case we are only checking if the scores are greater than this value. This means we are conducting a **one-tailed** test. The default in `t.test()` is for a **two-tailed** test so we need to modify the functions behaviour using another input argument: 
+
+```{r}
+t.test(subj_scores, mu = 50, alternative = "greater")
+```
+You probably noticed that we didn't use a formula as input this time, and instead just passed the data directly as an input. A lot of functions in **R** can work either with formula or with data, you will see this at the top of their help documents. In this case it was simpler just to use the data directly.
+
+Try to write out the results of the one sample t-test in the standard APA format.
+
+::: {.callout-note collapse="true" title="Show answer"}
+The mean score (54.6) in the Subjective Random group was significantly greater than the chance score of 50% (*t*(19) = 2.57, *p* = .009).
+:::
+
+## PAIRED SAMPLES T-TESTS
+
+For this data a researcher is testing a cognitive enhancement drug. They have taken a group of participants and got them to read a long document twice, one while taking a placebo and once while taking the drug (in a counter-balanced order). The have then recorded the number of words that they read in a set period of time. 
+
+Here is the code to read the data:
+```{r}
+rm(list = ls()) # clear the environment of variables
+df <- read.csv("https://raw.githubusercontent.com/vrNeuro/R_Teaching_Materials/refs/heads/main/Presessional/DrugWords.csv")
+head(df) #display the top 6 rows
+summary(df)
+```
+
+From earlier tutorials can you remember the code to check the number of participants in this study? Remember, that each participant is a row of the dataframe. 
+
+<textarea rows="1" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+dim(df)
+:::
+
+
+For paired data, where we have our data organised as two separate variables in the dataframe already, we don't need to use the formula method for creating a boxplot. We can simply do:
+
+```{r}
+boxplot(df)
+```
+
+However, this is missing some important elements for a figure we would want to include in a paper or report. What are some of these things?
+
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+Axis titles (and units if appropriate), a title. Colours for different groups are optional but a good way to make graphs more instantly interpretable for the reader.
+:::
+
+Try copying the `boxplot(df)` code to your own script and adding some of these additional features. You can either use `?boxplot` to explore them or look at examples in previous tutorials to see some ways of doing this.
+
+If we look at the boxplot it seems like there is a large overlap between the number of words read between the two conditions. However, a boxplot does not take into account one very important bit of information about our data and experimental design in this case. What is this?
+
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+We have a paired or within-subjects design (also often called repeated measures). This means that the score in one condition is dependent on the score in the other condition because they are generated by the same participant. For example someone might just be faster at reading in general, regardless of any drug effect.
+:::
+
+One nice way to improve boxplots and to add more detail to your figures is to plot the individual data points on top of the boxplot. One way to do this in **R** is to use the **points()** function
+
+
+```{r}
+
+boxplot(df, main = "Word Recall: Placebo vs Drug", ylab = "Words Recalled",
+       boxwex = 0.4)
+# add points on top
+points(rep(1, nrow(df)), df$Placebo, pch = 16, col = "black")
+points(rep(2, nrow(df)), df$Drug, pch = 16, col = "black")
+
+```
+
+The way the points are created is that `rep(1, nrow(df))` creates a vector of the number 1 which is the same length as the number of rows as `df`. This tells `points()` to plot all the values of the placebo group at a value of 1 on the x-axis but use their value for their position on the y-axis. The same is then repeated for the drug group, with all of their points at a value of 2 on the x-axis.
+
+With the points overlayed there still seems to be larger overlap between the groups, and just from examining this plot we may think it unlikely that there is a difference between the two conditions. However, if we connect the points in the two groups that match each participants value in the two conditions a pattern emerges:
+
+```{r}
+boxplot(df, main = "Word Recall: Placebo vs Drug", ylab = "Words Recalled",
+       boxwex = 0.4)
+# add points on top
+points(rep(1, nrow(df)), df$Placebo, pch = 16, col = "black")
+points(rep(2, nrow(df)), df$Drug, pch = 16, col = "black")
+
+# connect each subject's pair of points with a line
+segments(x0 = 1, y0 = df$Placebo, x1 = 2, y1 = df$Drug, col = "grey60")
+
+```
+
+We can now see that most of the lines point downwards, indicating a decrease in the number words read in the placebo condition to the number of words read in the drug condition. Before we drew these lines the **between-subjects variance** was obscuring a **within-subjects** difference.
+
+So if we want to statistically test the difference between the two conditions we need to make sure we use the correct version of the `t.test()` function and to make sure it is aware that we have paired data (also called **dependent** data). If we look at the results of a independent samples t-test, we can see no significant difference (*t*(30) = 1.38, *p* = 0.177). 
+
+```{r}
+t.test(df$Placebo,df$Drug, var.equal=TRUE)
+```
+
+However, if we conduct a dependent samples t-test we can find a statistically significant difference:
+
+```{r}
+t.test(df$Placebo,df$Drug, paired=TRUE)
+```
+
+Also notice that now instead of reporting the mean of the two groups separately, the output now reports the mean difference between the paired values in the two conditions. This highlights the strength of within-subjects designs as the between subject variance is removed and only the within subject variance analysed.
+
+Write out the results of the paired sample t-test in the standard format as you would in a report:
+
+<textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+The paired samples t-test showed a significant difference between the number of hours read in the Placebo and Drug conditions (*t*(15) = 5.19, *p* < 0.001), with a mean difference of 120 more words read in the Placebo condition.
+:::
+
+We have seen that boxplots for within subject designs might hide some of the important patterns in the data that we are most interested in. One other way we can look at this is to compute the pairwise differences between conditions and plot these as a histogram.
+
+```{r}
+difs <- df$Placebo - df$Drug
+```
+
+What is the name of the function we use to plot histograms in *R*, and how would we use it to plot a histogram of this new `difs` variable? (Hint, see *tutorial 2*)
+
+
+<textarea rows="1" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+hist(difs)
+:::
+
+We can also directly test the hypothesis we are interested in on the `difs` variable. Our **null hypothesis** in this case is that there is no difference in the number of words read per condition. Therefore, if this was true we would expect the mean value of the `difs` variable to be close to 0. In the previous section we use a version of a t-test to check if a variable had a mean of a specific value of 50. What type of t-test was this?
+
+<textarea rows="1" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+One sample t-test
+:::
+
+Here is the code to test the hypothesis using this test.
+
+```{r}
+t.test(difs, mu = 0)
+```
+
+What do you notice about the *p* value, degrees of freedom, and the *t* value when comparing these to the paired samples t-test we conducted?
+
+<textarea rows="1" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+They are all identical, this is because a paired samples t-test and a one sample t-test of the pairwise differences are exactly the same thing.
+:::
