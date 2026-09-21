@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Pre_sessional_3</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Pre_sessional_3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Pre_sessional_3_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Pre_sessional_3_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Pre_sessional_3_files/libs/quarto-html/popper.min.js"></script>
+<script src="Pre_sessional_3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Pre_sessional_3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Pre_sessional_3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Pre_sessional_3_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Pre_sessional_3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Pre_sessional_3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Pre_sessional_3_files/libs/bootstrap/bootstrap-215b371544c282197b31c8aa00ce3677.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Pre_sessional_3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="quarto" class="level2">
+<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
+<p>This document was built using Quarto. Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <a href="https://quarto.org" class="uri">https://quarto.org</a>.</p>
+<p>Below is a snippit of R code that is executed when the document is created.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>You can copy these code snippits into your own RStudio to begin to build you own analyses. As you go through the document create a new R script in RStudio and add the code section one after another. By then of this each section you will have built an analysis pipeline for each type of design. You can then use this as a basis for future analyses.</p>
+</section>
+<section id="independent-samples-t-tests" class="level2">
+<h2 class="anchored" data-anchor-id="independent-samples-t-tests">INDEPENDENT SAMPLES T-TESTS</h2>
+<p>The data below come from two groups of participants taking part in an experiment in which they are presented with a sequence of images. On each trial the participant had to choose one of two options for the next image in the sequence, one option was the correct answer and the other incorrect. This means that performance at the level of chance is 50%. Each subject takes part in the experiment only once and was randomly allocated to one of the groups. The ‘Subjective Random’ group had a hidden pattern in the sequences that the researcher believes will alter the number of correct responses. The scores represent the percentage of correctly answered trials for each participant.</p>
+<p>Below is some code loading the dataset and doing a basic inspection:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>()) <span class="co"># clear the environment of variables</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/vrNeuro/R_Teaching_Materials/refs/heads/main/Presessional/ImagePrediction.csv"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df) <span class="co">#display the top 6 rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Group Score
+1 SUBJECTIVE RANDOM    48
+2 SUBJECTIVE RANDOM    58
+3 SUBJECTIVE RANDOM    56
+4 SUBJECTIVE RANDOM    60
+5 SUBJECTIVE RANDOM    72
+6 SUBJECTIVE RANDOM    55</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Group               Score      
+ Length:44          Min.   :36.00  
+ Class :character   1st Qu.:46.00  
+ Mode  :character   Median :51.00  
+                    Mean   :51.11  
+                    3rd Qu.:56.00  
+                    Max.   :72.00  </code></pre>
+</div>
+</div>
+<p>As we have seen before, <strong>R</strong> doesn’t know that out <code>df$group</code> variable is actually a catgorical variable so let’s change that and recheck the <code>summary(df)</code> output.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Group <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>Group)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Group        Score      
+ SUBJECTIVE RANDOM:20   Min.   :36.00  
+ TRUE RANDOM      :24   1st Qu.:46.00  
+                        Median :51.00  
+                        Mean   :51.11  
+                        3rd Qu.:56.00  
+                        Max.   :72.00  </code></pre>
+</div>
+</div>
+<p>We can now see that it correctly summarises the <code>Group</code> variable as a categorical variables with 2 categories.</p>
+<p>Like we before we can use the <code>by()</code> function to get summary statistics for each group. We also saw in <em>Tutorial 1</em>, that to use the <code>sd()</code> function within <code>by()</code> we needed to only get standard deviations of numerical data by selecting certain columns.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(df, df<span class="sc">$</span>Group, summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>df$Group: SUBJECTIVE RANDOM
+               Group        Score      
+ SUBJECTIVE RANDOM:20   Min.   :36.00  
+ TRUE RANDOM      : 0   1st Qu.:49.50  
+                        Median :54.50  
+                        Mean   :54.65  
+                        3rd Qu.:60.00  
+                        Max.   :72.00  
+------------------------------------------------------------ 
+df$Group: TRUE RANDOM
+               Group        Score      
+ SUBJECTIVE RANDOM: 0   Min.   :38.00  
+ TRUE RANDOM      :24   1st Qu.:42.00  
+                        Median :48.00  
+                        Mean   :48.17  
+                        3rd Qu.:52.50  
+                        Max.   :60.00  </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(df<span class="sc">$</span>Score, df<span class="sc">$</span>Group,sd) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>df$Group: SUBJECTIVE RANDOM
+[1] 8.080353
+------------------------------------------------------------ 
+df$Group: TRUE RANDOM
+[1] 6.431354</code></pre>
+</div>
+</div>
+<p>Look at the descriptive statistics, do they at first glance indicate any differences between the groups?</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Subjective Random group appear to have higher scores on average than the True Random group. It is also good to note that there are more subjects in the True Random Group and that the variability in the Subjective Random group is greater.</p>
+</div>
+</div>
+</div>
+<p>Now we want to visualise this using a boxplot. We previously learnt how to generate boxplots using a type of input called a <strong>formula</strong>. See <em>Tutorial 1</em> if you need a refresher.</p>
+<p>What would be the formula we would need to give to <code>boxplot()</code> to create a plot of <code>Score</code> split by <code>Group</code>?</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Score ~ Group</p>
+</div>
+</div>
+</div>
+<p>We now want to test if there is a statistically significant difference between the scores for the two groups. Since we have two <strong>independent</strong> groups, with no participant appearing in both groups, the most appropriate test here is an <strong>independent samples t-test</strong>. The function for conducting <strong>t-tests</strong> in <strong>R</strong> is called <strong>t.test()</strong>, by controlling various of the input arguments we can ask it to carry out various different types.</p>
+<p>Happily, the two main input arguments that the <code>t-test()</code> function needs are the same as the <code>boxplot()</code> function, it first needs at formula and then the data to apply it to. Since we are going to use this formula for both the functions, it is worth us getting <strong>R</strong> so save it as a separate variable. We can do this using the <code>&lt;-</code> operator like we have for any other variable. In general in programming if you are going to use something more than once it is good practice to assign it to a variable. This saves you typing everything out repeatedly but also makes your code a bit more flexible and reusable.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>myFormula <span class="ot">&lt;-</span> Score <span class="sc">~</span> Group <span class="co">#define the formula</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myFormula) <span class="co">#formula are a separate class of variable in R</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "formula"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(myFormula,df) <span class="co">#use this formula object to create a boxplot</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Pre_sessional_3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(myFormula,df) <span class="co">#use the formula to perform a t-test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  Score by Group
+t = 2.9029, df = 36.055, p-value = 0.006272
+alternative hypothesis: true difference in means between group SUBJECTIVE RANDOM and group TRUE RANDOM is not equal to 0
+95 percent confidence interval:
+  1.954047 11.012620
+sample estimates:
+mean in group SUBJECTIVE RANDOM       mean in group TRUE RANDOM 
+                       54.65000                        48.16667 </code></pre>
+</div>
+</div>
+<p>The output of the <code>t.test()</code> function contains all of the bit of information we would need to report the results for a paper or a report.</p>
+<p>Here is a basic statistical report in APA format for this test:</p>
+<p>A Welch two-sample t-test indicated a significant difference between the mean scores in the two groups (<em>t</em>(36.06) = 2.96, <em>p</em> = .006), with the Subjective Random group displaying a higher mean (54.7) than the True Random group (48.2).</p>
+<p>There is a crucial bit of information in this output that might have been missed. This is that the test used was a <strong>Welch</strong> two sample t-test. This particular test is designed to be used when the <strong>variance</strong> in our two groups is unequal. Checking <strong>assumptions</strong> such as this an important aspect of deciding if a statistical test is valid for our particular data and we will cover this in later lessons. For now we are going to pretend that the variance in our two groups is equal and in that case the best test to use is the standard <strong>Student’s</strong> two sample t-test. As with other function we have seen we can change the behaviour of a function like <code>t.test()</code> by adding additional input arguments and the best way to find out what these are is by checking the help for that function by running <code>help(t.test)</code> or <code>?t.test</code> in our console.</p>
+<p>Here to perform the students two sample we want to tell it that the variances are equal:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(myFormula,df, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  Score by Group
+t = 2.9642, df = 42, p-value = 0.004983
+alternative hypothesis: true difference in means between group SUBJECTIVE RANDOM and group TRUE RANDOM is not equal to 0
+95 percent confidence interval:
+  2.069372 10.897295
+sample estimates:
+mean in group SUBJECTIVE RANDOM       mean in group TRUE RANDOM 
+                       54.65000                        48.16667 </code></pre>
+</div>
+</div>
+<p>The results are similar to before but there are a few changes. Write out the results in a standard format like before but using the results of the students t-test.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A Students two-sample t-test indicated a significant difference between the mean scores in the two groups (<em>t</em>(42) = 2.96, <em>p</em> = .005), with the Subjective Random group displaying a higher mean (54.7) than the True Random group (48.2).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="one-sample-t-tests" class="level2">
+<h2 class="anchored" data-anchor-id="one-sample-t-tests">ONE SAMPLE T-TESTS</h2>
+<p>The researcher in this study also wanted to check if performance in the <strong>SUBJECTIVE RANDOM</strong> group was significantly <strong>better</strong> than the chance level of performance of 50%.</p>
+<p>First we need to get only the scores from this particular group. In <em>Tutorial 1</em> we saw how we could use square brackets <code>[]</code> to index and select specific bits of data from a larger set. In <em>Tutorial 2</em> we saw how we could check if things we <code>&gt;</code> or <code>&lt;</code> a number and <strong>R</strong> would return <strong>LOGICAL</strong> values. We can combine these approaches to select only the <code>df$Score</code> values that belong to the participants who were part of the <code>df$Group</code> with values of SUBJECTIVE RANDOM. Here we aren’t asking if something is less than or greater than something else, but instead checking for <strong>equivalence</strong>, in other words does something equal something else. The syntax to do this in <strong>R</strong> is <strong>==</strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create a new variable with only the scores from the subjective random group</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>subj_scores <span class="ot">&lt;-</span> df<span class="sc">$</span>Score[df<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">"SUBJECTIVE RANDOM"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now we can use our new <code>subj_scores</code> variable in the <code>t.test()</code> function. However, there are a couple of other bits of information we need to supply. First is what the value we are testing against is. By default <code>t.test()</code> will test our data against a mean value of 0, however, here we want to test against a value of 50 as this is the chance level. The second thing is that we need to specify that in this case we are only checking if the scores are greater than this value. This means we are conducting a <strong>one-tailed</strong> test. The default in <code>t.test()</code> is for a <strong>two-tailed</strong> test so we need to modify the functions behaviour using another input argument:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(subj_scores, <span class="at">mu =</span> <span class="dv">50</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  subj_scores
+t = 2.5736, df = 19, p-value = 0.009302
+alternative hypothesis: true mean is greater than 50
+95 percent confidence interval:
+ 51.52577      Inf
+sample estimates:
+mean of x 
+    54.65 </code></pre>
+</div>
+</div>
+<p>You probably noticed that we didn’t use a formula as input this time, and instead just passed the data directly as an input. A lot of functions in <strong>R</strong> can work either with formula or with data, you will see this at the top of their help documents. In this case it was simpler just to use the data directly.</p>
+<p>Try to write out the results of the one sample t-test in the standard APA format.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The mean score (54.6) in the Subjective Random group was significantly greater than the chance score of 50% (t(19) = 2.57, p = .009, d = 0.575).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="paired-samples-t-tests" class="level2">
+<h2 class="anchored" data-anchor-id="paired-samples-t-tests">PAIRED SAMPLES T-TESTS</h2>
+<p>For this data a researcher is testing a cognitive enhancement drug. They have taken a group of participants and got them to read a long document twice, one while taking a placebo and once while taking the drug (in a counter-balanced order). The have then recorded the number of words that they read in a set period of time.</p>
+<p>Here is the code to read the data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>()) <span class="co"># clear the environment of variables</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/vrNeuro/R_Teaching_Materials/refs/heads/main/Presessional/DrugWords.csv"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df) <span class="co">#display the top 6 rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Placebo Drug
+1     680  618
+2     875  651
+3     261   45
+4     729  512
+5     647  505
+6     403  449</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Placebo            Drug       
+ Min.   : 261.0   Min.   :  45.0  
+ 1st Qu.: 560.2   1st Qu.: 440.0  
+ Median : 665.5   Median : 568.5  
+ Mean   : 684.8   Mean   : 564.8  
+ 3rd Qu.: 765.5   3rd Qu.: 626.2  
+ Max.   :1136.0   Max.   :1012.0  </code></pre>
+</div>
+</div>
+<p>From earlier tutorials can you remember the code to check the number of participants in this study? Remember, that each participant is a row of the dataframe.</p>
+<textarea rows="1" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>dim(df)</p>
+</div>
+</div>
+</div>
+<p>For paired data, where we have our data organised as two separate variables in the dataframe already, we don’t need to use the formula method for creating a boxplot. We can simply do:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Pre_sessional_3_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>However, this is missing some important elements for a figure we would want to include in a paper or report. What are some of these things?</p>
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Axis titles (and units if appropriate), a title. Colours for different groups are optional but a good way to make graphs more instantly interpretable for the reader.</p>
+</div>
+</div>
+</div>
+<p>Try copying the <code>boxplot(df)</code> code to your own script and adding some of these additional features. You can either use <code>?boxplot</code> to explore them or look at examples in previous tutorials to see some ways of doing this.</p>
+<p>If we look at the boxplot it seems like there is a large overlap between the number of words read between the two conditions. However, a boxplot does not take into account one very important bit of information about our data and experimental design in this case. What is this?</p>
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We have a paired or within-subjects design (also often called repeated measures). This means that the score in one condition is dependent on the score in the other condition because they are generated by the same participant. For example someone might just be faster at reading in general, regardless of any drug effect.</p>
+</div>
+</div>
+</div>
+<p>One nice way to improve boxplots and to add more detail to your figures is to plot the individual data points on top of the boxplot. One way to do this in <strong>R</strong> is to use the <strong>points()</strong> function</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(df, <span class="at">main =</span> <span class="st">"Word Recall: Placebo vs Drug"</span>, <span class="at">ylab =</span> <span class="st">"Words Recalled"</span>,</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">boxwex =</span> <span class="fl">0.4</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># add points on top</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(df)), df<span class="sc">$</span>Placebo, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">rep</span>(<span class="dv">2</span>, <span class="fu">nrow</span>(df)), df<span class="sc">$</span>Drug, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Pre_sessional_3_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The way the points are created is that <code>rep(1, nrow(df))</code> creates a vector of the number 1 which is the same length as the number of rows as <code>df</code>. This tells <code>points()</code> to plot all the values of the placebo group at a value of 1 on the x-axis but use their value for their position on the y-axis. The same is then repeated for the drug group, with all of their points at a value of 2 on the x-axis.</p>
+<p>With the points overlayed there still seems to be larger overlap between the groups, and just from examining this plot we may think it unlikely that there is a difference between the two conditions. However, if we connect the points in the two groups that match each participants value in the two conditions a pattern emerges:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(df, <span class="at">main =</span> <span class="st">"Word Recall: Placebo vs Drug"</span>, <span class="at">ylab =</span> <span class="st">"Words Recalled"</span>,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">boxwex =</span> <span class="fl">0.4</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># add points on top</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(df)), df<span class="sc">$</span>Placebo, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">rep</span>(<span class="dv">2</span>, <span class="fu">nrow</span>(df)), df<span class="sc">$</span>Drug, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># connect each subject's pair of points with a line</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="at">x0 =</span> <span class="dv">1</span>, <span class="at">y0 =</span> df<span class="sc">$</span>Placebo, <span class="at">x1 =</span> <span class="dv">2</span>, <span class="at">y1 =</span> df<span class="sc">$</span>Drug, <span class="at">col =</span> <span class="st">"grey60"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Pre_sessional_3_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can now see that most of the lines point downwards, indicating a decrease in the number words read in the placebo condition to the number of words read in the drug condition. Before we drew these lines the <strong>between-subjects variance</strong> was obscuring a <strong>within-subjects</strong> difference.</p>
+<p>So if we want to statistically test the difference between the two conditions we need to make sure we use the correct version of the <code>t.test()</code> function and to make sure it is aware that we have paired data (also called <strong>dependent</strong> data). If we look at the results of a independent samples t-test, we can see no significant difference (<em>t</em>(30) = 1.382, <em>p</em> = 0.177).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(df<span class="sc">$</span>Placebo,df<span class="sc">$</span>Drug, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  df$Placebo and df$Drug
+t = 1.3821, df = 30, p-value = 0.1771
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -57.31391 297.31391
+sample estimates:
+mean of x mean of y 
+ 684.8125  564.8125 </code></pre>
+</div>
+</div>
+<p>However, if we conduct a dependent samples t-test we can find a statistically significant difference:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(df<span class="sc">$</span>Placebo,df<span class="sc">$</span>Drug, <span class="at">paired=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  df$Placebo and df$Drug
+t = 5.1921, df = 15, p-value = 0.0001094
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+  70.73784 169.26216
+sample estimates:
+mean difference 
+            120 </code></pre>
+</div>
+</div>
+<p>Also notice that now instead of reporting the mean of the two groups separately, the output now reports the mean difference between the paired values in the two conditions. This highlights the strength of within-subjects designs as the between subject variance is removed and only the within subject variance analysed.</p>
+<p>Write out the results of the paired sample t-test in the standard format as you would in a report:</p>
+<textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The paired samples t-test showed a significant difference between the number of hours read in the Placebo and Drug conditions (<em>t</em>(15) = 5.19, <em>p</em> &lt; 0.001), with a mean difference of 120 more words read in the Placebo condition.</p>
+</div>
+</div>
+</div>
+<p>We have seen that boxplots for within subject designs might hide some of the important patterns in the data that we are most interested in. One other way we can look at this is to compute the pairwise differences between conditions and plot these as a histogram.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>difs <span class="ot">&lt;-</span> df<span class="sc">$</span>Placebo <span class="sc">-</span> df<span class="sc">$</span>Drug</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>What is the name of the function we use to plot histograms in <em>R</em>, and how would we use it to plot a histogram of this new <code>difs</code> variable? (Hint, see <em>tutorial 2</em>)</p>
+<textarea rows="1" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>hist(difs)</p>
+</div>
+</div>
+</div>
+<p>We can also directly test the hypothesis we are interested in on the <code>difs</code> variable. Our <strong>null hypothesis</strong> in this case is that there is no difference in the number of words read per condition. Therefore, if this was true we would expect the mean value of the <code>difs</code> variable to be close to 0. In the previous section we use a version of a t-test to check if a variable had a mean of a specific value of 50. What type of t-test was this?</p>
+<textarea rows="1" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>One sample t-test</p>
+</div>
+</div>
+</div>
+<p>Here is the code to test the hypothesis using this test.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(difs, <span class="at">mu =</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  difs
+t = 5.1921, df = 15, p-value = 0.0001094
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+  70.73784 169.26216
+sample estimates:
+mean of x 
+      120 </code></pre>
+</div>
+</div>
+<p>What do you notice about the <em>p</em> value, degrees of freedom, and the <em>t</em> value when comparing these to the paired samples t-test we conducted?</p>
+<textarea rows="1" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>They are all identical, this is because a paired samples t-test and a one sample t-test of the pairwise differences are exactly the same thing.</p>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
