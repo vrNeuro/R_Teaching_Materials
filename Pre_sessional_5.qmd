@@ -1,0 +1,199 @@
+---
+title: "Pre_sessional_5"
+format: html
+---
+
+## Quarto
+
+This document was built using Quarto. Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+Below is a snippit of R code that is executed when the document is created.
+
+```{r}
+1 + 1
+```
+
+You can copy these code snippits into your own RStudio to begin to build you own analyses. As you go through the document create a new R script in RStudio and add the code section one after another. By then of this each section you will have built an analysis pipeline for each type of design. You can then use this as a basis for future analyses.
+
+## CORRELATIONS
+
+
+In the data set we will use for this tutorial (it is an imaginary study). the data comes from a study of the correlates of trust in traditional journalism in a sample drawn from the general population. Participants provided demographic information (age, gender) and completed a battery of questionnaires that measured the following variables: \ 
+- trust in traditional journalism (TTJ; higher scores reflect greater trust in traditional journalism outlets [e.g.,newspapers]); \ 
+- social media use (SMU; average number of hours per day spent on social media platforms such as Facebook, Instagram, Twitter, TikTok, etc.); \ 
+- reliance on traditional vs. social media for news (RTN; relative reliance [%] on traditional media sources relative to social media platforms for news; higher scores reflect greater reliance on traditional media); \ 
+- endorsement of conspiracy theories (ECT; higher scores reflect greater belief in a range of conspiracy theories); \ 
+- political conservatism (PC; higher scores reflect greater conservatism); \ 
+- mistrust of experts (ME; higher scores reflect greater mistrust of experts [medical professionals, scientists, economists, legal scholars, etc.]). \ 
+
+We will use our familiar code pattern to clear the Environment and load the data from the csv file.
+
+```{r}
+rm(list = ls()) 
+df <- read.csv("data/SocialMediaData.csv")
+head(df) #display the top 6 rows
+summary(df)
+sapply(df,class)
+```
+
+Here the only variable that we need to change into a factor is `df$gender`. This is coded a 0 for male and 1 for female (this is purely for statistical simplicity in the tutorial and is not making any claims about the number of genders).
+
+
+
+```{r}
+df$gender <- factor(df$gender,levels = c(0,1), labels = c("M","F"))
+summary(df$gender) #check the change as worked.
+```
+
+All of our other variables of interest are continuous variables and therefore to examine the relationship between them we will use **correlations**.
+
+The first thing we want to do is to check the degree of correlation between variables. In **R** the function to perform correlations is **cor.test()**. If we wanted to look at the help for this function to understand how it works what would we type into the console:
+
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+?cor.test
+or
+help(cor.test)
+:::
+
+If we wanted to examine the correlation between social media use (smu) and political conservatism (pc) we would use:
+
+```{r}
+cor.test(df$smu,df$pc)
+
+```
+
+Here is how we would write this up in a report:
+
+A Pearson correlation was conducted to examine the relationship between social media use (smu) and PC scores. There was a statistically significant, weak negative correlation between the two variables, *r*(148) = −.17, *p* = .034.
+
+Try to spot where the numbers in the report come from in the output, as with t-tests and ANOVAs everything we need is present, it is just a matter of getting the information from the right places. Also notice that the direction of the correlation being **negative** is reported as well as its size, this is vital information to include.
+
+A common way of depicting the relationship between two continuous variables is with a scatter plot, to do this we will use the **plot()** function.
+
+```{r}
+plot(df$smu,df$pc,xlab = "Social Media Use", ylab = "Political Conservtism",
+      pch = 16, main = "Scatter Plot")
+```
+To better visualise the pattern of the relationship we can add a best fit line using the following code:
+
+```{r}
+plot(df$smu,df$pc,xlab = "Social Media Use", ylab = "Political Conservtism",
+      pch = 16, main = "Scatter Plot")
+model <- lm(pc ~ smu, data = df) #create a linear model
+abline(model, col = "red", lwd = 2) #plot the linear model as a straight line
+```
+
+This shows the weak negative relationship that the statistics indicated, as scores on Social Media Use increase, Political Conservatism decreases. The function **abline()** allows us to draw straight lines on plots. The input argument we gave to `abline()` to create this straight line relationship was a linear model created by the **lm()** function, we will come back to this later when we look at how to perform regressions.
+
+Often we want to examine the correlations between all of our variables at one time, instead of checking this pair by pair we can use **cor()** to check all of our numeric variables at one time.
+
+```{r}
+cor(df[, c("age", "smu", "rsm", "ect", "pc")])
+```
+
+You'll notice that here we used `cor()` instead of `cor.test()`, `cor()` does not perform a statistical test of significance (we don't get *p* values), instead it outputs a **correlation matrix** of the pearson R coefficients.
+
+The first thing to notice about this matrix is that on the diagonal from top-left to bottom-right are all 1s. This is because each cell in the matrix holds the pearson R coefficient for the correlation between the variable named in the row and the one in the column. Those on the diagonal are therefore the correlation of a variable and itself, which by definition is 1.
+
+The other thing to notice is that the matrix is symmetrical around this diagonal, so the value of -0.0012 in the 4th row, 1st column, is the same as that in the 1st row, 4th column. This is because the correlation of `ect ~ age` is identical to that of `age ~ ect`, the order we specify the variables in a correlation does not matter.
+
+It is usually good practice to also visually inspect your data, and we can produce a scatterplot matrix using the **pairs()** function:
+
+```{r}
+pairs(df[, c("age", "smu", "rsm", "ect", "pc")],
+      main = "Scatterplot Matrix", pch = 16)
+```
+## LINEAR REGRESSION WITH A SINGLE PREDICTOR
+
+Earlier to create a straight line of best fit to add to our correlation plot we used the function **lm()**. This is also the function we can use to compute more complex regressions later on. However, for now it is useful as an illustration.
+
+```{r}
+model <- lm(pc ~ smu, data = df)
+summary(model)
+```
+
+The formula `pc ~ smu` reads as "pc predicted by smu" — same left-side-outcome, right-side-predictor convention you've used in `aov()` and other places throughout these tutorials. Also, as you have seen previously `summary()` gives you the full output of these models. In the case of regression we get: \  
+the intercept and slope estimates, \  
+their standard errors, \ 
+t-values and p-values,  \ 
+plus R², \ 
+and the overall model F-test.
+
+Interestingly if we compare this output to the output of the correlation we performed earlier we will observe some patterns.
+
+```{r}
+corModel <- cor.test(df$smu,df$pc)
+corModel
+```
+The first is that the *p* value for the correlation is identical to that of the overall model F-test at the bottom of the regression output. \ 
+The second is that the degrees of freedom in the correlation and the F test also match. \ 
+The last is harder to spot but if you take the *r* value from a correlation and square it, you get the *R^2^* value of the regression:
+```{r}
+corModel$estimate^2
+summary(model)$r.squared
+```
+
+Performing a regression with a single predictor is identical to performing a pearsons correlation. In fact regression, ANOVAs, t-tests and correlations are all part of a larger framework of statistics called the **general linear model** or **GLM**.
+
+For example, if we take our `df$gender` variable that has two levels and perform a regression with this as the only predictor:
+
+```{r}
+model2 <- lm(pc ~ gender, data = df)
+summary(model2)
+```
+
+We can compare this output to a t-test of the same model.
+
+```{r}
+tModel <- t.test(pc ~ gender, data = df, var.equal = TRUE)
+tModel
+```
+
+Again we see that the *p* value of the t-test matches that of the *F* test of the regression, \ 
+The degrees of freedom match \ 
+If we square the *t* value from the t-test we get the *F* value of the regression test
+
+```{r}
+tModel$statistic^2
+summary(model2)$fstatistic[1] 
+```
+
+## LINEAR REGRESSION WITH A MULTIPLE PREDICTORS
+
+If we want to examine the effect of multiple predictors at the same time on an outcome variable we simply need to add these to the right hand side of the formula. For example this formula specifies that we want to look at how the predictors, smu, age, and ect all act to predict pc. 
+
+```{r}
+formula2 <- pc ~ smu + age + ect
+```
+
+We can then pass this and the data to the `lm()` function and use `summary()` to get a useful output of the linear regression model 
+
+```{r}
+model3 <- lm(formula2,df)
+summary(model3)
+```
+We get a very similar output to before, we still get an overall *F* test of the significance of the whole model. However, the table has now expanded and contains a row for each of our three predictors.  The **Estimate** column contains the **b** coefficient (unstandardised) of the relationship of that predictor to the outcome (whilst holding the other predictors constant). The final column `Pr(>|t|)` gives the *p* value of the significance of that particular predictor. 
+
+Based on this table, which predictors have a significant association with the outcome variable when they are all included in the model.
+
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+Only age seems to have a significant relationship with *p* < 0.0001. The *p* values for the other two predictors are >0.05. 
+:::
+
+To report the results of this regression in APA style we would write something like this:
+
+A multiple linear regression was conducted to examine whether social media use (smu), age, and endorsement of conspiracy theories (ect) predicted political conservatism (pc). The overall model was statistically significant, *F*(3, 146) = 5.74, *p* < .001, and explained approximately 11% of the variance in political conservatism (*R^2^* = .11, adjusted *R^2^* = .09).
+
+Age was a significant positive predictor of political conservatism, *b* = 0.23, *SE* = 0.07, *t*(146) = 3.47, *p* < .001, such that older participants tended to score higher on conservatism. Neither social media use (*b* = −0.03, *SE* = 0.08, *t*(146) = −0.33, *p* = .740) nor ect (*b* = 0.16, *SE* = 0.28, *t*(146) = 0.58, *p* = .561) significantly predicted political conservatism once the other variables in the model were accounted for.
+
+Quick reference for how the values map:
+
+*F*(3, 146) — from the model's 3 and 146 DF \ 
+*p* < .001 — from p-value: 0.0009706 \ 
+*R^2^* = .11, adjusted *R^2^* = .09 — from Multiple R-squared: 0.1055 and Adjusted R-squared: 0.0871 \ 
+
+For each predictor, *b* = Estimate, *SE* = Std. Error, *t*(146) = t value (residual df = 146 for all three), and *p* = Pr(>|t|), rounded to three decimals or reported as < .001 where applicable.

@@ -1,0 +1,28 @@
+---
+title: "PS71101A Lab Worksheets"
+subtitle: "Introduction to statistics in R"
+---
+
+Welcome to the lab worksheets for PS71101A. Each week has a worksheet that you should work through during the lab session, using RStudio to run the code and try out the examples.
+
+## How the labs work
+
+-   Bring a laptop with RStudio installed if you can. If not, you can use Posit Cloud or the Department RStudio server (see Week 1 for details).
+-   Work through the worksheet during the lab, individually or in small groups, and finish it outside class time if needed.
+-   Answer the questions in your own words. Each worksheet has model answers hidden under **Show answer** boxes, so try the question first and then click to check your work.
+-   If you have questions during the lab, ask your lab tutors. For questions about lecture content or homework sheets, contact Andy Cooper by email or use the forum on the VLE page.
+
+## Worksheets
+
+| Week | Topic | Worksheet |
+|------|-------|-----------|
+| 1 | Introduction to RStudio | [Week 1 worksheet](PS71101A_week1_lab_worksheet_modelanswers.qmd) |
+
+*More worksheets will be added here as the term progresses.*
+
+## Useful links
+
+-   [R and RStudio downloads](https://posit.co/download/rstudio-desktop/)
+-   [Posit Cloud](https://posit.cloud/)
+-   [CRAN (Comprehensive R Archive Network)](https://cran.r-project.org/)
+-   [The tidyverse](https://www.tidyverse.org/)

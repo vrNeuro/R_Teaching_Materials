@@ -1,0 +1,35 @@
+project:
+  type: website
+  # Rendered site goes into docs/ so GitHub Pages can serve it
+  # (Settings > Pages > Deploy from a branch > main > /docs)
+  output-dir: docs
+  
+execute:
+     dir: project
+     
+website:
+  title: "PG Stats Intro"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Unit 0"
+        href: Pre_sessional_0.qmd
+      # Add further weeks here as you create them, e.g.
+      # - text: "Week 2"
+      #   href: PS71101A_week2_lab_worksheet_modelanswers.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: worksheet.css
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    # Uncomment to make each page a single self-contained file
+    # (handy for emailing or uploading to the VLE, not needed for GitHub Pages):
+    # embed-resources: true
+
+# Any .R scripts, data files etc. you want copied into docs/ can be listed here
+# resources:
+#   - data/*
