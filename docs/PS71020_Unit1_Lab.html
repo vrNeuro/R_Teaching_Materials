@@ -162,6 +162,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#section-f.-setting-up-a-file-structure" id="toc-section-f.-setting-up-a-file-structure" class="nav-link" data-scroll-target="#section-f.-setting-up-a-file-structure">Section F. Setting Up a File Structure</a></li>
   <li><a href="#section-g.-working-with-projects-in-rstudio" id="toc-section-g.-working-with-projects-in-rstudio" class="nav-link" data-scroll-target="#section-g.-working-with-projects-in-rstudio">Section G. Working with projects in RStudio</a></li>
   <li><a href="#section-h.-working-with-script-files-in-rstudio" id="toc-section-h.-working-with-script-files-in-rstudio" class="nav-link" data-scroll-target="#section-h.-working-with-script-files-in-rstudio">Section H. Working with script files in RStudio</a></li>
+  <li><a href="#section-i.-importing-data" id="toc-section-i.-importing-data" class="nav-link" data-scroll-target="#section-i.-importing-data">Section I. Importing Data</a></li>
+  <li><a href="#section-j.-examining-the-dataset" id="toc-section-j.-examining-the-dataset" class="nav-link" data-scroll-target="#section-j.-examining-the-dataset">Section J. Examining the dataset</a></li>
+  <li><a href="#section-k.-data-wrangling-and-visualisation" id="toc-section-k.-data-wrangling-and-visualisation" class="nav-link" data-scroll-target="#section-k.-data-wrangling-and-visualisation">Section K. Data Wrangling and Visualisation</a></li>
   </ul>
 </nav>
     </div>
@@ -390,16 +393,17 @@ Figure&nbsp;4: Figure 5: The packages tab
 <p>Having separate folders for each project (or lab) you work on, avoids any conflicts within R about where your data or scripts sit, and it will also help you navigate around your projects easily when you need to find things again.</p>
 <p>RStudio uses projects to help you organise the files you will need for any analysis you undertake. RStudio projects will group your data files, script files and any output files you produce together in one folder. You can save projects, and then easily re-open them again in a new session, so you can pickup quickly from where you left off. When you create a new project, RStudio will create a new file with an extension Rproj. When you want to start work again on this project in the future, you can simply double click the project filename, and it should open RStudio with that project loaded.</p>
 <p>Let’s start a new project for this lab class. Click the File menu in the top left, and then New Project. This will open up the dialog box shown below on the left (Figure 1). Click New Directory, and then New Project. In the Create New Project box on the right below, you can name your new project. Create the new project as a subdirectory of the master folder you created in Section F above.</p>
-<p><img src="images/CreatingNewProject.png" class="img-fluid" alt="Figure 1: Creating a new Project">{#fig-project creation fig-alt=“The three steps for porject creation”}</p>
-<p>Once you have done this, go back to the main interface for RStudio, and have a look at the Files tab in the lower right pane. You should see an .Rproj file in the directory you just created. In my screenshot below, in the Files tab, you can see I have created an R project called <strong>Week2</strong>, with the Rproj file visible. It is sitting in my master directory called <strong>R Code</strong>. In the Files tab, you can navigate around the various folders you have on your computer. In the menu items at the top of the Files tab, you can create new folders, delete and rename folders etc, in much the same way you can when you open up folders on your harddrive.</p>
-<div id="fig-open" class="quarto-float quarto-figure quarto-figure-center anchored" data-project-alt="A new opened project">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/NewProjectOpen.png" class="img-fluid figure-img" data-project-alt="A new opened project">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/CreatingNewProject.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: Creating a new Project</figcaption>
+</figure>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Figure 2: Opening a new Project
-</figcaption>
+<p>Once you have done this, go back to the main interface for RStudio, and have a look at the Files tab in the lower right pane. You should see an .Rproj file in the directory you just created. In my screenshot below, in the Files tab, you can see I have created an R project called <strong>Week1</strong>, with the Rproj file visible. It is sitting in my master directory called <strong>R Code</strong>. In the Files tab, you can navigate around the various folders you have on your computer. In the menu items at the top of the Files tab, you can create new folders, delete and rename folders etc, in much the same way you can when you open up folders on your harddrive.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/NewProjectOpen.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2: Opening a new Project</figcaption>
 </figure>
 </div>
 </section>
@@ -409,18 +413,244 @@ Figure&nbsp;5: Figure 2: Opening a new Project
 <p>When we run analyses in a project, we would normally want to save the syntax we create, so when we open the project again, we don’t need to recreate the syntax from scratch. We can simply open and run the script we have saved, and we will be able to recreate any output we produced on the last occasion.</p>
 <p>An R script file is really just a text file that has the code that tells R what we want to do. You can open up a saved script file in RStudio, but you can also just open it with a normal text editor like Notepad (or the Mac equivalent) and it will show you the same thing. Using the script file in RStudio does have some advantages though; RStudio will use colour coding, auto-complete, and auto-suggestions, amongst other things, to help make your coding faster and simpler. In your new script file, on the first line type the following: <code>#  My first R script file</code></p>
 <p>In the screenshot below (Figure 3), you can see what this should look like. You will see that each line in the script file is numbered. The # symbol at the start of a line tells R to ignore anything further on that line. So why would we use that symbol? We use it to create <strong>comments</strong> in the script file to help ourselves, or others, understand what we are trying to do with the code. It is really important to use comments in the code to help you remember what the purpose of the file and code was all about. It only takes a few seconds to create a comment line, but it could potentially save you hours of pain and frustration in the future if you have to open up a script file after a few years and try to work out what you did if there are no comments there (I know this from experience)!</p>
-<p>Now that we have a line in our script file, we should save it. You will see in the upper left tab that the file is currently untitled, and there is an asterisk. This means the script file is not currently saved. Click on the disk icon at the top of the script pane, or go to File menu, then save, and it should open up a save file dialog box. Name your script file with something like Week2LabScript; you should save this file in the same folder directory you just created above.</p>
+<p>Now that we have a line in our script file, we should save it. You will see in the upper left tab that the file is currently untitled, and there is an asterisk. This means the script file is not currently saved. Click on the disk icon at the top of the script pane, or go to File menu, then save, and it should open up a save file dialog box. Name your script file with something like Week1LabScript; you should save this file in the same folder directory you just created above.</p>
 <p>Script files have an .R file extension. Once you have saved the file, you should notice that this file is now added to the directory shown in the Files tab on the lower left pane. You should regularly save your script files as you work on them to make sure you never lose your work. You can see this in the screenshot in Figure 3.</p>
-<div id="fig-open" class="quarto-float quarto-figure quarto-figure-center anchored" data-project-alt="A new opened project">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/FirstScript.png" class="img-fluid figure-img" data-project-alt="A new opened project">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Figure 3: A new script with a comment on the first line
-</figcaption>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/FirstScript.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3: A new script with a comment on the first line</figcaption>
 </figure>
 </div>
+</section>
+<section id="section-i.-importing-data" class="level2">
+<h2 class="anchored" data-anchor-id="section-i.-importing-data">Section I. Importing Data</h2>
+<p>To do anything useful with RStudio, we need to have some data to work with! To do that, we need to import data into R. There are various ways we can import data into R, depending on where we are trying to import the data from, and the file format of the data we are trying to import. Generally, we want to deal with files that are in csv file format. A csv file is a plain text file format where the data is separated by commas. The reason for this preference is that csv files can be opened by R and any other spreadsheet software, like Excel, Google docs etc, so it is a flexible file format.</p>
+<p>The data we are going to work with today comes from the World Happiness Report (WHR) of 2023, which derives from Gallup World Poll data. You can find more information about the source of this data here <a href="https://worldhappiness.report/" class="uri">https://worldhappiness.report/</a>.</p>
+<p>The data from this survey is freely available from a website called Kaggle (<a href="https://www.kaggle.com/" class="uri">https://www.kaggle.com/</a>). Kaggle is a data science website that hosts freely available datasets, code for R and Python, and hosts data science competitions, amongst other things. In particular, you can use the search engine on the site here to find open datasets on virtually any topic you can imagine: <a href="https://www.kaggle.com/datasets" class="uri">https://www.kaggle.com/datasets</a>.</p>
+<p>You can import data into R directly from sources on the WWW (you can see examples of this in the presessional materials), but to keep things simple for today, we will first download this data as a .csv file and move it across to the folder for Week1 that we created above.</p>
+<p>It generally keeps things simpler if the data you import into R sits in the same folder as your script and project file. If it doesn’t, you would need to tell R where exactly the datafile is sitting on your computer using syntax, or change the working directory to where the file is sitting.</p>
+<p>You can download the datafile from the module VLE page under week 1&gt;Lab Materials or at this link <a href="https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/WHR2023.csv">Github Link</a>. Save this file in the same folder as your script and project file. You should see it appear in the Files tab in the lower right.</p>
+<p>Data can also be stored in R as an object called a dataframe (see presessional materials for more examples). To import the data and store it as a dataframe, we can use the following syntax:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"WHR2023.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The sections of these workbooks that look like that above will be executed when the file is created. This enables the analysis results to be incorporated into the worksheets.</p>
+<p>What you should do is take the code here and add it to your own script file and add a comment to explain why it is included. This way as we go through these analyses you will build your own script.</p>
+<p>Your script file should now look like the screenshot below.</p>
+<p><img src="images/FirstScriptLoad.png" class="img-fluid" alt="Figure 4: Our script with the loading included"> To run a line/s of code, you simply highlight the relevant lines, and then click the run button in the top right of the upper left pane. The keyboard shortcut is hold CTRL (Command on MACs) and press ENTER.</p>
+<p>This will send the code to the R console in the lower left. You should see the syntax replicated in the R console window. Go ahead and run this code.</p>
+<p><strong>At first glance, after you have run this code, it may appear as though nothing has happened. But what do you now notice in the environment tab in the upper right pane?</strong></p>
+<textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You should now see your new mydata object sitting in the environment pane. It should say that there are 137 observations of 19 variables. The 137 refers to the number of countries in the datafile (or number of rows), and the 19 refers to the total number of variables in the datafile (or the number of columns).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="section-j.-examining-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="section-j.-examining-the-dataset">Section J. Examining the dataset</h2>
+<p>Now that we have our dataset loaded in R, we can undertake some basic examination of the data to check everything is ok. One simple thing you can do is simply click the table icon to the right of the variable in the Environment panel. This should open it for viewing in the same panel that your script appears. You can switch back and forth between these using the tabs at the top.</p>
+<p>You can also see that in the console the comman <code>View(mydata)</code> was executed to do this. Often when you click buttons in RStudio, it automatically executes code for you which can be a useful way to learn new commands.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/mydataInVarView.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 5: The mydata dataframe in the variable viewer</figcaption>
+</figure>
+</div>
+<p><strong>What do you notice R has done with the variable names such as “Country Name” in the datafile after importing?</strong></p>
+<textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>R has put a period in the variable names wherever there was a blank space between the words in the variable ie it is now Country.name instead of Country name. Remember, R generally does not like spaces between words.</p>
+</div>
+</div>
+</div>
+<p>If you click on the small blue arrow next to the variable name in the Environment panel, it will show you a breakdown of the type of variables included, and the values of these variables in the data (Figure 6).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/ExpandedVariable.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 6: The mydata dataframe expanded</figcaption>
+</figure>
+</div>
+<p><strong>What do you think ‘chr’ and ‘num’ might refer to in this list?</strong></p>
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The chr refers to a character variable ie a string, and the num refers to a numeric variable. We will cover the different types of R variables in further labs. Also you can see the presessional materials for some other examples.</p>
+</div>
+</div>
+</div>
+<p>If we want to print out the names of the variables in our data object, we can type the following in the script file, or in the console <code>names(mydata)</code>.</p>
+<p>If we want to access the data in a single variable in our data frame we use the following syntax <code>mydata$upperwhisker</code> to get the <code>upperwhisker</code> variable.</p>
+<p>It is very easy to make spelling mistakes and one way to avoid this is to use the autocomplete feature of RStudio. If you type into the console <code>mydata$</code> a list of all possible variable names will appear as a drop-down list. Using this can save you a lot of typing time when your code gets longer and help avoid spelling errors. Type the following code into the console and press ENTER to execute it <code>mydata$Country.name</code></p>
+<strong>What get’s displayed in the console?</strong>
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A list of the 137 country names as this is what this variable contains.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="section-k.-data-wrangling-and-visualisation" class="level2">
+<h2 class="anchored" data-anchor-id="section-k.-data-wrangling-and-visualisation">Section K. Data Wrangling and Visualisation</h2>
+<p>Now that we have checked that the data has been imported without problem, we can then start to wrangle the data in different ways, depending on our purposes for the data. (See presessional materials for more examples).</p>
+<p>There is a useful built-in function that we could use at this point called <strong>summary()</strong>. As the name suggests, the summary function provides you with an overview of the key summary statistics for the variables in the dataset; amongst other things, the maximum and minimum values, the mean, and the standard deviation. Looking at the maximum and minimum values can be useful for screening the data for any out of range values that might reflect, for example, data entry errors.</p>
+<p>Type the following syntax in your script file, run it and then have a look at the output in the console panel: <code>summary(mydata)</code>.</p>
+<p><strong>What are the minimum and maximum values for the Ladder.score variable?</strong></p>
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>min = 1.859 and max = 7.804</p>
+</div>
+</div>
+</div>
+<p><strong>Why does the Country.name variable have no similar numbers in the output from the summary function?</strong></p>
+<textarea rows="3" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This variable refers to qualitative information; hence, its designation as character data in the output. It wouldn’t make sense to talk about a mean country, for example.</p>
+</div>
+</div>
+</div>
+<p>Let’s do some more basic screening of our data by using some visual aids that were introduced in the lecture. For example, we could use a histogram to help assess the normality of the Ladder.score variable. Base R has some basic plotting functionality, although there are packages available that will allow for producing much slicker and fancier plots. We will introduce some of the packages next week, and in future weeks. For today, we will stick with the basic plotting available in base R.</p>
+<p>Type the following syntax into your script file and run:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mydata<span class="sc">$</span>Ladder.score)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit1_Lab_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This code uses the <strong>hist()</strong> function in base r to produce a histogram of the Ladder.score variable. When you run this code, you should then see a plot produced in the lower right pane under the plots tab (in this worksheet document it will appear in the middle of the text).</p>
+<p>This plot shows the distribution of the overall happiness scores on the x axis and the frequency of countries on the y axis. In the plots tab, you will see a menu called Export; if you click on this, you can see options to copy your plot, or save it as a jpeg or pdf file.</p>
+<p>Well done, you just produced your first plot in R!</p>
+<p><strong>Would you say this variable is normally distributed? What else do you notice about the distribution of happiness scores?</strong></p>
+<textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The happiness scores are reasonably normally distributed, although we would need to check the skewness and kurtosis values to be sure. The issue that is perhaps more problematic is that there appear to be two outliers at the bottom end of the distribution ie hovering around 2. These two values have moderate separation from the next lowest values, which are around 3.</p>
+</div>
+</div>
+</div>
+<p>We can make our histogram look a little nicer by changing some of the labels, and by adding a little colour. Use the following code in your script and run:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mydata<span class="sc">$</span>Ladder.score, <span class="at">main =</span> <span class="st">"Histogram of Happiness Scores"</span>, <span class="at">xlab =</span> <span class="st">"Happiness Scores"</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit1_Lab_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It is quite easy to modify and prettify your plots in R once you know what the code is doing. In the example here, we changed the default main label at the top of the plot, and the label for the x-axis ie xlab at the bottom of the plot. Col obviously just refers to colour. Play around with some different colours and see what you come up with!</p>
+<p>In the plot tab in the lower right pane, if you want to remove all of the plots you have created and start again, just click the broom icon.</p>
+<p>A boxplot might also show us that we have some outliers in this dataset. Use the following code to produce a boxplot of the same variable:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(mydata<span class="sc">$</span>Ladder.score, <span class="at">main =</span> <span class="st">"Boxplot of Happiness Scores"</span>, <span class="at">ylab =</span> <span class="st">"Happiness Scores"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit1_Lab_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>(Notice we changed xlab to ylab here, because in a boxplot the scores are on the y-axis).</p>
+<p><strong>How many outliers are there according to this plot?</strong></p>
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The boxplot suggests that there is in fact just one outlier at the bottom end of the scale.</p>
+</div>
+</div>
+</div>
+<p>We will do more on screening and cleaning data next week.</p>
 
 
 </section>

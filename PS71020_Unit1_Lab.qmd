@@ -254,3 +254,151 @@ The data we are going to work with today comes from the World Happiness Report (
 The data from this survey is freely available from a website called Kaggle (<https://www.kaggle.com/>). Kaggle is a data science website that hosts freely available datasets, code for R and Python, and hosts data science competitions, amongst other things. In particular, you can use the search engine on the site here to find open datasets on virtually any topic you can imagine: <https://www.kaggle.com/datasets>. 
 
 You can import data into R directly from sources on the WWW (you can see examples of this in the presessional materials), but to keep things simple for today, we will first download this data as a .csv file and move it across to the folder for Week1 that we created above. 
+
+It generally keeps things simpler if the data you import into R sits in the same folder as your script and project file. If it doesn't, you would need to tell R where exactly the datafile is sitting on your computer using syntax, or change the working directory to where the file is sitting.
+
+You can download the datafile from the module VLE page under week 1>Lab Materials or at this link [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/WHR2023.csv). Save this file in the same folder as your script and project file. You should see it appear in the Files tab in the lower right.
+
+Data can also be stored in R as an object called a dataframe (see presessional materials for more examples). To import the data and store it as a dataframe, we can use the following syntax:
+
+```{r}
+#| echo: false
+mydata <- read.csv("data/WHR2023.csv")
+```
+
+```{r}
+#| eval: false
+mydata <- read.csv("WHR2023.csv")
+```
+The sections of these workbooks that look like that above will be executed when the file is created. This enables the analysis results to be incorporated into the worksheets.
+
+What you should do is take the code here and add it to your own script file and add a comment to explain why it is included. This way as we go through these analyses you will build your own script.
+
+Your script file should now look like the screenshot below.
+
+![Figure 4: Our script with the loading included](images/FirstScriptLoad.png)
+To run a line/s of code, you simply highlight the relevant lines, and then click the run button in the top right of the upper left pane. The keyboard shortcut is hold CTRL (Command on MACs) and press ENTER. 
+
+This will send the code to the R console in the lower left. You should see the syntax replicated in the R console window. Go ahead and run this code. 
+
+**At first glance, after you have run this code, it may appear as though nothing has happened. But what do you now notice in the environment tab in the upper right pane?**
+
+<textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+You should now see your new mydata object sitting in the environment pane. It should say that there are 137 observations of 19 variables. The 137 refers to the number of countries in the datafile (or number of rows), and the 19 refers to the total number of variables in the datafile (or the number of columns). 
+:::
+
+## Section J. Examining the dataset
+
+Now that we have our dataset loaded in R, we can undertake some basic examination of the data to check everything is ok. One simple thing you can do is simply click the table icon to the right of the variable in the Environment panel. This should open it for viewing in the same panel that your script appears. You can switch back and forth between these using the tabs at the top.
+
+You can also see that in the console the comman `View(mydata)` was executed to do this. Often when you click buttons in RStudio, it automatically executes code for you which can be a useful way to learn new commands.
+
+![Figure 5: The mydata dataframe in the variable viewer](images/mydataInVarView.png)
+
+**What do you notice R has done with the variable names such as "Country Name" in the datafile after importing?**
+
+<textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+R has put a period in the variable names wherever there was a blank space between the words in the variable ie it is now Country.name instead of Country name. Remember, R generally does not like spaces between words. 
+:::
+
+If you click on the small blue arrow next to the variable name in the Environment panel, it will show you a breakdown of the type of variables included, and the values of these variables in the data (Figure 6).
+
+![Figure 6: The mydata dataframe expanded](images/ExpandedVariable.png)
+
+**What do you think 'chr' and 'num' might refer to in this list?** 
+
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+The chr refers to a character variable ie a string, and the num refers to a numeric variable. We will cover the different types of R variables in further labs.  Also you can see the presessional materials for some other examples.
+:::
+
+If we want to print out the names of the variables in our data object, we can type the following in the script file, or in the console `names(mydata)`.
+
+If we want to access the data in a single variable in our data frame we use the following syntax `mydata$upperwhisker` to get the `upperwhisker` variable.
+
+It is very easy to make spelling mistakes and one way to avoid this is to use the autocomplete feature of RStudio. If you type into the console `mydata$` a list of all possible variable names will appear as a drop-down list. Using this can save you a lot of typing time when your code gets longer and help avoid spelling errors. Type the following code into the console and press ENTER to execute it `mydata$Country.name`
+
+**What get's displayed in the console?**
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+A list of the 137 country names as this is what this variable contains.
+:::
+
+## Section K. Data Wrangling and Visualisation
+
+Now that we have checked that the data has been imported without problem, we can then start to wrangle the data in different ways, depending on our purposes for the data. (See presessional materials for more examples).
+
+There is a useful built-in function that we could use at this point called **summary()**. As the name suggests, the summary function provides you with an overview of the key summary statistics for the variables in the dataset; amongst other things, the maximum and minimum values, the mean, and the standard deviation. Looking at the maximum and minimum values can be useful for screening the data for any out of range values that might reflect, for example, data entry errors. 
+
+Type the following syntax in your script file, run it and then have a look at the output in the console panel: `summary(mydata)`. 
+
+**What are the minimum and maximum values for the Ladder.score variable?**
+
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+min = 1.859 and max = 7.804
+:::
+
+**Why does the Country.name variable have no similar numbers in the output from the summary function?**
+
+<textarea rows="3" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+This variable refers to qualitative information; hence, its designation as character data in the output. It wouldn't make sense to talk about a mean country, for example. 
+:::
+
+Let's do some more basic screening of our data by using some visual aids that were introduced in the lecture. For example, we could use a histogram to help assess the normality of the Ladder.score variable. Base R has some basic plotting functionality, although there are packages available that will allow for producing much slicker and fancier plots. We will introduce some of the packages next week, and in future weeks. For today, we will stick with the basic plotting available in base R.
+
+Type the following syntax into your script file and run:
+
+```{r}
+hist(mydata$Ladder.score)
+```
+This code uses the **hist()** function in base r to produce a histogram of the Ladder.score variable. When you run this code, you should then see a plot produced in the lower right pane under the plots tab (in this worksheet document it will appear in the middle of the text).
+
+This plot shows the distribution of the overall happiness scores on the x axis and the frequency of countries on the y axis. In the plots tab, you will see a menu called Export; if you click on this, you can see options to copy your plot, or save it as a jpeg or pdf file. 
+
+Well done, you just produced your first plot in R!
+
+**Would you say this variable is normally distributed? What else do you notice about the distribution of happiness scores?**
+
+<textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+The happiness scores are reasonably normally distributed, although we would need to check the skewness and kurtosis values to be sure. The issue that is perhaps more problematic is that there appear to be two outliers at the bottom end of the distribution ie hovering around 2. These two values have moderate separation from the next lowest values, which are around 3.  
+:::
+
+We can make our histogram look a little nicer by changing some of the labels, and by adding a little colour. Use the following code in your script and run:
+
+```{r}
+hist(mydata$Ladder.score, main = "Histogram of Happiness Scores", xlab = "Happiness Scores", col = "blue")
+```
+It is quite easy to modify and prettify your plots in R once you know what the code is doing. In the example here, we changed the default main label at the top of the plot, and the label for the x-axis ie xlab at the bottom of the plot. Col obviously just refers to colour. Play around with some different colours and see what you come up with! 
+
+In the plot tab in the lower right pane, if you want to remove all of the plots you have created and start again, just click the broom icon. 
+
+
+A boxplot might also show us that we have some outliers in this dataset. Use the following code to produce a boxplot of the same variable:
+
+```{r}
+boxplot(mydata$Ladder.score, main = "Boxplot of Happiness Scores", ylab = "Happiness Scores")
+```
+
+(Notice we changed xlab to ylab here, because in a boxplot the scores are on the y-axis).
+
+**How many outliers are there according to this plot?**
+
+<textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
+
+::: {.callout-note collapse="true" title="Show answer"}
+The boxplot suggests that there is in fact just one outlier at the bottom end of the scale.   
+:::
+
+We will do more on screening and cleaning data next week.
