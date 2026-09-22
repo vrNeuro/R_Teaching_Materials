@@ -1,18 +1,22 @@
 ---
-title: "Pre-sessional Statistics in R"
-subtitle: "Introduction to statistics in R"
+title: "Statistics in R"
+subtitle: "Goldsmiths Psychology & Neuroscience"
 ---
 
-Welcome to the presessional materials. During term you will geta a worksheet each week that you should work through during the lab session, using RStudio to run the code and try out the examples.
+During term you will get a worksheet each week that you should work through during the lab session, using RStudio to run the code and try out the examples.
+
+There are also some Welcome to the presessional materials, we encourage you to attempt to go through these before the start of term or during the first few weeks. They cover in more detail some of the topics we will cover in the early labs. In particular [Tutorial 1](Pre_sessional_0.qmd) on accessing RStudio would be very useful to complete before the first lab.
 
 ## How the labs work
 
--   Bring a laptop with RStudio installed if you can. If not, you can use the Department RStudio server or Posit Cloud (see Week 1 for details).
+-   Bring a laptop with RStudio installed if you can. If not, you can use the Department RStudio server or Posit Cloud (see [Tutorial 1](Pre_sessional_0.qmd) for details).
 -   Work through the worksheet during the lab, individually or in small groups, and finish it outside class time if needed.
 -   Answer the questions in your own words. Each worksheet has model answers hidden under **Show answer** boxes, so try the question first and then click to check your work.
 -   If you have questions during the lab, ask your lab tutors. For questions about lecture content or homework sheets, contact Peter Holland by email or use the forum on the VLE page.
 
-## Tutorials
+## Presessional Tutorials
+Welcome to the presessional materials. 
+
 | Number | Topic | Tutorial |
 |------|-------|-------|
 |0|Accessing RStudio| [Tutorial 1](Pre_sessional_0.qmd) |
@@ -26,7 +30,7 @@ Welcome to the presessional materials. During term you will geta a worksheet eac
 
 | Week | Topic | Worksheet |
 |------|-------|-----------|
-| 1 | Introduction to RStudio | [Week 1 worksheet](PS71101A_week1_lab_worksheet_modelanswers.qmd) |
+| 1 | Introduction to RStudio | [Week 1 worksheet](PS71020_Unit1_Lab.qmd) |
 
 *More worksheets will be added here as the term progresses.*
 

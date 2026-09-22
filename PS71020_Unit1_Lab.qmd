@@ -259,6 +259,12 @@ It generally keeps things simpler if the data you import into R sits in the same
 
 You can download the datafile from the module VLE page under week 1>Lab Materials or at this link [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/WHR2023.csv). Save this file in the same folder as your script and project file. You should see it appear in the Files tab in the lower right.
 
+::: {.callout-tip}
+## Uploading for RStudio Server
+If you are working on the departmental RStudio Server (or Posit Cloud), you will need to use the 'Upload' button at the top of the File Panel to upload the file you have just downloaded to your private area on the server.
+
+:::
+
 Data can also be stored in R as an object called a dataframe (see presessional materials for more examples). To import the data and store it as a dataframe, we can use the following syntax:
 
 ```{r}

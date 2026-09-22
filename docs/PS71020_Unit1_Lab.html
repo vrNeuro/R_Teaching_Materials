@@ -430,6 +430,19 @@ Figure&nbsp;4: Figure 5: The packages tab
 <p>You can import data into R directly from sources on the WWW (you can see examples of this in the presessional materials), but to keep things simple for today, we will first download this data as a .csv file and move it across to the folder for Week1 that we created above.</p>
 <p>It generally keeps things simpler if the data you import into R sits in the same folder as your script and project file. If it doesn’t, you would need to tell R where exactly the datafile is sitting on your computer using syntax, or change the working directory to where the file is sitting.</p>
 <p>You can download the datafile from the module VLE page under week 1&gt;Lab Materials or at this link <a href="https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/WHR2023.csv">Github Link</a>. Save this file in the same folder as your script and project file. You should see it appear in the Files tab in the lower right.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tip with Title
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are working on the departmental RStudio Server, you will need to use the ‘Upload’ button at the top of the File Panel to upload the file you have just downloaded to your private area on the server.</p>
+</div>
+</div>
 <p>Data can also be stored in R as an object called a dataframe (see presessional materials for more examples). To import the data and store it as a dataframe, we can use the following syntax:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"WHR2023.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -442,7 +455,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 <p><strong>At first glance, after you have run this code, it may appear as though nothing has happened. But what do you now notice in the environment tab in the upper right pane?</strong></p>
 <textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
 <div class="callout callout-style-default callout-note callout-titled" title="Show answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -451,7 +464,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>You should now see your new mydata object sitting in the environment pane. It should say that there are 137 observations of 19 variables. The 137 refers to the number of countries in the datafile (or number of rows), and the 19 refers to the total number of variables in the datafile (or the number of columns).</p>
 </div>
@@ -471,7 +484,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 <p><strong>What do you notice R has done with the variable names such as “Country Name” in the datafile after importing?</strong></p>
 <textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
 <div class="callout callout-style-default callout-note callout-titled" title="Show answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -480,7 +493,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>R has put a period in the variable names wherever there was a blank space between the words in the variable ie it is now Country.name instead of Country name. Remember, R generally does not like spaces between words.</p>
 </div>
@@ -496,7 +509,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 <p><strong>What do you think ‘chr’ and ‘num’ might refer to in this list?</strong></p>
 <textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
 <div class="callout callout-style-default callout-note callout-titled" title="Show answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -505,7 +518,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The chr refers to a character variable ie a string, and the num refers to a numeric variable. We will cover the different types of R variables in further labs. Also you can see the presessional materials for some other examples.</p>
 </div>
@@ -517,7 +530,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 <strong>What get’s displayed in the console?</strong>
 <textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
 <div class="callout callout-style-default callout-note callout-titled" title="Show answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -526,7 +539,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A list of the 137 country names as this is what this variable contains.</p>
 </div>
@@ -541,24 +554,6 @@ Figure&nbsp;4: Figure 5: The packages tab
 <p><strong>What are the minimum and maximum values for the Ladder.score variable?</strong></p>
 <textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
 <div class="callout callout-style-default callout-note callout-titled" title="Show answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Show answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>min = 1.859 and max = 7.804</p>
-</div>
-</div>
-</div>
-<p><strong>Why does the Country.name variable have no similar numbers in the output from the summary function?</strong></p>
-<textarea rows="3" cols="60" placeholder="Type your answer here..."></textarea>
-<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -569,6 +564,24 @@ Figure&nbsp;4: Figure 5: The packages tab
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>min = 1.859 and max = 7.804</p>
+</div>
+</div>
+</div>
+<p><strong>Why does the Country.name variable have no similar numbers in the output from the summary function?</strong></p>
+<textarea rows="3" cols="60" placeholder="Type your answer here..."></textarea>
+<div class="callout callout-style-default callout-note callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This variable refers to qualitative information; hence, its designation as character data in the output. It wouldn’t make sense to talk about a mean country, for example.</p>
 </div>
@@ -592,7 +605,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 <p><strong>Would you say this variable is normally distributed? What else do you notice about the distribution of happiness scores?</strong></p>
 <textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
 <div class="callout callout-style-default callout-note callout-titled" title="Show answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -601,7 +614,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The happiness scores are reasonably normally distributed, although we would need to check the skewness and kurtosis values to be sure. The issue that is perhaps more problematic is that there appear to be two outliers at the bottom end of the distribution ie hovering around 2. These two values have moderate separation from the next lowest values, which are around 3.</p>
 </div>
@@ -635,7 +648,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 <p><strong>How many outliers are there according to this plot?</strong></p>
 <textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
 <div class="callout callout-style-default callout-note callout-titled" title="Show answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -644,7 +657,7 @@ Figure&nbsp;4: Figure 5: The packages tab
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The boxplot suggests that there is in fact just one outlier at the bottom end of the scale.</p>
 </div>
