@@ -1,16 +1,26 @@
 ---
-title: "PS71101A Lab Worksheets"
+title: "Pre-sessional Statistics in R"
 subtitle: "Introduction to statistics in R"
 ---
 
-Welcome to the lab worksheets for PS71101A. Each week has a worksheet that you should work through during the lab session, using RStudio to run the code and try out the examples.
+Welcome to the presessional materials. During term you will geta a worksheet each week that you should work through during the lab session, using RStudio to run the code and try out the examples.
 
 ## How the labs work
 
--   Bring a laptop with RStudio installed if you can. If not, you can use Posit Cloud or the Department RStudio server (see Week 1 for details).
+-   Bring a laptop with RStudio installed if you can. If not, you can use the Department RStudio server or Posit Cloud (see Week 1 for details).
 -   Work through the worksheet during the lab, individually or in small groups, and finish it outside class time if needed.
 -   Answer the questions in your own words. Each worksheet has model answers hidden under **Show answer** boxes, so try the question first and then click to check your work.
--   If you have questions during the lab, ask your lab tutors. For questions about lecture content or homework sheets, contact Andy Cooper by email or use the forum on the VLE page.
+-   If you have questions during the lab, ask your lab tutors. For questions about lecture content or homework sheets, contact Peter Holland by email or use the forum on the VLE page.
+
+## Tutorials
+| Number | Topic | Tutorial |
+|------|-------|-------|
+|0|Accessing RStudio| [Tutorial 1](Pre_sessional_0.qmd) |
+|1|Data Types and Designs| [Tutorial 2](Pre_sessional_1.qmd) |
+|2|Distributions and Data Wrangling| [Tutorial 3](Pre_sessional_2.qmd) |
+|3|T-tests| [Tutorial 4](Pre_sessional_3.qmd) |
+|4|ANOVAs| [Tutorial 5](Pre_sessional_4.qmd) |
+|5|Correlation and Regression| [Tutorial 6](Pre_sessional_5.qmd) |
 
 ## Worksheets
 
@@ -23,6 +33,7 @@ Welcome to the lab worksheets for PS71101A. Each week has a worksheet that you s
 ## Useful links
 
 -   [R and RStudio downloads](https://posit.co/download/rstudio-desktop/)
+-   [Department R Studio Server](https://psy909.gold.ac.uk/rstudioserver/)
 -   [Posit Cloud](https://posit.cloud/)
 -   [CRAN (Comprehensive R Archive Network)](https://cran.r-project.org/)
 -   [The tidyverse](https://www.tidyverse.org/)
