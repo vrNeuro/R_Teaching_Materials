@@ -35,7 +35,7 @@ The data we will use here is from a researcher who was evaluating student perfor
 Just like last time the first thing we need to do is to load the data, but we will also clear the environment of data first.
 ```{r}
 rm(list = ls()) # clear the environment of variables
-#load the data
+#load the data (it is saved within the subfolder called data)
 df <-read.csv("data/ModuleMarks.csv")
 head(df) #display the top 6 rows
 ```

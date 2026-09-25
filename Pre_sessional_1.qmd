@@ -22,7 +22,7 @@ The first thing we need to do is to read the data into R's memory.
 
 The data is stored in a .csv file which is a common way to store data in psychology. We can use a function called **read.csv** to read the data from the csv file and assign it to a variable in R's memory using the assign operator **\<-**. I've called this variable **data**, but you could call it whatever you want. However, the important thing to remember is that whatever you call it you will need to refer to it by the same name whenever we want to use it later in our analysis.
 
-In this case I am reading the file from somewhere on the internet (a Github account), however, if you were reading a file on your computer you would just replace the web address with the file name.
+In this case I am reading the file within a subfolder of my working directory called 'data'. This is due to how things are set up for these online worksheets. However, if you were reading this csv file from within your working directory you would just use  `data <- read.csv("ChildReinforcement.csv")`.
 
 ```{r}
 data <- read.csv("data/ChildReinforcement.csv")
