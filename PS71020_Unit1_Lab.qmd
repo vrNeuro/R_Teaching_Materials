@@ -299,7 +299,7 @@ You should now see your new mydata object sitting in the environment pane. It sh
 
 Now that we have our dataset loaded in R, we can undertake some basic examination of the data to check everything is ok. One simple thing you can do is simply click the table icon to the right of the variable in the Environment panel. This should open it for viewing in the same panel that your script appears. You can switch back and forth between these using the tabs at the top.
 
-You can also see that in the console the comman `View(mydata)` was executed to do this. Often when you click buttons in RStudio, it automatically executes code for you which can be a useful way to learn new commands.
+You can also see that in the console the command `View(mydata)` was executed to do this. Often when you click buttons in RStudio, it automatically executes code for you which can be a useful way to learn new commands.
 
 ![Figure 5: The mydata dataframe in the variable viewer](images/mydataInVarView.png)
 
@@ -378,7 +378,7 @@ Well done, you just produced your first plot in R!
 <textarea rows="4" cols="60" placeholder="Type your answer here..."></textarea>
 
 ::: {.callout-note collapse="true" title="Show answer"}
-The happiness scores are reasonably normally distributed, although we would need to check the skewness and kurtosis values to be sure. The issue that is perhaps more problematic is that there appear to be two outliers at the bottom end of the distribution ie hovering around 2. These two values have moderate separation from the next lowest values, which are around 3.  
+The happiness scores are reasonably normally distributed, although we would need to check some statistics (more on this in coming weeks). The issue that is perhaps more problematic is that there appear to be two outliers at the bottom end of the distribution ie hovering around 2. These two values have moderate separation from the next lowest values, which are around 3.  
 :::
 
 We can make our histogram look a little nicer by changing some of the labels, and by adding a little colour. Use the following code in your script and run:
@@ -408,3 +408,5 @@ The boxplot suggests that there is in fact just one outlier at the bottom end of
 :::
 
 We will do more on screening and cleaning data next week.
+
+If you copied the commands used in this document to your own R script, you should now be able to run this simple analysis yourself. You will be able to find an example of this complete R script on the VLE after Wednesday.
