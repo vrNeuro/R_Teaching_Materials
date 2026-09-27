@@ -28,9 +28,9 @@ Welcome to the presessional materials.
 
 ## Worksheets
 
-| Week | Topic | Worksheet |
-|------|-------|-----------|
-| 1 | Introduction to RStudio | [Week 1 worksheet](PS71020_Unit1_Lab.qmd) |
+| Week | Topic | Worksheet | Homework |
+|------|-------|-----------|---------|
+| 1 | Introduction to RStudio | [Week 1 worksheet](PS71020_Unit1_Lab.qmd) | [Week 1 homework](PS71020_Unit1_Homework.qmd)
 
 *More worksheets will be added here as the term progresses.*
 
