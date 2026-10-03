@@ -111,6 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="worksheet.css">
+<link rel="stylesheet" href="answer-gate.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -157,11 +158,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#the-data-set" id="toc-the-data-set" class="nav-link active" data-scroll-target="#the-data-set">THE DATA SET</a></li>
   <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
   <li><a href="#section-a.-loading-the-data" id="toc-section-a.-loading-the-data" class="nav-link" data-scroll-target="#section-a.-loading-the-data">SECTION A. LOADING THE DATA</a></li>
-  <li><a href="#section-b.-univariate-data-screening" id="toc-section-b.-univariate-data-screening" class="nav-link" data-scroll-target="#section-b.-univariate-data-screening">SECTION B. UNIVARIATE DATA SCREENING</a></li>
+  <li><a href="#sec-univariate-screening" id="toc-sec-univariate-screening" class="nav-link" data-scroll-target="#sec-univariate-screening">SECTION B. UNIVARIATE DATA SCREENING</a></li>
   <li><a href="#section-c.-assessing-normality" id="toc-section-c.-assessing-normality" class="nav-link" data-scroll-target="#section-c.-assessing-normality">SECTION C. ASSESSING NORMALITY</a></li>
   <li><a href="#section-d.-transforming-a-variable" id="toc-section-d.-transforming-a-variable" class="nav-link" data-scroll-target="#section-d.-transforming-a-variable">SECTION D. TRANSFORMING A VARIABLE</a></li>
   <li><a href="#section-e.-checking-linearity-and-homoscedasticity" id="toc-section-e.-checking-linearity-and-homoscedasticity" class="nav-link" data-scroll-target="#section-e.-checking-linearity-and-homoscedasticity">SECTION E. CHECKING LINEARITY AND HOMOSCEDASTICITY</a></li>
-  <li><a href="#section-e.-identifying-multivariate-outliers" id="toc-section-e.-identifying-multivariate-outliers" class="nav-link" data-scroll-target="#section-e.-identifying-multivariate-outliers">SECTION E. IDENTIFYING MULTIVARIATE OUTLIERS</a></li>
+  <li><a href="#section-f.-identifying-multivariate-outliers" id="toc-section-f.-identifying-multivariate-outliers" class="nav-link" data-scroll-target="#section-f.-identifying-multivariate-outliers">SECTION F. IDENTIFYING MULTIVARIATE OUTLIERS</a></li>
   </ul>
 </nav>
     </div>
@@ -320,8 +321,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="section-b.-univariate-data-screening" class="level2">
-<h2 class="anchored" data-anchor-id="section-b.-univariate-data-screening">SECTION B. UNIVARIATE DATA SCREENING</h2>
+<section id="sec-univariate-screening" class="level2">
+<h2 class="anchored" data-anchor-id="sec-univariate-screening">SECTION B. UNIVARIATE DATA SCREENING</h2>
 <p>Now we will examine the variable ATTHOUSE, in a full data screening we would look at all the variables but to save time in class we will only look at a couple. However, once you have the code to do this for one variable you can easily change to look at another variable.</p>
 <p>The first thing we are going to do is to create a couple of different plots, a boxplot and a histogram. The <code>breaks =</code> input to the <code>hist()</code> function tells <strong>R</strong> how many bins to use when creating the histogram, you can try using different values to change the resolution of the x axis.</p>
 <div class="cell">
@@ -608,8 +609,8 @@ sample estimates:
 </div>
 </div>
 </section>
-<section id="section-e.-identifying-multivariate-outliers" class="level2">
-<h2 class="anchored" data-anchor-id="section-e.-identifying-multivariate-outliers">SECTION E. IDENTIFYING MULTIVARIATE OUTLIERS</h2>
+<section id="section-f.-identifying-multivariate-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="section-f.-identifying-multivariate-outliers">SECTION F. IDENTIFYING MULTIVARIATE OUTLIERS</h2>
 <p>Next we will check the data for multivariate outliers amongst a set of 5 variables (TIMEDRS_LOG, ATTDRUG, ATTHOUSE, MSTATUS, and ETHNICITY). Notice that we are going to remove multivariate outliers after first removing univariate outliers as we are using our <code>cleanData</code>.</p>
 <p>We want to create a simpler data set with only these columns of data in it. Earlier we used <code>subset()</code> to select certain rows. Here we are going to use it again in a slightly different way:</p>
 <div class="cell">
@@ -1099,6 +1100,7 @@ sample estimates:
   });
   </script>
 </div> <!-- /content -->
+<script src="answer-gate.js"></script>
 
 
 

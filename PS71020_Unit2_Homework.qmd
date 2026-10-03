@@ -1,0 +1,376 @@
+---
+title: "PS71020_Unit2_Homework"
+editor: visual
+---
+
+::: {.callout-note appearance="simple"}
+## Some general notes about the weekly homeworks
+
+
+
+*Each week will have an associated homework worksheet in a similar format to this. You should go through the worksheet during your own time to get extra practice. Try to answer the  worksheet questions in your own words however. Model answers will be available within the document itself but please try to answer the questions properly before revealing them. A full R script for the analysis will be published VLE page from Fridays after the labs so you can compare your own script. If your question relates specifically to the lecture content or the homework sheets, please contact Peter Holland by email or use the forum on the VLE page.*
+:::
+
+
+Homework Learning Outcomes: \ 
+
+1 - Use RStudio to screen data for missing values \ 
+
+2 - Use RStudio to exclude cases with missing values \ 
+
+3 - Use RStudio to perform mean imputation \ 
+
+4 - Use z-scores to detect outliers \ 
+
+5 - Use ggplot2 and extensions to create compound plots \ 
+
+
+##SECTION A. THE DATA SET
+
+The dataset for the homework this week is adapted from one of the datasets used as an example in the corresponding lecture. A sample of 191 university students resident in Dubai were measured on their impulsivity-related personality traits, their use of conventional cigarettes and their use of a nicotine-based local product called dokha. The questionnaires include an impulsivity measure called the UPPS-P, and a measure of behavioural approach and inhibition, the BIS/BAS scales. The researchers were planning to examine the extent to which the personality variables predict smoking behaviour, and to examine how these relationships might be moderated by socio-demographic factors. Prior to the focal analyses planned for the dataset, the dataset needs to be screened and cleaned.  
+
+
+```{r}
+#| echo: false
+df  <- read.csv("data/lec_dokha_example_data_withoutliers.csv")
+```
+
+As usual we will load the data set using the `read.csv()` function:
+```{r}
+#| eval: false
+df <- read.csv("lec_dokha_example_data_withoutliers.csv")
+```
+
+The first thing we will do is to check for missing data in the data set. 
+
+**What code does R use for missing data?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+NA
+:::
+:::
+
+## SECTION B. MISSING DATA
+
+**What is one function we can use to summarise a data set and find the number of missing values in each variable? It produces the output shown below**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+summary(), in this case we would use `summary(df)`.
+:::
+:::
+
+```{r}
+#| echo: false
+summary(df)
+```
+
+**What is the extent of missing data in the dataset?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+We seem to have some missing values, with 4 variables missing one value and 5 missing two values. However, at this stage it isn't clear if these are across multiple participants or only two participants who are missing multiple data points.
+
+:::
+:::
+
+**R** contains several useful functions for finding missing data. The simplest is we can find the location of `NA`s in a single variable, using the function `is.na()`.
+
+```{r}
+is.na(df$DRIVE)
+```
+
+However, this list of `TRUE` or `FALSE` values (**logical** values), is not the most reader friendly for identifying their position. We can use a second function called `which()` that tells us the positions of any true values.
+
+```{r}
+which(is.na(df$DRIVE))
+```
+
+This not tells us positions 9 and 186 of the `df$DRIVE` variables are `NA`s, this corresponds to rows 9 and 186 of `df`.
+
+A way to check for complete cases of data (rows with no `NA` values), we can use a function called `complete.cases()`:
+
+```{r}
+which(complete.cases(df))
+```
+If we look carefully through the list of the row numbers of the complete cases we can see that 9 and 186 are missing. So it seems like we have two participants that account for all of our missing data.
+
+It would make it easier for us to change the code to return the row numbers of participants that are **not** complete cases. We can do this by adding a single character to our previous code.
+**What is it? Also write the line of code that would create the following output**
+For a hint see [Section B](PS71020_Unit2_Lab.qmd#sec-univariate-screening).
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+The `!` flips `TRUE` and `FALSE` values to become the opposite. Importantly it leaves `NA` values as `NA`.
+The code would be:
+`which(!complete.cases(df))`
+
+:::
+:::
+
+```{r}
+#| echo: false
+which(!complete.cases(df))
+```
+**Given the scale of missing data what do you think would be a good option for handling it in this case?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+Given the size of the dataset here and the extent of missing data, it is unlikely that any solution we undertake will have a major effect on the study results. The simplest option would be to remove the cases, or we could impute the values. 
+:::
+:::
+
+We have seen in the Lab [Section B](PS71020_Unit2_Lab.qmd#sec-univariate-screening) how to use `subset()` to select only certain data. 
+
+**What code would we need to create a new data set called `dfClean` with only the complete cases included?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+`dfClean <- subset(df,complete.cases(df))`
+:::
+:::
+
+Instead we are going to use mean imputation here and replace all the missing values in each variable with the mean of that variable. If we wanted to do this for a single variable we could use the code below, I'm first going to create a copy of our data set called `dfImp` so we leave the original intact. 
+
+```{r}
+
+dfImp <- df
+dfImp$DRIVE[is.na(dfImp$DRIVE)] <- mean(dfImp$DRIVE, na.rm = TRUE)
+```
+
+This might look complex but if we break it down into individual steps we can understand.
+
+On the right side of the assign operator (`<-`) we have `mean(dfImp$DRIVE, na.rm = TRUE)`. The reason we can't simply use `mean(dfImp)` is because if there are any `NA` values in that variable `mean()` will simply return a `NA`:
+
+```{r}
+mean(df$DRIVE)
+```
+Instead, using the code below tell the `mean()` function to ignore any missing values.
+```{r}
+mean(df$DRIVE, na.rm = TRUE)
+```
+
+So the right side of our code was calculating the mean (while ignoring missing values). What is the left side `dfImp$DRIVE[is.na(dfImp$DRIVE)]` doing? So if we simply run this on it's own we can see it returns the two `NA` values in `df$DRIVE`.
+
+```{r}
+df$DRIVE[is.na(df$DRIVE)]
+```
+
+When we combine these two parts, the code finds the `NA` values in `dfImp$Drive` and then overwrites them with the mean of that variable. This is mean imputation. We could do this one by one for each variable but that is generally not considered good practice in code to list out 20 lines of code.
+
+Instead we can use a function called `lapply()` which applies the same function to a list of variables, if you give it a dataframe as an input it will apply the same function to each column. Don't worry if this seems complex at the moment we will use functions like this more often as we progress through the course.
+
+```{r}
+
+dfImp <- df                                   # keep the raw data untouched
+sum(is.na(dfImp)) #count the number of NAs
+dfImp[] <- lapply(dfImp, function(x) {
+  x[is.na(x)] <- mean(x, na.rm = TRUE)
+  x
+})
+
+sum(is.na(dfImp))    #count the number of NAs again
+```
+Just as we did in the lab session with outliers it would also be good to label which rows of the `dfImp` data set we performed mean imputation on. This would later enable us to quickly include/exclude these cases from analysis if we wanted to check the effects of our process. We can do this using the follwing code:
+
+```{r}
+
+dfImp$imputed_row <- !complete.cases(df)  
+which(dfImp$imputed_row) # check that we have labelled the right rows with a TRUE
+```
+
+However, there is one potential problem in the way we have processed the data. Before we performed mean imputation, we did not first check for outliers. 
+
+**Why might this cause a problem?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+Extreme values in a variable can bias the mean in that direction. If we had a few large outliers our computed mean might not be an accurate reflection of the clean data and therefore out mean imputation would contain this bias. If using mean imputation make sure to screen for outliers first.
+:::
+:::
+
+## SECTION C. DETECTING OUTLIERS WITH Z-SCORES
+
+
+We are going to do this the `df$Lack_of_PremediationUPPS` variable. Let's first plot a histogram of the data to get an initial visualisation.
+
+```{r}
+hist(dfImp$Lack_of_PremediationUPPS, breaks = 20, main = "Histogram of Lack_of_PremediationUPPS", xlab = "Lack_of_PremediationUPPS")
+```
+
+It seems like we have at least one extreme value that is near 50, but it isn't clear exactly how many data points are there. We could check this using a manual threshold and find out:
+
+```{r}
+which(dfImp$Lack_of_PremediationUPPS>40)
+```
+I've used the same `which()` function as earlier to ask **R** to return the positions of any values in `df$Lack_of_PremediationUPPS` that are **greater than** (the **>** symbol) 40. The value of 40 was purely based of choosing a value in the histogram that separated the data.
+
+**How many outliers do we have based on this criterion of `>40`?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+Two, in rows of 96 and 114 of `df`.
+:::
+:::
+
+However, manually defining values like this is not best practice unless there are clear theoretical grounds for choosing them (i.e. impossible/implausible values for Age, reaction time, or score on a scale).
+
+Instead we can use **z-scores** as a way of **standardising** or **scaling** our data. 
+
+See [Section from Pre-sesional tutorial 3](Pre_sessional_2.qmd#sec-reviewing-data) for another example of calculating z-scores that explains how to do this step by step. Here we are going to use the function `scale()` that will do it for us in once go.
+
+```{r}
+PM_z <- scale(dfImp$Lack_of_PremediationUPPS) #calculate z-scores for the Negative_UrgencyUPPS variable.
+```
+
+Taking a z-score means standardising (or scaling) the data so that it now has a mean of 0 and a standard deviation of 1. This makes it then easier to compare to other variables/data sets and to apply the same cut-off values for outliers to all variables.
+
+We can check the mean and standard deviation of the new variable:
+
+```{r}
+mean(PM_z)
+sd(PM_z)
+
+```
+We can see the mean is very close to 0 and the standard deviation is exactly 1.
+
+See [Section from Pre-sesional tutorial 3](Pre_sessional_2.qmd#sec-reviewing-data) for an explanation of numbers in **E notation**. The number 1.681791e-16 means:
+
+```{r}
+format(1.681791e-16, scientific = FALSE)
+```
+
+So is very very close to 0.
+
+If we plot the histogram of our `PM_z` variable we can see that the general shape is very similar to before but the data is centered on the mean of 0 and each point is now expressed as the number of standard deviations it is away from that mean.
+
+```{r}
+hist(PM_z, breaks = 20)
+```
+A common threshold to choose when using z-scores is less than -3.29 or greater than +3.29.  (These are the z-scores associated with a *p*-value less than .001.) 
+
+If we wanted to do this for our `PM_z` variable we could use this:
+
+```{r}
+which(abs(PM_z) > 3.29 )
+```
+
+The `abs()` function makes all the numbers positive so values of -2 become +2, but values of +2 stay as +2. This means we can check for `<-3.29` and `>3.29` at the same time.
+
+We can see that using this rule has returned the same rows (96 and 114) as we identified earlier.
+
+We can use some slightly more advanced code to check all variables in one go and get **R** to return the names and positions of any outliers exceeding these limits.
+
+```{r}
+#create a vector with the names of the variables we want to check
+vars <- c("Negative_UrgencyUPPS", "Lack_of_PremediationUPPS", "BAS", "FUN") 
+#scale all of them at the same time and assign to a matrix z
+z <- scale(dfImp[vars])
+#
+which(abs(z) > 3.29, arr.ind = TRUE)
+```
+**Which rows of which variables are outliers according the to abs(z)>3.29 rule?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+Rows 11 and 15 in Negative_UrgencyUPPS, rows 96 and 114 in Lack_of_PremediationUPPS, and row 157 in BAS and FUN.
+:::
+:::
+
+One thing to keep in mind is that the z-score method assumes that the data is roughly normally distributed, in very skewed data it can pick up the tails of the distribution which might not be real outliers.
+
+## COMPOUND PLOTS
+
+To visualise linearity, normality and homoscedasticity in a pair of variables is possible by creating separate plots. However, for doing this all in one plot we can use compound plots. These can be built using base **R** functions but some packages can make things much simpler.
+
+See [Section E from Lab 1](PS71020_Unit1_Lab.qmd#sec-packages-rstudio)  for some more information on packages.
+
+In this case we are going to use a function called `ggscatterhist()` from a package called **ggpubr**. There are a lot of packages that start with **gg** and they are mainly extensions to a package called **ggplot2** which is the most widely used for plotting in R.
+
+Before we can use the functions from this package we need to load it's functions into **R**s memory:
+
+```{r}
+library(ggpubr)
+```
+You will also see that it loaded the package **ggplot2** because some of the functions in **ggpubr** require other functions in **ggplot2**, this is called dependency between packages. **R** should normally handle dependencies for you and load any required packages automatically.
+
+The code below produces a scatter graph of `Positive_UrgencyUPPS` and `Sensation_SeekingUPPS`, and places the histograms in the margins.
+
+```{r}
+ggscatterhist(dfImp, x = "Positive_UrgencyUPPS", y = "Sensation_SeekingUPPS",
+              add = "reg.line",
+              conf.int = TRUE,                                    
+              margin.params = list(fill = "lightgray"))
+
+```
+
+
+**What code do you think you would need to produce the following plot?**
+
+```{r}
+#| echo: false
+ggscatterhist(dfImp, x = "BAS", y = "BIS",
+              add = "reg.line",
+              conf.int = TRUE, 
+              color = "cornflowerblue",
+              margin.params = list(fill = "cornflowerblue"))
+```
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+`ggscatterhist(dfImp, x = "BAS", y = "BIS",`
+             `add = "reg.line",`
+              `conf.int = TRUE,` 
+              `color = "cornflowerblue",`
+             `margin.params = list(fill = "cornflowerblue"))`
+:::
+:::
+
+**Do you think these variables are normally distributed? Linearly related? Homoscedastic?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+Normality: both show a mild negative skew.
+Linearity: The trend looks to be a straight line but there isn't really a relationship.
+Homoscedasticity: The vertical spread of BIS, increases slightly as values of BAS increase. The spread is visually wider to the right hand side of the plot. 
+:::
+:::
+
+In this case none of these violations are severe enough to prevent us analysing the data but we should still report them all for reproducibility.

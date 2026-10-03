@@ -22,7 +22,11 @@ website:
 format:
   html:
     theme: cosmo
-    css: worksheet.css
+    css: 
+      - worksheet.css
+      - answer-gate.css
+    include-after-body:
+      - text: '<script src="answer-gate.js"></script>'
     toc: true
     toc-depth: 2
     number-sections: false

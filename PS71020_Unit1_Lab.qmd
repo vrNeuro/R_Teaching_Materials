@@ -173,7 +173,7 @@ If you want to print the value of your object, you can just type `print(calculat
 
 If you want to remove an object from the environment, you can simply type `rm(calculation)` into the console. If you want to remove all objects from the environment, you can use the broom icon at the top of the environment tab.
 
-## Section E. R Packages
+## Section E. R Packages {#sec-packages-rstudio}
 
 On its own, R is capable of performing many functions and statistical analyses; this is often referred to as base R. R really comes alive, though, with the use of packages. Packages provide sets of functions that are like add-ons for base R. Given that the R language is open source, anyone can write and contribute an R package. Packages are used across many different areas of science to extend base R and provide cutting edge functionality for R. Lastly, packages are sometimes arranged into collections that have a coherent purpose or functionality. A good example of the latter is the tidyverse. We will use the tidyverse in upcoming labs. You can read more about the tidyverse here: <https://www.tidyverse.org/>
 

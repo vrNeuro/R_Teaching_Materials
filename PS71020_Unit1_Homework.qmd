@@ -3,33 +3,6 @@ title: "PS71020_Unit1_Homework"
 editor: visual
 ---
 
-```{=html}
-<style>
-  .answer-box { display: flex; flex-direction: column; gap: 0.5em; margin: 1em 0 1.5em; }
-  .answer-input { padding: 0.4em 0.6em; border: 1px solid #ccc; border-radius: 4px; max-width: 20em; }
-  .reveal-btn { align-self: flex-start; padding: 0.3em 0.8em; }
-  .reveal-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .answer { display: none; padding: 0.75em 1em; margin-top: 0.25em;
-            border-left: 4px solid #2c7be5; background: #f4f8fd; }
-</style>
-<script>
-  document.addEventListener('input', function (e) {
-    if (e.target.matches('.answer-input')) {
-      const box = e.target.closest('.answer-box');
-      box.querySelector('.reveal-btn').disabled = e.target.value.trim().length === 0;
-    }
-  });
-  document.addEventListener('click', function (e) {
-    if (e.target.matches('.reveal-btn') && !e.target.disabled) {
-      const box = e.target.closest('.answer-box');
-      const ans = box.querySelector('.answer');
-      const showing = ans.style.display === 'block';
-      ans.style.display = showing ? 'none' : 'block';
-      e.target.textContent = showing ? 'Show answer' : 'Hide answer';
-    }
-  });
-</script>
-```
 
 
 ::: {.callout-note appearance="simple"}
@@ -75,7 +48,7 @@ Before downloading the data and starting to write your script what is a good ide
 <button class="reveal-btn" disabled>Show answer</button>
 
 ::: {.answer}
-Create a new R Project with its own folder to work in. This keeps the data ans scripts in the same place to help prevent file location errors.
+Create a new R Project with its own folder to work in. This keeps the data and scripts in the same place to help prevent file location errors.
 :::
 :::
 

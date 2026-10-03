@@ -111,6 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="worksheet.css">
+<link rel="stylesheet" href="answer-gate.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -174,31 +175,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<style>
-  .answer-box { display: flex; flex-direction: column; gap: 0.5em; margin: 1em 0 1.5em; }
-  .answer-input { padding: 0.4em 0.6em; border: 1px solid #ccc; border-radius: 4px; max-width: 20em; }
-  .reveal-btn { align-self: flex-start; padding: 0.3em 0.8em; }
-  .reveal-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .answer { display: none; padding: 0.75em 1em; margin-top: 0.25em;
-            border-left: 4px solid #2c7be5; background: #f4f8fd; }
-</style>
-<script>
-  document.addEventListener('input', function (e) {
-    if (e.target.matches('.answer-input')) {
-      const box = e.target.closest('.answer-box');
-      box.querySelector('.reveal-btn').disabled = e.target.value.trim().length === 0;
-    }
-  });
-  document.addEventListener('click', function (e) {
-    if (e.target.matches('.reveal-btn') && !e.target.disabled) {
-      const box = e.target.closest('.answer-box');
-      const ans = box.querySelector('.answer');
-      const showing = ans.style.display === 'block';
-      ans.style.display = showing ? 'none' : 'block';
-      e.target.textContent = showing ? 'Show answer' : 'Hide answer';
-    }
-  });
-</script>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -227,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="answer-box">
 <p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
 <div class="answer">
-<p>Create a new R Project with its own folder to work in. This keeps the data ans scripts in the same place to help prevent file location errors.</p>
+<p>Create a new R Project with its own folder to work in. This keeps the data and scripts in the same place to help prevent file location errors.</p>
 </div>
 </div>
 <p>The first thing we need to do is to load the data. First go to the VLE page and download the two csv files. Now move these to your working directory.</p>
@@ -845,6 +821,7 @@ Evening Morning
   });
   </script>
 </div> <!-- /content -->
+<script src="answer-gate.js"></script>
 
 
 

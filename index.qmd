@@ -31,9 +31,12 @@ Welcome to the presessional materials.
 | Week | Topic | Worksheet | Homework |
 |------|-------|-----------|---------|
 | 1 | Introduction to RStudio | [Week 1 worksheet](PS71020_Unit1_Lab.qmd) | [Week 1 homework](PS71020_Unit1_Homework.qmd) |
-| 2 | Screening and Cleaning Data | [Week 2 worksheet](PS71020_Unit2_Lab.qmd) |  |
+| 2 | Screening and Cleaning Data | [Week 2 worksheet](PS71020_Unit2_Lab.qmd) | [Week 2 homework](PS71020_Unit2_Homework.qmd)  |
 
 *More worksheets will be added here as the term progresses.*
+
+## Specific skills
+TODO: build a list here linking to specific skills such as z-scoring etc.
 
 ## Useful links
 

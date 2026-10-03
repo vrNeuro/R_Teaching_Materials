@@ -1,0 +1,33 @@
+/* Styles for the "type an answer, then reveal" boxes used across worksheets */
+
+.answer-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin: 1em 0 1.5em;
+}
+
+.answer-input {
+  padding: 0.4em 0.6em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-width: 20em;
+}
+
+.reveal-btn {
+  align-self: flex-start;
+  padding: 0.3em 0.8em;
+}
+
+.reveal-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.answer {
+  display: none;
+  padding: 0.75em 1em;
+  margin-top: 0.25em;
+  border-left: 4px solid #2c7be5;
+  background: #f4f8fd;
+}

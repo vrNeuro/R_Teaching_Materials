@@ -111,6 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="worksheet.css">
+<link rel="stylesheet" href="answer-gate.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -158,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#section-b.-getting-to-know-rstudio" id="toc-section-b.-getting-to-know-rstudio" class="nav-link" data-scroll-target="#section-b.-getting-to-know-rstudio">Section B. Getting to know RStudio</a></li>
   <li><a href="#section-c.-using-the-r-console" id="toc-section-c.-using-the-r-console" class="nav-link" data-scroll-target="#section-c.-using-the-r-console">Section C. Using the R Console</a></li>
   <li><a href="#section-d.-coding-in-r-and-the-environment-tab" id="toc-section-d.-coding-in-r-and-the-environment-tab" class="nav-link" data-scroll-target="#section-d.-coding-in-r-and-the-environment-tab">Section D. Coding in R and the Environment Tab</a></li>
-  <li><a href="#section-e.-r-packages" id="toc-section-e.-r-packages" class="nav-link" data-scroll-target="#section-e.-r-packages">Section E. R Packages</a></li>
+  <li><a href="#sec-packages-rstudio" id="toc-sec-packages-rstudio" class="nav-link" data-scroll-target="#sec-packages-rstudio">Section E. R Packages</a></li>
   <li><a href="#section-f.-setting-up-a-file-structure" id="toc-section-f.-setting-up-a-file-structure" class="nav-link" data-scroll-target="#section-f.-setting-up-a-file-structure">Section F. Setting Up a File Structure</a></li>
   <li><a href="#section-g.-working-with-projects-in-rstudio" id="toc-section-g.-working-with-projects-in-rstudio" class="nav-link" data-scroll-target="#section-g.-working-with-projects-in-rstudio">Section G. Working with projects in RStudio</a></li>
   <li><a href="#section-h.-working-with-script-files-in-rstudio" id="toc-section-h.-working-with-script-files-in-rstudio" class="nav-link" data-scroll-target="#section-h.-working-with-script-files-in-rstudio">Section H. Working with script files in RStudio</a></li>
@@ -357,8 +358,8 @@ Figure&nbsp;3: Figure 3: The RStudio interface with source pane
 </div>
 <p>If you want to remove an object from the environment, you can simply type <code>rm(calculation)</code> into the console. If you want to remove all objects from the environment, you can use the broom icon at the top of the environment tab.</p>
 </section>
-<section id="section-e.-r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="section-e.-r-packages">Section E. R Packages</h2>
+<section id="sec-packages-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="sec-packages-rstudio">Section E. R Packages</h2>
 <p>On its own, R is capable of performing many functions and statistical analyses; this is often referred to as base R. R really comes alive, though, with the use of packages. Packages provide sets of functions that are like add-ons for base R. Given that the R language is open source, anyone can write and contribute an R package. Packages are used across many different areas of science to extend base R and provide cutting edge functionality for R. Lastly, packages are sometimes arranged into collections that have a coherent purpose or functionality. A good example of the latter is the tidyverse. We will use the tidyverse in upcoming labs. You can read more about the tidyverse here: <a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a></p>
 <p>To use a package in R, we first need to install it, and then we need to load it. You can think of this process as being similar to when you purchase a new smartphone. On its own, base Android can do some useful things, like make phone calls and send texts, but we can get much more out of a smartphone when we add third party apps to it. To use an app on a phone, we first need to download and install it, and then load it by clicking its icon. Packages in R work in a similar way.</p>
 <p>RStudio has a useful interface that makes installing and loading packages quite straightforward. If you look at the lower right pane of RStudio, you will see a tab called packages. Click on that tab, and you should then see a list of packages you have currently installed in R, along with a brief description of each. If you have a new installation of R/RStudio, these will likely be default packages that are included in R (notice that one of them will be called base).</p>
@@ -1071,6 +1072,7 @@ Figure&nbsp;4: Figure 5: The packages tab
   });
   </script>
 </div> <!-- /content -->
+<script src="answer-gate.js"></script>
 
 
 

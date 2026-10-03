@@ -15,7 +15,7 @@ Below is a snippit of R code that is executed when the document is created.
 
 You can copy these code snippits into your own RStudio to begin to build you own analyses. As you go through the document create a new R script in RStudio and add the code section one after another. By then of this each section you will have built an analysis pipeline for each type of design. You can then use this as a basis for future analyses.
 
-## REVIEWING DATA
+## REVIEWING DATA {#sec-reviewing-data}
 
 In the previous tutorial we learnt how to load data files, manipulate data formats, generate descriptive statistics, and create plots. In this tutorial we will look at some simple data screening techniques to prepare data for statistical testing (in later tutorials)
 

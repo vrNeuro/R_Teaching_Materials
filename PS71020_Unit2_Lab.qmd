@@ -153,7 +153,7 @@ summary(mydata)
 ```
 
 
-## SECTION B. UNIVARIATE DATA SCREENING
+## SECTION B. UNIVARIATE DATA SCREENING {#sec-univariate-screening}
 
 Now we will examine the variable ATTHOUSE, in a full data screening we would look at all the variables but to save time in class we will only look at a couple. However, once you have the code to do this for one variable you can easily change to look at another variable.
 
