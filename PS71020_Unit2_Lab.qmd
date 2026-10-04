@@ -371,7 +371,7 @@ Write the code to create the scatterplot shown below using the log-transformed v
 <button class="reveal-btn" disabled>Show answer</button>
 
 ::: {.answer}
-It does look better than before but you are entitled to be somewhat sceptical as to whether this graph shows any kind of relationship, let alone a linear one. The best fit line is almost horizontal and the r^2^ is only .01. (A Pearson’s correlation test shows that this relationship is still significant, *r*=.11, *p*=.014; small correlations can of course be significant with large samples). We will discuss this in week3 or see [Tutorial 5](Pre_sessional_4.qmd).
+It does look better than before but you are entitled to be somewhat sceptical as to whether this graph shows any kind of relationship, let alone a linear one. The best fit line is almost horizontal and the r^2^ is only .01. (A Pearson’s correlation test shows that this relationship is still significant, *r*=.11, *p*=.017; small correlations can of course be significant with large samples). We will discuss this in week3 or see [Tutorial 5](Pre_sessional_4.qmd).
 :::
 :::
 
