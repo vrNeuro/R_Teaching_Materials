@@ -25,7 +25,7 @@ Homework Learning Outcomes: \
 5 - Use ggplot2 and extensions to create compound plots \ 
 
 
-##SECTION A. THE DATA SET
+## SECTION A. THE DATA SET
 
 The dataset for the homework this week is adapted from one of the datasets used as an example in the corresponding lecture. A sample of 191 university students resident in Dubai were measured on their impulsivity-related personality traits, their use of conventional cigarettes and their use of a nicotine-based local product called dokha. The questionnaires include an impulsivity measure called the UPPS-P, and a measure of behavioural approach and inhibition, the BIS/BAS scales. The researchers were planning to examine the extent to which the personality variables predict smoking behaviour, and to examine how these relationships might be moderated by socio-demographic factors. Prior to the focal analyses planned for the dataset, the dataset needs to be screened and cleaned.  
 
@@ -307,7 +307,7 @@ Rows 11 and 15 in Negative_UrgencyUPPS, rows 96 and 114 in Lack_of_PremediationU
 
 One thing to keep in mind is that the z-score method assumes that the data is roughly normally distributed, in very skewed data it can pick up the tails of the distribution which might not be real outliers.
 
-## COMPOUND PLOTS
+## SECTION D. COMPOUND PLOTS
 
 To visualise linearity, normality and homoscedasticity in a pair of variables is possible by creating separate plots. However, for doing this all in one plot we can use compound plots. These can be built using base **R** functions but some packages can make things much simpler.
 

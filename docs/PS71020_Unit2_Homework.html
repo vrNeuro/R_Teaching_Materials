@@ -155,9 +155,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#section-b.-missing-data" id="toc-section-b.-missing-data" class="nav-link active" data-scroll-target="#section-b.-missing-data">SECTION B. MISSING DATA</a></li>
+  <li><a href="#section-a.-the-data-set" id="toc-section-a.-the-data-set" class="nav-link active" data-scroll-target="#section-a.-the-data-set">SECTION A. THE DATA SET</a></li>
+  <li><a href="#section-b.-missing-data" id="toc-section-b.-missing-data" class="nav-link" data-scroll-target="#section-b.-missing-data">SECTION B. MISSING DATA</a></li>
   <li><a href="#section-c.-detecting-outliers-with-z-scores" id="toc-section-c.-detecting-outliers-with-z-scores" class="nav-link" data-scroll-target="#section-c.-detecting-outliers-with-z-scores">SECTION C. DETECTING OUTLIERS WITH Z-SCORES</a></li>
-  <li><a href="#compound-plots" id="toc-compound-plots" class="nav-link" data-scroll-target="#compound-plots">COMPOUND PLOTS</a></li>
+  <li><a href="#section-d.-compound-plots" id="toc-section-d.-compound-plots" class="nav-link" data-scroll-target="#section-d.-compound-plots">SECTION D. COMPOUND PLOTS</a></li>
   </ul>
 </nav>
     </div>
@@ -202,7 +203,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>3 - Use RStudio to perform mean imputation &nbsp;</p>
 <p>4 - Use z-scores to detect outliers &nbsp;</p>
 <p>5 - Use ggplot2 and extensions to create compound plots &nbsp;</p>
-<p>##SECTION A. THE DATA SET</p>
+<section id="section-a.-the-data-set" class="level2">
+<h2 class="anchored" data-anchor-id="section-a.-the-data-set">SECTION A. THE DATA SET</h2>
 <p>The dataset for the homework this week is adapted from one of the datasets used as an example in the corresponding lecture. A sample of 191 university students resident in Dubai were measured on their impulsivity-related personality traits, their use of conventional cigarettes and their use of a nicotine-based local product called dokha. The questionnaires include an impulsivity measure called the UPPS-P, and a measure of behavioural approach and inhibition, the BIS/BAS scales. The researchers were planning to examine the extent to which the personality variables predict smoking behaviour, and to examine how these relationships might be moderated by socio-demographic factors. Prior to the focal analyses planned for the dataset, the dataset needs to be screened and cleaned.</p>
 <p>As usual we will load the data set using the <code>read.csv()</code> function:</p>
 <div class="cell">
@@ -216,6 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>NA</p>
 </div>
 </div>
+</section>
 <section id="section-b.-missing-data" class="level2">
 <h2 class="anchored" data-anchor-id="section-b.-missing-data">SECTION B. MISSING DATA</h2>
 <p><strong>What is one function we can use to summarise a data set and find the number of missing values in each variable? It produces the output shown below</strong></p>
@@ -516,8 +519,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>One thing to keep in mind is that the z-score method assumes that the data is roughly normally distributed, in very skewed data it can pick up the tails of the distribution which might not be real outliers.</p>
 </section>
-<section id="compound-plots" class="level2">
-<h2 class="anchored" data-anchor-id="compound-plots">COMPOUND PLOTS</h2>
+<section id="section-d.-compound-plots" class="level2">
+<h2 class="anchored" data-anchor-id="section-d.-compound-plots">SECTION D. COMPOUND PLOTS</h2>
 <p>To visualise linearity, normality and homoscedasticity in a pair of variables is possible by creating separate plots. However, for doing this all in one plot we can use compound plots. These can be built using base <strong>R</strong> functions but some packages can make things much simpler.</p>
 <p>See <a href="./PS71020_Unit1_Lab.html#sec-packages-rstudio">Section E from Lab 1</a> for some more information on packages.</p>
 <p>In this case we are going to use a function called <code>ggscatterhist()</code> from a package called <strong>ggpubr</strong>. There are a lot of packages that start with <strong>gg</strong> and they are mainly extensions to a package called <strong>ggplot2</strong> which is the most widely used for plotting in R.</p>
