@@ -189,31 +189,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<style>
-  .answer-box { display: flex; flex-direction: column; gap: 0.5em; margin: 1em 0 1.5em; }
-  .answer-input { padding: 0.4em 0.6em; border: 1px solid #ccc; border-radius: 4px; max-width: 20em; }
-  .reveal-btn { align-self: flex-start; padding: 0.3em 0.8em; }
-  .reveal-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .answer { display: none; padding: 0.75em 1em; margin-top: 0.25em;
-            border-left: 4px solid #2c7be5; background: #f4f8fd; }
-</style>
-<script>
-  document.addEventListener('input', function (e) {
-    if (e.target.matches('.answer-input')) {
-      const box = e.target.closest('.answer-box');
-      box.querySelector('.reveal-btn').disabled = e.target.value.trim().length === 0;
-    }
-  });
-  document.addEventListener('click', function (e) {
-    if (e.target.matches('.reveal-btn') && !e.target.disabled) {
-      const box = e.target.closest('.answer-box');
-      const ans = box.querySelector('.answer');
-      const showing = ans.style.display === 'block';
-      ans.style.display = showing ? 'none' : 'block';
-      e.target.textContent = showing ? 'Show answer' : 'Hide answer';
-    }
-  });
-</script>
 <section id="learning-outcomes" class="level3">
 <h3 class="anchored" data-anchor-id="learning-outcomes">Learning Outcomes: &nbsp;</h3>
 <p>1 - Use RStudio to screen data for normality and univariate outliers. &nbsp;</p>
