@@ -95,7 +95,7 @@ In this data set each row is the data about one participant and each column is t
 <button class="reveal-btn" disabled>Show answer</button>
 
 ::: {.answer}
-This data is wide format data, the alternative is tall format.
+This data is wide format data, the alternative is long format.
 :::
 :::
 
@@ -230,7 +230,7 @@ If we now re-plot a histogram of our ATTHOUSE data in the clean data set we can 
 ```{r}
 hist(cleanData$ATTHOUSE, breaks = 20, main = "Histogram of the variable ATTHOUSE (outliers removed)", xlab = "ATTHOUSE")
 ```
-## SECTION C. ASSESSING NORMALITY
+## SECTION C. ASSESSING NORMALITY {#sec-assessing-normality}
 
 In the plot above the *ATTHOUSE* variable appears reasonably normally distributed from the histogram. We can assess the skewness and kurtosis using **R**, however, base R does not contain a function for this so we will use one called `describe()` from the **psych** package. First we load the package using the `library()` function.
 

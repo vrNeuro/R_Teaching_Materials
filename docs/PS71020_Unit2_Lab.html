@@ -159,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
   <li><a href="#section-a.-loading-the-data" id="toc-section-a.-loading-the-data" class="nav-link" data-scroll-target="#section-a.-loading-the-data">SECTION A. LOADING THE DATA</a></li>
   <li><a href="#sec-univariate-screening" id="toc-sec-univariate-screening" class="nav-link" data-scroll-target="#sec-univariate-screening">SECTION B. UNIVARIATE DATA SCREENING</a></li>
-  <li><a href="#section-c.-assessing-normality" id="toc-section-c.-assessing-normality" class="nav-link" data-scroll-target="#section-c.-assessing-normality">SECTION C. ASSESSING NORMALITY</a></li>
+  <li><a href="#sec-assessing-normality" id="toc-sec-assessing-normality" class="nav-link" data-scroll-target="#sec-assessing-normality">SECTION C. ASSESSING NORMALITY</a></li>
   <li><a href="#section-d.-transforming-a-variable" id="toc-section-d.-transforming-a-variable" class="nav-link" data-scroll-target="#section-d.-transforming-a-variable">SECTION D. TRANSFORMING A VARIABLE</a></li>
   <li><a href="#section-e.-checking-linearity-and-homoscedasticity" id="toc-section-e.-checking-linearity-and-homoscedasticity" class="nav-link" data-scroll-target="#section-e.-checking-linearity-and-homoscedasticity">SECTION E. CHECKING LINEARITY AND HOMOSCEDASTICITY</a></li>
   <li><a href="#section-f.-identifying-multivariate-outliers" id="toc-section-f.-identifying-multivariate-outliers" class="nav-link" data-scroll-target="#section-f.-identifying-multivariate-outliers">SECTION F. IDENTIFYING MULTIVARIATE OUTLIERS</a></li>
@@ -452,8 +452,8 @@ logical     461       3       1 </code></pre>
 </div>
 </div>
 </section>
-<section id="section-c.-assessing-normality" class="level2">
-<h2 class="anchored" data-anchor-id="section-c.-assessing-normality">SECTION C. ASSESSING NORMALITY</h2>
+<section id="sec-assessing-normality" class="level2">
+<h2 class="anchored" data-anchor-id="sec-assessing-normality">SECTION C. ASSESSING NORMALITY</h2>
 <p>In the plot above the <em>ATTHOUSE</em> variable appears reasonably normally distributed from the histogram. We can assess the skewness and kurtosis using <strong>R</strong>, however, base R does not contain a function for this so we will use one called <code>describe()</code> from the <strong>psych</strong> package. First we load the package using the <code>library()</code> function.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>

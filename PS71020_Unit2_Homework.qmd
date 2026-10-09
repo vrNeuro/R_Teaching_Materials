@@ -307,7 +307,7 @@ Rows 11 and 15 in Negative_UrgencyUPPS, rows 96 and 114 in Lack_of_PremediationU
 
 One thing to keep in mind is that the z-score method assumes that the data is roughly normally distributed, in very skewed data it can pick up the tails of the distribution which might not be real outliers.
 
-## SECTION D. COMPOUND PLOTS
+## SECTION D. COMPOUND PLOTS {#sec-compound-plots}
 
 To visualise linearity, normality and homoscedasticity in a pair of variables is possible by creating separate plots. However, for doing this all in one plot we can use compound plots. These can be built using base **R** functions but some packages can make things much simpler.
 

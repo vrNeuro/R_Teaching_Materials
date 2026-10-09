@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistics in R – PG Stats Intro</title>
+<title>PS71020_Unit3_Lab – PG Stats Intro</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -97,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -120,11 +155,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#how-the-labs-work" id="toc-how-the-labs-work" class="nav-link active" data-scroll-target="#how-the-labs-work">How the labs work</a></li>
-  <li><a href="#presessional-tutorials" id="toc-presessional-tutorials" class="nav-link" data-scroll-target="#presessional-tutorials">Presessional Tutorials</a></li>
-  <li><a href="#worksheets" id="toc-worksheets" class="nav-link" data-scroll-target="#worksheets">Worksheets</a></li>
-  <li><a href="#specific-skills" id="toc-specific-skills" class="nav-link" data-scroll-target="#specific-skills">Specific skills</a></li>
-  <li><a href="#useful-links" id="toc-useful-links" class="nav-link" data-scroll-target="#useful-links">Useful links</a></li>
+  <li><a href="#section-a.-the-data-set" id="toc-section-a.-the-data-set" class="nav-link active" data-scroll-target="#section-a.-the-data-set">SECTION A. THE DATA SET</a></li>
+  <li><a href="#section-b.-t-tests-and-correlations" id="toc-section-b.-t-tests-and-correlations" class="nav-link" data-scroll-target="#section-b.-t-tests-and-correlations">SECTION B. T-TESTS AND CORRELATIONS</a></li>
   </ul>
 </nav>
     </div>
@@ -133,8 +165,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Statistics in R</h1>
-<p class="subtitle lead">Goldsmiths Psychology &amp; Neuroscience</p>
+<h1 class="title">PS71020_Unit3_Lab</h1>
+<p class="subtitle lead">A Review of Basic Statistical Tests</p>
 </div>
 
 
@@ -151,109 +183,62 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>During term you will get a worksheet each week that you should work through during the lab session, using RStudio to run the code and try out the examples.</p>
-<p>There are also some Welcome to the presessional materials, we encourage you to attempt to go through these before the start of term or during the first few weeks. They cover in more detail some of the topics we will cover in the early labs. In particular <a href="./Pre_sessional_0.html">Tutorial 1</a> on accessing RStudio would be very useful to complete before the first lab.</p>
-<section id="how-the-labs-work" class="level2">
-<h2 class="anchored" data-anchor-id="how-the-labs-work">How the labs work</h2>
-<ul>
-<li>Bring a laptop with RStudio installed if you can. If not, you can use the Department RStudio server or Posit Cloud (see <a href="./Pre_sessional_0.html">Tutorial 1</a> for details).</li>
-<li>Work through the worksheet during the lab, individually or in small groups, and finish it outside class time if needed.</li>
-<li>Answer the questions in your own words. Each worksheet has model answers hidden under <strong>Show answer</strong> boxes, so try the question first and then click to check your work.</li>
-<li>If you have questions during the lab, ask your lab tutors. For questions about lecture content or homework sheets, contact Peter Holland by email or use the forum on the VLE page.</li>
-</ul>
+<section id="learning-outcomes" class="level3">
+<h3 class="anchored" data-anchor-id="learning-outcomes">Learning Outcomes: &nbsp;</h3>
+<p>1 - Use RStudio to perform t-tests and assumption checks &nbsp;</p>
+<p>2 - Use RStudio to produce scatter plots and perform correlations &nbsp;</p>
+<p>3 - Use RStudio to perform ANOVAs and post-hoc tests &nbsp;</p>
+<p>4 - Learn the standard way of reporting the results of these statistical tests and extracting the values from RStudio output &nbsp;</p>
 </section>
-<section id="presessional-tutorials" class="level2">
-<h2 class="anchored" data-anchor-id="presessional-tutorials">Presessional Tutorials</h2>
-<p>Welcome to the presessional materials.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Number</th>
-<th>Topic</th>
-<th>Tutorial</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>0</td>
-<td>Accessing RStudio</td>
-<td><a href="./Pre_sessional_0.html">Tutorial 1</a></td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>Data Types and Designs</td>
-<td><a href="./Pre_sessional_1.html">Tutorial 2</a></td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>Distributions and Data Wrangling</td>
-<td><a href="./Pre_sessional_2.html">Tutorial 3</a></td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>T-tests</td>
-<td><a href="./Pre_sessional_3.html">Tutorial 4</a></td>
-</tr>
-<tr class="odd">
-<td>4</td>
-<td>ANOVAs</td>
-<td><a href="./Pre_sessional_4.html">Tutorial 5</a></td>
-</tr>
-<tr class="even">
-<td>5</td>
-<td>Correlation and Regression</td>
-<td><a href="./Pre_sessional_5.html">Tutorial 6</a></td>
-</tr>
-</tbody>
-</table>
+<section id="materials-used" class="level3">
+<h3 class="anchored" data-anchor-id="materials-used">Materials Used:</h3>
+<p>We will use the package <strong>rstatix</strong>, this are already installed on the RStudio Server but if you are working on your own Laptop you may need to install it.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Some general notes about the weekly labs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You should go through the worksheet during the lab and try to complete as much of it during the lab as you can. You can work on the sheet individually or in small groups during the lab. Try to answer the lab worksheet questions in your own words however. If you are unable to finish the worksheet during the class, try to finish it outside class time. Try to attempt the answer before using the ‘Show Answer’ button.</p>
+<p>As you go through the sheet, copy the relevant lines of code to your own analysis script.</p>
+<p>A complete model answers script will be available on the VLE page from Fridays after the labs so you can check your own answers.</p>
+<p>If you have any queries during the class, please feel free to ask your lab tutors. If your question relates specifically to the lecture content or the homework sheets, please contact Peter Holland by email or use the forum on the VLE page.*</p>
+</div>
+</div>
 </section>
-<section id="worksheets" class="level2">
-<h2 class="anchored" data-anchor-id="worksheets">Worksheets</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Week</th>
-<th>Topic</th>
-<th>Worksheet</th>
-<th>Homework</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Introduction to RStudio</td>
-<td><a href="./PS71020_Unit1_Lab.html">Week 1 worksheet</a></td>
-<td><a href="./PS71020_Unit1_Homework.html">Week 1 homework</a></td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>Screening and Cleaning Data</td>
-<td><a href="./PS71020_Unit2_Lab.html">Week 2 worksheet</a></td>
-<td><a href="./PS71020_Unit2_Homework.html">Week 2 homework</a></td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>Review Of Basic Statistical Tests</td>
-<td><a href="./PS71020_Unit3_Lab.html">Week 3 worksheet</a></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><em>More worksheets will be added here as the term progresses.</em></p>
+<section id="section-a.-the-data-set" class="level2">
+<h2 class="anchored" data-anchor-id="section-a.-the-data-set">SECTION A. THE DATA SET</h2>
+<p>These data include 100 patients with generalized anxiety disorder who took part in a therapeutic intervention to reduce anxiety. As you will see, we have basic demographic information on these patients (age and gender) and other relevant information such as whether they are currently taking medication (medicated) and whether they have previously undergone therapy (previous_therapy). For the latter two, click on the variable names to see the meaning of the values 0 and 1 for each variable. Finally, we have our principal measures of interest: anxiety prior to treatment (pre_anxiety) and after treatment (post_anxiety). Anxiety scores range from 0 to 100 with higher scores reflecting greater anxiety.</p>
+<p>The researchers were interested in variables related to baseline anxiety (i.e.&nbsp;pre_anxiety), whether treatment reduced anxiety, and whether any of the variables might predict changes in anxiety from pre- to post-. They expected that the patients who were medicated would have lower baseline anxiety.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"AnxietyPrePostData.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>gender, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"female"</span>,<span class="st">"unreported"</span>,<span class="st">"male"</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>previous_therapy <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>previous_therapy, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"No"</span>,<span class="st">"Yes"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>medicated <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>previous_therapy, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Unmedicated"</span>,<span class="st">"Medicated"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
-<section id="specific-skills" class="level2">
-<h2 class="anchored" data-anchor-id="specific-skills">Specific skills</h2>
-<p>TODO: build a list here linking to specific skills such as z-scoring etc.</p>
-</section>
-<section id="useful-links" class="level2">
-<h2 class="anchored" data-anchor-id="useful-links">Useful links</h2>
-<ul>
-<li><a href="https://posit.co/download/rstudio-desktop/">R and RStudio downloads</a></li>
-<li><a href="https://psy909.gold.ac.uk/rstudioserver/">Department R Studio Server</a></li>
-<li><a href="https://posit.cloud/">Posit Cloud</a></li>
-<li><a href="https://cran.r-project.org/">CRAN (Comprehensive R Archive Network)</a></li>
-<li><a href="https://www.tidyverse.org/">The tidyverse</a></li>
-</ul>
+<section id="section-b.-t-tests-and-correlations" class="level2">
+<h2 class="anchored" data-anchor-id="section-b.-t-tests-and-correlations">SECTION B. T-TESTS AND CORRELATIONS</h2>
+<p>Before testing there predictions, it would be valuable to know if the baseline anxiety scores are normally distributed, as is assumed by most statistical tests.</p>
+<p>The function used to do a Shapiro Wilk test in R is <code>shapiro.test()</code>. What code would you need to run this on the <code>pre_anxiety</code> variable?</p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p><code>shapiro.test(df$pre_anxiety)</code></p>
+</div>
+</div>
+<p>Perform the Shapiro-Wilk test.</p>
+<p><strong>Looking at the Shapiro-Wilk test do you have any concerns?</strong></p>
+<p><a href="./PS71020_Unit2_Lab.html#sec-assessing-normality">Section C from Lab 2</a></p>
+<p>and the data distribution</p>
+<p>Give them some code to comment</p>
+<p>Give them an example analysis and then ask them to edit to make it work for this data</p>
 
 
 </section>

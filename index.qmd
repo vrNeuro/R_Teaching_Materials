@@ -32,6 +32,7 @@ Welcome to the presessional materials.
 |------|-------|-----------|---------|
 | 1 | Introduction to RStudio | [Week 1 worksheet](PS71020_Unit1_Lab.qmd) | [Week 1 homework](PS71020_Unit1_Homework.qmd) |
 | 2 | Screening and Cleaning Data | [Week 2 worksheet](PS71020_Unit2_Lab.qmd) | [Week 2 homework](PS71020_Unit2_Homework.qmd)  |
+| 3 | Review Of Basic Statistical Tests | [Week 3 worksheet](PS71020_Unit3_Lab.qmd) |   |
 
 *More worksheets will be added here as the term progresses.*
 

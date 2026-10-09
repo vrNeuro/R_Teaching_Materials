@@ -16,7 +16,7 @@ Below is a snippit of R code that is executed when the document is created.
 
 You can copy these code snippits into your own RStudio to begin to build you own analyses. As you go through the document create a new R script in RStudio and add the code section one after another. By then of this each section you will have built an analysis pipeline for each type of design. You can then use this as a basis for future analyses.
 
-## ONE-WAY ANOVA (BETWEEN)
+## ONE-WAY ANOVA (BETWEEN) {#sec-1way-ANOVA}
 
 The first data set we are going to work with, is from a study that looked at the level of conspiracy beliefs (scored from a questionnaire) and the political ideology of the 30 participants which was categorised into 3 levels based on the party they voted for in the last election.
 
