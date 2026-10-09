@@ -156,7 +156,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul class="collapse">
   <li><a href="#section-a.-the-data-set" id="toc-section-a.-the-data-set" class="nav-link active" data-scroll-target="#section-a.-the-data-set">SECTION A. THE DATA SET</a></li>
-  <li><a href="#section-b.-t-tests-and-correlations" id="toc-section-b.-t-tests-and-correlations" class="nav-link" data-scroll-target="#section-b.-t-tests-and-correlations">SECTION B. T-TESTS AND CORRELATIONS</a></li>
+  <li><a href="#section-b.-t-tests" id="toc-section-b.-t-tests" class="nav-link" data-scroll-target="#section-b.-t-tests">SECTION B. T-TESTS</a></li>
+  <li><a href="#section-c.-paired-samples-t-test-and-correlation" id="toc-section-c.-paired-samples-t-test-and-correlation" class="nav-link" data-scroll-target="#section-c.-paired-samples-t-test-and-correlation">SECTION C. PAIRED SAMPLES T-TEST AND CORRELATION</a></li>
+  <li><a href="#section-d.-anovas" id="toc-section-d.-anovas" class="nav-link" data-scroll-target="#section-d.-anovas">SECTION D. ANOVAs</a></li>
   </ul>
 </nav>
     </div>
@@ -192,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="materials-used" class="level3">
 <h3 class="anchored" data-anchor-id="materials-used">Materials Used:</h3>
-<p>We will use the package <strong>rstatix</strong>, this are already installed on the RStudio Server but if you are working on your own Laptop you may need to install it.</p>
+<p>We will use the packages <strong>tidyr</strong>, <strong>car</strong>, <strong>rstatix</strong>, <strong>ggpubr</strong> and <strong>psych</strong>, these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install it.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -212,19 +214,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="section-a.-the-data-set" class="level2">
 <h2 class="anchored" data-anchor-id="section-a.-the-data-set">SECTION A. THE DATA SET</h2>
-<p>These data include 100 patients with generalized anxiety disorder who took part in a therapeutic intervention to reduce anxiety. As you will see, we have basic demographic information on these patients (age and gender) and other relevant information such as whether they are currently taking medication (medicated) and whether they have previously undergone therapy (previous_therapy). For the latter two, click on the variable names to see the meaning of the values 0 and 1 for each variable. Finally, we have our principal measures of interest: anxiety prior to treatment (pre_anxiety) and after treatment (post_anxiety). Anxiety scores range from 0 to 100 with higher scores reflecting greater anxiety.</p>
-<p>The researchers were interested in variables related to baseline anxiety (i.e.&nbsp;pre_anxiety), whether treatment reduced anxiety, and whether any of the variables might predict changes in anxiety from pre- to post-. They expected that the patients who were medicated would have lower baseline anxiety.</p>
+<p>These data include 100 patients with generalized anxiety disorder who took part in a therapeutic intervention to reduce anxiety. As you will see, we have basic demographic information on these patients: &nbsp; age &nbsp;</p>
+<p>gender: 0 = female, 1 = unreported, 2 = male &nbsp;</p>
+<p>whether they are currently taking medication (medicated): 0 = Unmedicated, 1 = Medicated&nbsp;</p>
+<p>whether they have previously undergone therapy (previous_therapy): 0 = No, 1 = Yes &nbsp;</p>
+<p>Finally, we have our principal measures of interest: &nbsp; anxiety prior to treatment (pre_anxiety) and after treatment (post_anxiety).</p>
+<p>Anxiety scores range from 0 to 100 with higher scores reflecting greater anxiety.</p>
+<p>The researchers were interested in variables related to baseline anxiety (i.e.&nbsp;pre_anxiety), whether treatment reduced anxiety.</p>
+<p>As we have done in previous labs we first read the data and store it as a variable, called <code>df</code> in this case:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"AnxietyPrePostData.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Then we properly specify our factors and their levels:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>gender, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"female"</span>,<span class="st">"unreported"</span>,<span class="st">"male"</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>previous_therapy <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>previous_therapy, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"No"</span>,<span class="st">"Yes"</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>medicated <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>previous_therapy, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Unmedicated"</span>,<span class="st">"Medicated"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>medicated <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>medicated, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Unmedicated"</span>,<span class="st">"Medicated"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Finally we can get a quick summary to check if things look ok:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       id              age               gender         medicated 
+ Min.   :  1.00   Min.   :19.73   female    :40   Unmedicated:45  
+ 1st Qu.: 25.75   1st Qu.:25.78   unreported:20   Medicated  :55  
+ Median : 50.50   Median :29.12   male      :40                   
+ Mean   : 50.50   Mean   :29.55                                   
+ 3rd Qu.: 75.25   3rd Qu.:32.70                                   
+ Max.   :100.00   Max.   :40.56                                   
+ previous_therapy  pre_anxiety     post_anxiety   
+ No :69           Min.   :26.96   Min.   : 8.903  
+ Yes:31           1st Qu.:47.40   1st Qu.:27.635  
+                  Median :54.66   Median :35.117  
+                  Mean   :55.08   Mean   :35.616  
+                  3rd Qu.:62.20   3rd Qu.:43.316  
+                  Max.   :85.09   Max.   :63.363  </code></pre>
+</div>
 </div>
 </section>
-<section id="section-b.-t-tests-and-correlations" class="level2">
-<h2 class="anchored" data-anchor-id="section-b.-t-tests-and-correlations">SECTION B. T-TESTS AND CORRELATIONS</h2>
+<section id="section-b.-t-tests" class="level2">
+<h2 class="anchored" data-anchor-id="section-b.-t-tests">SECTION B. T-TESTS</h2>
 <p>Before testing there predictions, it would be valuable to know if the baseline anxiety scores are normally distributed, as is assumed by most statistical tests.</p>
 <p>The function used to do a Shapiro Wilk test in R is <code>shapiro.test()</code>. What code would you need to run this on the <code>pre_anxiety</code> variable?</p>
 <div class="answer-box">
@@ -234,11 +263,462 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Perform the Shapiro-Wilk test.</p>
-<p><strong>Looking at the Shapiro-Wilk test do you have any concerns?</strong></p>
-<p><a href="./PS71020_Unit2_Lab.html#sec-assessing-normality">Section C from Lab 2</a></p>
-<p>and the data distribution</p>
-<p>Give them some code to comment</p>
-<p>Give them an example analysis and then ask them to edit to make it work for this data</p>
+<p><strong>Looking at the Shapiro-Wilk test do you have any concerns? What other steps should we take to assess normality?</strong></p>
+<p>Hint: <a href="./PS71020_Unit2_Lab.html#sec-assessing-normality">Section C from Lab 2</a></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The test is not significant with <em>p</em> = 0.98, so this does not suggest any concerns. However, we should also visualise the distribution of our data and also check skewness and kurtosis values.</p>
+</div>
+</div>
+<p><strong>What potential issue have we missed by testing the normality of the variable as a whole when our planned analysis is based on two groups?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>If we had a large difference in means between the groups this could potentially cause a bimodal distribution. Instead we should test the normality of each group separately. Here is the code to do this: <code>by(df$pre_anxiety, df$medicated, shapiro.test)</code></p>
+<p>See <a href="./Pre_sessional_1.html#sec-between-subjects-designs">This Section from Presessional 2</a> for some more information on using the <code>by()</code> function.</p>
+<p>In this case if you run the code you will see that both groups show normally distributed data.</p>
+</div>
+</div>
+<p>The researchers expected that the patients who were medicated would have lower baseline anxiety. Below is the code to get descriptive statistics by group, create a boxplot, and perform an independent samples t-test in RStudio:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(pre_anxiety <span class="sc">~</span> medicated, df, <span class="at">main =</span> <span class="st">"Boxplot of Pre Anxiety"</span>, <span class="at">xlab =</span> <span class="st">"Medication"</span>, <span class="at">ylab =</span> <span class="st">"Anxiety"</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"cornflowerblue"</span>,<span class="st">"pink"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit3_Lab_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describeBy</span>(pre_anxiety <span class="sc">~</span> medicated, <span class="at">data =</span> df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Descriptive statistics by group 
+medicated: Unmedicated
+            vars  n  mean   sd median trimmed  mad   min   max range  skew
+pre_anxiety    1 45 62.66 10.1  62.08   63.09 9.79 38.35 85.09 46.74 -0.36
+            kurtosis   se
+pre_anxiety     0.17 1.51
+------------------------------------------------------------ 
+medicated: Medicated
+            vars  n  mean   sd median trimmed  mad   min   max range  skew
+pre_anxiety    1 55 48.88 8.43  48.82   49.01 8.46 26.96 68.91 41.95 -0.11
+            kurtosis   se
+pre_anxiety     0.06 1.14</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pre_anxiety <span class="sc">~</span> medicated, <span class="at">data =</span> df, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  pre_anxiety by medicated
+t = 7.4403, df = 98, p-value = 3.887e-11
+alternative hypothesis: true difference in means between group Unmedicated and group Medicated is not equal to 0
+95 percent confidence interval:
+ 10.10729 17.46004
+sample estimates:
+mean in group Unmedicated   mean in group Medicated 
+                 62.65919                  48.87552 </code></pre>
+</div>
+</div>
+<p><strong>Was the prediction supported? What were the results? Write them out in standard format.</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Yes. The medicated group exhibited lower anxiety scores at baseline (<em>M</em>=48.88, <em>SD</em>=8.43) than the unmedicated group (<em>M</em>=62.66, <em>SD</em>=10.10), <em>t</em>(98)=7.44, <em>p</em>&lt;.001.</p>
+</div>
+</div>
+<p>The code above uses a <strong>formula</strong> object to define the relationship we want to examine, you can find more information on this in <a href="./Pre_sessional_1.html#sec-between-subjects-designs">Tutorial 2</a>. In a formula object the dependent (or outcome) variables go on the left hand side of the <code>~</code> symbol and the independent variables (or predictors) go on the right hand side. So the formula <code>pre_anxiety ~ medicated</code> specifies that we want to examine how <code>pre_anxiety</code> varies by <code>medicated</code>.</p>
+<p>The input argument <code>var.equal = TRUE</code> performs the version of the t-test that assumes homogeneity of variances. However, we should first check that this is actually true (if it wasn’t we could use a Welch t-test).</p>
+<p><strong>What information do we already have that suggests that this assumption might not be violated in this data? What test would we use to formally confirm this?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The standard deviations of the two groups are relatively similar: The medicated group (<em>SD</em>=8.43) The unmedicated group (<em>SD</em>=10.10)</p>
+<p>Also the boxplots have similar whisker sizes. However, these aren’t not direct measures of variance so be wary of relying on them for this purpose (see week 2 lecture for what they represent).</p>
+<p>Levene’s test is the test for homogeneity of variance.</p>
+</div>
+</div>
+<p>The function to test this is called <code>leveneTest()</code> and it is found in the <strong>car</strong> package. It takes the same form of input arguments as the <code>describeBy()</code> and <code>t.test()</code> functions above.</p>
+<p><strong>What are the two lines of code you would need to use to load the package and perform the test? Run these lines and you should get the output shown below. Does this result suggest that we have met the homogeneity of variances assumption?</strong></p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'car'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:psych':
+
+    logit</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(&gt;F)
+group  1  1.0278 0.3132
+      98               </code></pre>
+</div>
+</div>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p><code>library(car)</code> <code>leveneTest(pre_anxiety ~ medicated, data = df)</code></p>
+<p>The test is not significant, <em>p</em> = 0.31, this means that the assumption was not violated and we were justified in running a standard student’s t-test instead of the Welch t-test.</p>
+</div>
+</div>
+<p>The final thing we should also include is a measure of effect size. There are different functions to do this in different <strong>R</strong> packages. However, the package <strong>rstatix</strong> contains a lot of other useful statistics functions so we will use this throughout. Below is the code needed to load the package and compute Cohen’s D (the measure of effect size for t-tests).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'rstatix'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    filter</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(df, pre_anxiety <span class="sc">~</span> medicated, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  .y.         group1      group2    effsize    n1    n2 magnitude
+* &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;ord&gt;    
+1 pre_anxiety Unmedicated Medicated    1.50    45    55 large    </code></pre>
+</div>
+</div>
+<p>You now have the complete code to run an independent samples t-test after checking it’s assumptions.</p>
+<p><strong>Try to write your own code using this as a guide to run the appropriate independent samples t-test to test <code>post_anxiety</code> differs based on the <code>previous_therapy</code> factor. The outputs your code should produce are shown below:</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix) <span class="co"># since we have loaded these packages already </span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#this is not strictly necessary but it is good practice to </span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#put all the library() calls at the top of the script.`</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>myFormula <span class="ot">&lt;-</span> post_anxiety <span class="sc">~</span> previous_therapy <span class="co"># as we will use this multiple times we can define it`</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(df<span class="sc">$</span>post_anxiety, df<span class="sc">$</span>previous_therapy, shapiro.test) <span class="co">#check normality of both groups</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(myFormula,<span class="at">data =</span> df) <span class="co"># check homogeneity of variance`</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">#create a boxplot</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(myFormula, df, <span class="at">main =</span> <span class="st">"Boxplot of Post Anxiety"</span>, <span class="at">xlab =</span> <span class="st">"Therapy"</span>, <span class="at">ylab =</span> <span class="st">"Anxiety"</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"cornflowerblue"</span>,<span class="st">"pink"</span>))</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#get descriptive statistics by group</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="fu">describeBy</span>(myFormula, <span class="at">data =</span> df)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co">#perform the t-test</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(myFormula, <span class="at">data =</span> df, <span class="at">var.equal =</span> <span class="cn">TRUE</span>) <span class="co">#use equal variances as levene's mot significant`</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(df, myFormula, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>df$previous_therapy: No
+
+    Shapiro-Wilk normality test
+
+data:  dd[x, ]
+W = 0.98494, p-value = 0.5755
+
+------------------------------------------------------------ 
+df$previous_therapy: Yes
+
+    Shapiro-Wilk normality test
+
+data:  dd[x, ]
+W = 0.97508, p-value = 0.6671</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(&gt;F)
+group  1  2.1105 0.1495
+      98               </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit3_Lab_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Descriptive statistics by group 
+previous_therapy: No
+             vars  n  mean    sd median trimmed   mad min   max range skew
+post_anxiety    1 69 34.17 11.47  33.04   33.82 11.86 8.9 63.36 54.46 0.29
+             kurtosis   se
+post_anxiety    -0.46 1.38
+------------------------------------------------------------ 
+previous_therapy: Yes
+             vars  n  mean   sd median trimmed  mad   min  max range  skew
+post_anxiety    1 31 38.83 9.31  39.42   39.18 8.51 18.63 59.7 41.07 -0.28
+             kurtosis   se
+post_anxiety     -0.2 1.67</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  post_anxiety by previous_therapy
+t = -1.987, df = 98, p-value = 0.04972
+alternative hypothesis: true difference in means between group No and group Yes is not equal to 0
+95 percent confidence interval:
+ -9.318826224 -0.005853199
+sample estimates:
+ mean in group No mean in group Yes 
+         34.17062          38.83296 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  .y.          group1 group2 effsize    n1    n2 magnitude
+* &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;ord&gt;    
+1 post_anxiety No     Yes     -0.430    69    31 small    </code></pre>
+</div>
+</div>
+<p><strong>How would you write the results out in the standard format for a report?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Prior to analysis, assumptions were checked. Shapiro-Wilk tests indicated that post-treatment anxiety scores did not depart significantly from normality in either the no-therapy group (<em>W</em> = .98, <em>p</em> = .576) or the previous-therapy group (<em>W</em> = .98, <em>p</em> = .667), and Levene’s test indicated homogeneity of variance, <em>F</em>(1, 98) = 2.11, <em>p</em> = .150. An independent samples t-test (equal variances assumed) showed that post-treatment anxiety was significantly lower for participants with no previous therapy (<em>M</em> = 34.17, <em>SD</em> = 11.47) than for those with previous therapy (<em>M</em> = 38.83, <em>SD</em> = 9.31), <em>t</em>(98) = −1.99, <em>p</em> = .050, <em>d</em> = −0.43. This corresponds to a small effect.</p>
+</div>
+</div>
+</section>
+<section id="section-c.-paired-samples-t-test-and-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="section-c.-paired-samples-t-test-and-correlation">SECTION C. PAIRED SAMPLES T-TEST AND CORRELATION</h2>
+<p>We can also check if there is a relationship between pre and post anxiety and if these values changed after the intervention.</p>
+<p>The first thing we can do is to create a scatter plot of the two variables. The simplest way to do this using the base <strong>R</strong> function plot:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>pre_anxiety,df<span class="sc">$</span>post_anxiety, <span class="at">xlab =</span> <span class="st">"Pre Anxiety"</span>, <span class="at">ylab =</span> <span class="st">"Post Anxiety"</span>, <span class="at">main =</span> <span class="st">"Scatter plot of Anxiety"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit3_Lab_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>However, it is nicer to use the combined plots shown in the lecture that can be created with the <strong>ggpubr</strong> package. You can find the code for creating one of these here: <a href="./PS71020_Unit2_Homework.html#sec-compound-plots">Week 2 Homework 2</a>. Try to modify that code to produce the plot shown below:</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggpubr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ggplot2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'ggplot2'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:psych':
+
+    %+%, alpha</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+ℹ Please use the `linewidth` argument instead.
+ℹ The deprecated feature was likely used in the ggpubr package.
+  Please report the issue at &lt;https://github.com/kassambara/ggpubr/issues&gt;.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.
+ℹ Please use the `linewidth` argument instead.
+ℹ The deprecated feature was likely used in the ggpubr package.
+  Please report the issue at &lt;https://github.com/kassambara/ggpubr/issues&gt;.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit3_Lab_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Does the plot suggest that there is a relationship between pre and post intervention anxiety levels? What else does the plot suggest about the assumptions of a correlation?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Yes, it looks like there is a small positive correlation between the two variables. Also we can see from the histograms on the margins that both variables appear to be normally distributed, there appears to be a linear relationship, and the relationship appears to be homoscedastic.</p>
+</div>
+</div>
+<p>We can now perform a correlation to check if this relationship is statistically significant. The function to perform a correlation in <strong>R</strong> is <code>cor.test()</code>.</p>
+<p><strong>Look at the help for this function to see if you can produce the following result and then write the results up in a standard format.</strong></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  df$pre_anxiety and df$post_anxiety
+t = 2.3281, df = 98, p-value = 0.02196
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.03403658 0.40703987
+sample estimates:
+      cor 
+0.2289243 </code></pre>
+</div>
+</div>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The code is: <code>cor.test(df$pre_anxiety,df$post_anxiety)</code></p>
+<p>A simple write up would be: A Pearson correlation showed a significant, weak positive relationship between pre-treatment anxiety and post-treatment anxiety, <em>r</em>(98) = .23, <em>p</em> = .022. Participants with higher pre-treatment anxiety tended to have higher post-treatment anxiety.</p>
+</div>
+</div>
+<p>We have found that there is a relationship between pre and post anxiety levels. However, we should check statistically whether the intervention significantly affected anxiety. One way to do this in base <strong>R</strong> would be to use the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(df<span class="sc">$</span>pre_anxiety, df<span class="sc">$</span>post_anxiety, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  df$pre_anxiety and df$post_anxiety
+t = 13.936, df = 99, p-value &lt; 2.2e-16
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 16.69126 22.23320
+sample estimates:
+mean difference 
+       19.46223 </code></pre>
+</div>
+</div>
+<p>However, for calculating effect size measures and for more complex statistical designs we are going to use the <strong>rstatix</strong> package. Most of the functions in the <strong>rstatix</strong> package are designed to work with <strong>long</strong> format dataframes. Currently, our data is in a <strong>wide</strong> format with each row representing one participant and each column representing different bits of data about that participant.</p>
+<p>Below is the code to transform our data into long format. Take some time to read through the code and comments and examine the <code>df_long</code> dataframe to understand what has changed about how the data is arranged.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr) <span class="co">#this package include the pivot_ functions we need</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">#change to long format, </span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(df,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">cols      =</span> <span class="fu">c</span>(pre_anxiety, post_anxiety), <span class="co">#using these old columns</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to  =</span> <span class="st">"time"</span>, <span class="co">#this is the new column to hold the factor names</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">"anxiety"</span>) <span class="co">#this is the new column to hold the values</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure each participant's two scores line up</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> df_long[<span class="fu">order</span>(df_long<span class="sc">$</span>id, df_long<span class="sc">$</span>time), ]   <span class="co"># use your participant ID column</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can now use the same formula style input as we did for the independent samples t-test to perform a paired samples t-test and get the Cohen’s D value. We just need to tell both functions that this is paired data, we do this with an input argument of <code>paired = TRUE</code>.</p>
+<p><strong>If we want to test the effect of <code>time</code> on <code>anxiety</code>, what is the formula we would use?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p><code>pairedFormula &lt;- anxiety ~ time</code></p>
+</div>
+</div>
+<p>Here is the code to perform the t-test and calculate Cohen’s D:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pairedFormula, df_long, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  anxiety by time
+t = -13.936, df = 99, p-value &lt; 2.2e-16
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -22.23320 -16.69126
+sample estimates:
+mean difference 
+      -19.46223 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(df_long, pairedFormula, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  .y.     group1       group2      effsize    n1    n2 magnitude
+* &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;         &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;ord&gt;    
+1 anxiety post_anxiety pre_anxiety   -1.39   100   100 large    </code></pre>
+</div>
+</div>
+</section>
+<section id="section-d.-anovas" class="level2">
+<h2 class="anchored" data-anchor-id="section-d.-anovas">SECTION D. ANOVAs</h2>
+<p>Previously using t-tests we tested if either the <code>medicated</code> variable or the <code>previous_therapy</code> variable affected the <code>pre_anxiety</code> variable when considered alone. However, we can use an ANOVA to examine if the effects of factors interact.</p>
+<p><strong>What is the common way of describing an ANOVA like this?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>This would commonly be called a 2x2 between subjects ANOVA, since we have 2 levels to both of our IVs.</p>
+</div>
+</div>
+<p>When using a formula object we list our IVs on the right hand side of the <code>~</code> symbol. If we use the formula <code>pre_anxiety ~ medicated + previous_therapy</code>, this would ask for the <strong>main effects</strong> of both IVs but it would not estimate the <strong>interaction effect</strong>. To specify an interaction between two IVs we place the <code>:</code> between them. So the formula for both main effects and their interaction would be: <code>pre_anxiety ~ medicated + previous_therapy + medicated:previous_therapy</code>.</p>
+<p>To perform an ANOVA with this formula we use the <code>aov()</code> function. This Because we want to use the output of this to summarise and calculate effect sizes we want to assign this output to a variable. Below is the code to do this and to get a summary of the ANOVA results:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perform the anova and assign the output to an object called mdl</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>mdl <span class="ot">&lt;-</span> <span class="fu">aov</span>(pre_anxiety <span class="sc">~</span> medicated <span class="sc">+</span> previous_therapy <span class="sc">+</span> medicated<span class="sc">:</span>previous_therapy, <span class="at">data =</span> df)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summarise the mdl </span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdl)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                           Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+medicated                   1   4702    4702  93.426 7.77e-16 ***
+previous_therapy            1   3482    3482  69.188 6.01e-13 ***
+medicated:previous_therapy  1     10      10   0.204    0.652    
+Residuals                  96   4832      50                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><strong>Do either of the IVs have a significant main effect? Is the interaction significant?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Both IVs have a significant main effect (<em>p</em> &lt; 0.001), however the interaction is not significant (<em>p</em> = 0.652).</p>
+</div>
+</div>
+<p>We can use the code below to create an interaction plot of this data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interaction plot</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> medicated, <span class="at">y =</span> pre_anxiety,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> previous_therapy, <span class="at">group =</span> previous_therapy)) <span class="sc">+</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_se, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"cornflowerblue"</span>, <span class="st">"orange"</span>)) <span class="sc">+</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Medicated"</span>, <span class="at">y =</span> <span class="st">"Mean pre-treatment anxiety (error bars = 1 SE)"</span>,</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour =</span> <span class="st">"Previous therapy"</span>) <span class="sc">+</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit3_Lab_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Does the plot match the results of the statistical test?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Yes, the main effect of Previous Therapy is clear with the orange line consistently higher than the blue line. The Main effect of Medicated is clear as both lines point down to the right indicating a decrease of Anxiety with medication. Finally the non-significant interaction matches as both the lines are close to parallel.</p>
+</div>
+</div>
+<p>The final thing we should do is to add some effect size measures. For ANOVAs this is eta<sup>2</sup> and partial eta<sup>2</sup>. There are two functions from the <strong>rstatix</strong> package that we can use to calculate these, for a ANOVA with more than one IV it is more common to report partial eta<sup>2</sup>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">partial_eta_squared</span>(mdl) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 medicated           previous_therapy 
+               0.493205510                0.418843377 
+medicated:previous_therapy 
+               0.002125058 </code></pre>
+</div>
+</div>
+<p><strong>Write the results of the ANOVA in the way you would for a report:</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>A 2 (medicated) × 2 (previous therapy) between-subjects ANOVA was conducted on pre-treatment anxiety. There was a significant main effect of medication status, <em>F</em>(1, 96) = 93.43, <em>p</em> &lt; .001, partial η² = .49 , and a significant main effect of previous therapy, <em>F</em>(1, 96) = 69.19, <em>p</em> &lt; .001, partial η² = .42. The interaction between medication status and previous therapy was not significant, <em>F</em>(1, 96) = 0.20, <em>p</em> = .652, partial η² = .002. The effect of each factor on pre-treatment anxiety therefore did not depend on the level of the other.</p>
+</div>
+</div>
 
 
 </section>
