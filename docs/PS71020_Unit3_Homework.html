@@ -196,46 +196,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="section-a.-one-way-between-subjects-anova" class="level2">
 <h2 class="anchored" data-anchor-id="section-a.-one-way-between-subjects-anova">SECTION A. ONE-WAY BETWEEN SUBJECTS ANOVA</h2>
 <p>The data set in <strong>studyStrategyData.csv</strong> comes from an experiment in which 90 students read the same passage on the history of psychometrics, then are randomly assigned to one of three ways of studying it for 20 minutes (30 students per group): 1 - Re-reading - read the passage again 2 - Concept mapping - draw a diagram linking the key ideas 3 - Retrieval practice - close the passage and write down what they remember One week later everyone takes the same recall test (30 questions).</p>
-<p>Read the data from the csv.</p>
+<p>The data can be found on the VLE in this week’s homework files section or there is a direct download here <a href="https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/studyStrategyData.csv">Github Link</a></p>
+<p>Read the data from the .csv file.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"studyStrategyData.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Set up the factors.</p>
+<p>Set up the factors, since these are already specified as strings (letters instead of numbers), we can just use these as the levels, previously we had been dealing with factors with levels represented by numbers and labels represented by strings.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>strategy <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>strategy, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Re-reading"</span>,</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">"Concept mapping"</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">"Retrieval practice"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>What would the formula be to look at the effect of <code>strategy</code> on <code>recall</code>?</strong></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>aovFormula <span class="ot">&lt;-</span> recall <span class="sc">~</span> strategy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p><code>aovFormula &lt;- recall ~ strategy</code></p>
 </div>
-<p>Assumption checks and descriptive statistics</p>
+</div>
+<p>We can the carry out our assumption checks.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: carData</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(aovFormula,df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(aovFormula,df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Levene's Test for Homogeneity of Variance (center = median)
       Df F value Pr(&gt;F)
 group  2  0.8567 0.4281
       87               </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mdl <span class="ot">&lt;-</span> <span class="fu">aov</span>(aovFormula,df)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-strategy     2    671   335.5   16.53 8.21e-07 ***
-Residuals   87   1765    20.3                     
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<p><strong>What assumption does levene’s test check? And what does the result here indicate</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Homogeneity of variance, the result is not significant so the assumption holds.</p>
 </div>
 </div>
-<p>Normality of residuals</p>
+<p>We can build our ANOVA model using the <code>aov()</code> function, remember to assign the output to a variable so we can use it in subsequent steps, such as getting a summary.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(mdl<span class="sc">$</span>residuals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mdl <span class="ot">&lt;-</span> <span class="fu">aov</span>(aovFormula,df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The <code>mdl</code> object contains various bits of information, just like a dataframe we can access these using the <code>$</code> symbol. One of the most useful one is <code>mdl$residuals</code> which contains the residuals of the ANOVA model (the error term). One of the key assumptions of an ANOVA is that these are normally distributed.</p>
+<p><strong>What code would we use to test this assumption and produce the results seen below? What do the results indicate?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The code is: <code>shapiro.test(mdl$residuals)</code></p>
+<p>The result is not significant (<em>p</em> = 0.82) so the assumption is not violated.</p>
+</div>
+</div>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -244,9 +257,20 @@ data:  mdl$residuals
 W = 0.99132, p-value = 0.8232</code></pre>
 </div>
 </div>
-<p>Post-hoc tests and grouped descriptives</p>
+<p>Below is how to get an easy to read version of the ANOVA results:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+strategy     2    671   335.5   16.53 8.21e-07 ***
+Residuals   87   1765    20.3                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Post-hoc tests and grouped descriptive statistics:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'psych'</code></pre>
@@ -256,7 +280,7 @@ Attaching package: 'psych'</code></pre>
 
     logit</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(mdl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(mdl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -269,7 +293,7 @@ Concept mapping-Re-reading         1.633333 -1.140024 4.406691 0.3431459
 Retrieval practice-Re-reading      6.433333  3.659976 9.206691 0.0000010
 Retrieval practice-Concept mapping 4.800000  2.026643 7.573357 0.0002458</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describeBy</span>(df<span class="sc">$</span>recall, df<span class="sc">$</span>strategy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describeBy</span>(df<span class="sc">$</span>recall, df<span class="sc">$</span>strategy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Descriptive statistics by group 
@@ -286,9 +310,9 @@ group: Retrieval practice
 X1    1 30 19.2 4.94     19   19.04 5.93  11  30    19 0.27    -0.62 0.9</code></pre>
 </div>
 </div>
-<p>Effect size</p>
+<p>Effect size:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'rstatix'</code></pre>
@@ -298,21 +322,52 @@ Attaching package: 'rstatix'</code></pre>
 
     filter</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(mdl) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(mdl) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> strategy 
 0.2753969 </code></pre>
 </div>
 </div>
-<p>Boxplot with overlayed points</p>
+<p><strong>Write up the results in a standard format for a report:</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>A one-way between-subjects ANOVA showed a significant effect of study strategy on delayed recall, <em>F</em>(2, 87) = 16.53, <em>p</em> &lt; .001, η² = .28. Tukey HSD post hoc comparisons showed that retrieval practice (<em>M</em> = 19.2, <em>SD</em> = 4.94) produced significantly higher recall than both re-reading (<em>M</em> = 12.77, <em>SD</em> = 4.95) <em>p</em> &lt; .001 and concept mapping (<em>M</em> = 14.40, <em>SD</em> = 3.47) <em>p</em> &lt; .001. Re-reading and concept mapping did not differ significantly (<em>M</em>diff = 1.63, <em>p</em> = .343).</p>
+</div>
+</div>
+<p>Finally we can use the code below to create a boxplot with overlayed points:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(aovFormula, <span class="at">data =</span> df, <span class="at">outline =</span> <span class="cn">FALSE</span>) </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(aovFormula, <span class="at">data =</span> df, <span class="at">outline =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stripchart</span>(aovFormula, <span class="at">data =</span> df, <span class="at">vertical =</span> <span class="cn">TRUE</span>, <span class="at">method =</span> <span class="st">"jitter"</span>, <span class="at">jitter =</span> <span class="fl">0.05</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit3_Homework_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Does the boxplot support the results of the statistical test?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Yes, it shows that retrieval practice has higher recall than the other two groups, but that the other groups are very similar. These are in line with a significant ANOVA and the pattern observed in the post hoc tests. Also the variance in each group looks similar according to the boxplot, this matches the lack of significance in Levene’s test.</p>
+</div>
+</div>
+<p><strong>Try to edit the code used for the figure to give each bar a difference colour and give the figure a title.</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(aovFormula, <span class="at">data =</span> df, <span class="at">main =</span> <span class="st">"Boxplot of recall by group"</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"thistle"</span>,<span class="st">"skyblue"</span>,<span class="st">"peru"</span> ),<span class="at">outline =</span> <span class="cn">FALSE</span>) </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stripchart</span>(aovFormula, <span class="at">data =</span> df, <span class="at">vertical =</span> <span class="cn">TRUE</span>, <span class="at">method =</span> <span class="st">"jitter"</span>, <span class="at">jitter =</span> <span class="fl">0.05</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="PS71020_Unit3_Homework_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="PS71020_Unit3_Homework_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
+</div>
+</div>
 </div>
 </div>
 </div>

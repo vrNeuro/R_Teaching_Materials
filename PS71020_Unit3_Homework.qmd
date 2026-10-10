@@ -35,8 +35,9 @@ The data set in **studyStrategyData.csv** comes from an experiment in which 90 s
 3 - Retrieval practice - close the passage and write down what they remember
 One week later everyone takes the same recall test (30 questions).
 
+The data can be found on the VLE in this week's homework files section or there is a direct download here [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/studyStrategyData.csv)
 
-Read the data from the csv.
+Read the data from the .csv file.
 ```{r}
 #| echo: false
 df <- read.csv("data/studyStrategyData.csv")
@@ -48,7 +49,7 @@ df <- read.csv("studyStrategyData.csv")
 ```
 
 
-Set up the factors.
+Set up the factors, since these are already specified as strings (letters instead of numbers), we can just use these as the levels, previously we had been dealing with factors with levels represented by numbers and labels represented by strings.
 ```{r}
 df$strategy <- factor(df$strategy, levels = c("Re-reading",
                                              "Concept mapping",
@@ -57,27 +58,75 @@ df$strategy <- factor(df$strategy, levels = c("Re-reading",
 
 **What would the formula be to look at the effect of `strategy` on `recall`?**
 
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+`aovFormula <- recall ~ strategy`
+:::
+:::
+
 ```{r}
+#| echo: false
 aovFormula <- recall ~ strategy
 ```
 
-Assumption checks and descriptive statistics
+We can the carry out our assumption checks. 
+
+
+
 ```{r}
 library(car)
 leveneTest(aovFormula,df)
 
+```
+
+**What assumption does levene's test check? And what does the result here indicate**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+Homogeneity of variance, the result is not significant so the assumption holds.
+:::
+:::
+
+We can build our ANOVA model using the `aov()` function, remember to assign the output to a variable so we can use it in subsequent steps, such as getting a summary.
+```{r}
 mdl <- aov(aovFormula,df)
-summary(mdl)
-
-
 
 ```
-Normality of residuals
+
+The `mdl` object contains various bits of information, just like a dataframe we can access these using the `$` symbol. One of the most useful one is `mdl$residuals` which contains the residuals of the ANOVA model (the error term). One of the key assumptions of an ANOVA is that these are normally distributed. 
+
+**What code would we use to test this assumption and produce the results seen below? What do the results indicate?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+The code is:
+`shapiro.test(mdl$residuals)`
+
+The result is not significant (*p* = 0.82) so the assumption is not violated. 
+:::
+:::
+
+
 ```{r}
+#| echo: false
 shapiro.test(mdl$residuals)
 ```
 
-Post-hoc tests and grouped descriptives
+Below is how to get an easy to read version of the ANOVA results:
+```{r}
+summary(mdl)
+```
+
+Post-hoc tests and grouped descriptive statistics:
 ```{r}
 library(psych)
 TukeyHSD(mdl)
@@ -86,13 +135,23 @@ describeBy(df$recall, df$strategy)
 ```
 
 
-Effect size
+Effect size:
 ```{r}
 library(rstatix)
 eta_squared(mdl) 
 ```
+**Write up the results in a standard format for a report:**
 
-Boxplot with overlayed points
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+A one-way between-subjects ANOVA showed a significant effect of study strategy on delayed recall, *F*(2, 87) = 16.53, *p* < .001, η² = .28. Tukey HSD post hoc comparisons showed that retrieval practice (*M* = 19.2, *SD* = 4.94) produced significantly higher recall than both re-reading (*M* = 12.77, *SD* = 4.95) *p* < .001 and concept mapping (*M* = 14.40, *SD* = 3.47) *p* < .001. Re-reading and concept mapping did not differ significantly (*M*diff = 1.63, *p* = .343).
+:::
+:::
+
+Finally we can use the code below to create a boxplot with overlayed points:
 
 
 ```{r}
@@ -100,3 +159,31 @@ boxplot(aovFormula, data = df, outline = FALSE)
 stripchart(aovFormula, data = df, vertical = TRUE, method = "jitter", jitter = 0.05, pch = 19, add = TRUE)
 
 ```
+
+**Does the boxplot support the results of the statistical test?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+Yes, it shows that retrieval practice has higher recall than the other two groups, but that the other groups are very similar. These are in line with a significant ANOVA and the pattern observed in the post hoc tests. Also the variance in each group looks similar according to the boxplot, this matches the lack of significance in Levene's test.
+:::
+:::
+
+**Try to edit the code used for the figure to give each bar a difference colour and give the figure a title.**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+```{r}
+boxplot(aovFormula, data = df, main = "Boxplot of recall by group", col = c("thistle","skyblue","peru" ),outline = FALSE) 
+stripchart(aovFormula, data = df, vertical = TRUE, method = "jitter", jitter = 0.05, pch = 19, add = TRUE)
+
+```
+:::
+:::
+
+## SECTION B. REPEATED MEASURES ANOVA
