@@ -111,6 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="worksheet.css">
+<link rel="stylesheet" href="answer-gate.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -155,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul class="collapse">
   <li><a href="#quarto" id="toc-quarto" class="nav-link active" data-scroll-target="#quarto">Quarto</a></li>
-  <li><a href="#between-subjects-design" id="toc-between-subjects-design" class="nav-link" data-scroll-target="#between-subjects-design">BETWEEN SUBJECTS DESIGN</a></li>
+  <li><a href="#sec-between-subjects-designs" id="toc-sec-between-subjects-designs" class="nav-link" data-scroll-target="#sec-between-subjects-designs">BETWEEN SUBJECTS DESIGN</a></li>
   <li><a href="#within-subjcets-design" id="toc-within-subjcets-design" class="nav-link" data-scroll-target="#within-subjcets-design">WITHIN SUBJCETS DESIGN</a></li>
   <li><a href="#mixed-designs" id="toc-mixed-designs" class="nav-link" data-scroll-target="#mixed-designs">MIXED DESIGNS</a></li>
   </ul>
@@ -195,8 +196,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>You can copy these code snippits into your own RStudio to begin to build you own analyses. As you go through the document create a new R script in RStudio and add the code section one after another. By then of this each section you will have built an analysis pipeline for each type of design. You can then use this as a basis for future analyses.</p>
 </section>
-<section id="between-subjects-design" class="level2">
-<h2 class="anchored" data-anchor-id="between-subjects-design">BETWEEN SUBJECTS DESIGN</h2>
+<section id="sec-between-subjects-designs" class="level2">
+<h2 class="anchored" data-anchor-id="sec-between-subjects-designs">BETWEEN SUBJECTS DESIGN</h2>
 <p>This study looks at the effects of verbal reinforcement on the performance of 8 year old children given a series of fairly simple problems to solve. The independent variable (IV) of verbal reinforcement consisted of three (treatment) levels: positive (praise) for correct responses; negative (criticism) for incorrect responses; and silence regardless of response. The dependent variable (DV) was a measure of the number of simple problems correctly solved before the child decided not to continue. The researcher believed that the different types of reinforcement would differentially influence the number of problems solved by the children. A random sample of 30 eight year old children were selected and randomly assigned to one of the three treatments to form groups of equal size (n=10).</p>
 <p>The first thing we need to do is to read the data into R’s memory.</p>
 <p>The data is stored in a .csv file which is a common way to store data in psychology. We can use a function called <strong>read.csv</strong> to read the data from the csv file and assign it to a variable in R’s memory using the assign operator <strong>&lt;-</strong>. I’ve called this variable <strong>data</strong>, but you could call it whatever you want. However, the important thing to remember is that whatever you call it you will need to refer to it by the same name whenever we want to use it later in our analysis.</p>
@@ -589,7 +590,7 @@ F M
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(df,df<span class="sc">$</span>gender, colMeans)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `FUN()`:
-! 'x' must be numeric</code></pre>
+! 'x' must be numeric or complex</code></pre>
 </div>
 </div>
 <p>However, this produces an <strong>error</strong>. If we look at the <strong>error message</strong> it tells us important information about what went wrong. In general as you learn to write code learning how to spot and interpret common errors is one of the main skills, do not see these as a failure on your part, instead they are an opportunity to learn! The error message here tells us that “‘x’ must be numeric”. This is because the <code>colMeans()</code> function only knows how to calculate a mean value of numeric data.</p>
@@ -1063,6 +1064,7 @@ df$gender: M
   });
   </script>
 </div> <!-- /content -->
+<script src="answer-gate.js"></script>
 
 
 

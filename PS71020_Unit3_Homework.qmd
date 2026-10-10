@@ -1,0 +1,102 @@
+---
+title: "PS71020_Unit3_Homework"
+subtitle: "A Review of Basic Statistical Tests"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+    css: worksheet.css 
+---
+
+### Learning Outcomes: \ 
+
+1 - Use RStudio to perform a one way ANOVA and post-hoc tests \ 
+
+2 - Use RStudio to perform a repeated measures ANOVA\ 
+
+3 - Use RStudio to perform a mixed ANOVA \ 
+
+4 - Learn the standard way of reporting the results of these statistical tests and extracting the values from RStudio output \ 
+
+
+### Materials Used:
+
+We will use the packages **tidyr**, **car**, **rstatix**, **ggpubr** and **psych**, these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install it.
+
+
+
+## SECTION A. ONE-WAY BETWEEN SUBJECTS ANOVA
+
+The data set in **studyStrategyData.csv** comes from an experiment in which 90 students read the same passage on the history of psychometrics, then are randomly assigned to one of three ways of studying it for 20 minutes (30 students per group):
+1 - Re-reading        - read the passage again
+2 - Concept mapping   - draw a diagram linking the key ideas
+3 - Retrieval practice - close the passage and write down what they remember
+One week later everyone takes the same recall test (30 questions).
+
+
+Read the data from the csv.
+```{r}
+#| echo: false
+df <- read.csv("data/studyStrategyData.csv")
+```
+
+```{r}
+#| eval: false
+df <- read.csv("studyStrategyData.csv")
+```
+
+
+Set up the factors.
+```{r}
+df$strategy <- factor(df$strategy, levels = c("Re-reading",
+                                             "Concept mapping",
+                                             "Retrieval practice"))
+```
+
+**What would the formula be to look at the effect of `strategy` on `recall`?**
+
+```{r}
+aovFormula <- recall ~ strategy
+```
+
+Assumption checks and descriptive statistics
+```{r}
+library(car)
+leveneTest(aovFormula,df)
+
+mdl <- aov(aovFormula,df)
+summary(mdl)
+
+
+
+```
+Normality of residuals
+```{r}
+shapiro.test(mdl$residuals)
+```
+
+Post-hoc tests and grouped descriptives
+```{r}
+library(psych)
+TukeyHSD(mdl)
+
+describeBy(df$recall, df$strategy)
+```
+
+
+Effect size
+```{r}
+library(rstatix)
+eta_squared(mdl) 
+```
+
+Boxplot with overlayed points
+
+
+```{r}
+boxplot(aovFormula, data = df, outline = FALSE) 
+stripchart(aovFormula, data = df, vertical = TRUE, method = "jitter", jitter = 0.05, pch = 19, add = TRUE)
+
+```

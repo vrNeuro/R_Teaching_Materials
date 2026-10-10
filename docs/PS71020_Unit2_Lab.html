@@ -257,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="answer-box">
 <p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
 <div class="answer">
-<p>This data is wide format data, the alternative is tall format.</p>
+<p>This data is wide format data, the alternative is long format.</p>
 </div>
 </div>
 <p>We have some categorical variables in this data set, so we need to tell R that these are and what the different codes mean. <strong>Look at the explanation of the data above, which variables should be changed to be categorical?</strong></p>
@@ -284,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Mean   :317.4   Mean   : 7.901   Mean   : 7.686   Mean   :23.54  
  3rd Qu.:483.0   3rd Qu.:10.000   3rd Qu.: 9.000   3rd Qu.:27.00  
  Max.   :758.0   Max.   :81.000   Max.   :10.000   Max.   :35.00  
-                                                   NA's   :1      
+                                                   NAs    :1      
      INCOME        EMPLMNT         MSTATUS            ETHNICITY  
  Min.   : 1.00   Office:246   Married  :103   Caucasian    :424  
  1st Qu.: 2.50   Home  :219   Unmarried:362   Non-caucasian: 41  
@@ -292,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Mean   : 4.21                                                   
  3rd Qu.: 6.00                                                   
  Max.   :10.00                                                   
- NA's   :26                                                      </code></pre>
+ NAs    :26                                                      </code></pre>
 </div>
 </div>
 </section>
@@ -382,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mydata<span class="sc">$</span>ATTHOUSE<span class="sc">&lt;</span><span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   Mode   FALSE    TRUE    NA's 
+<pre><code>   Mode   FALSE    TRUE     NAs 
 logical     461       3       1 </code></pre>
 </div>
 </div>

@@ -158,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#section-a.-the-data-set" id="toc-section-a.-the-data-set" class="nav-link active" data-scroll-target="#section-a.-the-data-set">SECTION A. THE DATA SET</a></li>
   <li><a href="#section-b.-missing-data" id="toc-section-b.-missing-data" class="nav-link" data-scroll-target="#section-b.-missing-data">SECTION B. MISSING DATA</a></li>
   <li><a href="#section-c.-detecting-outliers-with-z-scores" id="toc-section-c.-detecting-outliers-with-z-scores" class="nav-link" data-scroll-target="#section-c.-detecting-outliers-with-z-scores">SECTION C. DETECTING OUTLIERS WITH Z-SCORES</a></li>
-  <li><a href="#section-d.-compound-plots" id="toc-section-d.-compound-plots" class="nav-link" data-scroll-target="#section-d.-compound-plots">SECTION D. COMPOUND PLOTS</a></li>
+  <li><a href="#sec-compound-plots" id="toc-sec-compound-plots" class="nav-link" data-scroll-target="#sec-compound-plots">SECTION D. COMPOUND PLOTS</a></li>
   </ul>
 </nav>
     </div>
@@ -253,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Mean   :2.67   Mean   : 1.89    Mean   : 35.12       Mean   :21.66           
  3rd Qu.:6.00   3rd Qu.: 3.00    3rd Qu.: 38.00       3rd Qu.:25.00           
  Max.   :8.00   Max.   :10.00    Max.   :444.00       Max.   :50.00           
-                                 NA's   :1            NA's   :1               
+                                 NAs    :1            NAs    :1               
  Lack_of_PerseveranceUPPS Sensation_SeekingUPPS Positive_UrgencyUPPS
  Min.   :10.00            Min.   :17.00         Min.   :14.00       
  1st Qu.:16.00            1st Qu.:32.00         1st Qu.:26.25       
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Mean   :19.91            Mean   :37.01         Mean   :32.13       
  3rd Qu.:23.00            3rd Qu.:43.75         3rd Qu.:39.00       
  Max.   :31.00            Max.   :48.00         Max.   :56.00       
- NA's   :1                NA's   :1             NA's   :1           
+ NAs    :1                NAs    :1             NAs    :1           
      DRIVE            FUN              RR             BAS             BIS      
  Min.   : 6.00   Min.   : 4.00   Min.   :12.00   Min.   :23.00   Min.   : 7.0  
  1st Qu.:11.00   1st Qu.:11.00   1st Qu.:16.00   1st Qu.:39.00   1st Qu.:17.0  
@@ -269,7 +269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Mean   :12.31   Mean   :12.64   Mean   :17.87   Mean   :42.82   Mean   :20.2  
  3rd Qu.:14.00   3rd Qu.:15.00   3rd Qu.:20.00   3rd Qu.:47.00   3rd Qu.:24.0  
  Max.   :16.00   Max.   :16.00   Max.   :20.00   Max.   :52.00   Max.   :28.0  
- NA's   :2       NA's   :2       NA's   :2       NA's   :2       NA's   :2     </code></pre>
+ NAs    :2       NAs    :2       NAs    :2       NAs    :2       NAs    :2     </code></pre>
 </div>
 </div>
 <p><strong>What is the extent of missing data in the dataset?</strong></p>
@@ -519,8 +519,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>One thing to keep in mind is that the z-score method assumes that the data is roughly normally distributed, in very skewed data it can pick up the tails of the distribution which might not be real outliers.</p>
 </section>
-<section id="section-d.-compound-plots" class="level2">
-<h2 class="anchored" data-anchor-id="section-d.-compound-plots">SECTION D. COMPOUND PLOTS</h2>
+<section id="sec-compound-plots" class="level2">
+<h2 class="anchored" data-anchor-id="sec-compound-plots">SECTION D. COMPOUND PLOTS</h2>
 <p>To visualise linearity, normality and homoscedasticity in a pair of variables is possible by creating separate plots. However, for doing this all in one plot we can use compound plots. These can be built using base <strong>R</strong> functions but some packages can make things much simpler.</p>
 <p>See <a href="./PS71020_Unit1_Lab.html#sec-packages-rstudio">Section E from Lab 1</a> for some more information on packages.</p>
 <p>In this case we are going to use a function called <code>ggscatterhist()</code> from a package called <strong>ggpubr</strong>. There are a lot of packages that start with <strong>gg</strong> and they are mainly extensions to a package called <strong>ggplot2</strong> which is the most widely used for plotting in R.</p>
@@ -528,31 +528,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'ggpubr' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: ggplot2</code></pre>
 </div>
 </div>
 <p>You will also see that it loaded the package <strong>ggplot2</strong> because some of the functions in <strong>ggpubr</strong> require other functions in <strong>ggplot2</strong>, this is called dependency between packages. <strong>R</strong> should normally handle dependencies for you and load any required packages automatically.</p>
 <p>The code below produces a scatter graph of <code>Positive_UrgencyUPPS</code> and <code>Sensation_SeekingUPPS</code>, and places the histograms in the margins.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggscatterhist</span>(dfImp, <span class="at">x =</span> <span class="st">"Positive_UrgencyUPPS"</span>, <span class="at">y =</span> <span class="st">"Sensation_SeekingUPPS"</span>,</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">add =</span> <span class="st">"reg.line"</span>,</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">conf.int =</span> <span class="cn">TRUE</span>,                                    </span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">margin.params =</span> <span class="fu">list</span>(<span class="at">fill =</span> <span class="st">"lightgray"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
-ℹ Please use the `linewidth` argument instead.
-ℹ The deprecated feature was likely used in the ggpubr package.
-  Please report the issue at &lt;https://github.com/kassambara/ggpubr/issues&gt;.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.
-ℹ Please use the `linewidth` argument instead.
-ℹ The deprecated feature was likely used in the ggpubr package.
-  Please report the issue at &lt;https://github.com/kassambara/ggpubr/issues&gt;.</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggscatterhist</span>(dfImp, <span class="at">x =</span> <span class="st">"Positive_UrgencyUPPS"</span>, <span class="at">y =</span> <span class="st">"Sensation_SeekingUPPS"</span>,</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">add =</span> <span class="st">"reg.line"</span>,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">conf.int =</span> <span class="cn">TRUE</span>,                                    </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">margin.params =</span> <span class="fu">list</span>(<span class="at">fill =</span> <span class="st">"lightgray"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

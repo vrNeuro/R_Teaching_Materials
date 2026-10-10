@@ -155,7 +155,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#section-a.-the-data-set" id="toc-section-a.-the-data-set" class="nav-link active" data-scroll-target="#section-a.-the-data-set">SECTION A. THE DATA SET</a></li>
+  <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link active" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
+  <li><a href="#section-a.-the-data-set" id="toc-section-a.-the-data-set" class="nav-link" data-scroll-target="#section-a.-the-data-set">SECTION A. THE DATA SET</a></li>
   <li><a href="#section-b.-t-tests" id="toc-section-b.-t-tests" class="nav-link" data-scroll-target="#section-b.-t-tests">SECTION B. T-TESTS</a></li>
   <li><a href="#section-c.-paired-samples-t-test-and-correlation" id="toc-section-c.-paired-samples-t-test-and-correlation" class="nav-link" data-scroll-target="#section-c.-paired-samples-t-test-and-correlation">SECTION C. PAIRED SAMPLES T-TEST AND CORRELATION</a></li>
   <li><a href="#section-d.-anovas" id="toc-section-d.-anovas" class="nav-link" data-scroll-target="#section-d.-anovas">SECTION D. ANOVAs</a></li>
@@ -189,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="learning-outcomes">Learning Outcomes: &nbsp;</h3>
 <p>1 - Use RStudio to perform t-tests and assumption checks &nbsp;</p>
 <p>2 - Use RStudio to produce scatter plots and perform correlations &nbsp;</p>
-<p>3 - Use RStudio to perform ANOVAs and post-hoc tests &nbsp;</p>
+<p>3 - Use RStudio to perform ANOVAs &nbsp;</p>
 <p>4 - Learn the standard way of reporting the results of these statistical tests and extracting the values from RStudio output &nbsp;</p>
 </section>
 <section id="materials-used" class="level3">
@@ -211,6 +212,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>If you have any queries during the class, please feel free to ask your lab tutors. If your question relates specifically to the lecture content or the homework sheets, please contact Peter Holland by email or use the forum on the VLE page.*</p>
 </div>
 </div>
+</section>
+<section id="create-a-new-project" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-new-project">CREATE A NEW PROJECT</h2>
+<p>Just as we did in previous weeks we are going to start by creating a new project for this week’s lab. Download the data from the VLE (In the Week 3 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: <a href="https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/AnxietyPrePostData.csv">Github Link</a>.</p>
+<p>If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.</p>
+<p>Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.</p>
 </section>
 <section id="section-a.-the-data-set" class="level2">
 <h2 class="anchored" data-anchor-id="section-a.-the-data-set">SECTION A. THE DATA SET</h2>
@@ -511,9 +518,6 @@ sample estimates:
 <p>However, it is nicer to use the combined plots shown in the lecture that can be created with the <strong>ggpubr</strong> package. You can find the code for creating one of these here: <a href="./PS71020_Unit2_Homework.html#sec-compound-plots">Week 2 Homework 2</a>. Try to modify that code to produce the plot shown below:</p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'ggpubr' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: ggplot2</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
@@ -524,18 +528,6 @@ Attaching package: 'ggplot2'</code></pre>
 <pre><code>The following objects are masked from 'package:psych':
 
     %+%, alpha</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
-ℹ Please use the `linewidth` argument instead.
-ℹ The deprecated feature was likely used in the ggpubr package.
-  Please report the issue at &lt;https://github.com/kassambara/ggpubr/issues&gt;.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.
-ℹ Please use the `linewidth` argument instead.
-ℹ The deprecated feature was likely used in the ggpubr package.
-  Please report the issue at &lt;https://github.com/kassambara/ggpubr/issues&gt;.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -578,7 +570,7 @@ sample estimates:
 </div>
 <p>We have found that there is a relationship between pre and post anxiety levels. However, we should check statistically whether the intervention significantly affected anxiety. One way to do this in base <strong>R</strong> would be to use the following code:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(df<span class="sc">$</span>pre_anxiety, df<span class="sc">$</span>post_anxiety, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(df<span class="sc">$</span>pre_anxiety, df<span class="sc">$</span>post_anxiety, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Paired t-test
@@ -596,15 +588,15 @@ mean difference
 <p>However, for calculating effect size measures and for more complex statistical designs we are going to use the <strong>rstatix</strong> package. Most of the functions in the <strong>rstatix</strong> package are designed to work with <strong>long</strong> format dataframes. Currently, our data is in a <strong>wide</strong> format with each row representing one participant and each column representing different bits of data about that participant.</p>
 <p>Below is the code to transform our data into long format. Take some time to read through the code and comments and examine the <code>df_long</code> dataframe to understand what has changed about how the data is arranged.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr) <span class="co">#this package include the pivot_ functions we need</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">#change to long format, </span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(df,</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">cols      =</span> <span class="fu">c</span>(pre_anxiety, post_anxiety), <span class="co">#using these old columns</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to  =</span> <span class="st">"time"</span>, <span class="co">#this is the new column to hold the factor names</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">"anxiety"</span>) <span class="co">#this is the new column to hold the values</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure each participant's two scores line up</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> df_long[<span class="fu">order</span>(df_long<span class="sc">$</span>id, df_long<span class="sc">$</span>time), ]   <span class="co"># use your participant ID column</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr) <span class="co">#this package include the pivot_ functions we need</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#change to long format, </span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(df,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">cols      =</span> <span class="fu">c</span>(pre_anxiety, post_anxiety), <span class="co">#using these old columns</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to  =</span> <span class="st">"time"</span>, <span class="co">#this is the new column to hold the factor names</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">"anxiety"</span>) <span class="co">#this is the new column to hold the values</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure each participant's two scores line up</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> df_long[<span class="fu">order</span>(df_long<span class="sc">$</span>id, df_long<span class="sc">$</span>time), ]   <span class="co"># use your participant ID column</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can now use the same formula style input as we did for the independent samples t-test to perform a paired samples t-test and get the Cohen’s D value. We just need to tell both functions that this is paired data, we do this with an input argument of <code>paired = TRUE</code>.</p>
 <p><strong>If we want to test the effect of <code>time</code> on <code>anxiety</code>, what is the formula we would use?</strong></p>
@@ -614,23 +606,16 @@ mean difference
 <p><code>pairedFormula &lt;- anxiety ~ time</code></p>
 </div>
 </div>
-<p>Here is the code to perform the t-test and calculate Cohen’s D:</p>
+<p>Here is the code to perform the t-test (using the <strong>rstatix</strong> <code>t_test()</code> function instead of the base <strong>R</strong> <code>t.test()</code> function) and calculate Cohen’s D:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pairedFormula, df_long, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(df_long, anxiety <span class="sc">~</span> time, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-    Paired t-test
-
-data:  anxiety by time
-t = -13.936, df = 99, p-value &lt; 2.2e-16
-alternative hypothesis: true mean difference is not equal to 0
-95 percent confidence interval:
- -22.23320 -16.69126
-sample estimates:
-mean difference 
-      -19.46223 </code></pre>
+<pre><code># A tibble: 1 × 8
+  .y.     group1       group2         n1    n2 statistic    df        p
+* &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;       &lt;int&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+1 anxiety post_anxiety pre_anxiety   100   100     -13.9    99 4.45e-25</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(df_long, pairedFormula, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(df_long, pairedFormula, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
   .y.     group1       group2      effsize    n1    n2 magnitude
@@ -652,10 +637,10 @@ mean difference
 <p>When using a formula object we list our IVs on the right hand side of the <code>~</code> symbol. If we use the formula <code>pre_anxiety ~ medicated + previous_therapy</code>, this would ask for the <strong>main effects</strong> of both IVs but it would not estimate the <strong>interaction effect</strong>. To specify an interaction between two IVs we place the <code>:</code> between them. So the formula for both main effects and their interaction would be: <code>pre_anxiety ~ medicated + previous_therapy + medicated:previous_therapy</code>.</p>
 <p>To perform an ANOVA with this formula we use the <code>aov()</code> function. This Because we want to use the output of this to summarise and calculate effect sizes we want to assign this output to a variable. Below is the code to do this and to get a summary of the ANOVA results:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perform the anova and assign the output to an object called mdl</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>mdl <span class="ot">&lt;-</span> <span class="fu">aov</span>(pre_anxiety <span class="sc">~</span> medicated <span class="sc">+</span> previous_therapy <span class="sc">+</span> medicated<span class="sc">:</span>previous_therapy, <span class="at">data =</span> df)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summarise the mdl </span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdl)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perform the anova and assign the output to an object called mdl</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>mdl <span class="ot">&lt;-</span> <span class="fu">aov</span>(pre_anxiety <span class="sc">~</span> medicated <span class="sc">+</span> previous_therapy <span class="sc">+</span> medicated<span class="sc">:</span>previous_therapy, <span class="at">data =</span> df)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summarise the mdl </span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdl)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                           Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 medicated                   1   4702    4702  93.426 7.77e-16 ***
@@ -675,18 +660,18 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>We can use the code below to create an interaction plot of this data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interaction plot</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> medicated, <span class="at">y =</span> pre_anxiety,</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> previous_therapy, <span class="at">group =</span> previous_therapy)) <span class="sc">+</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_se, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"cornflowerblue"</span>, <span class="st">"orange"</span>)) <span class="sc">+</span></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Medicated"</span>, <span class="at">y =</span> <span class="st">"Mean pre-treatment anxiety (error bars = 1 SE)"</span>,</span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour =</span> <span class="st">"Previous therapy"</span>) <span class="sc">+</span></span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interaction plot</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> medicated, <span class="at">y =</span> pre_anxiety,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> previous_therapy, <span class="at">group =</span> previous_therapy)) <span class="sc">+</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_se, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"cornflowerblue"</span>, <span class="st">"orange"</span>)) <span class="sc">+</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Medicated"</span>, <span class="at">y =</span> <span class="st">"Mean pre-treatment anxiety (error bars = 1 SE)"</span>,</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour =</span> <span class="st">"Previous therapy"</span>) <span class="sc">+</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -704,7 +689,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>The final thing we should do is to add some effect size measures. For ANOVAs this is eta<sup>2</sup> and partial eta<sup>2</sup>. There are two functions from the <strong>rstatix</strong> package that we can use to calculate these, for a ANOVA with more than one IV it is more common to report partial eta<sup>2</sup>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">partial_eta_squared</span>(mdl) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">partial_eta_squared</span>(mdl) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 medicated           previous_therapy 
                0.493205510                0.418843377 

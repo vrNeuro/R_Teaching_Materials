@@ -16,7 +16,7 @@ format:
 
 2 - Use RStudio to produce scatter plots and perform correlations \ 
 
-3 - Use RStudio to perform ANOVAs and post-hoc tests \ 
+3 - Use RStudio to perform ANOVAs \ 
 
 4 - Learn the standard way of reporting the results of these statistical tests and extracting the values from RStudio output \ 
 
@@ -37,6 +37,13 @@ A complete model answers script will be available on the VLE page from Fridays a
 If you have any queries during the class, please feel free to ask your lab tutors. If your question relates specifically to the lecture content or the homework sheets, please contact Peter Holland by email or use the forum on the VLE page.*
 :::
 
+## CREATE A NEW PROJECT
+
+Just as we did in previous weeks we are going to start by creating a new project for this week's lab. Download the data from the VLE (In the Week 3 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/AnxietyPrePostData.csv).
+
+If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.
+
+Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script. 
 
 ## SECTION A. THE DATA SET
 
@@ -55,6 +62,7 @@ anxiety prior to treatment (pre_anxiety) and after treatment (post_anxiety).
 Anxiety scores range from 0 to 100 with higher scores reflecting greater anxiety.
 
 The researchers were interested in variables related to baseline anxiety (i.e. pre_anxiety), whether treatment reduced anxiety. 
+
 
 
 
@@ -388,9 +396,9 @@ We can now use the same formula style input as we did for the independent sample
 pairedFormula <- anxiety ~ time
 ```
 
-Here is the code to perform the t-test and calculate Cohen's D:
+Here is the code to perform the t-test (using the **rstatix** `t_test()` function instead of the base **R** `t.test()` function) and calculate Cohen's D:
 ```{r}
-t.test(pairedFormula, df_long, paired = TRUE)
+t_test(df_long, anxiety ~ time, paired = TRUE)
 cohens_d(df_long, pairedFormula, paired = TRUE)
 ```
 
