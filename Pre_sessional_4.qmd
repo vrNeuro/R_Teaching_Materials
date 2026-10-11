@@ -120,7 +120,7 @@ So we would add this information to our earlier write up of the overall ANOVA re
 A one-way ANOVA revealed a significant effect of political group on conspiracy beliefs, *F*(2, 27) = 54.85, *p* < .001. Post hoc comparisons using the Tukey HSD test indicated that conspiracy beliefs were significantly lower in the centre group than in the left group (*Mdiff* = −9.10, *p* = .005). Conspiracy beliefs were significantly higher in the right group than in the left group (*Mdiff* = 17.90, *p* < .001), and significantly higher in the right group than in the centre group (*Mdiff* = 27.00, *p* < .001). All three pairwise comparisons were therefore statistically significant, indicating that each political group differed significantly from the other two on conspiracy beliefs.
 
 
-## ONE-WAY ANOVA (WITHIN)
+## ONE-WAY ANOVA (WITHIN) {#sec-1way-RMANOVA}
 
 The data we will look at for the next section will be from an experiment that investigated the performance of participants on three different spatial memory tasks, with each participant completing all three tasks. The experiment also recorded whether the participants were regular usersof virtual reality devices as well as the number of hours they spent each week playing computer games.
 

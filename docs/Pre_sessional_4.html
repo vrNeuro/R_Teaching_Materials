@@ -156,8 +156,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul class="collapse">
   <li><a href="#quarto" id="toc-quarto" class="nav-link active" data-scroll-target="#quarto">Quarto</a></li>
-  <li><a href="#one-way-anova-between" id="toc-one-way-anova-between" class="nav-link" data-scroll-target="#one-way-anova-between">ONE-WAY ANOVA (BETWEEN)</a></li>
-  <li><a href="#one-way-anova-within" id="toc-one-way-anova-within" class="nav-link" data-scroll-target="#one-way-anova-within">ONE-WAY ANOVA (WITHIN)</a></li>
+  <li><a href="#sec-1way-ANOVA" id="toc-sec-1way-ANOVA" class="nav-link" data-scroll-target="#sec-1way-ANOVA">ONE-WAY ANOVA (BETWEEN)</a></li>
+  <li><a href="#sec-1way-RMANOVA" id="toc-sec-1way-RMANOVA" class="nav-link" data-scroll-target="#sec-1way-RMANOVA">ONE-WAY ANOVA (WITHIN)</a></li>
   <li><a href="#mixed-two-way-anova" id="toc-mixed-two-way-anova" class="nav-link" data-scroll-target="#mixed-two-way-anova">MIXED TWO-WAY ANOVA</a></li>
   </ul>
 </nav>
@@ -196,8 +196,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>You can copy these code snippits into your own RStudio to begin to build you own analyses. As you go through the document create a new R script in RStudio and add the code section one after another. By then of this each section you will have built an analysis pipeline for each type of design. You can then use this as a basis for future analyses.</p>
 </section>
-<section id="one-way-anova-between" class="level2">
-<h2 class="anchored" data-anchor-id="one-way-anova-between">ONE-WAY ANOVA (BETWEEN)</h2>
+<section id="sec-1way-ANOVA" class="level2">
+<h2 class="anchored" data-anchor-id="sec-1way-ANOVA">ONE-WAY ANOVA (BETWEEN)</h2>
 <p>The first data set we are going to work with, is from a study that looked at the level of conspiracy beliefs (scored from a questionnaire) and the political ideology of the 30 participants which was categorised into 3 levels based on the party they voted for in the last election.</p>
 <p>Before we load the data what is a good practice to do to our <strong>R</strong> Environment? What is the code to do this?</p>
 <textarea rows="2" cols="60" placeholder="Type your answer here..."></textarea>
@@ -239,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Mean   :2       Mean   :66.63     
  3rd Qu.:3       3rd Qu.:77.75     
  Max.   :3       Max.   :91.00     
- NA's   :71      NA's   :71        </code></pre>
+ NAs    :71      NAs    :71        </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(df,class)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -259,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#check that it has been properly configured using</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>political_group)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  left centre  right   NA's 
+<pre><code>  left centre  right    NAs 
     10     10     10     71 </code></pre>
 </div>
 </div>
@@ -432,8 +432,8 @@ right-centre 27.0  20.4962 33.503802 0.0000000</code></pre>
 <p>So we would add this information to our earlier write up of the overall ANOVA results to give a full report:</p>
 <p>A one-way ANOVA revealed a significant effect of political group on conspiracy beliefs, <em>F</em>(2, 27) = 54.85, <em>p</em> &lt; .001. Post hoc comparisons using the Tukey HSD test indicated that conspiracy beliefs were significantly lower in the centre group than in the left group (<em>Mdiff</em> = −9.10, <em>p</em> = .005). Conspiracy beliefs were significantly higher in the right group than in the left group (<em>Mdiff</em> = 17.90, <em>p</em> &lt; .001), and significantly higher in the right group than in the centre group (<em>Mdiff</em> = 27.00, <em>p</em> &lt; .001). All three pairwise comparisons were therefore statistically significant, indicating that each political group differed significantly from the other two on conspiracy beliefs.</p>
 </section>
-<section id="one-way-anova-within" class="level2">
-<h2 class="anchored" data-anchor-id="one-way-anova-within">ONE-WAY ANOVA (WITHIN)</h2>
+<section id="sec-1way-RMANOVA" class="level2">
+<h2 class="anchored" data-anchor-id="sec-1way-RMANOVA">ONE-WAY ANOVA (WITHIN)</h2>
 <p>The data we will look at for the next section will be from an experiment that investigated the performance of participants on three different spatial memory tasks, with each participant completing all three tasks. The experiment also recorded whether the participants were regular usersof virtual reality devices as well as the number of hours they spent each week playing computer games.</p>
 <p>As usual we will clear the Environment of variables and load the csv file:</p>
 <div class="cell">

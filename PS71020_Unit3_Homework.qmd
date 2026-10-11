@@ -23,7 +23,7 @@ format:
 
 ### Materials Used:
 
-We will use the packages **tidyr**, **car**, **rstatix**, **ggpubr** and **psych**, these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install it.
+We will use the packages **tidyr**, **car**, **rstatix**, **ggplot2**, these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install it.
 
 
 
@@ -187,3 +187,390 @@ stripchart(aovFormula, data = df, vertical = TRUE, method = "jitter", jitter = 0
 :::
 
 ## SECTION B. REPEATED MEASURES ANOVA
+
+The data for this section is from a fake mindfulness intervention study in students. 30 students filled out the Perceived Stress Scale. The scale ranges from 0-40 with higher scores indicating higher stress levels. The students completed the scale at 3 time points: \ 
+
+1 - Before the intervention `stress_pre` \ 
+
+2 - Immediately after the intervention `stress_post` \ 
+
+3 - One week later `stress_followup` \ 
+
+The `id` of the participant is also included as a variable. The file is **stress_repeated_1x3.csv** and can be found inthe homework section of the VLE or you can download directly from here: [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/stress_repeated_1x3.csv).
+
+
+```{r}
+#| echo: false
+rm(list = ls()) #clear the environment
+df <- read.csv("data/stress_repeated_1x3.csv")
+```
+
+```{r}
+#| eval: false
+rm(list = ls()) #clear the environment
+df <- read.csv("stress_repeated_1x3.csv")
+```
+
+**What is the key difference between a 1x3 between subjects ANOVA and a 1x3 repeated measures ANOVA?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+In a between subjects design each participant only takes part in one condition, in a repeated measures design each participant is measured in each condition/time point.
+:::
+:::
+
+The data is currently in wide format, however, the function from the **rstatix** package that we will use are designed for data in long format. Below is the code required to change the format of the data. Take some time to have a look at each of the input arguments to understand what is going on.
+
+```{r}
+library(tidyr)
+
+dfLong <- pivot_longer(df, cols = starts_with("stress"), names_to = "Time", values_to = "Score")
+
+# we still need to properly set up our factor variable
+dfLong$Time <- factor(dfLong$Time,
+                       levels = c("stress_pre", "stress_post", "stress_followup"),
+                       labels = c("Pre", "Post", "Follow-up"))
+```
+
+**What does the `cols = ` input argument refer to?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+The are the columns that we want to get the data from, here I've used a useful shorthand method `starts_with()` that will find all columns that have names that start with "stress". However, we could have used `c("stress_pre","stress_post","stress_followup")`. To accomplish the same thing. Notice that we haven't included the `id` variable in this list. 
+:::
+:::
+
+**What does the `names_to = ` input argument refer to?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+This is where the old column titles are going to be stored in a new column called `dfLong$Time` to label which time each bit of data came from.
+:::
+:::
+
+**What does the `values_to = ` input argument refer to?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+This is where the questionnaire scores are going to be stored in a new column called `dfLong$Score` to contain the bit of data associated with that `id` and that `Time`.
+:::
+:::
+
+It is possible to use the **base R** `aov()` function to perform a repeated measures ANOVA. You can see how this is done in [Tutorial 5](Pre_sessional_4.qmd#sec-1way-RMANOVA). However, the **rstatix** package provides us with some useful additional function for effect size so we are going to use it to perform the ANOVA as well. Also if you look at the help for functions in this package like `anova_test()` it contains hyperlinks to some useful tutorials and code examples for running various examples of these analyses.
+
+```{r}
+library(rstatix)
+
+res <- anova_test(data = dfLong, dv = Score, wid = id,
+                  within = Time, effect.size = "pes")
+
+res  #print the result to screen
+
+```
+
+In the code above: \ 
+The `dv = ` argument specifies which column in `dfLong` to use as the **Dependent Variable**. \ 
+The `wid = ` argument specifies which variable indicates which data comes from the same subject. \ 
+The `within = ` argument specifies which variable is the within subjects factor. \ 
+The `effect.size = "pes"` specifies that we want our effect size measure to be partial eta^2^.
+
+Looking at the output, multiple things are returned within `res`, including Mauchly's Test For Sphericity. **What is this test checking and has the assumption been violated in this case?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+Sphericity is the assumption that the differences between pairs of the time points all have equal variances. In this case the test is not significant *p* = 0.84 and the assumption is not violated. If it had been violated we would have used a correction such as Greenhouse-Geiser to account for this. 
+:::
+:::
+
+We can also use another very useful function from **rstatix** called `get_anova_table()`. This returns the ANOVA table and will automatically apply a correction (GG by default) if the sphericity test is violated.
+
+```{r}
+get_anova_table(res)
+```
+**What is a telltale sign that no correction has been applied here?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+Both the degrees of freedom values DFn and DFd are integers (2,58). The corrections work by adjusting these and rarely return integers. You can see this in the `res$`Sphericity Corrections` table in DF[GG] and DF[HF].
+:::
+:::
+
+**We have a significant ANOVA with p<0.001, is that all we need to check?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+No, we know that there is an effect of Time on Score but we don't know which timepoints differ from each other so we need to follow-up with post-hoc tests. In a repeated measures ANOVA these are pairwise t-tests (as the data are dependent).
+:::
+:::
+
+The **rstatix** package is useful here as it contains two functions that can perform this test and also calculate the Cohen's D values for these comparisons. As we are conducting multiple tests we need to apply what is called a multiple comparison correction. When we performed a one-way between subjects ANOVA we used the function `TukeyHSD()` to apply this correction, here we will use a **bonferroni** correction.
+
+```{r}
+pwc <- pairwise_t_test(dfLong, Score ~ Time,
+                       paired = TRUE,
+                       p.adjust.method = "bonferroni")
+pwc
+
+#calculate Cohen's D
+pwd <- cohens_d(dfLong, Score ~ Time, paired = TRUE)
+
+pwd
+
+
+#get descriptive statistics
+get_summary_stats(df, stress_pre, stress_post, stress_followup, type = "mean_sd")
+```
+
+**Which comparisons show a significant difference?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+Both followup and post are significantly different from pre, but they are not different from each other. This suggests the intervention changed the scores but that they did not change between the post and followup periods. 
+:::
+:::
+
+**Write out the results of the tests in the standard APA format:**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+A one-way repeated measures ANOVA showed a significant effect of time on perceived stress, *F*(2, 58) = 38.95, *p* < .001, partial η² = .57. Mauchly’s test indicated that the assumption of sphericity was met, *W* = .99, *p* = .838, so no correction was applied. Bonferroni-adjusted paired comparisons showed that stress was significantly lower post-programme (*M* = 16.83, *SD* = 5.15) than at baseline (*M* = 24.03, *SD* = 5.78), *t*(29) = −7.75, *p* < .001, *d* = −1.42, and significantly lower at follow-up (*M* = 17.57, *SD* = 5.62) than at baseline, *t*(29) = −7.06, *p* < .001, *d* = −1.29. Stress at follow-up did not differ significantly from stress post-programme, *t*(29) = 0.87, *p* > .999, *d* = 0.16. Stress therefore fell after the programme and the reduction was maintained over one week.
+:::
+:::
+
+We can create a simple boxplot for this using the following code:
+```{r}
+boxplot(df[, c("stress_pre", "stress_post", "stress_followup")],
+        main = "Stress over Time", ylab = "Stress Score",
+        boxwex = 0.4)
+
+```
+However, by using the package **ggplot2** we can create much nicer ways of displaying this. Don't worry if this code appears confusing, try to edit parts of it like the colours to understand what the individual lines do.
+```{r}
+library(ggplot2)
+ggplot(dfLong, aes(x = Time, y = Score)) +
+  geom_boxplot(width = 0.4, outlier.shape = NA,
+               fill = "cornflowerblue", alpha = 0.4) +
+  geom_line(aes(group = id), colour = "grey50", alpha = 0.5) +
+  geom_point(colour = "grey20", alpha = 0.7, size = 1.8) +
+  labs(x = "Time point", y = "Perceived stress") +
+  theme_minimal(base_size = 14)
+
+
+```
+
+## SECTION C. MIXED-ANOVA
+
+We will now look at a data set that contains a within subject IV as well as a between subjects IV. 
+
+The data for this section is from a fake mindfulness intervention study in students. 90 students filled out the Perceived Stress Scale. The scale ranges from 0-40 with higher scores indicating higher stress levels. The students completed the scale at 3 time points: \ 
+
+1 - Before the intervention `stress_pre` \ 
+
+2 - Immediately after the intervention `stress_post` \ 
+
+3 - One week later `stress_followup` \ 
+
+4 - group \ 
+
+There were 3 separate groups of students, the Mindfulness group is identical to those in the previous analysis. However, there are 30 students who underwent CBT, and another 30 who were on the waitlist for receiving an intervention. 
+
+The `id` of the participant is also included as a variable. The file is **stress_mixed_3x3.csv** and can be found in the homework section of the VLE or you can download directly from here: [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/stress_mixed_3x3.csv).
+
+
+```{r}
+#| echo: false
+rm(list = ls()) #clear the environment
+df <- read.csv("data/stress_mixed_3x3.csv")
+```
+
+```{r}
+#| eval: false
+rm(list = ls()) #clear the environment
+df <- read.csv("stress_mixed_3x3.csv")
+```
+
+
+**In this study what is the between subjects IV and what is the within subjects IV?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+Time is the within subjects IV: all participants were measured at each of the 3 timepoints.
+group is the between subjects IV: each student only belonged to one group.
+:::
+:::
+
+
+We again need to change the format of our data set to be long. The code to do this is the same as before, the only addition is that we need to also set up our `group` variable as a factor. 
+```{r}
+
+library(tidyr)
+
+dfLong <- pivot_longer(df, cols = starts_with("stress"), names_to = "Time", values_to = "Score")
+
+# we still need to properly set up our factor variable
+dfLong$Time <- factor(dfLong$Time,
+                       levels = c("stress_pre", "stress_post", "stress_followup"),
+                       labels = c("Pre", "Post", "Follow-up"))
+#now we need to do the same for the group variable.
+dfLong$group <- factor(dfLong$group,
+                       levels = c("Mindfulness", "CBT", "Waitlist"),
+                       )
+
+head(dfLong)
+```
+
+Here is some very similar code to create the **ggplot** figure. Compare this code to the earlier one for the one way repeated measures ANOVA. 
+
+
+```{r}
+ggplot(dfLong, aes(x = Time, y = Score, fill = group)) +
+  geom_boxplot(width = 0.6, outlier.shape = NA, alpha = 0.4,
+               position = position_dodge(width = 0.75)) +
+  geom_point(shape = 21, colour = "grey20", alpha = 0.7, size = 1.8,
+             position = position_jitterdodge(jitter.width = 0.1,
+                                             dodge.width = 0.75)) +
+  scale_fill_manual(values = c("cornflowerblue", "orange","grey70")) +
+  labs(x = "Time point", y = "Perceived stress", fill = "Group") +
+  theme_minimal(base_size = 14)
+
+```
+
+**There is no need to fully understand what is going on but what are some differences you can spot?**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+`aes(x = Time, y = Score, fill = group)`  
+This used to be `aes(x = Time, y = Score)`, now because we want to fill the boxplots with different colours based on `group`, we add `fill = group` as the last input.
+
+`geom_line(aes(group = id), colour = "grey50", alpha = 0.5)` is no longer there, this is because we don't want to draw any connecting lines anymore as they are very hard to follow in this case.
+
+`scale_fill_manual(values = c("cornflowerblue", "orange","grey70"))` has been introduced, this is what we use to set out the colours of each of the groups.
+
+`labs(x = "Time point", y = "Perceived stress", fill = "Group")` has also expanded to include the fact that we are colouring by group.
+
+Both the `geom_boxplot()` and `geom_point()` functions have an extra argument with `position =`. In the case of the boxplot this sets the boxplots to 'dodge' so that the three groups at one timepoint they don't overlap. In the case of the points, a 'jitter' is applied (the random left/right offsets of the individual points).
+:::
+:::
+
+Try playing around with some aspects of the code such as the colours, jitter size etc.
+
+**What patterns can we see in the data?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+ In the pre Time point, all three groups appear to be at similar level of stress. However, in both the post and followup timepoints the Waitlist groups seems to have not changed from pre levels, but the other two groups have reduced. It's unclear if the pattern of the CBT and mindfulness groups are different enough to be signficant but there is a hint that CBT reduces even more at followup. Also the CBT group appears to have higher variance at all three time points.
+:::
+:::
+
+Before running the ANOVA we need to check some assumptions, we will be using `leveneTest()` from the **car** package as we did in the lab. However, in this case we need to check if the homogeneity of variances between the groups is ok at all three timepoints seperately. To do this we are going to use the `by()` function. In the lab we used `by()` to apply the `shapiro.test()` function to each group separately. Here it is a little bit more complex but the idea is the same:
+```{r}
+library(car)
+
+by(dfLong, dfLong$Time, function(d) leveneTest(Score ~ group, data = d))
+
+```
+
+The code tells R to apply Levene's test to check if HoV holds for the Scores in different groups with the formula `Score ~ group`. The second input into `by()` tells it to do this separately at each time point. The reason we need to use the `function(d)` part here is that `leveneTest()` needs two input arguments and this is more complex to set up within the `by()` function.
+
+**What are the results of the levene's tests?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+The HoV assumption is met for both the post and followup timepoints. However, it is violated at the pre timepoint (*p* = 0.046). However, this is a very small violation and given the equal group sizes here is very unlikely to bias our results so we will continue as we are.
+:::
+:::
+
+Previously we used the code:
+`res <- anova_test(data = dfLong, dv = Score, wid = id, within = Time)` \ 
+to perform out 1x3 repeated measures ANOVA. 
+
+**Try to read the help for `anova_test()` to see how to add a between subjects factor of `group`.**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+```{r}
+# The ANOVA itself reports Mauchly's test and the sphericity corrections
+res <- anova_test(data = dfLong, dv = Score, wid = id,
+           between = group, within = Time)
+get_anova_table(res)
+```
+:::
+:::
+
+
+**Try to read the help for `anova_test()` to see how to add a between subjects factor of `group`.**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+```{r}
+# The ANOVA itself reports Mauchly's test and the sphericity corrections
+res <- anova_test(data = dfLong, dv = Score, wid = id,
+           between = group, within = Time, effect.size = "pes")
+res
+get_anova_table(res)
+```
+:::
+:::
+
+
+**Try to write up the results in a standard format:**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+A 3 (group: waitlist, mindfulness, CBT) × 3 (time: pre, post, follow-up) mixed ANOVA showed a significant main effect of group, *F*(2, 87) = 3.91, *p* = .024, partial η² = .08, and a significant main effect of time, *F*(2, 174) = 71.81, *p* < .001, partial η² = .45. These effects were qualified by a significant group × time interaction, *F*(4, 174) = 16.79, *p* < .001, partial η² = .28, indicating that the change in perceived stress over time differed between the three groups.
+
+:::
+:::
+
