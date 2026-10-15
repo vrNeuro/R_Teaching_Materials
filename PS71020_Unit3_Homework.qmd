@@ -23,16 +23,20 @@ format:
 
 ### Materials Used:
 
-We will use the packages **tidyr**, **car**, **rstatix**, **ggplot2**, these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install it.
+We will use the packages **tidyr**, **car**, **pysch**, **rstatix**, **ggplot2**, these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install it.
 
 
 
 ## SECTION A. ONE-WAY BETWEEN SUBJECTS ANOVA
 
-The data set in **studyStrategyData.csv** comes from an experiment in which 90 students read the same passage on the history of psychometrics, then are randomly assigned to one of three ways of studying it for 20 minutes (30 students per group):
-1 - Re-reading        - read the passage again
-2 - Concept mapping   - draw a diagram linking the key ideas
-3 - Retrieval practice - close the passage and write down what they remember
+The data set in **studyStrategyData.csv** comes from an experiment in which 90 students read the same passage on the history of psychometrics, then are randomly assigned to one of three ways of studying it for 20 minutes (30 students per group): \ 
+
+1 - Re-reading        - read the passage again \ 
+
+2 - Concept mapping   - draw a diagram linking the key ideas \ 
+
+3 - Retrieval practice - close the passage and write down what they remember \ 
+
 One week later everyone takes the same recall test (30 questions).
 
 The data can be found on the VLE in this week's homework files section or there is a direct download here [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/studyStrategyData.csv)
@@ -535,7 +539,7 @@ to perform out 1x3 repeated measures ANOVA.
 ```{r}
 # The ANOVA itself reports Mauchly's test and the sphericity corrections
 res <- anova_test(data = dfLong, dv = Score, wid = id,
-           between = group, within = Time)
+           between = group, within = Time, effect.size = "pes")
 get_anova_table(res)
 ```
 :::

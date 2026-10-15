@@ -403,7 +403,7 @@ cohens_d(df_long, pairedFormula, paired = TRUE)
 ```
 
 
-## SECTION D. ANOVAs
+## SECTION D. ANOVAs {#sec-ANOVAs}
 
 Previously using t-tests we tested if either the `medicated` variable or the `previous_therapy` variable affected the `pre_anxiety` variable when considered alone. However, we can use an ANOVA to examine if the effects of factors interact. 
 

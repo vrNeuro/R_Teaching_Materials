@@ -193,11 +193,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="materials-used" class="level3">
 <h3 class="anchored" data-anchor-id="materials-used">Materials Used:</h3>
-<p>We will use the packages <strong>tidyr</strong>, <strong>car</strong>, <strong>rstatix</strong>, <strong>ggplot2</strong>, these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install it.</p>
+<p>We will use the packages <strong>tidyr</strong>, <strong>car</strong>, <strong>pysch</strong>, <strong>rstatix</strong>, <strong>ggplot2</strong>, these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install it.</p>
 </section>
 <section id="section-a.-one-way-between-subjects-anova" class="level2">
 <h2 class="anchored" data-anchor-id="section-a.-one-way-between-subjects-anova">SECTION A. ONE-WAY BETWEEN SUBJECTS ANOVA</h2>
-<p>The data set in <strong>studyStrategyData.csv</strong> comes from an experiment in which 90 students read the same passage on the history of psychometrics, then are randomly assigned to one of three ways of studying it for 20 minutes (30 students per group): 1 - Re-reading - read the passage again 2 - Concept mapping - draw a diagram linking the key ideas 3 - Retrieval practice - close the passage and write down what they remember One week later everyone takes the same recall test (30 questions).</p>
+<p>The data set in <strong>studyStrategyData.csv</strong> comes from an experiment in which 90 students read the same passage on the history of psychometrics, then are randomly assigned to one of three ways of studying it for 20 minutes (30 students per group): &nbsp;</p>
+<p>1 - Re-reading - read the passage again &nbsp;</p>
+<p>2 - Concept mapping - draw a diagram linking the key ideas &nbsp;</p>
+<p>3 - Retrieval practice - close the passage and write down what they remember &nbsp;</p>
+<p>One week later everyone takes the same recall test (30 questions).</p>
 <p>The data can be found on the VLE in this week’s homework files section or there is a direct download here <a href="https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/studyStrategyData.csv">Github Link</a></p>
 <p>Read the data from the .csv file.</p>
 <div class="cell">
@@ -705,15 +709,15 @@ group  2  1.7116 0.1866
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The ANOVA itself reports Mauchly's test and the sphericity corrections</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">anova_test</span>(<span class="at">data =</span> dfLong, <span class="at">dv =</span> Score, <span class="at">wid =</span> id,</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">between =</span> group, <span class="at">within =</span> Time)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">between =</span> group, <span class="at">within =</span> Time, <span class="at">effect.size =</span> <span class="st">"pes"</span>)</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_anova_table</span>(res)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ANOVA Table (type II tests)
 
-      Effect DFn DFd      F        p p&lt;.05   ges
-1      group   2  87  3.912 2.40e-02     * 0.067
-2       Time   2 174 71.813 1.82e-23     * 0.143
-3 group:Time   4 174 16.787 1.18e-11     * 0.072</code></pre>
+      Effect DFn DFd      F        p p&lt;.05   pes
+1      group   2  87  3.912 2.40e-02     * 0.083
+2       Time   2 174 71.813 1.82e-23     * 0.452
+3 group:Time   4 174 16.787 1.18e-11     * 0.278</code></pre>
 </div>
 </div>
 </div>

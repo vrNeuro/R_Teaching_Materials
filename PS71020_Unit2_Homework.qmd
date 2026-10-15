@@ -54,7 +54,7 @@ NA
 :::
 :::
 
-## SECTION B. MISSING DATA
+## SECTION B. MISSING DATA {#sec-missing-data}
 
 **What is one function we can use to summarise a data set and find the number of missing values in each variable? It produces the output shown below**
 
