@@ -160,7 +160,7 @@ The `describe()` function in the `psych` package is the easiest way to get skewn
 
 ```{r}
 library(psych)
-describe(dfClean$Fearful_face_RT)
+describe(dfClean)
 ```
 
 :::
@@ -284,7 +284,7 @@ However, the **psych** package has a very useful function called **pairs.panels(
 #| label: fig-pairs
 #| fig-width: 9
 #| fig-height: 9
-#| fig-cap: "Scatterplot matrix of the attitude data"
+#| fig-cap: "Scatterplot matrix of the data"
 pairs.panels(dfClean, lm = TRUE, ellipses = FALSE)
 ```
 
@@ -303,10 +303,11 @@ pairs.panels(dfClean, lm = TRUE, ellipses = FALSE)
 ::: {.answer}
 •	If one looks at Age it is easy to see the skew in age which makes it hard to see a linear relationship and hard to judge any heteroscedasticity as the age values are bunched up in a very narrow range with very few values for the older ages. \ 
 
+•	If one looks at trait anxiety the relationship looks reasonably linear and homoscedastic (especially if you remove the two most anxious subjects who might well have been outliers and are scoring in the clinical range). \ 
+
 •	If one looks at ACS, the relationships looks a bit like an O; there is an absence of data points in the centre of the diagram where they would normally be the highest density of dots (for a bivariate normal relationship). So, this possibly creates some heteroscedasticity with more variance at the extremes of the ACS scores relative to the centre. \ 
 
-•	If one looks at trait anxiety the relationship looks reasonably linear and homoscedastic (especially if you remove the two most anxious subjects who might well have been outliers and are scoring in the clinical range).
- 
+
 :::
 :::
 
