@@ -467,7 +467,7 @@ Figure&nbsp;1: Scatterplot matrix of the data
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs.panels</span>(dfClean, <span class="at">lm =</span> <span class="cn">TRUE</span>, <span class="at">ellipses =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs.panels</span>(dfClean, <span class="at">lm =</span> <span class="cn">TRUE</span>, <span class="at">ellipses =</span> <span class="cn">FALSE</span>, <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Concentrating on the DV, how do the scatterplots with the other variables look. Do the relationships look markedly heteroscedastic or non-linear?</strong></p>
 <div class="answer-box">
@@ -551,7 +551,7 @@ F-statistic: 2.943 on 3 and 68 DF,  p-value: 0.0391</code></pre>
 </div>
 </div>
 <p>As well as the unstandarised regression coefficients it is important to also report the standardised regression coefficients. The <code>lm()</code> function in <strong>base R</strong> does not provide these for us, however, we can get these in a few different ways.</p>
-<p>1 - we can use the <code>standardize_parameters()</code> function from the <strong>psych</strong> package:</p>
+<p>1 - we can use the <code>standardize_parameters()</code> function from the <strong>effectsize</strong> package:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -794,7 +794,7 @@ Attaching package: 'MASS'</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.2882545</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>sr2          <span class="co"># squared semi-partial correlation unique variance explained by sleep_hours</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>sr2          <span class="co"># squared semi-partial correlation unique variance explained by traitanx</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.08309065</code></pre>
 </div>
@@ -803,7 +803,7 @@ Attaching package: 'MASS'</code></pre>
 <div class="answer-box">
 <p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
 <div class="answer">
-<p>~29%</p>
+<p>~8%</p>
 </div>
 </div>
 

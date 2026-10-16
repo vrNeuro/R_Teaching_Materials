@@ -285,12 +285,12 @@ However, the **psych** package has a very useful function called **pairs.panels(
 #| fig-width: 9
 #| fig-height: 9
 #| fig-cap: "Scatterplot matrix of the data"
-pairs.panels(dfClean, lm = TRUE, ellipses = FALSE)
+pairs.panels(dfClean, lm = TRUE, ellipses = FALSE, stars = TRUE)
 ```
 
 ```{r}
 #| eval: false
-pairs.panels(dfClean, lm = TRUE, ellipses = FALSE)
+pairs.panels(dfClean, lm = TRUE, ellipses = FALSE, stars = TRUE)
 ```
 
 
@@ -406,7 +406,7 @@ The unstandardised coefficients for an IV therefore represent the amount that Fe
 
 As well as the unstandarised regression coefficients it is important to also report the standardised regression coefficients. The `lm()` function in **base R** does not provide these for us, however, we can get these in a few different ways.
 
-1 - we can use the `standardize_parameters()` function from the **psych** package:
+1 - we can use the `standardize_parameters()` function from the **effectsize** package:
 
 ```{r}
 library(effectsize)
@@ -605,7 +605,7 @@ reduced <- lm(Fearful_face_RT ~ Age +  ACS, data = dfClean)
 
 sr2 <- summary(full)$r.squared - summary(reduced)$r.squared
 sqrt(sr2)  #semi-partial correlation
-sr2          # squared semi-partial correlation unique variance explained by sleep_hours
+sr2          # squared semi-partial correlation unique variance explained by traitanx
 
 
 ```
@@ -618,6 +618,6 @@ sr2          # squared semi-partial correlation unique variance explained by sle
 
 ::: {.answer}
 
-~29%
+~8%
 :::
 :::

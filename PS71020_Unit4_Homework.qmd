@@ -1,0 +1,264 @@
+---
+title: "PS71020_Unit4_Homework"
+subtitle: "Regression 1"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+    css: worksheet.css 
+---
+
+**TODO**
+### Learning Outcomes: \ 
+
+1 - Use RStudio to carry out simple linear regressions (forced-entry) \ 
+
+2 - Understand the relationship between regression parameter estimates and various types of correlation coefficients \ 
+
+3 - Use RStudio to check data for assumptions of linear regression. \ 
+
+4 - Use RStudio to calculate semipartial correlations \ 
+
+
+**TODO**
+### Materials Used:
+
+We will use the packages **effectsize**, **rstatix**, **car**, **psych**, **ppcor** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
+
+
+## CREATE A NEW PROJECT
+
+Just as we did in previous weeks we are going to start by creating a new project for this week's lab. Download the data from the VLE (In the Week 4 Homework Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/SmLifeSatisfactionData.csv).
+
+If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.
+
+Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.
+
+## SECTION A. THE DATASET
+
+A research team were interested in the extent to which life satisfaction was related to the personality trait of extraversion and one's level of social media use. They had three questionnaire measures of these constructs, with high scores on each measure indicating higher scores on the construct. They also recorded the age and gender of each participant. The team managed to collect data at one time-point from 237 participants in total.
+Gender was coded as: \ 
+
+1 - Male \ 
+
+2 - Female \ 
+
+3 - Other \ 
+
+4 - Prefer Not To Say \ 
+
+
+
+```{r}
+#| echo: false
+df <- read.csv("data/SmLifeSatisfactionData.csv")
+```
+
+
+**Load the data and check the data carefully to see if it meets the assumptions for carrying out a multiple regression. Are there any concerns, and what might you do to address any of these concerns?**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+The sample size in this dataset is well above the rule of thumb requirements mentioned in the lecture ie N > 104 + k. The DV and IVs are all continuous variables; we don't have the information in the dataset to examine their reliability, but they are widely used constructs, so likely fine. 
+
+
+
+ 
+
+```{r}
+#| eval: false
+#Load the data
+df <- read.csv("SmLifeSatisfactionData.csv")
+```
+
+
+```{r}
+#Load required packages
+library(psych)  #for describe
+library(rstatix) #for cor functions 
+library(car) #for VIF
+library(ppcor) #for sr2
+library(effectsize)
+```
+
+```{r}
+#recode the Gender variable as a factor
+df$Gender <- factor(df$Gender, levels = c(1:4), labels = c("Male","Female","Other","Prefer not to say"))
+
+#check the summary
+summary(df)
+
+#as Age includes 5 NAs so remove these cases
+dfClean <- subset(df,complete.cases(df))
+```
+
+```{r}
+#apply shapiro-wilk to only the numeric variables
+sapply(dfClean[,2:5],shapiro.test)
+#get descriptive statistics including skewness and kurtosis
+describe(dfClean)
+```
+
+If we examine the distributions of the three key variables and check these for outliers, we can see the skewness and kurtosis values are largely fine. The Shapiro-Wilk test is significant in all cases, but given the sample size, we might be best to focus on the histograms and boxplots.
+
+```{r}
+
+boxplot(scale(dfClean[,2:5]), main = "Boxplot of numeric variables", ylab = "Z-score")
+
+
+par(mfrow = c(2, 2))    # 2 rows, 2 columns of plots
+
+hist(dfClean$Age, main = "Age", xlab = "years")
+hist(dfClean$Social.media.use, main = "Social Media Use", xlab = "Social Media Use")
+hist(dfClean$Extraversion, main = "Extraversion", xlab = "Extraversion")
+hist(dfClean$Life.satisfaction, main = "Life Satisfaction", xlab = "Life Satisfaction")
+
+```
+There is some positive skew in all three main variables, and a few outliers of potential concern for life satisfaction, but they are largely fine. The variable age does have more substantive positive skew. You could remove all participants above the age of 42 from the dataset and this brings the skewness down below 2. This removal of participants is arguably justified given the large sample size.
+```{r}
+#trim the higher age range
+dfTrim <- subset(dfClean,dfClean$Age <= 42)
+#get descriptive statistics including skewness and kurtosis
+describe(dfTrim)
+
+```
+
+
+Examining the bivariate correlations suggests there are no issues with multicollinearity.
+
+```{r}
+cor_gather(pull_lower_triangle(cor_mat(dfTrim[,2:5])))
+```
+
+
+If we run an initial regression analysis, we can see the VIF and tolerance values indicate no issues with multicollinearity using the rules of thumb from the lecture. 
+
+The plots of the residuals largely look fine. 
+
+```{r}
+#define the formula
+myFormula <- Life.satisfaction ~ Social.media.use + Extraversion
+
+#fit the model
+mdl <- lm(myFormula, dfTrim)
+
+#get summary
+summary(mdl)
+
+#residuals diagnostic plot
+plot(mdl, which = 1)
+
+#VIF and tolerance
+vif_vals <- vif(mdl)
+vif_vals
+tol_vals <- 1/vif_vals
+tol_vals
+```
+
+:::
+:::
+
+**Examine the bivariate correlation matrix for extraversion, social media use, and life satisfaction. What does it suggest?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+#correlation matrix as a table (repeated from above but without Age)
+cor_gather(pull_lower_triangle(cor_mat(dfTrim[,3:5])))
+```
+
+The bivariate correlation matrix suggests that all three variables have medium to large positive correlations with each other. 
+
+:::
+:::
+
+**Run a multiple regression analysis with life satisfaction as the outcome variable, and extraversion and social media use as the two predictors. What do your results suggest? You might also like to calculate the semi-partial correlations and examine the extent to which the predictors account for individual and shared variance in life satisfaction.**
+
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+#regression repeated from above
+#define the formula
+myFormula <- Life.satisfaction ~ Social.media.use + Extraversion
+
+#fit the model
+mdl <- lm(myFormula, dfTrim)
+
+#get summary
+summary(mdl)
+
+#get standardised betas (making sure to use the right package)
+effectsize::standardize_parameters(mdl)
+
+#get the squared semi-partial correlations of predictors to the DV
+spcor(dfTrim[,3:5])$estimate["Life.satisfaction", ]^2
+
+```
+
+
+
+Here would be a standard APA format write-up:
+
+A multiple linear regression was conducted to predict life satisfaction from social media use and extraversion. The overall model was significant, *F*(2, 218) = 35.08, *p* < .001, and explained 24% of the variance in life satisfaction (R^2^ = .24, adjusted R^2^ = .24). Social media use was a significant positive predictor, *b* = 1.11, $\beta$ = .41, SE = 0.21, *t*(218) = 5.23, *p* < .001, *sr*^2^ = .09. Holding extraversion constant, each one-unit increase in social media use was associated with a 1.11-point increase in life satisfaction, and social media use uniquely accounted for approximately 9% of the variance in life satisfaction. Extraversion was not a significant predictor, *b* = 0.21, $\beta$ = .11, SE = 0.16, *t*(218) = 1.38, *p* = .171, *sr*^2^ = .01, uniquely accounting for less than 1% of the variance.
+
+A further note is that:
+Social media use and extraversion are both positively related to life satisfaction (see correlations), but only social media use is a significant predictor ie $\beta$ = 0.41 when both are included in the regression model. The semi-partial correlation coefficients suggest extraversion is making virtually no individual contribution to the prediction of life satisfaction, while social media use is making an individual contribution of around 9% to the prediction of life satisfaction. This leaves 14% (total R^2^ of 0.24 - (0.09+0.01) = 0.14) of the variance in life satisfaction accounted for by the shared contribution of the two predictors. This highlights the difficulties with interpreting individual regression coefficients when the predictors are highly correlated with each other ie extraversion and social media use have a correlation of 0.67. Even though this is not high enough to suggest a problematic level of collinearity it is still something to be aware of when interpreting results and highlights why *sr*^2^ values are useful in interpretation.   
+
+:::
+:::
+
+
+**The research team decided to also add age to the regression model as a control variable. What happens when you do this?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+mdl2 <- lm(Life.satisfaction ~ Social.media.use + Extraversion + Age, dfTrim)
+summary(mdl2)
+```
+
+If you remove the older age participants (as was done for `dfTrim` here), age becomes a marginally significant predictor of life satisfaction, with age weakly positively correlated with life satisfaction, but there are no substantive changes with extraversion and social media use as predictors in the model. 
+
+:::
+:::
+
+
+**One team member was heard to remark that the results showed these predictor variables cause changes in life satisfaction. Why would we remain cautious about that kind of claim for this data?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+We should be very cautious making these claims, given the nature of the variables and the research design used in this study. Although we often use words like 'predictors' and 'outcomes' when using regression models, in reality, complex variables like these will likely have reciprocal relationships with each other across time. The design here used just one time point for the data collection; we would need to use an alternative research design to allow us to make stronger causal claims ie a longitudinal study, or a randomised control study etc.  
+
+In other words correlation != causation
+
+:::
+:::
+
