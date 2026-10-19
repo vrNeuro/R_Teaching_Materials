@@ -1,0 +1,341 @@
+---
+title: "PS71020_Unit5_Homework"
+subtitle: "Regression 2"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+    css: worksheet.css 
+---
+
+**TODO**
+### Learning Outcomes: \ 
+
+1 - Use RStudio to carry out a simple linear regression (forced-entry) \ 
+
+2 - Learn how to fully report regression results in APA style  \ 
+
+3 - Use RStudio to check data for assumptions of linear regression. \ 
+
+4 - Understand the effects of collinearity on predictor results \ 
+
+
+**TODO**
+### Materials Used:
+
+We will use the packages  **rstatix**, **effectsize**, **knitr**, **ppcor**
+
+
+**car**, **psych** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
+
+
+## CREATE A NEW PROJECT
+
+Just as we did in previous weeks we are going to start by creating a new project for this week's lab. Download the data from the VLE (In the Week 5 Homework Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/LonelinessData.csv).
+
+If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.
+
+Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.
+
+## SECTION A. THE DATASET
+
+A researcher was interested in the extent to which loneliness was related to self-esteem and the personality trait of neuroticism. They collected self-report questionnaire data for each of these constructs from 257 participants, along with their age and gender (1=Male, 2=Female). Higher scores on each of the continuous measures equated to higher levels of the construct.  
+
+
+First load the data as usual and correctly set up the Gender variable as a factor. The code is not shown here as this should be familiar to you but it will be included in the model answers released at the end of the week.
+
+```{r}
+#| echo: false
+df <- read.csv("data/LonelinessData.csv")
+df$Gender <- factor(df$Gender, levels = c(1,2), labels = c("Male","Female"))
+```
+
+We need to check if there are any missing data and create a new data with only complete rows. 
+
+**What is the required code to do this?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+summary(df)
+#this shows one missing value from Age
+dfTrim <- df[complete.cases(df),]
+```
+
+:::
+:::
+
+
+**Summarise the bivariate relationships between each of these three variables by looking at the correlation matrix.** 
+
+Hint: see [Lab 4. Section B](PS71020_Unit4_Lab.qmd#sec-regression-assumptionchecks)
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+library(rstatix)
+cor_gather(pull_lower_triangle(cor_mat(dfTrim[,2:5]))) 
+#note we have to do 2:5 as we only want the numeric columns
+
+```
+
+
+The correlation matrix shows that the self-esteem variable is negatively and significantly related to both neuroticism and loneliness, and the loneliness variable is significantly and positively related to neuroticism. Each of the correlations is in the moderate to large range, using Cohen's rules of thumb.
+
+However, Age is not significantly correlated with any of the personality variables. Remember that
+1.688951e-01 is the same as 0.1688951, the e-01 part at the end means to shift the decimal point by one digit to the left.
+
+:::
+:::
+
+We are going to skip the rest of the screening, cleaning and assumption checks here for the sake of brevity but you should always do them when analysing your own data.
+
+**Run a standard multiple regression model with neuroticism and self-esteem predicting loneliness. What do the results suggest?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+myFormula <- Loneliness ~ Neuroticism + Self.esteem 
+mdl <- lm(myFormula, dfTrim)
+summary(mdl)
+library(effectsize)
+standardize_parameters(mdl)
+library(ppcor)
+sr2 <- spcor(dfTrim[,3:5])$estimate["Loneliness", ]^2  #note we are using 3:5 
+#to only include columns of the three variables used in the model
+```
+
+The results suggest that neuroticism and self-esteem account for significant variance in loneliness, R^2^ = 0.42, *F*(2, 254) = 90.59, *p* < .0001. Neuroticism is a significant and positive predictor of loneliness,  $\beta$ = 0.50, *t* = 9.93, *p* < .0001, *sr*^2^ = 0.23, while self-esteem is a significant and negative predictor of loneliness,  $\beta$ = -0.28, *t* = -5.47, *p* < .0001, *sr*^2^ = 0.07. The semi-partial correlations suggest around 13% of the variance in loneliness is shared by neuroticism and self-esteem as 6.8% is unique to Self Esteem, 22.6% is unique to Neuroticism. 
+
+```{r}
+42-(22.6+6.8) 
+```
+
+Below is an example of how to use **knitr** to produce a nice table of these:
+```{r}
+library(knitr)
+
+# 1. Unstandardised coefficients, SE, t, p
+co <- summary(mdl)$coefficients
+
+# 2. Standardised betas (drop intercept; names use "Self esteem" not "Self.esteem")
+std <- as.data.frame(standardize_parameters(mdl))
+std$Parameter <- gsub(" ", ".", std$Parameter)
+std <- std[std$Parameter != "(Intercept)", ]
+
+preds <- c("Neuroticism", "Self.esteem")
+
+#this is to reformat p values in APA style
+fmt_p <- function(p) ifelse(p < .001, "< .001", sub("^0", "", sprintf("%.3f", p)))
+
+tab <- data.frame(
+  Predictor = c("Intercept", "Neuroticism", "Self-esteem"),
+  b    = co[, "Estimate"],
+  SE   = co[, "Std. Error"],
+  beta = c(NA, std$Std_Coefficient[match(preds, std$Parameter)]),
+  t    = co[, "t value"],
+  p    = fmt_p(co[, "Pr(>|t|)"]),
+  sr2  = c(NA, sr2[preds])
+)
+
+
+kable(tab,
+      row.names = FALSE,
+      digits    = c(0, 2, 2, 2, 2, 0, 3),
+      align     = "lrrrrrr",
+      col.names = c("Predictor", "*b*", "*SE*", "β", "*t*", "*p*", "*sr*²"),
+      caption   = "Regression predicting loneliness")
+
+```
+
+:::
+:::
+
+
+**The researcher thought they best control for age and gender too. Run a hierarchical multiple regression model that would appropriately control for the effect of age and gender. Contrast the results with your summary from the previous question**.
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+Here we can run a hierarchical regression model, with age and gender entered in the first step of the model, and then self-esteem and neuroticism entered in the second step of the model. 
+```{r}
+#first block
+mdl1 <- lm(Loneliness ~ Age + Gender, dfTrim)
+#second block
+mdl2 <- lm(Loneliness ~ Age + Gender + Neuroticism + Self.esteem, dfTrim)
+#summary and standardised beta for block 1
+summary(mdl1)
+std1 <- standardize_parameters(mdl1)
+std1
+#summary and standardised beta for block 2
+summary(mdl2)
+std2 <- standardize_parameters(mdl2)
+std2
+#get the change statistics
+anova(mdl1,mdl2)
+#get the change in R2
+deltaR2 <- summary(mdl2)$r.squared-summary(mdl1)$r.squared
+deltaR2
+```
+
+In sum, age and gender have little influence on loneliness, and the substantive results from the previous question are not greatly modified when including age and gender in the model. Gender and age accounted for only 2% of the variance in loneliness on their own in the first step of the model, R^2^ = 0.02, *F*(2, 253) = 2.87, *p* = .059. Age did not significantly predict loneliness, while gender did significantly predict loneliness, $\beta$ = -0.31, *t* = -2.13, *p* = .035, with males having higher loneliness scores than females. 
+
+The addition of self-esteem and neuroticism to the model accounted for an additional 40% variance in loneliness, which was significant, $\Delta$R^2^ = 0.40, *F*(2, 251) = 85.58, *p* < .0001. In the second step of the model, gender was no longer a significant predictor of loneliness, while self-esteem and neuroticism were significant predictors, with the regression coefficients very similar to those shown in the previous question.    
+
+:::
+:::
+
+**The researcher then decided to test whether self-esteem mediates the relationship between neuroticism and loneliness. Run an appropriate series of regression analyses to see if this is the case.**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+If we use the Baron and Kenny four steps approach: \ 
+
+**Step 1** check if the IV predicts the outcome variable. Neuroticism is a robust positive predictor of loneliness *b* = 0.66, $\beta$ = 0.59, *t* = 11.63, *p* < .0001:
+```{r}
+mdlA <- lm(Loneliness ~ Neuroticism, dfTrim)
+summary(mdlA)
+standardize_parameters(mdlA)
+```
+
+**Step 2** check if the mediator predicts the outcome variable; self-esteem is a robust negative predictor of loneliness, *b* = -0.65, $\beta$ = -0.44, *t* = -7.71, *p* < .0001
+
+```{r}
+mdlB <- lm(Loneliness ~ Self.esteem, dfTrim)
+summary(mdlB)
+standardize_parameters(mdlB)
+
+```
+
+**Step 3** We then check if the IV predicts the mediator; neuroticism is a robust negative predictor of self-esteem, *b* = -0.24, $\beta$ = -0.32, *t* = -5.32, *p* < .0001. 
+
+```{r}
+mdlC <- lm(Self.esteem ~ Neuroticism, dfTrim)
+summary(mdlC)
+standardize_parameters(mdlC)
+
+```
+
+**Step 4** We see if the regression coefficient for neuroticism predicting loneliness, shrinks when we add self-esteem to the model. The neuroticism regression coefficient does decrease in the presence of self-esteem, albeit the decrease is quite modest ie *b* = 0.66 versus *b* = 0.56  (or $\beta$ = 0.59 versus $\beta$ = 0.50). The drop in the unstandardised *b* value of 0.1 is the size of the indirect effect.
+
+```{r}
+mdlD <- lm(Loneliness ~ Self.esteem + Neuroticism, dfTrim)
+summary(mdlD)
+standardize_parameters(mdlD)
+
+```
+
+The next stage would be to conduct a Sobel test to check if this decrease was significant. That is possible in base **R** but requires some coding:
+
+```{r}
+a    <- coef(mdlC)["Neuroticism"]
+sa   <- summary(mdlC)$coefficients["Neuroticism", "Std. Error"]
+b    <- coef(mdlD)["Self.esteem"]
+sb   <- summary(mdlD)$coefficients["Self.esteem", "Std. Error"]
+
+indirect <- a * b
+se_sobel <- sqrt(b^2 * sa^2 + a^2 * sb^2)
+z        <- indirect / se_sobel
+p        <- 2 * pnorm(-abs(z))
+
+c(indirect = unname(indirect), SE = unname(se_sobel), z = unname(z), p = unname(p))
+```
+The Sobel test here is significant, *z* = 3.81, *p* < .001, so we could say here that self-esteem does mediate the relationship between neuroticism and loneliness (notwithstanding major concerns we would have assuming causal relationships here). However, the indirect effect is a modest part of the total effect (about 0.10 / 0.66, or roughly 15%), so the conclusion is that most of neuroticism’s association with loneliness is not accounted for by self-esteem.
+
+
+Instead we can use the `mediate()` function from the **psych** package to do all of this for us, as a bonus this uses **bootstrapping** as a way to estimate if the mediation effect is significant. It also produces a nice mediation diagram showing the path strengths (in terms of unstandardised *b* values)
+
+```{r}
+library(psych)
+
+#the mediator goes in parentheses ()
+med <- mediate(Loneliness ~ Neuroticism + (Self.esteem),
+               data = dfTrim,
+               n.iter = 5000)    # bootstrap iterations
+print(med, short = FALSE)
+```
+
+The Baron and Kenny steps are a good way to understand what we are looking for in a mediation analysis, but the modern emphasis is on the indirect effect’s CI rather than the “shrinkage” comparison in step 4 and bootstrapping is generally a more modern approach.
+
+We could write this up as:
+
+The indirect effect of neuroticism on loneliness via self-esteem was significant, ab = 0.10, 95% bootstrap CI [0.06, 0.15] (unstandardised ab = 0.098). The direct effect remained significant, c’ = 0.56, p < .001, indicating partial mediation. Self-esteem accounted for approximately 15% of the total effect (ab/c = 0.10/0.66)
+
+:::
+:::
+
+
+**They also wanted to test if self-esteem was a moderator of the relationship between neuroticism and loneliness. How might they test this? What would they find in this data?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+We can follow the methodology of the lab, however, instead of using `scale()` to z-score the data I am going to mean centre it here to demonstrate this alternative. I'm also going to use the hierarchical approach where in the first block we add the predictors and then in the second we add the interaction.
+
+```{r}
+#make a copy
+dfC <- dfTrim
+#substract the mean of each variable from all the other values
+dfC$Self.esteem <- dfC$Self.esteem-mean(dfC$Self.esteem) 
+dfC$Neuroticism <- dfC$Neuroticism-mean(dfC$Neuroticism)
+
+#check the means are 0
+mean(dfC$Self.esteem)
+mean(dfC$Neuroticism)
+
+#model with the predictors
+mdlMod1 <- lm(Loneliness ~ Self.esteem + Neuroticism, dfC)
+#model including the interaction
+mdlMod2 <- lm(Loneliness ~ Self.esteem + Neuroticism + Self.esteem:Neuroticism, dfC)
+
+#compare the models
+anova(mdlMod1,mdlMod2)
+
+#R2 change
+summary(mdlMod2)$r.squared - summary(mdlMod1)$r.squared
+
+#summary for predictor table
+summary(mdlMod2)
+```
+We can see that adding the interaction variable accounts for almost no additional variance $\Delta$R^2^ = 0.00005 and that the `Self.esteem:Neuroticism` interaction term is not significant *b* = 0.001, *t* = 0.008, *p* = 0.884. So we have no evidence of a moderation effect here.
+
+Normally, we would not bother to run a simple slopes analysis given the above, but in this case if we  examine the simple slopes plot we can see there is no interaction between these variables at all. 
+```{r}
+library(interactions)
+interact_plot(mdlMod2, pred = Neuroticism, modx = Self.esteem,
+              modx.values = c(-1, 0, 1),
+              plot.points = TRUE,
+              interval = TRUE)
+
+```
+
+:::
+:::
+

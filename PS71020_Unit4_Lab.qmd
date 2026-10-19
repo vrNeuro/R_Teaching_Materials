@@ -97,7 +97,7 @@ dfClean <- subset(dfTrim,complete.cases(dfTrim))
 :::
 :::
 
-## SECTION B. ASSUMPTION CHECKS
+## SECTION B. ASSUMPTION CHECKS {#sec-regression-assumptionchecks}
 
 We should now inspect our variables of interest. 
 
