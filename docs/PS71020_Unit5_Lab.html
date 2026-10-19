@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>PS71020_Unit5_Lab – PG Stats Intro</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="worksheet.css">
+<link rel="stylesheet" href="answer-gate.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">PG Stats Intro</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Pre_sessional_0.html"> 
+<span class="menu-text">Unit 0</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link active" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
+  <li><a href="#section-a.-the-dataset" id="toc-section-a.-the-dataset" class="nav-link" data-scroll-target="#section-a.-the-dataset">SECTION A. THE DATASET</a></li>
+  <li><a href="#section-c.-regression-with-categorical-variables" id="toc-section-c.-regression-with-categorical-variables" class="nav-link" data-scroll-target="#section-c.-regression-with-categorical-variables">SECTION C. REGRESSION WITH CATEGORICAL VARIABLES</a></li>
+  <li><a href="#section-c.-moderation-analysis" id="toc-section-c.-moderation-analysis" class="nav-link" data-scroll-target="#section-c.-moderation-analysis">SECTION C. MODERATION ANALYSIS</a></li>
+  <li><a href="#section-d.-hierarchical-regression" id="toc-section-d.-hierarchical-regression" class="nav-link" data-scroll-target="#section-d.-hierarchical-regression">SECTION D. HIERARCHICAL REGRESSION</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">PS71020_Unit5_Lab</h1>
+<p class="subtitle lead">Regression 2</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-outcomes" class="level3">
+<h3 class="anchored" data-anchor-id="learning-outcomes">Learning Outcomes: &nbsp;</h3>
+<p>1 - Use RStudio to carry out simple linear regressions that include categorical, as well as continuous, predictors &nbsp;</p>
+<p>2 - Understand how dummy coding works for categorical predictors in regression &nbsp;</p>
+<p>3 - Carry out regression with a moderator (interaction) term in various ways &nbsp;</p>
+<p>4 - Enter predictors hierarchically in regression models &nbsp;</p>
+</section>
+<section id="materials-used" class="level3">
+<h3 class="anchored" data-anchor-id="materials-used">Materials Used:</h3>
+<p>We will use the packages <strong>interactions</strong> and <strong>knitr</strong> these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Some general notes about the weekly labs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You should go through the worksheet during the lab and try to complete as much of it during the lab as you can. You can work on the sheet individually or in small groups during the lab. Try to answer the lab worksheet questions in your own words however. If you are unable to finish the worksheet during the class, try to finish it outside class time. Try to attempt the answer before using the ‘Show Answer’ button.</p>
+<p>As you go through the sheet, copy the relevant lines of code to your own analysis script.</p>
+<p>A complete model answers script will be available on the VLE page from Fridays after the labs so you can check your own answers.</p>
+<p>If you have any queries during the class, please feel free to ask your lab tutors. If your question relates specifically to the lecture content or the homework sheets, please contact Peter Holland by email or use the forum on the VLE page.*</p>
+</div>
+</div>
+</section>
+<section id="create-a-new-project" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-new-project">CREATE A NEW PROJECT</h2>
+<p>Just as we did in previous weeks we are going to start by creating a new project for this week’s lab. Download the data from the VLE (In the Week 5 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: <a href="https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/reinforcement_personality_data.csv">Github Link</a>.</p>
+<p>If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.</p>
+<p>Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.</p>
+</section>
+<section id="section-a.-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="section-a.-the-dataset">SECTION A. THE DATASET</h2>
+<p>The dataset (reinforcement_personality_data.csv) involves reaction time (RT) data from a vigilance task that will be related to personality variables (impulsivity, extraversion) using regression. Participants are tested in one of 3 reinforcement conditions and the condition is predicted to affect how personality is related to task performance.</p>
+<p>Experiment Summary • Tested 108 healthy participants carrying out a vigilance task &nbsp;</p>
+<p>• Main DV is mean RT for each participant (variable = <code>rtmean</code>) &nbsp;</p>
+<p>• Each participant randomly assigned to 1 of 3 conditions: &nbsp;</p>
+<p>Control: Simple task feedback, no financial reinforcement &nbsp;</p>
+<p>Reward: Win money for correct target detection &nbsp;</p>
+<p>Punishment: Lose money for false positives (responding “target” when there was no target) &nbsp;</p>
+<p>Variables • Reinforcement condition is recorded as <code>reinf</code> with: &nbsp;</p>
+<p>reward = 1 &nbsp;</p>
+<p>punishment = 2 &nbsp;</p>
+<p>control = 3 &nbsp;</p>
+<p>• Two main personality variables: &nbsp;</p>
+<p>Extraversion (<code>epqe</code>) &nbsp;</p>
+<p>Impulsivity (<code>i7imp</code>) &nbsp;</p>
+<p>Predictions • Gray’s theory <a href="https://en.wikipedia.org/wiki/Gray%27s_biopsychological_theory_of_personality">Wikipedia article</a> predicts that extraverted and/or impulsive participants should respond more rapidly than introverted / non impulsive subjects, especially under conditions of reward. The DV (<code>rtmean</code>) is our main index of response speed. Of course, <strong>fast responses mean small RTs!</strong> This effect of extraversion / impulsivity should thus be weaker, or even possibly reversed, in non-reinforced (control) or punishment conditions.</p>
+<p>First we need to load the data as usual.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"reinforcement_personality_data.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Set up variables as factors (<code>reinf</code> has been left unchanged for now on purpose)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>extgp <span class="ot">=</span> <span class="fu">factor</span>(df<span class="sc">$</span>extgp, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Extravert"</span>, <span class="st">"Introvert"</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>sex <span class="ot">=</span> <span class="fu">factor</span>(df<span class="sc">$</span>sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>inpaper <span class="ot">=</span> <span class="fu">factor</span>(df<span class="sc">$</span>inpaper, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Excluded-middling E value"</span>,<span class="st">"Include"</span>,<span class="st">"Excluded-P outlier"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Before doing any analyses on the data we must exclude 4 participants (for various reasons). This is coded by the <code>inpaper</code> variable and we want to keep only those who have a value of 1 (label of <code>Include</code>).</p>
+<p>Notice below that we have to use the “Include” not the original numeric value of 1.</p>
+<p>In <strong>R</strong>, a factor’s <strong>levels</strong> are the underlying category values (<code>levels(f)</code>). The <strong>labels</strong> are the names assigned to those <strong>levels</strong> when the factor is created, via the <code>labels =</code> argument of <code>factor()</code>. Once the factor exists, the <strong>labels</strong> are the <strong>levels</strong>. R keeps no separate <strong>label</strong> layer, so you subset using whatever <code>levels()</code> shows you.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(df<span class="sc">$</span>inpaper)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Excluded-middling E value" "Include"                  
+[3] "Excluded-P outlier"       </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dfTrim <span class="ot">&lt;-</span> <span class="fu">subset</span>(df,df<span class="sc">$</span>inpaper<span class="sc">==</span><span class="st">"Include"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="section-c.-regression-with-categorical-variables" class="level2">
+<h2 class="anchored" data-anchor-id="section-c.-regression-with-categorical-variables">SECTION C. REGRESSION WITH CATEGORICAL VARIABLES</h2>
+<p>One of the advantages of using the <code>factor()</code> function to correctly set up our categorical variables is that when we use <code>lm()</code> it treats it properly as a categorical variable. If we simply leave it as numeric and fit a model then the regression will treat it as continuous and fits a single slope, which is almost certainly not what we want.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>myFormula <span class="ot">&lt;-</span> rtmean <span class="sc">~</span> reinf</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mdlC <span class="ot">&lt;-</span> <span class="fu">lm</span>(myFormula,dfTrim)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdlC)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = myFormula, data = dfTrim)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-158.81  -38.83  -10.31   36.60  183.47 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  540.260     16.527  32.689   &lt;2e-16 ***
+reinf         10.554      8.008   1.318     0.19    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 65.59 on 106 degrees of freedom
+Multiple R-squared:  0.01612,   Adjusted R-squared:  0.00684 
+F-statistic: 1.737 on 1 and 106 DF,  p-value: 0.1904</code></pre>
+</div>
+</div>
+<p>If we instead convert it to a factor first:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dfTrim<span class="sc">$</span>reinf <span class="ot">=</span> <span class="fu">factor</span>(dfTrim<span class="sc">$</span>reinf, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Reward"</span>,<span class="st">"Punishment"</span>,<span class="st">"Control"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>And then run our linear regression with exactly the same formula we can see that we now get different <em>F</em> and <em>p</em> values and also our Coefficients table contains two lines instead of one.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mdlF <span class="ot">&lt;-</span> <span class="fu">lm</span>(myFormula,dfTrim)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdlF)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = myFormula, data = dfTrim)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-162.30  -38.38   -8.10   32.21  190.27 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     554.3034    10.5176  52.703   &lt;2e-16 ***
+reinfPunishment   0.2591    14.7808   0.018    0.986    
+reinfControl     22.3115    16.1054   1.385    0.169    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 65.68 on 105 degrees of freedom
+Multiple R-squared:  0.02252,   Adjusted R-squared:  0.003904 
+F-statistic:  1.21 on 2 and 105 DF,  p-value: 0.3024</code></pre>
+</div>
+</div>
+<p>When using a categorical variable with more than two levels, the variable is recoded into pairs of other variables that allow meaningful regression analysis. Here a common coding scheme has been used , this is typically referred to as <strong>dummy coding</strong>. The variable <code>reinf</code> has been “dummy coded” into 2 new variables.</p>
+<p>A factor with <em>k</em> levels gives <em>k</em> - 1 dummy variables. Thus, the 3 levels of <code>reinf</code> requires 2 dummy-coded variables. One level of the original variable is assigned a value of 0 in all of the dummy coded variables, and this level will act as the reference (Reward in this case). In each of the dummy coded variables, a value of 1 is assigned to one of the other levels of the original variable; this is the level which is compared against the reference level.</p>
+<p>To understand how this has been set up we can use the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(dfTrim<span class="sc">$</span>reinf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Punishment Control
+Reward              0       0
+Punishment          1       0
+Control             0       1</code></pre>
+</div>
+</div>
+<p>The regression output above will therefore have an intercept plus one coefficient per non-reference level:</p>
+<p>(Intercept): the mean of the reference group (Reward, the first level) &nbsp;</p>
+<p>reinfPunishment: the difference between Punishment and Reward &nbsp;</p>
+<p>reinfControl: the difference between Control and Reward &nbsp;</p>
+<p>The reference level is the first level of the factor. We can see this is “Reward” in this case if we use the code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dfTrim<span class="sc">$</span>reinf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Reward"     "Punishment" "Control"   </code></pre>
+</div>
+</div>
+<p>The dummy coding scheme is usually used in situations for which one level of the categorical variable is a natural “reference” or comparison/control level. This is thus a good coding scheme to use in the current study. However, in this case “Reward” isn’t the most sensible reference level, instead we probably want to use “Control” as the reference level and then analyse the differences from this level.</p>
+<p>To change the reference level of a factor variable:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dfTrim<span class="sc">$</span>reinf <span class="ot">&lt;-</span> <span class="fu">relevel</span>(dfTrim<span class="sc">$</span>reinf, <span class="at">ref =</span> <span class="st">"Control"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>If we now rerun the regression, we can see that the the two coefficients now represent the difference from the new reference level “Control”.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mdlF2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(myFormula,dfTrim)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdlF2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = myFormula, data = dfTrim)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-162.30  -38.38   -8.10   32.21  190.27 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       576.61      12.20  47.276   &lt;2e-16 ***
+reinfReward       -22.31      16.11  -1.385    0.169    
+reinfPunishment   -22.05      16.02  -1.377    0.172    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 65.68 on 105 degrees of freedom
+Multiple R-squared:  0.02252,   Adjusted R-squared:  0.003904 
+F-statistic:  1.21 on 2 and 105 DF,  p-value: 0.3024</code></pre>
+</div>
+</div>
+<p>If we inspect the means of the <code>rtmean</code> variable we can see: &nbsp;</p>
+<p>1 - The estimate for the intercept row of the coefficients table is equal to the mean of <code>rtmean</code> in the “Control” condition. &nbsp;</p>
+<p>2 - The estimate for the reinfReward row = The Reward group mean - the Control group mean &nbsp;</p>
+<p>3 - The estimate for the reinfPunishment row = The Punishment group mean - the Control group mean &nbsp;</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(dfTrim<span class="sc">$</span>rtmean,dfTrim<span class="sc">$</span>reinf,mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dfTrim$reinf: Control
+[1] 576.6149
+------------------------------------------------------------ 
+dfTrim$reinf: Reward
+[1] 554.3034
+------------------------------------------------------------ 
+dfTrim$reinf: Punishment
+[1] 554.5625</code></pre>
+</div>
+</div>
+<p>Note: With a two-level factor, the dummy coding is equivalent to a 0/1 variable, so you can use either a factor or a numeric 0/1 variable and get the same result.</p>
+<p><strong>Think about the regression equation, why in this case with a single dummy coded predictor do we see these coefficients as simply the difference between group means?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>A categorical predictor with three levels is represented by two dummy variables, X<sub>1</sub> and X<sub>2</sub>, each coded 0 or 1. The equation is Ŷ = b<sub>0</sub> + b<sub>1</sub>X<sub>1</sub> + b<sub>2</sub>X<sub>2</sub>, and it can only produce three predicted values, one per group:</p>
+<p>Reference group (X<sub>1</sub> = 0, X<sub>2</sub> = 0): Ŷ = b<sub>0</sub> Group 1 (X<sub>1</sub> = 1, X<sub>2</sub> = 0): Ŷ = b<sub>0</sub> + b<sub>1</sub>, so b<sub>1</sub> = Ŷ<sub>1</sub> − b<sub>0</sub> Group 2 (X<sub>1</sub> = 0, X<sub>2</sub> = 1): Ŷ = b<sub>0</sub> + b<sub>2</sub>, so b<sub>2</sub> = Ŷ<sub>2</sub> − b<sub>0</sub></p>
+<p>Least squares regression sets each group’s predicted value to that group’s mean (the mean minimises squared error within the group), and with three parameters for three groups the model can do this exactly. Therefore b<sub>0</sub> is the reference group mean, b<sub>1</sub> is the difference between Group 1 and the reference group, and b<sub>2</sub> is the difference between Group 2 and the reference group.</p>
+<p>Notice that the coefficients compare each group to the reference only. The difference between Group 1 and Group 2 is b<sub>1</sub> − b<sub>2</sub>, which doesn’t appear directly in the output.</p>
+</div>
+</div>
+<p><strong>For the regression above with the automatically dummy coded predictor was the overall model significant?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>No, the Anova shows R<sup>2</sup>=0.0225, <em>F</em>(2,105) = 1.210, <em>p</em> = .302. (Note: usually in APA style, R2, F and t values are reported to 2 decimal places [except when convention dictates using 3 decimal places when <em>p</em> &lt; .10] but I have left all 3 here, and various other places, for comparison later.)</p>
+</div>
+</div>
+<p><strong>Did either, both or neither of the reinforcement conditions make an independent significant contribution to the prediction of task RT?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Neither. From the Coefficients table: For Reward , <em>t</em> = -1.39, <em>p</em> = .169 For Punishment, <em>t</em> = -1.38, <em>p</em> = .172.</p>
+</div>
+</div>
+<p>NOTE: Other coding schemes are available such as effect (sum-to-zero) coding: With this coding, the intercept becomes the grand mean and the coefficients are deviations from it. This is worth knowing if you’re mixing categorical predictors with interactions, where the coding changes the interpretation of the other terms.</p>
+</section>
+<section id="section-c.-moderation-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="section-c.-moderation-analysis">SECTION C. MODERATION ANALYSIS</h2>
+<p>So far, these analyses have just analysed the overall effect of reinforcement on RT. And basically, they have shown that there were no significant effects. However, actually, the hypotheses we wanted to test with this dataset were that the effect of reinforcement would depend on a participant’s level of extraversion or impulsivity (<code>i7imp</code>). This is an interaction prediction, so we turn to a moderation analysis to address our main hypotheses.</p>
+<p>To do this we must first restrict the analyses to the reward and punishment conditions only (as the control condition does not have full personality data).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dfMod <span class="ot">&lt;-</span> <span class="fu">subset</span>(dfTrim,dfTrim<span class="sc">$</span>reinf <span class="sc">!=</span> <span class="st">"Control"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>First, we want to test whether the effect of impulsivity on RT is affected (“moderated”) by the reinforcement condition (reward vs.&nbsp;punishment). We start by doing this using hand-crafted interaction terms, before using <strong>R</strong> to do this automatically.</p>
+<p>The first thing we want to do is change our <code>reinf</code> variable slightly, currently we have, “Reward” and “Punishment” as our levels, you can check this with <code>levels(dfMod$reinf)</code>.</p>
+<p>The code below creates a new variable called <code>reinf_code</code>, the function <code>ifelse()</code> tells <strong>R</strong> to place a 1 whenever <code>reinf == "Reward"</code> and a -1 whenever this is not true. (This is why it was important to remove the “Control” condition first otherwise these would all be coded as -1 as well)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dfMod<span class="sc">$</span>reinf_code <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(dfMod<span class="sc">$</span>reinf <span class="sc">==</span> <span class="st">"Reward"</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can check this worked properly using this code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfMod<span class="sc">$</span>reinf, dfMod<span class="sc">$</span>reinf_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            
+             -1  1
+  Control     0  0
+  Reward      0 39
+  Punishment 40  0</code></pre>
+</div>
+</div>
+<p>This shows us that we don’t have any “Control” left and that all of our “Reward” in <code>reinf</code> are now 1 in <code>reinf_code</code> and all of our “Punishment” in <code>reinf</code> are now -1 in <code>reinf_code</code>.</p>
+<p>The next thing we want to do is to create z-scored version of our variable <code>i7imp</code>. And then check that the mean and SD are close to 0 and 1, respectively. The use of <code>as.numeric()</code> around <code>scale()</code> stops it from returning a one-column matrix, which can cause awkward errors later.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>dfMod<span class="sc">$</span>i7imp_z <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(dfMod<span class="sc">$</span>i7imp))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dfMod<span class="sc">$</span>i7imp_z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.139383e-19</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(dfMod<span class="sc">$</span>i7imp_z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<p>Finally we are going to manually calculate our impulsivity-by-reinforcement interaction term, remember that the interaction is simply the two variables multiplied together.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dfMod<span class="sc">$</span>imp_by_reinf <span class="ot">&lt;-</span> dfMod<span class="sc">$</span>i7imp_z<span class="sc">*</span>dfMod<span class="sc">$</span>reinf_code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Why is the standardisation step required?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>When creating variables for an interaction term, you need to centre them before you multiply them, otherwise the interaction term will be spuriously correlated (perhaps even highly collinear) with the original variables. Standardisation is the easiest way to do this but mean centering (subtracting the mean) is probably used more often, the difference is that then we don’t divide by the standard deviation). Notice that <code>reinf_code</code> is already centred (because it has only two values, -1 and 1, with roughly equal numbers of cases each).</p>
+<p>We had a short cut here because <code>reinf_code</code> was already centred by our previous step. But in general, the way to safely construct an interaction term is to standardise (or mean centre) both of the variables concerned, then multiply the results together. It is important to centre them before doing the multiplication step.</p>
+</div>
+</div>
+<p><strong>What would the formula be for a regression with <code>imp_by_reinf</code>, <code>reinf_code</code>, and <code>i7imp_z</code> as predictors of <code>rtmean</code> be? Perform the regression and produce the summary table</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#the order of the predictors in the formula doesn't matter apart from how they appear in the table</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>modFormula <span class="ot">&lt;-</span> rtmean <span class="sc">~</span> i7imp_z <span class="sc">+</span> reinf_code <span class="sc">+</span> imp_by_reinf</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>mdlMod <span class="ot">&lt;-</span> <span class="fu">lm</span>(modFormula,dfMod)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdlMod )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = modFormula, data = dfMod)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-150.509  -36.940   -5.306   37.426  197.414 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  554.16669    7.62276  72.699   &lt;2e-16 ***
+i7imp_z        1.93501    7.67100   0.252   0.8015    
+reinf_code    -0.09406    7.62276  -0.012   0.9902    
+imp_by_reinf -13.28574    7.67100  -1.732   0.0874 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 67.73 on 75 degrees of freedom
+Multiple R-squared:  0.03931,   Adjusted R-squared:  0.0008829 
+F-statistic: 1.023 on 3 and 75 DF,  p-value: 0.3874</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = modFormula, data = dfMod)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-150.509  -36.940   -5.306   37.426  197.414 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  554.16669    7.62276  72.699   &lt;2e-16 ***
+i7imp_z        1.93501    7.67100   0.252   0.8015    
+reinf_code    -0.09406    7.62276  -0.012   0.9902    
+imp_by_reinf -13.28574    7.67100  -1.732   0.0874 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 67.73 on 75 degrees of freedom
+Multiple R-squared:  0.03931,   Adjusted R-squared:  0.0008829 
+F-statistic: 1.023 on 3 and 75 DF,  p-value: 0.3874</code></pre>
+</div>
+</div>
+<p><strong>Which coefficient/effect in the output relates to the moderation effect? And is this effect significant?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The key moderation effect is imp_by_reinf, as this represents the interaction between the two variables.</p>
+<p>This is not significant, although many people might report it as a weak trend.: <em>t</em> = -1.73, <em>p</em> = .087.</p>
+</div>
+</div>
+<p>If we perform the regression using the original (non z-scored) <code>i7imp</code> variable we get the following results:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#note in this formula I have used i7imp*reinf_code, this is a shorthand way of asking for all main</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#effects and interactions.</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>mdlMod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rtmean <span class="sc">~</span> i7imp<span class="sc">*</span>reinf_code,dfMod)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdlMod2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rtmean ~ i7imp * reinf_code, data = dfMod)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-150.509  -36.940   -5.306   37.426  197.414 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      550.2336    17.3529  31.709   &lt;2e-16 ***
+i7imp              0.4376     1.7349   0.252   0.8015    
+reinf_code        26.9101    17.3529   1.551   0.1252    
+i7imp:reinf_code  -3.0047     1.7349  -1.732   0.0874 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 67.73 on 75 degrees of freedom
+Multiple R-squared:  0.03931,   Adjusted R-squared:  0.0008829 
+F-statistic: 1.023 on 3 and 75 DF,  p-value: 0.3874</code></pre>
+</div>
+</div>
+<p><strong>What changes between the two sets of outputs? Why might this be?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The interaction effect remains the same as does the main effect of <code>i7imp</code>. As does the overall model fit. The only thing to change are the estimates of the <code>reinf_code</code> predictor. At first this might seem confusing but remember:</p>
+<p><code>reinf_code</code>’s coefficient is the effect of reinforcement at <code>i7imp</code> = 0. Centring/standardising moves what “zero” means for <code>i7imp</code> (from the scale’s zero to the sample mean), so you are now asking about a different point on the moderator. Because the effect of reinforcement depends on <code>i7imp</code> (that is what the interaction says), the coefficient changes.</p>
+<p><code>i7imp</code>’s coefficient is the slope of <code>i7imp</code> when <code>reinf_code</code> = 0. Centring <code>i7imp</code> doesn’t change where <code>reinf_code</code> is zero, so this slope is the same.</p>
+<p>The interaction coefficient is how much the slope changes per unit of the moderator. Shifting a variable doesn’t alter that, so it stays the same.</p>
+<p>Centring is a reparameterisation, not a new model. The fitted lines, residuals, R<sup>2</sup> and <em>F</em> are identical. The only difference is where the coefficients are evaluated.</p>
+</div>
+</div>
+<p>A good way to follow up a moderation analysis is to perform a simple slopes analysis. There are multiple ways to do this in <strong>R</strong> but a particularly useful package for this is <strong>interactions</strong>. First let’s recreate our <code>mdlMod</code> object using the standardised <code>i7imp_z</code> and <code>reinf_code</code> variables. The reason we need to do this is that the functions in the <strong>interactions</strong> package won’t recognise the name of our hand-crafted interaction term in the old model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mdlMod <span class="ot">&lt;-</span> <span class="fu">lm</span>(rtmean <span class="sc">~</span> i7imp_z<span class="sc">*</span>reinf_code,dfMod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can use the <code>sim_slopes()</code> function to carry out a simple slopes analysis to see how the effect of <code>reinf_code</code> on <code>rtmean</code> changes at different levels of <code>i7imp_z</code>. By default this function uses the values of -1, 0, and 1 of <code>i7imp_z</code> to evaluate the slopes at, which is the standard practice.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">&lt;-</span> <span class="fu">sim_slopes</span>(mdlMod,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">pred =</span> reinf_code,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">modx =</span> i7imp_z)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> ss<span class="sc">$</span>slopes</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>tab </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Value of i7imp_z         Est.      S.E.       2.5%     97.5%      t val.
+1    -1.000000e+00  13.19167437 10.812333  -8.347597 34.730946  1.22005810
+2     3.513364e-19  -0.09406445  7.622763 -15.279388 15.091259 -0.01233994
+3     1.000000e+00 -13.37980327 10.816416 -34.927208  8.167601 -1.23699050
+          p
+1 0.2262654
+2 0.9901872
+3 0.2199499</code></pre>
+</div>
+</div>
+<p>We can also use the <code>interact_plot()</code> function from this package to produce a simple slopes plot:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(mdlMod, <span class="at">pred =</span> reinf_code, <span class="at">modx =</span> i7imp_z,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">modx.values =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot.points =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"palegreen"</span>,<span class="st">"gray"</span>,<span class="st">"orange"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit5_Lab_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>What do the simple slopes analysis output (estimates and plots show)? And what do they say about the hypothesis in question?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>They show that high impulsivity participants (1 SD above the mean for impulsivity) show a modest reduction (negative slope) in mean RT of about 13.4 msec in the reward condition (reinf_code=+1) relative to the punishment (reinf_code=-1) condition. This effect was non-significant, <em>t</em> = -1.24, <em>p</em> = .22. The hypothesis was that the impulsive participants would speed up in reward relative to punishment, so the results are consistent with the hypothesis, but not significantly so, of course. By contrast, a low impulsivity participant (1 SD below the mean for impulsivity) showed a modest increase (positive slope) in mean RT (of 13.2 msec) in reward relative to punishment (not significant again; <em>t</em> = 1.22, <em>p</em> = .23). The fact that the simple slopes were in opposite directions demonstrates why there was a weak trend for the interaction.</p>
+</div>
+</div>
+<p>Note we could also look at this the other way around with <code>reinf_code</code> acting as the moderator:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>ss2 <span class="ot">&lt;-</span> <span class="fu">sim_slopes</span>(mdlMod,</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">pred   =</span> i7imp_z,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">modx   =</span> reinf_code,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">modx.values =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>tab2 <span class="ot">&lt;-</span> ss2<span class="sc">$</span>slopes</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>tab2 </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Value of reinf_code      Est.     S.E.       2.5%    97.5%    t val.
+1                  -1  15.22075 10.81569  -6.325212 36.76672  1.407284
+2                   1 -11.35073 10.88106 -33.026911 10.32546 -1.043163
+          p
+1 0.1634740
+2 0.3002234</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#note here I haven't used reinf_code=0 as this does not exist in our data set</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(mdlMod, <span class="at">pred =</span> i7imp_z, <span class="at">modx =</span> reinf_code,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">modx.values =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot.points =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">interval =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit5_Lab_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Are the two sets of results consistent with each other?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Yes, when using reinf_code = 1 (Reward) we see that reaction times decrease as impulsivity decreases, so the greater impulsivity the quicker the reaction time in the reward condition. Conversely in the reinf_code = -1 (Punishment), higher levels of impulsivity lead to increases in reaction time.</p>
+<p>However, none of these effects are significant so we should be careful not to over interpret them.</p>
+</div>
+</div>
+</section>
+<section id="section-d.-hierarchical-regression" class="level2">
+<h2 class="anchored" data-anchor-id="section-d.-hierarchical-regression">SECTION D. HIERARCHICAL REGRESSION</h2>
+<p>Suppose we actually want to find the effect of our variables after first removing the effects of the “uninteresting” (nuisance) variables <code>age</code> and <code>sex</code> (of course, these variables might be of interest in some studies – they just aren’t important here). To do this, we use <strong>hierarchical regression</strong>. Also, it is common to use hierarchical regression for interaction terms in a moderation analysis, entering the interaction term in a separate stage (after first including the individual predictors). To cover both of these practices, we will do a hierarchical regression in three stages.In a hierarchical regression, variables are entered in separate blocks of variables in separate models.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#our first model just has age and sex as predictors</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>mdl1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rtmean <span class="sc">~</span> age <span class="sc">+</span> sex, dfMod)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co">#our next model has these as well as reinf_code and i7imp_z</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>mdl2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rtmean <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> reinf_code <span class="sc">+</span> i7imp_z, dfMod)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co">#our final model includes our hand-made interaction term</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>mdl3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rtmean <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> reinf_code <span class="sc">+</span> i7imp_z <span class="sc">+</span> imp_by_reinf, dfMod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To compare these models using an <em>F</em> test we can use the <code>anova()</code> function:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the models</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mdl1, mdl2, mdl3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: rtmean ~ age + sex
+Model 2: rtmean ~ age + sex + reinf_code + i7imp_z
+Model 3: rtmean ~ age + sex + reinf_code + i7imp_z + imp_by_reinf
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)  
+1     76 342042                             
+2     74 341136  2     906.1 0.1010 0.9040  
+3     73 327399  1   13736.8 3.0629 0.0843 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>A few of important points: Nested models only, each model must contain all the predictors of the previous one. <code>anova()</code> compares them in the order you list them. &nbsp;</p>
+<p>Order matters, and should be theory-driven. Enter variables in blocks based on your rationale (e.g.&nbsp;controls first, then the variables of interest), not by trying orders until something is significant. &nbsp;</p>
+<p>Same data in every model. If predictors have missing values, <code>lm()</code> will drop different rows at each step, and <code>anova()</code> will refuse to compare the models (or give invalid results). Create the complete-case data first. &nbsp;</p>
+<p>The <code>anova()</code> function tests for significant improvements in fit between each nested model, however, one other important bit of information is the R<sup>2</sup> change between each model. To get this we need to use a bit of code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>r2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">summary</span>(mdl1)<span class="sc">$</span>r.squared,</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summary</span>(mdl2)<span class="sc">$</span>r.squared,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summary</span>(mdl3)<span class="sc">$</span>r.squared)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>delta_r2 <span class="ot">&lt;-</span> <span class="fu">diff</span>(r2)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>delta_r2 <span class="co"># this is the change in R2 between each of the models, the first is model2-model1, the second is model3-model2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.002529904 0.038353181</code></pre>
+</div>
+</div>
+<p><strong>What do the “R-squared change” statistics in <code>delta_r2</code> and what do they tell us?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>They tell us how much additional variance each model explains compared to the previous model. The associated <em>F</em>-change statistics tell us whether this is a significant amount of extra variance explained.</p>
+</div>
+</div>
+<p>Currently our information is all a bit spread out and hard to read, so we are going to use some code to tidy it up and produce a table that is easier to read and include in reports. <strong>kable</strong>s are a simple table that are easier to include in reports, they are part of the <strong>knitr</strong> package that I use to build these worksheets. Don’t worry too much about how the code works, the interpretation of the tables is the most important thing for now.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co">#this is a kable of the model change statistics</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">"1-2"</span>, <span class="st">"2-3"</span>),</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">R2    =</span> <span class="fu">round</span>(r2[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>], <span class="dv">3</span>),</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  Δ<span class="at">R2   =</span> <span class="fu">round</span>(delta_r2, <span class="dv">3</span>),</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">F     =</span> <span class="fu">round</span>(<span class="fu">anova</span>(mdl1, mdl2, mdl3)<span class="sc">$</span>F, <span class="dv">2</span>)[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>],</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">p     =</span> <span class="fu">round</span>(<span class="fu">anova</span>(mdl1, mdl2, mdl3)<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;F)</span><span class="st">`</span>, <span class="dv">3</span>)[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(res, <span class="at">caption =</span> <span class="st">"Model Comparisons"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Model Comparisons</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">R2</th>
+<th style="text-align: right;">ΔR2</th>
+<th style="text-align: right;">F</th>
+<th style="text-align: right;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1-2</td>
+<td style="text-align: right;">0.048</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.904</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2-3</td>
+<td style="text-align: right;">0.086</td>
+<td style="text-align: right;">0.038</td>
+<td style="text-align: right;">3.06</td>
+<td style="text-align: right;">0.084</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#this is a kable of the model fit statistics</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(mdl1, mdl2, mdl3)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(<span class="fu">seq_along</span>(models), <span class="cf">function</span>(i) {</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">summary</span>(models[[i]])</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  f <span class="ot">&lt;-</span> s<span class="sc">$</span>fstatistic                      <span class="co"># F, df1, df2</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Model =</span> i,</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">R2    =</span> <span class="fu">round</span>(s<span class="sc">$</span>r.squared, <span class="dv">3</span>),</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">F     =</span> <span class="fu">round</span>(<span class="fu">unname</span>(f[<span class="dv">1</span>]), <span class="dv">2</span>),</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">df1   =</span> <span class="fu">unname</span>(f[<span class="dv">2</span>]),</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">df2   =</span> <span class="fu">unname</span>(f[<span class="dv">3</span>]),</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">p     =</span> <span class="fu">round</span>(<span class="fu">pf</span>(f[<span class="dv">1</span>], f[<span class="dv">2</span>], f[<span class="dv">3</span>], <span class="at">lower.tail =</span> <span class="cn">FALSE</span>), <span class="dv">3</span>)</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>}))</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(fit) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(fit, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"*R*²"</span>, <span class="st">"*F*"</span>, <span class="st">"df1"</span>, <span class="st">"df2"</span>, <span class="st">"*p*"</span>), <span class="at">caption =</span> <span class="st">"Model Fit Measures"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Model Fit Measures</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Model</th>
+<th style="text-align: right;"><em>R</em>²</th>
+<th style="text-align: right;"><em>F</em></th>
+<th style="text-align: right;">df1</th>
+<th style="text-align: right;">df2</th>
+<th style="text-align: right;"><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.045</td>
+<td style="text-align: right;">1.79</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">0.174</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.048</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">0.455</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.086</td>
+<td style="text-align: right;">1.37</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">0.245</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Examine our output table, what do these results tell us about each block of variables in explaining variance in <code>rtmean</code>?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>They tell us how much additional variance each model explains compared to the previous model. The associated <em>F</em>-change statistics tell us whether this is a significant amount of extra variance explained.</p>
+<p>First line of Model Fit Measures:<br>
+Model 1 explains 4.5% of the DV variance (4.5% more than no model at all), but this is not a significant amount of variance: <em>F</em>(2,76) = 1.79, <em>p</em> = .174. &nbsp;</p>
+<p>Second line of Model Fit Measures:<br>
+Model 2 explains 4.8% of the DV variance, again not significant: <em>F</em>(4,74) = 0.92, <em>p</em> = .455. &nbsp;</p>
+<p>Model 1 vs 2 in Model Comparisons: Model 2 explains 0.3% more of the DV variance than explained in model 1, which is unsurprisingly also not a significant increase: <em>F</em>(2,74) = 0.10, <em>p</em> = .904. &nbsp;</p>
+<p>Third line of Model Fit Measures:<br>
+Model 3 explains 8.6% of the DV variance, again not significant: <em>F</em>(5,73) = 1.37, <em>p</em> = .245. &nbsp;</p>
+<p>Model 2 vs 3 in Model Comparisons: Model 3 explains 3.8% more of the DV variance than is explained in model 2, but this is also not a significant increase (a weak trend): <em>F</em>(1,73) = 3.06, <em>p</em> = .084.</p>
+</div>
+</div>
+<p><strong>There is an almost significant effect of <code>sex</code>. Without doing any further analyses can you work out if mean RTs (after partialling out the other IVs) are faster for men than for women, or vice versa? </strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The first thing we need to do is check what the reference level for the <code>sex</code> variable is:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dfMod<span class="sc">$</span>sex)  <span class="co">#the reference level is the first returned, so Female in this case </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Female" "Male"  </code></pre>
+</div>
+</div>
+<p>We can also see this because the line the predictor table of <code>mdl3</code> says <code>sexMale</code>, so it is the effect of being <code>Male</code> that is being estimated.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdl3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rtmean ~ age + sex + reinf_code + i7imp_z + imp_by_reinf, 
+    data = dfMod)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-143.969  -39.901   -3.034   32.456  196.618 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  540.828538  36.242427  14.923   &lt;2e-16 ***
+age            1.204230   1.413341   0.852   0.3970    
+sexMale      -31.516893  16.425189  -1.919   0.0589 .  
+reinf_code    -0.008859   7.561673  -0.001   0.9991    
+i7imp_z        3.069345   7.722532   0.397   0.6922    
+imp_by_reinf -13.405415   7.659760  -1.750   0.0843 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 66.97 on 73 degrees of freedom
+Multiple R-squared:  0.0859,    Adjusted R-squared:  0.02329 
+F-statistic: 1.372 on 5 and 73 DF,  p-value: 0.2448</code></pre>
+</div>
+</div>
+<p>The coefficients table with the Reference Level set to female, shows that the Estimate is -31.5 msec for Male – Female. Thus, females have larger RTs, i.e.&nbsp;are slower in this task (thus when you take their larger mean RTs away from the smaller mean RTs of males the value is negative). Keep in mind that this effect was still only at a trend-level so you would want to interpret this cautiously, even more so if it wasn’t predicted in advance.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script src="answer-gate.js"></script>
+
+
+
+
+</body></html>
