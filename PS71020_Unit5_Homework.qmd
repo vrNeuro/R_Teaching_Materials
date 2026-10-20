@@ -10,25 +10,22 @@ format:
     css: worksheet.css 
 ---
 
-**TODO**
+
 ### Learning Outcomes: \ 
 
 1 - Use RStudio to carry out a simple linear regression (forced-entry) \ 
 
-2 - Learn how to fully report regression results in APA style  \ 
+2 - Use RStudio to carry out a hierarchical regression  \ 
 
-3 - Use RStudio to check data for assumptions of linear regression. \ 
+3 - Use RStudio to perform a mediated regression \ 
 
-4 - Understand the effects of collinearity on predictor results \ 
+4 - Use RStudio to perform and report a moderation analysis \ 
 
 
-**TODO**
+
 ### Materials Used:
 
-We will use the packages  **rstatix**, **effectsize**, **knitr**, **ppcor**
-
-
-**car**, **psych** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
+We will use the packages  **interactions**, **knitr**, and **psych** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
 
 
 ## CREATE A NEW PROJECT
@@ -72,6 +69,7 @@ dfTrim <- df[complete.cases(df),]
 :::
 :::
 
+## SECTION B. CORRELATION & REGRESSION
 
 **Summarise the bivariate relationships between each of these three variables by looking at the correlation matrix.** 
 
@@ -168,6 +166,7 @@ kable(tab,
 :::
 :::
 
+## SECTION C. HIERARCHICAL REGRESSION
 
 **The researcher thought they best control for age and gender too. Run a hierarchical multiple regression model that would appropriately control for the effect of age and gender. Contrast the results with your summary from the previous question**.
 
@@ -204,6 +203,8 @@ The addition of self-esteem and neuroticism to the model accounted for an additi
 
 :::
 :::
+
+## SECTION D. MEDIATION
 
 **The researcher then decided to test whether self-esteem mediates the relationship between neuroticism and loneliness. Run an appropriate series of regression analyses to see if this is the case.**
 
@@ -283,11 +284,12 @@ The Baron and Kenny steps are a good way to understand what we are looking for i
 
 We could write this up as:
 
-The indirect effect of neuroticism on loneliness via self-esteem was significant, ab = 0.10, 95% bootstrap CI [0.06, 0.15] (unstandardised ab = 0.098). The direct effect remained significant, c’ = 0.56, p < .001, indicating partial mediation. Self-esteem accounted for approximately 15% of the total effect (ab/c = 0.10/0.66)
+The indirect effect of neuroticism on loneliness via self-esteem was significant, ab = 0.10, 95% bootstrap CI [0.06, 0.15] (unstandardised ab = 0.098). The direct effect remained significant, c’ = 0.56, *p* < .001, indicating partial mediation. Self-esteem accounted for approximately 15% of the total effect (ab/c = 0.10/0.66)
 
 :::
 :::
 
+## SECTION E. MODERATION & WRITE-UP
 
 **They also wanted to test if self-esteem was a moderator of the relationship between neuroticism and loneliness. How might they test this? What would they find in this data?**
 
@@ -324,7 +326,7 @@ summary(mdlMod2)$r.squared - summary(mdlMod1)$r.squared
 #summary for predictor table
 summary(mdlMod2)
 ```
-We can see that adding the interaction variable accounts for almost no additional variance $\Delta$R^2^ = 0.00005 and that the `Self.esteem:Neuroticism` interaction term is not significant *b* = 0.001, *t* = 0.008, *p* = 0.884. So we have no evidence of a moderation effect here.
+We can see that adding the interaction variable accounts for almost no additional variance $\Delta$R^2^ = 0.00005 and that the `Self.esteem:Neuroticism` interaction term is not significant *b* = 0.001, *t* = 0.146, *p* = 0.884. So we have no evidence of a moderation effect here.
 
 Normally, we would not bother to run a simple slopes analysis given the above, but in this case if we  examine the simple slopes plot we can see there is no interaction between these variables at all. 
 ```{r}
@@ -335,6 +337,23 @@ interact_plot(mdlMod2, pred = Neuroticism, modx = Self.esteem,
               interval = TRUE)
 
 ```
+
+However, we can also use the `mediate()` function to perform all of this for us:
+```{r}
+mod <- mediate(Loneliness ~ Neuroticism * Self.esteem,
+               data = dfTrim,
+               n.iter = 5000)
+print(mod, short = FALSE)
+```
+
+An APA format writeup would be:
+
+A hierarchical multiple regression was conducted to test whether self-esteem moderated the relationship between neuroticism and loneliness. Both predictors were mean-centred prior to analysis. In Block 1, neuroticism and self-esteem were entered, and in Block 2 their interaction term was added.
+
+Block 1 explained a significant proportion of the variance in loneliness, R^2^ = .42, *F*(2, 253) = 90.21, *p* < .001. Neuroticism was a positive predictor, *b* = 0.56, SE = 0.06, and self-esteem a negative predictor, *b* = −0.42, SE = 0.08 (both *p* < .001).
+
+Adding the neuroticism × self-esteem interaction in Block 2 did not significantly improve the model, $\Delta$R^2^ < .001, *F*(1, 252) = 0.02, *p* = .884. The interaction term was not significant, *b* = 0.001, SE = 0.008, *t*(252) = 0.15, *p* = .884. There was therefore no evidence that self-esteem moderated the association between neuroticism and loneliness. The effect of neuroticism on loneliness did not differ across levels of self-esteem, as the simple slopes plot also showed.
+
 
 :::
 :::
