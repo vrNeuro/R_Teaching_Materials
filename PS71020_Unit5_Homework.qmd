@@ -25,7 +25,7 @@ format:
 
 ### Materials Used:
 
-We will use the packages  **interactions**, **knitr**, and **psych** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
+We will use the packages  **interactions**, **knitr**, **rstatix**, **effectsize**, **ppcor**, and **psych** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
 
 
 ## CREATE A NEW PROJECT

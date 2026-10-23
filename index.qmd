@@ -34,6 +34,7 @@ Welcome to the presessional materials.
 | 2 | Screening and Cleaning Data | [Week 2 worksheet](PS71020_Unit2_Lab.qmd) | [Week 2 homework](PS71020_Unit2_Homework.qmd)  |
 | 3 | Review Of Basic Statistical Tests | [Week 3 worksheet](PS71020_Unit3_Lab.qmd) |[Week 3 homework](PS71020_Unit3_Homework.qmd)     |
 | 4 | Regression 1 | [Week 4 worksheet](PS71020_Unit4_Lab.qmd) |  [Week 4 homework](PS71020_Unit4_Homework.qmd)  |
+| 5 | Regression 2 | [Week 5 worksheet](PS71020_Unit5_Lab.qmd) |  [Week 5 homework](PS71020_Unit5_Homework.qmd)  |
 
 *More worksheets will be added here as the term progresses.*
 

@@ -217,7 +217,7 @@ Notice that the coefficients compare each group to the reference only. The diffe
 
 ::: {.answer}
 
-No, the Anova shows R^2^=0.0225, *F*(2,105) = 1.210, *p* = .302.
+No, the F-test shows R^2^=0.0225, *F*(2,105) = 1.210, *p* = .302.
 (Note: usually in APA style, R2, F and t values are reported to 2 decimal places [except when convention dictates using 3 decimal places when *p* < .10] but I have left all 3 here, and various other places, for comparison later.)
 
 
