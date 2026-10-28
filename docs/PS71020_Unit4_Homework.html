@@ -186,6 +186,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link active" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
   <li><a href="#section-a.-the-dataset" id="toc-section-a.-the-dataset" class="nav-link" data-scroll-target="#section-a.-the-dataset">SECTION A. THE DATASET</a></li>
+  <li><a href="#section-b.-assumption-checking" id="toc-section-b.-assumption-checking" class="nav-link" data-scroll-target="#section-b.-assumption-checking">SECTION B. ASSUMPTION CHECKING</a></li>
+  <li><a href="#section-c.-regression" id="toc-section-c.-regression" class="nav-link" data-scroll-target="#section-c.-regression">SECTION C. REGRESSION</a></li>
   </ul>
 </nav>
     </div>
@@ -236,6 +238,9 @@ window.Quarto = {
 <p>2 - Female &nbsp;</p>
 <p>3 - Other &nbsp;</p>
 <p>4 - Prefer Not To Say &nbsp;</p>
+</section>
+<section id="section-b.-assumption-checking" class="level2">
+<h2 class="anchored" data-anchor-id="section-b.-assumption-checking">SECTION B. ASSUMPTION CHECKING</h2>
 <p><strong>Load the data and check the data carefully to see if it meets the assumptions for carrying out a multiple regression. Are there any concerns, and what might you do to address any of these concerns?</strong></p>
 <div class="answer-box">
 <p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
@@ -491,6 +496,9 @@ F-statistic: 35.24 on 2 and 219 DF,  p-value: 5.392e-14</code></pre>
 <p>The bivariate correlation matrix suggests that all three variables have medium to large positive correlations with each other.</p>
 </div>
 </div>
+</section>
+<section id="section-c.-regression" class="level2">
+<h2 class="anchored" data-anchor-id="section-c.-regression">SECTION C. REGRESSION</h2>
 <p><strong>Run a multiple regression analysis with life satisfaction as the outcome variable, and extraversion and social media use as the two predictors. What do your results suggest? You might also like to calculate the semi-partial correlations and examine the extent to which the predictors account for individual and shared variance in life satisfaction.</strong></p>
 <div class="answer-box">
 <p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
@@ -545,9 +553,10 @@ Extraversion     |       0.11 | [-0.05, 0.26]</code></pre>
 </div>
 </div>
 <p>Here would be a standard APA format write-up:</p>
-<p>A multiple linear regression was conducted to predict life satisfaction from social media use and extraversion. The overall model was significant, <em>F</em>(2, 219) = 35.24, <em>p</em> &lt; .001, and explained 24% of the variance in life satisfaction (R<sup>2</sup> = .24, adjusted R<sup>2</sup> = .24). Social media use was a significant positive predictor, <em>b</em> = 1.11, <span class="math inline">\(\beta\)</span> = .41, SE = 0.21, <em>t</em>(218) = 5.23, <em>p</em> &lt; .001, <em>sr</em><sup>2</sup> = .09. Holding extraversion constant, each one-unit increase in social media use was associated with a 1.11-point increase in life satisfaction, and social media use uniquely accounted for approximately 9% of the variance in life satisfaction. Extraversion was not a significant predictor, <em>b</em> = 0.21, <span class="math inline">\(\beta\)</span> = .11, SE = 0.16, <em>t</em>(218) = 1.38, <em>p</em> = .171, <em>sr</em><sup>2</sup> = .01, uniquely accounting for less than 1% of the variance.</p>
+<p>A multiple linear regression was conducted to predict life satisfaction from social media use and extraversion. The overall model was significant, <em>F</em>(2, 219) = 35.24, <em>p</em> &lt; .001, and explained 24% of the variance in life satisfaction (R<sup>2</sup> = .24, adjusted R<sup>2</sup> = .24). Social media use was a significant positive predictor, <em>b</em> = 1.11, <span class="math inline">\(\beta\)</span> = .41, SE = 0.21, <em>t</em>(219) = 5.24, <em>p</em> &lt; .001, <em>sr</em><sup>2</sup> = .09. Holding extraversion constant, each one-unit increase in social media use was associated with a 1.11-point increase in life satisfaction, and social media use uniquely accounted for approximately 9% of the variance in life satisfaction. Extraversion was not a significant predictor, <em>b</em> = 0.21, <span class="math inline">\(\beta\)</span> = .11, SE = 0.16, <em>t</em>(219) = 1.38, <em>p</em> = .171, <em>sr</em><sup>2</sup> = .01, uniquely accounting for less than 1% of the variance.</p>
 <p>A further note is that: Social media use and extraversion are both positively related to life satisfaction (see correlations), but only social media use is a significant predictor ie <span class="math inline">\(\beta\)</span> = 0.41 when both are included in the regression model. The semi-partial correlation coefficients suggest extraversion is making virtually no individual contribution to the prediction of life satisfaction, while social media use is making an individual contribution of around 9% to the prediction of life satisfaction. This leaves 14% (total R<sup>2</sup> of 0.24 - (0.09+0.01) = 0.14) of the variance in life satisfaction accounted for by the shared contribution of the two predictors. This highlights the difficulties with interpreting individual regression coefficients when the predictors are highly correlated with each other ie extraversion and social media use have a correlation of 0.67. Even though this is not high enough to suggest a problematic level of collinearity it is still something to be aware of when interpreting results and highlights why <em>sr</em><sup>2</sup> values are useful in interpretation.</p>
 <p>A note on presenting larger numbers of predictors: If you have more than 2 predictors it often makes more sense to report these in a table with all of the relevant statistics. You should still interpret the results (including direction of effects) in the text but this can reduce the need for huge amounts of numbers in the text.</p>
+<p>A note on the degrees of freedom for the t-test for individual predictors. These are given by the formula: df = <em>n</em> - <em>k</em> - 1 Where <em>n</em> is the number of participants and <em>k</em> is the number of predictors. 222 - 2 - 1 = 219</p>
 </div>
 </div>
 <p><strong>The research team decided to also add age to the regression model as a control variable. What happens when you do this?</strong></p>
