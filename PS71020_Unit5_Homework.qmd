@@ -328,17 +328,30 @@ summary(mdlMod2)
 ```
 We can see that adding the interaction variable accounts for almost no additional variance $\Delta$R^2^ = 0.00005 and that the `Self.esteem:Neuroticism` interaction term is not significant *b* = 0.001, *t* = 0.146, *p* = 0.884. So we have no evidence of a moderation effect here.
 
-Normally, we would not bother to run a simple slopes analysis given the above, but in this case if we  examine the simple slopes plot we can see there is no interaction between these variables at all. 
+Normally, we would not bother to run a simple slopes analysis given the above, but in this case if we  examine the simple slopes plot we can see there is no interaction between these variables at all. As there is a significant effect for both predictors, the lines are not flat (the positive effect of Neuroticism on Loneliness), they are also offset with higher self esteem associated with lower Loneliness (the +1 SD line is lower than the mean which is again lower than the -1SD line). However, crucially the lines are parallel which is the absence of the interaction effect.
 ```{r}
+#Note that when we did this in the lab we used an argument of modx.values = c(-1, 0, 1)
+#This was because we had already z-scored the data so requesting the estimates at -1, 0, and 1
+#was already in terms of SDs. Below we just use the default which produces them at the mean +- 1SD
+#Using modx.values = c(-1, 0, 1) in this case would be the actual values of -1, 0 and 1 of the moderator in it's original units.
 library(interactions)
 interact_plot(mdlMod2, pred = Neuroticism, modx = Self.esteem,
-              modx.values = c(-1, 0, 1),
               plot.points = TRUE,
               interval = TRUE)
+```
+We can also use the `psych:sim_slopes()` function to perform a simple slopes analysis:
 
+```{r}
+#Note again using the default option instead of modx.values = c(-1, 0, 1) for the same reason as above.
+ss2 <- sim_slopes(mdlMod2,
+                  pred   = Neuroticism,
+                  modx   = Self.esteem,
+                  )
+tab2 <- ss2$slopes
+tab2 
 ```
 
-However, we can also use the `mediate()` function to perform all of this for us:
+However, we can also use the `mediate()` function to perform all of this for us. Notice that here we are not using the manually mean centered data in `dfC`, instead we are using the raw data in `dfTrim`, the `mediate()` function applies mean centering automatically.
 ```{r}
 mod <- mediate(Loneliness ~ Neuroticism * Self.esteem,
                data = dfTrim,

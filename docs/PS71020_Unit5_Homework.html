@@ -871,13 +871,16 @@ F-statistic: 59.92 on 3 and 252 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>We can see that adding the interaction variable accounts for almost no additional variance <span class="math inline">\(\Delta\)</span>R<sup>2</sup> = 0.00005 and that the <code>Self.esteem:Neuroticism</code> interaction term is not significant <em>b</em> = 0.001, <em>t</em> = 0.146, <em>p</em> = 0.884. So we have no evidence of a moderation effect here.</p>
-<p>Normally, we would not bother to run a simple slopes analysis given the above, but in this case if we examine the simple slopes plot we can see there is no interaction between these variables at all.</p>
+<p>Normally, we would not bother to run a simple slopes analysis given the above, but in this case if we examine the simple slopes plot we can see there is no interaction between these variables at all. As there is a significant effect for both predictors, the lines are not flat (the positive effect of Neuroticism on Loneliness), they are also offset with higher self esteem associated with lower Loneliness (the +1 SD line is lower than the mean which is again lower than the -1SD line). However, crucially the lines are parallel which is the absence of the interaction effect.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(mdlMod2, <span class="at">pred =</span> Neuroticism, <span class="at">modx =</span> Self.esteem,</span>
-<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">modx.values =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot.points =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">interval =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Note that when we did this in the lab we used an argument of modx.values = c(-1, 0, 1)</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="co">#This was because we had already z-scored the data so requesting the estimates at -1, 0, and 1</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="co">#was already in terms of SDs. Below we just use the default which produces them at the mean +- 1SD</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Using modx.values = c(-1, 0, 1) in this case would be the actual values of -1, 0 and 1 of the moderator in it's original units.</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(mdlMod2, <span class="at">pred =</span> Neuroticism, <span class="at">modx =</span> Self.esteem,</span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot.points =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">interval =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -886,19 +889,39 @@ F-statistic: 59.92 on 3 and 252 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div>
-<p>However, we can also use the <code>mediate()</code> function to perform all of this for us:</p>
+<p>We can also use the <code>psych:sim_slopes()</code> function to perform a simple slopes analysis:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">mediate</span>(Loneliness <span class="sc">~</span> Neuroticism <span class="sc">*</span> Self.esteem,</span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> dfTrim,</span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.iter =</span> <span class="dv">5000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Note again using the default option instead of modx.values = c(-1, 0, 1) for the same reason as above.</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>ss2 <span class="ot">&lt;-</span> <span class="fu">sim_slopes</span>(mdlMod2,</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pred   =</span> Neuroticism,</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">modx   =</span> Self.esteem,</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>tab2 <span class="ot">&lt;-</span> ss2<span class="sc">$</span>slopes</span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>tab2 </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Value of Self.esteem      Est.       S.E.      2.5%     97.5%   t val.
+1            -6.640385 0.5535510 0.08000668 0.3959840 0.7111179 6.918809
+2             0.000000 0.5613993 0.05686905 0.4494001 0.6733984 9.871788
+3             6.640385 0.5692475 0.07644272 0.4186995 0.7197956 7.446720
+             p
+1 3.746162e-11
+2 1.211712e-19
+3 1.518853e-12</code></pre>
+</div>
+</div>
+<p>However, we can also use the <code>mediate()</code> function to perform all of this for us. Notice that here we are not using the manually mean centered data in <code>dfC</code>, instead we are using the raw data in <code>dfTrim</code>, the <code>mediate()</code> function applies mean centering automatically.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">mediate</span>(Loneliness <span class="sc">~</span> Neuroticism <span class="sc">*</span> Self.esteem,</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> dfTrim,</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.iter =</span> <span class="dv">5000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="PS71020_Unit5_Homework_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="PS71020_Unit5_Homework_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mod, <span class="at">short =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mod, <span class="at">short =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Mediation/Moderation Analysis 
