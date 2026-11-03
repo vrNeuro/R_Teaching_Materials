@@ -1,0 +1,121 @@
+"id","condition","week_1","week_2","week_3","week_4","week_5","week_6","week_7","week_8"
+1,"Control",42,44,41,41,40,37,29,34
+2,"Control",53,45,53,47,44,43,40,38
+3,"Control",48,38,43,NA,NA,NA,NA,NA
+4,"Control",48,41,41,45,45,40,NA,NA
+5,"Control",50,54,57,51,56,55,53,52
+6,"Control",63,64,66,59,53,59,57,55
+7,"Control",51,48,54,49,48,51,58,49
+8,"Control",49,52,54,51,50,51,50,53
+9,"Control",48,46,40,40,43,42,43,43
+10,"Control",47,49,41,48,45,43,41,42
+11,"Control",47,49,54,49,47,52,51,NA
+12,"Control",52,49,47,42,44,41,35,37
+13,"Control",45,47,43,51,48,NA,NA,NA
+14,"Control",46,42,51,46,52,45,48,45
+15,"Control",67,68,59,59,61,55,59,60
+16,"Control",34,35,35,32,34,39,39,44
+17,"Control",40,NA,NA,NA,NA,NA,NA,NA
+18,"Control",48,39,39,40,46,43,38,42
+19,"Control",50,49,47,49,46,47,44,43
+20,"Control",39,42,37,NA,NA,NA,NA,NA
+21,"Control",48,47,50,49,47,43,48,47
+22,"Control",48,47,47,44,48,52,45,48
+23,"Control",53,50,52,47,50,51,48,44
+24,"Control",34,37,41,NA,NA,NA,NA,NA
+25,"Control",44,42,NA,NA,NA,NA,NA,NA
+26,"Control",29,28,NA,NA,NA,NA,NA,NA
+27,"Control",33,35,NA,NA,NA,NA,NA,NA
+28,"Control",50,44,42,45,41,42,39,44
+29,"Control",43,38,41,42,37,43,42,36
+30,"Control",31,35,NA,NA,NA,NA,NA,NA
+31,"Control",50,43,49,44,49,47,46,47
+32,"Control",43,50,48,41,43,42,43,43
+33,"Control",46,39,44,45,45,40,39,48
+34,"Control",45,43,41,42,41,41,41,41
+35,"Control",46,43,47,39,NA,NA,NA,NA
+36,"Control",40,33,NA,NA,NA,NA,NA,NA
+37,"Control",42,42,38,NA,NA,NA,NA,NA
+38,"Control",49,50,53,54,56,53,53,56
+39,"Control",39,46,40,42,44,45,44,39
+40,"Control",47,47,47,48,51,44,55,48
+41,"Sleep hygiene",55,57,50,55,53,53,58,48
+42,"Sleep hygiene",44,43,46,43,46,52,54,58
+43,"Sleep hygiene",49,52,54,61,60,62,66,65
+44,"Sleep hygiene",43,43,NA,NA,NA,NA,NA,NA
+45,"Sleep hygiene",52,49,51,NA,NA,NA,NA,NA
+46,"Sleep hygiene",34,NA,NA,NA,NA,NA,NA,NA
+47,"Sleep hygiene",38,47,40,42,44,NA,NA,NA
+48,"Sleep hygiene",45,54,52,52,53,56,57,60
+49,"Sleep hygiene",43,42,42,43,48,47,49,55
+50,"Sleep hygiene",41,39,51,45,50,53,52,56
+51,"Sleep hygiene",57,56,57,57,62,62,62,60
+52,"Sleep hygiene",45,45,44,52,49,55,58,58
+53,"Sleep hygiene",55,54,56,53,NA,NA,NA,NA
+54,"Sleep hygiene",43,46,45,44,54,50,47,52
+55,"Sleep hygiene",50,51,52,53,53,61,55,50
+56,"Sleep hygiene",50,47,53,54,56,55,49,52
+57,"Sleep hygiene",53,59,59,57,59,60,66,70
+58,"Sleep hygiene",51,56,61,60,58,51,56,64
+59,"Sleep hygiene",44,46,43,47,43,45,44,43
+60,"Sleep hygiene",52,53,55,51,53,56,53,57
+61,"Sleep hygiene",46,50,51,48,54,55,55,51
+62,"Sleep hygiene",43,45,47,44,45,45,45,47
+63,"Sleep hygiene",44,52,51,NA,NA,NA,NA,NA
+64,"Sleep hygiene",50,44,50,46,46,52,52,47
+65,"Sleep hygiene",55,57,55,57,60,63,60,60
+66,"Sleep hygiene",45,51,NA,NA,NA,NA,NA,NA
+67,"Sleep hygiene",55,55,57,58,60,56,58,59
+68,"Sleep hygiene",42,33,38,38,45,45,47,46
+69,"Sleep hygiene",54,54,54,53,51,51,52,57
+70,"Sleep hygiene",46,44,NA,NA,NA,NA,NA,NA
+71,"Sleep hygiene",35,NA,NA,NA,NA,NA,NA,NA
+72,"Sleep hygiene",44,49,49,48,53,51,54,48
+73,"Sleep hygiene",39,42,NA,NA,NA,NA,NA,NA
+74,"Sleep hygiene",55,52,52,53,57,60,54,58
+75,"Sleep hygiene",36,47,44,44,49,50,56,56
+76,"Sleep hygiene",45,45,56,53,47,48,50,49
+77,"Sleep hygiene",26,33,32,32,36,32,42,45
+78,"Sleep hygiene",36,37,43,52,50,52,62,57
+79,"Sleep hygiene",50,44,49,49,61,56,58,56
+80,"Sleep hygiene",41,45,NA,NA,NA,NA,NA,NA
+81,"Mindfulness",58,56,54,61,51,55,51,54
+82,"Mindfulness",35,37,40,35,37,38,40,39
+83,"Mindfulness",52,52,51,54,52,56,57,61
+84,"Mindfulness",61,54,58,59,59,65,61,62
+85,"Mindfulness",48,48,47,49,52,52,50,54
+86,"Mindfulness",41,36,41,40,37,36,36,37
+87,"Mindfulness",48,NA,NA,NA,NA,NA,NA,NA
+88,"Mindfulness",50,52,54,50,55,56,56,51
+89,"Mindfulness",38,39,40,36,42,43,44,NA
+90,"Mindfulness",31,NA,NA,NA,NA,NA,NA,NA
+91,"Mindfulness",53,61,67,62,60,57,68,63
+92,"Mindfulness",35,39,34,35,39,40,37,43
+93,"Mindfulness",46,50,53,48,63,57,55,56
+94,"Mindfulness",35,40,44,37,42,41,47,47
+95,"Mindfulness",55,63,64,61,65,61,63,61
+96,"Mindfulness",48,49,48,45,43,45,45,50
+97,"Mindfulness",52,54,53,54,53,51,53,57
+98,"Mindfulness",45,52,49,54,47,48,49,51
+99,"Mindfulness",54,53,54,56,47,51,48,54
+100,"Mindfulness",44,51,43,38,39,46,35,44
+101,"Mindfulness",38,39,38,43,48,42,47,43
+102,"Mindfulness",50,54,56,53,57,56,65,64
+103,"Mindfulness",50,50,51,51,49,50,51,60
+104,"Mindfulness",51,56,57,56,60,57,59,58
+105,"Mindfulness",36,42,49,43,41,43,NA,NA
+106,"Mindfulness",43,42,42,42,43,44,40,44
+107,"Mindfulness",58,51,56,59,60,58,63,67
+108,"Mindfulness",38,34,39,42,40,45,43,52
+109,"Mindfulness",53,60,53,47,53,53,55,55
+110,"Mindfulness",54,58,50,52,58,49,54,55
+111,"Mindfulness",59,56,55,58,57,58,62,50
+112,"Mindfulness",51,46,54,55,61,52,53,55
+113,"Mindfulness",53,46,NA,NA,NA,NA,NA,NA
+114,"Mindfulness",39,37,44,49,43,50,52,54
+115,"Mindfulness",45,46,49,52,52,55,56,57
+116,"Mindfulness",46,49,46,47,39,47,45,50
+117,"Mindfulness",48,50,47,53,50,53,58,62
+118,"Mindfulness",35,42,38,46,39,41,40,38
+119,"Mindfulness",26,NA,NA,NA,NA,NA,NA,NA
+120,"Mindfulness",50,49,47,53,54,53,52,49

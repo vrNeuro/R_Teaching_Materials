@@ -211,7 +211,7 @@ Extreme values in a variable can bias the mean in that direction. If we had a fe
 :::
 :::
 
-## SECTION C. DETECTING OUTLIERS WITH Z-SCORES
+## SECTION C. DETECTING OUTLIERS WITH Z-SCORES {#sec-univariateoutliers-zscores}
 
 
 We are going to do this the `df$Lack_of_PremediationUPPS` variable. Let's first plot a histogram of the data to get an initial visualisation.

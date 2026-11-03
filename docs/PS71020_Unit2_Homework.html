@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#section-a.-the-data-set" id="toc-section-a.-the-data-set" class="nav-link active" data-scroll-target="#section-a.-the-data-set">SECTION A. THE DATA SET</a></li>
   <li><a href="#sec-missing-data" id="toc-sec-missing-data" class="nav-link" data-scroll-target="#sec-missing-data">SECTION B. MISSING DATA</a></li>
-  <li><a href="#section-c.-detecting-outliers-with-z-scores" id="toc-section-c.-detecting-outliers-with-z-scores" class="nav-link" data-scroll-target="#section-c.-detecting-outliers-with-z-scores">SECTION C. DETECTING OUTLIERS WITH Z-SCORES</a></li>
+  <li><a href="#sec-univariateoutliers-zscores" id="toc-sec-univariateoutliers-zscores" class="nav-link" data-scroll-target="#sec-univariateoutliers-zscores">SECTION C. DETECTING OUTLIERS WITH Z-SCORES</a></li>
   <li><a href="#sec-compound-plots" id="toc-sec-compound-plots" class="nav-link" data-scroll-target="#sec-compound-plots">SECTION D. COMPOUND PLOTS</a></li>
   </ul>
 </nav>
@@ -416,8 +416,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="section-c.-detecting-outliers-with-z-scores" class="level2">
-<h2 class="anchored" data-anchor-id="section-c.-detecting-outliers-with-z-scores">SECTION C. DETECTING OUTLIERS WITH Z-SCORES</h2>
+<section id="sec-univariateoutliers-zscores" class="level2">
+<h2 class="anchored" data-anchor-id="sec-univariateoutliers-zscores">SECTION C. DETECTING OUTLIERS WITH Z-SCORES</h2>
 <p>We are going to do this the <code>df$Lack_of_PremediationUPPS</code> variable. Let’s first plot a histogram of the data to get an initial visualisation.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dfImp<span class="sc">$</span>Lack_of_PremediationUPPS, <span class="at">breaks =</span> <span class="dv">20</span>, <span class="at">main =</span> <span class="st">"Histogram of Lack_of_PremediationUPPS"</span>, <span class="at">xlab =</span> <span class="st">"Lack_of_PremediationUPPS"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

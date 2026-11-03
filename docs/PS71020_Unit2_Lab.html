@@ -162,7 +162,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-assessing-normality" id="toc-sec-assessing-normality" class="nav-link" data-scroll-target="#sec-assessing-normality">SECTION C. ASSESSING NORMALITY</a></li>
   <li><a href="#section-d.-transforming-a-variable" id="toc-section-d.-transforming-a-variable" class="nav-link" data-scroll-target="#section-d.-transforming-a-variable">SECTION D. TRANSFORMING A VARIABLE</a></li>
   <li><a href="#section-e.-checking-linearity-and-homoscedasticity" id="toc-section-e.-checking-linearity-and-homoscedasticity" class="nav-link" data-scroll-target="#section-e.-checking-linearity-and-homoscedasticity">SECTION E. CHECKING LINEARITY AND HOMOSCEDASTICITY</a></li>
-  <li><a href="#section-f.-identifying-multivariate-outliers" id="toc-section-f.-identifying-multivariate-outliers" class="nav-link" data-scroll-target="#section-f.-identifying-multivariate-outliers">SECTION F. IDENTIFYING MULTIVARIATE OUTLIERS</a></li>
+  <li><a href="#sec-multivariate-outliers" id="toc-sec-multivariate-outliers" class="nav-link" data-scroll-target="#sec-multivariate-outliers">SECTION F. IDENTIFYING MULTIVARIATE OUTLIERS</a></li>
   </ul>
 </nav>
     </div>
@@ -584,8 +584,8 @@ sample estimates:
 </div>
 </div>
 </section>
-<section id="section-f.-identifying-multivariate-outliers" class="level2">
-<h2 class="anchored" data-anchor-id="section-f.-identifying-multivariate-outliers">SECTION F. IDENTIFYING MULTIVARIATE OUTLIERS</h2>
+<section id="sec-multivariate-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="sec-multivariate-outliers">SECTION F. IDENTIFYING MULTIVARIATE OUTLIERS</h2>
 <p>Next we will check the data for multivariate outliers amongst a set of 5 variables (TIMEDRS_LOG, ATTDRUG, ATTHOUSE, MSTATUS, and ETHNICITY). Notice that we are going to remove multivariate outliers after first removing univariate outliers as we are using our <code>cleanData</code>.</p>
 <p>We want to create a simpler data set with only these columns of data in it. Earlier we used <code>subset()</code> to select certain rows. Here we are going to use it again in a slightly different way:</p>
 <div class="cell">

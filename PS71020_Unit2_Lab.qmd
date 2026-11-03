@@ -382,7 +382,7 @@ abline(lm(ATTDRUG ~ TIMEDRS_log,cleanData), col = "red", lwd = 2) #plot the line
 cor.test(cleanData$TIMEDRS_log,cleanData$ATTDRUG) # calculate the correlation
 ```
 
-## SECTION F. IDENTIFYING MULTIVARIATE OUTLIERS
+## SECTION F. IDENTIFYING MULTIVARIATE OUTLIERS {#sec-multivariate-outliers}
 
 Next we will check the data for multivariate outliers amongst a set of 5 variables (TIMEDRS_LOG, ATTDRUG, ATTHOUSE, MSTATUS, and ETHNICITY). Notice that we are going to remove multivariate outliers after first removing univariate outliers as we are using our `cleanData`.
 
