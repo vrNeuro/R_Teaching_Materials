@@ -10,7 +10,7 @@ format:
     css: worksheet.css 
 ---
 
-### Learning Outcomes: \ 
+### Learning Outcomes:  
 
 1 - Use RStudio to examine a mixed effects data set \ 
 
