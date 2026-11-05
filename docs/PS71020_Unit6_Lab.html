@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>PS71020_Unit6_Lab – PG Stats Intro</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="worksheet.css">
+<link rel="stylesheet" href="answer-gate.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">PG Stats Intro</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Pre_sessional_0.html"> 
+<span class="menu-text">Unit 0</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link active" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
+  <li><a href="#section-a.-the-dataset" id="toc-section-a.-the-dataset" class="nav-link" data-scroll-target="#section-a.-the-dataset">SECTION A. THE DATASET</a></li>
+  <li><a href="#section-b.-various-approaches-to-modelling" id="toc-section-b.-various-approaches-to-modelling" class="nav-link" data-scroll-target="#section-b.-various-approaches-to-modelling">SECTION B. VARIOUS APPROACHES TO MODELLING</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">PS71020_Unit6_Lab</h1>
+<p class="subtitle lead">Linear Mixed Effects Models 1</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-outcomes" class="level3">
+<h3 class="anchored" data-anchor-id="learning-outcomes">Learning Outcomes: &nbsp;</h3>
+<p>1 - Use RStudio to examine a mixed effects data set &nbsp;</p>
+<p>2 - Understand different approaches to analysing this type of data &nbsp;</p>
+<p>3 - Carry out regression with a mixed-effects model &nbsp;</p>
+<p>4 - Understand how to interpret the output from a mixed-effects model &nbsp;</p>
+</section>
+<section id="materials-used" class="level3">
+<h3 class="anchored" data-anchor-id="materials-used">Materials Used:</h3>
+<p>We will use the packages <strong>tidyr</strong>, <strong>ggplot2</strong>, <strong>lme4</strong>, <strong>lmerTest</strong>, &amp; <strong>rstatix</strong> these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Some general notes about the weekly labs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You should go through the worksheet during the lab and try to complete as much of it during the lab as you can. You can work on the sheet individually or in small groups during the lab. Try to answer the lab worksheet questions in your own words however. If you are unable to finish the worksheet during the class, try to finish it outside class time. Try to attempt the answer before using the ‘Show Answer’ button.</p>
+<p>As you go through the sheet, copy the relevant lines of code to your own analysis script.</p>
+<p>A complete model answers script will be available on the VLE page from Fridays after the labs so you can check your own answers.</p>
+<p>If you have any queries during the class, please feel free to ask your lab tutors. If your question relates specifically to the lecture content or the homework sheets, please contact Peter Holland by email or use the forum on the VLE page.*</p>
+</div>
+</div>
+</section>
+<section id="create-a-new-project" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-new-project">CREATE A NEW PROJECT</h2>
+<p>Just as we did in previous weeks we are going to start by creating a new project for this week’s lab. Download the data from the VLE (In the Week 6 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: <a href="https://raw.githubusercontent.com/vrNeuro/R_Teaching_Materials/main/data/sleep_study_mixed.csv">Github Link</a>.</p>
+<p>If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.</p>
+<p>Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.</p>
+<p><strong>Given the list of packages above what code do we need to use to load them all?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'Matrix'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'lmerTest'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:lme4':
+
+    lmer</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    step</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'car':
+  method           from
+  na.action.merMod lme4</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'rstatix'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    filter</code></pre>
+</div>
+</div>
+<p>As you will have seen from the answer scripts from previous homeworks and labs it is good to do this at the top of your script instead of just before you use each package.</p>
+<p>Technically in this case we don’t need to use <code>library(lme4)</code> as <code>library(lmerTest)</code> loads this automatically as it is a required package (<strong>lmerTest</strong> is an extension of <strong>lme4</strong>). However, it is important that if we do use both that <code>library(lmerTest)</code> is called second as it masks the <code>lmer()</code> function in <strong>lme4</strong>.</p>
+<p>In practice most of the time you would just use <code>library(lmerTest)</code> and let it automatically do things in the correct order. If for some reason you specifically wanted to use the <strong>lme4</strong> version of the <code>lmer()</code> function you could use the <strong>package::function</strong> syntax of <code>lme4::lmer()</code>.</p>
+</div>
+</div>
+</section>
+<section id="section-a.-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="section-a.-the-dataset">SECTION A. THE DATASET</h2>
+<p>The dataset is a more advanced version of the one that was discussed in the Week 1 Lecture when we discussed ways of plotting data.</p>
+<p>120 students take part in an 8-week study. Randomly assigned to one of three conditions: a sleep hygiene programme, a mindfulness app, a control group.</p>
+<p>Each week they log their wellbeing scores. We are interested in: &nbsp;</p>
+<p>Do wellbeing scores change over time &nbsp;</p>
+<p>Does the condition they are in affect wellbeing scores.</p>
+<p>However, as with many real world longitudinal data sets some students have dropped out of the study at different times, so we have missing data.</p>
+<p>Next we read the data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"sleep_study_mixed.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Let’s first examine the data, what are the two functions we can use to:</strong> &nbsp;</p>
+<p><strong>1 - See the first few rows of data</strong> &nbsp;</p>
+<p><strong>2 - Get some summary statistics of each variable in our data frame</strong><br>
+</p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id condition week_1 week_2 week_3 week_4 week_5 week_6 week_7 week_8
+1  1   Control     42     44     41     41     40     37     29     34
+2  2   Control     53     45     53     47     44     43     40     38
+3  3   Control     48     38     43     NA     NA     NA     NA     NA
+4  4   Control     48     41     41     45     45     40     NA     NA
+5  5   Control     50     54     57     51     56     55     53     52
+6  6   Control     63     64     66     59     53     59     57     55</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       id             condition       week_1          week_2     
+ Min.   :  1.00   Length   :120   Min.   :26.00   Min.   :28.00  
+ 1st Qu.: 30.75   N.unique :  3   1st Qu.:41.75   1st Qu.:42.00  
+ Median : 60.50   N.blank  :  0   Median :46.00   Median :47.00  
+ Mean   : 60.50   Min.nchar:  7   Mean   :45.92   Mean   :46.94  
+ 3rd Qu.: 90.25   Max.nchar: 13   3rd Qu.:51.00   3rd Qu.:52.00  
+ Max.   :120.00                   Max.   :67.00   Max.   :68.00  
+                                                  NAs    :6      
+     week_3          week_4          week_5          week_6     
+ Min.   :32.00   Min.   :32.00   Min.   :34.00   Min.   :32.00  
+ 1st Qu.:43.00   1st Qu.:43.00   1st Qu.:44.00   1st Qu.:44.00  
+ Median :49.00   Median :49.00   Median :49.00   Median :51.00  
+ Mean   :48.41   Mean   :48.45   Mean   :49.43   Mean   :49.72  
+ 3rd Qu.:54.00   3rd Qu.:53.00   3rd Qu.:54.00   3rd Qu.:55.00  
+ Max.   :67.00   Max.   :62.00   Max.   :65.00   Max.   :65.00  
+ NAs    :17      NAs    :23      NAs    :25      NAs    :27     
+     week_7          week_8     
+ Min.   :29.00   Min.   :34.00  
+ 1st Qu.:44.00   1st Qu.:45.00  
+ Median :51.00   Median :51.00  
+ Mean   :50.43   Mean   :51.22  
+ 3rd Qu.:56.00   3rd Qu.:57.00  
+ Max.   :68.00   Max.   :70.00  
+ NAs    :29      NAs    :31     </code></pre>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Is this data currently in wide or tall format? What does this organisation mean?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>It is currently in wide format, with one row per participant and then their 8 weeks of scores as separate variables.</p>
+</div>
+</div>
+<p><strong>What do you notice about the summary output in terms of missing data?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>There is no missing data for the condition variable or week 1 but there are increasing amounts of missing data in the subsequent weeks. This is what we’d expect if participants drop out and don’t return.</p>
+</div>
+</div>
+<p>Our next step is to convert this data to long format, the code to do this is below:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wide to long </span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(df,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">cols            =</span> week_1<span class="sc">:</span>week_8,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">names_to        =</span> <span class="st">"week"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">names_prefix    =</span> <span class="st">"week_"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">names_transform =</span> as.integer,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_to       =</span> <span class="st">"wellbeing"</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_drop_na  =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Before examining the new <code>df_long</code> dataframe let’s look the code used. Look at the help for the <code>pivot_longer</code> function and what the different optional input arguments mean.</p>
+<p><strong>What does the <code>names_to =</code> argument specify?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>It is the name of the column we will create using the column names in the <code>df</code> dataframe.</p>
+<p>In this case we will create <code>df_long$week</code></p>
+</div>
+</div>
+<p>The <code>names_prefix = "week_"</code> and <code>names_transform = as.integer</code> means that we should take a column with a name “week_1” and turn it into a integer value of 1, “week_2” becomes 2 etc. in our new <code>df_long$week</code> variable.</p>
+<p><strong>What does the <code>values_to =</code> argument specify?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>It is the name of the column we will create using the values in the <code>df</code> dataframe.</p>
+<p>In this case we will create <code>df_long$wellbeing</code> which will store the values extracted from the columns selected.</p>
+</div>
+</div>
+<p><strong>What does the <code>values_drop_na  = TRUE</code> argument specify?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>This means that instead of copying all the data and having rows in <code>df_long</code> with a NA in the <code>wellbeing</code> column, we will instead just drop (ignore) these rows when creating <code>df_long</code>. So that each row is now an observation with data.</p>
+</div>
+</div>
+<p>Now we can set up our variables as factors as we have done previously:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create a variable to store our condition labels</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>cond_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Sleep hygiene"</span>, <span class="st">"Mindfulness"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#change the condition to a factor in the long data</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>df_long<span class="sc">$</span>condition <span class="ot">&lt;-</span> <span class="fu">factor</span>(df_long<span class="sc">$</span>condition, <span class="at">levels =</span> cond_levels)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#change the condition to a factor in the wide data</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>condition <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>condition, <span class="at">levels =</span> cond_levels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In the long version of the data we are also going to make one other change, we are going to subtract 1 from all of the values in <code>df_long$week</code> and create a new variable called <code>df_long$week0</code>. We are doing this as we want the first week to act as the reference level (and intercept) when we perform our regressions</p>
+<p>See <strong>XXX</strong> for when we did something similar for dummy coding.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># week0 = week - 1, so that week0 = 0 is the start of the study and the intercept</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># means "wellbeing at week 1". (Centring time is a decision we always have to make.)</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>df_long<span class="sc">$</span>week0 <span class="ot">&lt;-</span> df_long<span class="sc">$</span>week <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>If we check the first few rows of our <code>df_long</code> dataframe we can see what this all looks like and that our first student completed all 8 weeks.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_long, <span class="at">n =</span> <span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 5
+     id condition  week wellbeing week0
+  &lt;int&gt; &lt;fct&gt;     &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;
+1     1 Control       1        42     0
+2     1 Control       2        44     1
+3     1 Control       3        41     2
+4     1 Control       4        41     3
+5     1 Control       5        40     4
+6     1 Control       6        37     5
+7     1 Control       7        29     6
+8     1 Control       8        34     7</code></pre>
+</div>
+</div>
+<p>We can check the pattern of missing data and see if this varies by condition. Look at the code below and try and understand what it is doing.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#students still in the study at each week</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="sc">!</span><span class="fu">is.na</span>(df[, <span class="fu">paste0</span>(<span class="st">"week_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)]))   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>week_1 week_2 week_3 week_4 week_5 week_6 week_7 week_8 
+   120    114    103     97     95     93     91     89 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TRUE = provided all 8 weeks</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>has_all_weeks <span class="ot">&lt;-</span> <span class="fu">complete.cases</span>(df)             </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#contingency table</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">Condition =</span> df<span class="sc">$</span>condition, <span class="st">`</span><span class="at">All 8 weeks</span><span class="st">`</span> <span class="ot">=</span> has_all_weeks)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               All 8 weeks
+Condition       FALSE TRUE
+  Control          14   26
+  Sleep hygiene    11   29
+  Mindfulness       6   34</code></pre>
+</div>
+</div>
+<p>The first thing to notice is we are using <code>df</code> which is the wide format data.</p>
+<p>The code <code>paste0("week_", 1:8)</code> is a shorthand way of asking for all the columns <code>week_1</code>, <code>week_2</code>… <code>week_8</code>. Try running just this code in the console to see this working.</p>
+<p>We have come across the <code>is.na()</code> function before as way of finding missing data (<code>NA</code>).</p>
+<p><strong>What does the <code>colSums()</code> function do in this situation?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>It returns the sum of non-NA values in each column of data in the columns <code>week_1</code>, <code>week_2</code>… <code>week_8</code>.</p>
+</div>
+</div>
+<p>The next section of code uses a function called <code>table()</code>, this builds something called a contingency table. Here it counts, for each condition, how many students have all 8 weeks (TRUE) and how many don’t (FALSE). We will come back to these in Week 8 when we look at analysing categorical data.</p>
+<p><strong>What do you notice about the pattern of missing data?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>It seems like this is uneven with more students completing the full 8 weeks of data in the Mindfulness condition. We will ignore this in the current worksheet but this is something to think about and check when analysing real data.</p>
+</div>
+</div>
+<p>This line of code just sets up some reproducible colours for plotting. It uses HEX codes for the colours, previously we have used words for the colours but this is just another way of specifying them, you can find a conversion chart here: <a href="https://r-charts.com/colors/">Link</a></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cond_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Control"</span> <span class="ot">=</span> <span class="st">"#999999"</span>, <span class="st">"Sleep hygiene"</span> <span class="ot">=</span> <span class="st">"#0072B2"</span>, <span class="st">"Mindfulness"</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We will use some code to produce a “spaghetti plot”. This is the single most useful plot for repeated-measures data. It conveys a lot of information in a single figure.</p>
+<p>The code may seem complex at first but I’ve added comments to try and explain what each section does.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_long, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> wellbeing, <span class="at">group =</span> id)) <span class="sc">+</span> <span class="co">#sets up the initial plot of wellbeing over weeks, split by individual ID</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">colour =</span> <span class="st">"grey40"</span>) <span class="sc">+</span> <span class="co">#plots individuals as grey semi-opaque lines</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="fu">aes</span>(<span class="at">group =</span> condition, <span class="at">colour =</span> condition),</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span> <span class="co">#adds the mean of each group as a thicker line, coloured by the cond_cols (but with default ggplot2 colours)</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> condition) <span class="sc">+</span> <span class="co">#splits into 3 subplots based on condition</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> cond_cols) <span class="sc">+</span> <span class="co">#uses the actual colours we want</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">+</span> <span class="co">#sets up the ticks on the x axis</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Every student's wellbeing over the 8 weeks"</span>,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Thick line = group mean of the students observed that week"</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Week"</span>, <span class="at">y =</span> <span class="st">"Wellbeing"</span>) <span class="sc">+</span> <span class="co">#adds labels</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="co">#says not to plot a legend</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit6_Lab_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>What are three things you notice about the data from the plot?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>1 - students start at very different heights, &nbsp;</p>
+<p>2 - their slopes differ, &nbsp;</p>
+<p>3 - some lines stop early (dropout). &nbsp;</p>
+</div>
+</div>
+<p>These three different aspects are the key to why mixed-effects models are so useful for this type of data.</p>
+</section>
+<section id="section-b.-various-approaches-to-modelling" class="level2">
+<h2 class="anchored" data-anchor-id="section-b.-various-approaches-to-modelling">SECTION B. VARIOUS APPROACHES TO MODELLING</h2>
+<section id="repeated-measures-anova-approach" class="level3">
+<h3 class="anchored" data-anchor-id="repeated-measures-anova-approach">Repeated measures anova approach</h3>
+<p>The first approach we could use is a repeated measures ANOVA. However, it needs every student to have a score at every week. Students with any missing weeks are dropped completely (“listwise deletion”).</p>
+<p>Also, week must be treated as a FACTOR with 8 categories. Therefore, the model does not know that week 4 comes after week 3.</p>
+<p><strong>Here we will run a mixed ANOVA with one between subjects factor and one within subjects factor. Which is which?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Our within subjects factor is week. &nbsp;</p>
+<p>Our between subjects factor is condition, &nbsp;</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#get participants with complete data</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>completers <span class="ot">&lt;-</span> df<span class="sc">$</span>id[has_all_weeks]</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co">#get complete data set</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> df_long[df_long<span class="sc">$</span>id <span class="sc">%in%</span> completers, ]</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">#set both ID and week as factors</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>cc<span class="sc">$</span>id     <span class="ot">&lt;-</span> <span class="fu">factor</span>(cc<span class="sc">$</span>id)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>cc<span class="sc">$</span>week_f <span class="ot">&lt;-</span> <span class="fu">factor</span>(cc<span class="sc">$</span>week, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="st">"wk"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>))</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(completers)           <span class="co"># students left (out of 120)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 89</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(cc)                     <span class="co"># observations left (out of 802)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 712</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#use the rstatix::anova_test function to perform a mixed anova.</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>rm_res <span class="ot">&lt;-</span> <span class="fu">anova_test</span>(<span class="at">data =</span> cc, <span class="at">dv =</span> wellbeing, <span class="at">wid =</span> id,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">between =</span> condition, <span class="at">within =</span> week_f)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>rm_res                       <span class="co"># includes Mauchly's test and the GG/HF corrections</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ANOVA Table (type III tests)
+
+$ANOVA
+            Effect DFn DFd     F        p p&lt;.05   ges
+1        condition   2  86 3.850 2.50e-02     * 0.066
+2           week_f   7 602 9.224 7.27e-11     * 0.022
+3 condition:week_f  14 602 9.477 3.87e-19     * 0.044
+
+$`Mauchly's Test for Sphericity`
+            Effect     W        p p&lt;.05
+1           week_f 0.275 1.45e-11     *
+2 condition:week_f 0.275 1.45e-11     *
+
+$`Sphericity Corrections`
+            Effect   GGe       DF[GG]    p[GG] p[GG]&lt;.05  HFe       DF[HF]
+1           week_f 0.649 4.55, 390.96 8.82e-08         * 0.69 4.83, 415.47
+2 condition:week_f 0.649 9.09, 390.96 3.47e-13         * 0.69 9.66, 415.47
+     p[HF] p[HF]&lt;.05
+1 3.85e-08         *
+2 7.03e-14         *</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_anova_table</span>(rm_res)      <span class="co"># the ANOVA table, with the sphericity correction applied</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ANOVA Table (type III tests)
+
+            Effect  DFn    DFd     F        p p&lt;.05   ges
+1        condition 2.00  86.00 3.850 2.50e-02     * 0.066
+2           week_f 4.55 390.96 9.224 8.82e-08     * 0.022
+3 condition:week_f 9.09 390.96 9.477 3.47e-13     * 0.044</code></pre>
+</div>
+</div>
+<p><strong>What do the results of the ANOVA tell us? What do they not tell us?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>1 - We have a main effect of our within subjects factor of week, &nbsp;</p>
+<p>2 - We have a main effect of our between subjects factor of condition, &nbsp;</p>
+<p>3 - We have a significant interaction effect of week and condition. &nbsp;</p>
+<p>4 - We violated the sphericity assumption and a GG correction was automatically applied. &nbsp;</p>
+<p>However, we have no indication of which direction these effects are in so we don’t know which condition is greater than which and we also don’t know which week is different from which other weeks.</p>
+<p>We also don’t know if we are observing linear trends (such as wellbeing increasing over weeks) as to the ANOVA the week factor is categorical not ordinal. We could just be seeing one week in the middle being very different from all the others.</p>
+<p>We could follow this up with a series of post-hoc tests to try and understand the pattern in our data. However, if we expect <strong>linear</strong> patterns over weeks we are better using a regression based approach that can account for this.</p>
+</div>
+</div>
+</section>
+<section id="standard-regression" class="level3">
+<h3 class="anchored" data-anchor-id="standard-regression">Standard Regression</h3>
+<p>We could also model this data using a simple regression, in this case we ignore which student the data comes from and just look at the effect of condition and week and if these factors interact in how they predict wellbeing.</p>
+<p>This is what we have done with data with multiple independent participants in weeks 4 and 5.</p>
+<p>NOTE: remember we are using <code>week0</code> since we made our weeks start at 0 earlier.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignores which student each row belongs to. Everyone in a condition gets the same line.</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>m_complete <span class="ot">&lt;-</span> <span class="fu">lm</span>(wellbeing <span class="sc">~</span> week0 <span class="sc">*</span> condition, <span class="at">data =</span> df_long)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_complete)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = wellbeing ~ week0 * condition, data = df_long)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-20.9663  -4.7432   0.4335   4.7526  22.3095 
+
+Coefficients:
+                             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                  45.66047    0.75062  60.831  &lt; 2e-16 ***
+week0                         0.02999    0.19229   0.156  0.87611    
+conditionSleep hygiene        0.72502    1.06190   0.683  0.49496    
+conditionMindfulness          1.30582    1.05436   1.238  0.21590    
+week0:conditionSleep hygiene  1.23599    0.26917   4.592 5.11e-06 ***
+week0:conditionMindfulness    0.72105    0.26340   2.738  0.00633 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.05 on 796 degrees of freedom
+Multiple R-squared:  0.1379,    Adjusted R-squared:  0.1325 
+F-statistic: 25.47 on 5 and 796 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong>What are the main results of this approach to modelling this data? Do these results match what you see in the plot above</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>1 - The overall model is significant, so this combination of predictors does explain some of the variance (~14%) in wellbeing scores &nbsp;</p>
+<p>2 - The week0 coefficient (the Control group’s slope) is close to zero &amp; The condition coefficients (differences from Control at week 1) are close to zero. &nbsp;</p>
+<p>3 - There is no main effect of either condition group (compared to control) on wellbeing scores &nbsp;</p>
+<p>4 - There are significant interactions for both conditions and week when explaining wellbeing scores (compared to control*week interaction) &nbsp;</p>
+<p>Yes, roughly we can see that the effect of week on wellbeing is different in the two non-control conditions when compared to control (Control is flat but the other two increase steadily).</p>
+<p>The lack of overall effect of week or condition might seem surprising given this, however, the reason is treatment coding: week0 is the slope for the Control group only, and the condition coefficients are group differences at week 1 (week0 = 0). Control doesn’t change over time, and the groups don’t differ at baseline because of random assignment, so both being near zero is expected.</p>
+<p>However, we should not trust these results since we are violating one of the key assumptions of linear regression which is independence of observations (or residuals) as we are ignoring the fact that our data is linked by student.</p>
+</div>
+</div>
+<p><strong>What do the residuals from a regression represent?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>They represent the errors of each data point from the predicted value generated by the regression model. The regression fits a straight line through the data that minimises these errors but it is never a perfect fit.</p>
+</div>
+</div>
+<p>Look at the residuals of the regression, student by student. If the rows were independent these boxes would all sit around zero. Instead each student sits mostly above or below it: their rows are NOT independent. &nbsp;</p>
+<p>NOTE: Uneven number of dots per student is because of missing data for some students.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>some_students <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">unique</span>(df_long<span class="sc">$</span>id), <span class="dv">25</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>resid_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">student =</span> <span class="fu">factor</span>(df_long<span class="sc">$</span>id), <span class="at">resid =</span> <span class="fu">resid</span>(m_complete))</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>resid_df <span class="ot">&lt;-</span> resid_df[resid_df<span class="sc">$</span>student <span class="sc">%in%</span> some_students, ]</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>resid_df<span class="sc">$</span>student <span class="ot">&lt;-</span> <span class="fu">reorder</span>(resid_df<span class="sc">$</span>student, resid_df<span class="sc">$</span>resid, <span class="at">FUN =</span> median)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(resid_df, <span class="fu">aes</span>(<span class="at">x =</span> student, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>, <span class="at">fill =</span> <span class="st">"grey90"</span>) <span class="sc">+</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">size =</span> <span class="fl">1.3</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Residuals from the ordinary regression, 25 students"</span>,</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Each student's residuals sit together: the rows are not independent"</span>,</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Student (ordered by their median residual)"</span>, <span class="at">y =</span> <span class="st">"Residual"</span>) <span class="sc">+</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit6_Lab_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="individual-regressions" class="level3">
+<h3 class="anchored" data-anchor-id="individual-regressions">Individual Regressions</h3>
+<p>Another approach to analysing data like this would be to fit a separate regression to each student and get the slope of the line over weeks and the intercept (their score at week 1 [<code>week0 = 0</code>]).</p>
+<p><strong>What would the formula be to fit a regression to a single participant to examine the effect of week on wellbeing?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>wellbeing ~ week0</p>
+<p>We don’t need to include condition here as each student only takes part in one condition.</p>
+</div>
+</div>
+<p>The function below does this and also extracts the ID, intercept, slope and number of observations for that participant:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fit_one_student <span class="ot">&lt;-</span> <span class="cf">function</span>(d) {</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(d) <span class="sc">&lt;</span> <span class="dv">3</span>) {</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">data.frame</span>(<span class="at">id =</span> d<span class="sc">$</span>id[<span class="dv">1</span>], <span class="at">intercept =</span> <span class="cn">NA</span>, <span class="at">slope =</span> <span class="cn">NA</span>, <span class="at">n_obs =</span> <span class="fu">nrow</span>(d)))</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">lm</span>(wellbeing <span class="sc">~</span> week0, <span class="at">data =</span> d))</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">id =</span> d<span class="sc">$</span>id[<span class="dv">1</span>], <span class="at">intercept =</span> b[[<span class="dv">1</span>]], <span class="at">slope =</span> b[[<span class="dv">2</span>]], <span class="at">n_obs =</span> <span class="fu">nrow</span>(d))</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This bit of code now runs this function, in effect doing 120 little regressions to get one intercept and one slope each.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#apply individual regression function to each participant</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>person_fits <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(<span class="fu">split</span>(df_long, df_long<span class="sc">$</span>id), fit_one_student))</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co">#also get the condition for that participant and add it to our person_fits dataframe</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>person_fits<span class="sc">$</span>condition <span class="ot">&lt;-</span> df<span class="sc">$</span>condition[<span class="fu">match</span>(person_fits<span class="sc">$</span>id, df<span class="sc">$</span>id)]</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co">#examine the first few rows.</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(person_fits)             </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id intercept      slope n_obs condition
+1  1  44.50000 -1.7142857     8   Control
+2  2  52.16667 -1.9404762     8   Control
+3  3  45.50000 -2.5000000     3   Control
+4  4  45.04762 -0.6857143     6   Control
+5  5  53.16667  0.0952381     8   Control
+6  6  64.41667 -1.4047619     8   Control</code></pre>
+</div>
+</div>
+<p>We need a minimum of 3 weeks of data to accurately fit a lm model so check how many satisfy this. The <code>lm()</code> function will still fit a line with two points exactly, with no residual df left. However, we need 3 points to have any error left to estimate. So the code above modifies the regression output and returns <code>NA</code> if that student had less than 3 weeks data.</p>
+<p>So this next bit of code checks how many have values: (Remember this: the mixed model WILL be able to say something about these participants)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>fits_ok <span class="ot">&lt;-</span> person_fits[<span class="sc">!</span><span class="fu">is.na</span>(person_fits<span class="sc">$</span>slope), ]</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(fits_ok)                 <span class="co"># students we could fit separately</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 103</code></pre>
+</div>
+</div>
+<p>If you check earlier on <strong>TODO add link</strong> this number of 103 matches the number of participants who completed at least 3 weeks of data collection.</p>
+<p>We can now plot the fits for each student:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw all the separate lines</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fits_ok) <span class="sc">+</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">xend =</span> <span class="dv">8</span>,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> intercept, <span class="at">yend =</span> intercept <span class="sc">+</span> <span class="dv">7</span> <span class="sc">*</span> slope,</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">colour =</span> condition), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> condition) <span class="sc">+</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> cond_cols) <span class="sc">+</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"No pooling: a separate regression line for each student"</span>,</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Week"</span>, <span class="at">y =</span> <span class="st">"Wellbeing"</span>) <span class="sc">+</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit6_Lab_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see how much variability we have in the intercepts:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How much do the intercepts and slopes vary?</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fits_ok, <span class="fu">aes</span>(<span class="at">x =</span> intercept)) <span class="sc">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">2.5</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Students' own starting levels (intercepts)"</span>,</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Wellbeing at week 1"</span>, <span class="at">y =</span> <span class="st">"Number of students"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit6_Lab_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Also can do this split by condition, remember that condition was randomly assigned so hopefully these won’t be too different:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#same but split by group</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fits_ok, <span class="fu">aes</span>(<span class="at">x =</span> intercept, <span class="at">fill =</span> condition)) <span class="sc">+</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">2.5</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> condition, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> cond_cols) <span class="sc">+</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Students' own starting levels (intercepts)"</span>,</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Wellbeing at week 1"</span>, <span class="at">y =</span> <span class="st">"Number of students"</span>) <span class="sc">+</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit6_Lab_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Generally the values for the intercepts are similar across the three conditions, which is what we would hope for with random assignment.</p>
+<p>However, if we look at the slope values split by condition we can see that these do seem to vary according to the condition.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fits_ok, <span class="fu">aes</span>(<span class="at">x =</span> slope, <span class="at">fill =</span> condition)) <span class="sc">+</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> condition, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> cond_cols) <span class="sc">+</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Students' own rates of change (slopes)"</span>,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Change in wellbeing per week"</span>, <span class="at">y =</span> <span class="st">"Number of students"</span>) <span class="sc">+</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit6_Lab_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Two ideas to take away: &nbsp;</p>
+<ul>
+<li><p>Intercepts and slopes really do vary between students: a model with ONE line per group (ordinary regression) ignores this. &nbsp;</p></li>
+<li><p>However, these separate slopes are noisy: a line through 3 or 4 points is very unreliable &nbsp;</p></li>
+</ul>
+<p>Part of the spread is real variation, part of it is estimation error.</p>
+<p>However, our main question is whether the conditions change at different rates, and a separate regression per student can’t test that. We’d need a second stage: take the 103 slopes and compare them across conditions with a t-test or ANOVA. You will sometimes see this done.</p>
+<p>However, that treats each estimated slope as a known, exact number. A slope from 3 weeks of data is weighted the same as one from 8 weeks, and its uncertainty is ignored. The mixed model estimates the group differences and each student’s variation in one step, weighting each student by how much information they provide. This is the usual argument against two-stage analyses.</p>
+<p>Another benefit of the mixed-effects approach comes from something called <strong>Shrinkage</strong>, which we will examine in more detail next week.</p>
+<p>Individual regressions answer “what happened for this student?”, and the mixed model answers “what is going on in the population, and how much do students vary around it?”.</p>
+</section>
+<section id="mixed-models-approach" class="level3">
+<h3 class="anchored" data-anchor-id="mixed-models-approach">Mixed models approach</h3>
+<p>Alternatively using a mixed model approach we can give every student their own intercept in the fitting process.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#We can also fit a model that allows students to have their own intercept (1 | id)</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>m_intercepts <span class="ot">&lt;-</span> <span class="fu">lmer</span>(wellbeing <span class="sc">~</span> week0 <span class="sc">*</span> condition <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id), <span class="at">data =</span> df_long)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_intercepts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: wellbeing ~ week0 * condition + (1 | id)
+   Data: df_long
+
+REML criterion at convergence: 4612.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.8275 -0.6460 -0.0162  0.6079  3.0660 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 43.69    6.610   
+ Residual             11.53    3.395   
+Number of obs: 802, groups:  id, 120
+
+Fixed effects:
+                              Estimate Std. Error        df t value Pr(&gt;|t|)
+(Intercept)                   45.39393    1.10707 127.62541  41.004  &lt; 2e-16
+week0                         -0.36980    0.09892 691.24407  -3.738 0.000201
+conditionSleep hygiene         0.65895    1.56623 127.77692   0.421 0.674664
+conditionMindfulness           1.24765    1.56550 127.50100   0.797 0.426953
+week0:conditionSleep hygiene   1.53704    0.13774 690.87014  11.159  &lt; 2e-16
+week0:conditionMindfulness     1.01450    0.13250 687.26088   7.656  6.5e-14
+                                
+(Intercept)                  ***
+week0                        ***
+conditionSleep hygiene          
+conditionMindfulness            
+week0:conditionSleep hygiene ***
+week0:conditionMindfulness   ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) week0  cndtSh cndtnM wk0:Sh
+week0       -0.242                            
+cndtnSlphyg -0.707  0.171                     
+cndtnMndfln -0.707  0.171  0.500              
+wk0:cndtnSh  0.174 -0.718 -0.242 -0.123       
+wk0:cndtnMn  0.181 -0.747 -0.128 -0.247  0.536</code></pre>
+</div>
+</div>
+<p><strong>Which part of the formula above indicates that the model should allow the intercept to vary per participant?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>(1 | id)</p>
+<p>The part to the left of the pipe <code>|</code> indicates what should vary according to the bit to the right side of the pipe. In regressions the intercept is denoted by the <code>1</code>. Both the <code>lm()</code> and <code>lmer()</code> function automatically include the intercept in the formula so when we use a formula like <code>wellbeing ~ week0 * condition</code> what the code actually runs is <code>wellbeing ~ 1 + week0 * condition</code>. With the <code>1</code> indicating that the model includes a intercept term. However, when specifying a mixed effects model with individual intercepts we need to include something on the left hand side of the pipe <code>|</code>, so here we use a <code>1</code>.</p>
+</div>
+</div>
+<p><strong>In the formula above which are our fixed effects and which are our random effects?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The fixed effects are <code>week0</code>, <code>condition</code> and their interaction, plus the overall intercept (the average Control wellbeing at week 1).</p>
+<p>The random effect is the intercept, which varies across <code>id</code>: each student gets their own starting level, shown by <code>(1 | id)</code>. Here <code>id</code> is the grouping factor, the thing the observations are clustered within.</p>
+</div>
+</div>
+<p>We can see the effects of this in the plot below:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>all_students <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">id =</span> <span class="fu">unique</span>(df_long<span class="sc">$</span>id), <span class="at">week0 =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>all_students<span class="sc">$</span>condition    <span class="ot">&lt;-</span> df<span class="sc">$</span>condition[<span class="fu">match</span>(all_students<span class="sc">$</span>id, df<span class="sc">$</span>id)]</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>all_students<span class="sc">$</span>student_line <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_intercepts, <span class="at">newdata =</span> all_students)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>all_students<span class="sc">$</span>week <span class="ot">&lt;-</span> all_students<span class="sc">$</span>week0 <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>group_lines <span class="ot">&lt;-</span> <span class="fu">unique</span>(all_students[, <span class="fu">c</span>(<span class="st">"condition"</span>, <span class="st">"week0"</span>, <span class="st">"week"</span>)])</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>group_lines<span class="sc">$</span>group_line <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_intercepts, <span class="at">newdata =</span> group_lines, <span class="at">re.form =</span> <span class="cn">NA</span>)</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> all_students, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> student_line, <span class="at">group =</span> id, <span class="at">colour =</span> condition), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> group_lines, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> group_line, <span class="at">group =</span> condition),</span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> condition) <span class="sc">+</span></span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> cond_cols) <span class="sc">+</span></span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Random intercepts model: one parallel line per student"</span>,</span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Thick black line = the group line from the fixed effects"</span>,</span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Week"</span>, <span class="at">y =</span> <span class="st">"Predicted wellbeing"</span>) <span class="sc">+</span></span>
+<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit6_Lab_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Every student now has its own intercept (start at a different level in week 1) but all students within a condition are given the same slope. We will look at modelling random slopes next week.</p>
+<p><strong>How does this differ from the spaghetti plot from earlier?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The model’s lines are all parallel, but the real students’ lines clearly aren’t, which is why we allow random slopes next week.</p>
+</div>
+</div>
+<p>The code below produces a comparison of the standard errors between the linear regression (<code>lm()</code>) version of our results and the mixed effects model (<code>lmer()</code>) version, which includes random intercepts.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>  se_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">lm =</span> <span class="fu">coef</span>(<span class="fu">summary</span>(m_complete))[, <span class="st">"Std. Error"</span>],</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">random_intercept =</span> <span class="fu">coef</span>(<span class="fu">summary</span>(m_intercepts))[, <span class="st">"Std. Error"</span>])</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(se_table, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                               lm random_intercept
+(Intercept)                  0.75             1.11
+week0                        0.19             0.10
+conditionSleep hygiene       1.06             1.57
+conditionMindfulness         1.05             1.57
+week0:conditionSleep hygiene 0.27             0.14
+week0:conditionMindfulness   0.26             0.13</code></pre>
+</div>
+</div>
+<p><strong>What do you notice about how the SEs change between the two modelling approaches?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>With the mixed effects model: Between-student terms get larger SEs and within-student terms get smaller ones.</p>
+</div>
+</div>
+<p>The two kinds of term answer different questions, so the repeated measurements help one and hurt the other.</p>
+<p>Between-student terms (the intercept and the condition coefficients) compare different students. Students in a group are different people, so a group difference rests on 120 students, not 802 observations. The rows from one student are highly similar, so the extra rows add little new information. Eight weeks from one student tells you much less than eight different students would. <code>lm()</code> treats every row as independent, so it thinks it has about 802 pieces of information and reports SEs that are too small (1.06 for the condition coefficients). The mixed model knows the real sample size is closer to 120 and gives the larger, more honest SE (1.57). This is also why the df for these terms is about 128.</p>
+<p>Within-student terms (week0 and its interactions) compare each student with themselves over time. Here the repeated measurements are an advantage, as in a paired t-test compared with an independent-samples t-test. In <code>lm()</code>, the large differences between students (SD about 6.6) are left in the residual (the errors the model makes), which is why its SE is larger. The mixed model gives each student their own starting level, which removes that variation. What remains is the week-to-week noise, so the effect of week is measured against much less noise. That is why the SEs are smaller (0.14 vs 0.27 for the interaction), and why the df is about 690, close to the number of observations.</p>
+<p>However, the within-student SEs in the random-intercept model are still a bit too small, because the model assumes every student changes at exactly the same rate. Next week we will look to correct this by allowing random slopes for each student as well.</p>
+<p><strong>Examine the output from our Linear mixed model. What do the results in each of the tables tell us?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p><strong>Header and fit statistics</strong></p>
+<ul>
+<li>The model was fitted by REML, and the p-values come from <strong>lmerTest</strong>, which uses Satterthwaite’s method to estimate the degrees of freedom.</li>
+<li>The REML criterion (4612.4) is a measure of fit that is only useful for comparing models, so we don’t interpret it on its own.</li>
+<li>The scaled residuals (minimum -2.83, maximum 3.07) are standardised, so nothing here looks extreme.</li>
+</ul>
+<p><strong>Random effects table</strong></p>
+<ul>
+<li><code>id (Intercept)</code>: the SD of 6.61 tells us how much students’ week 1 wellbeing varies around their group’s average.</li>
+<li><code>Residual</code>: the SD of 3.40 is the week-to-week fluctuation around each student’s own starting level.</li>
+<li><code>Number of obs: 802, groups: id, 120</code> confirms the model knows there are 802 observations from 120 students.</li>
+<li>Student variance divided by total variance is 43.69 / (43.69 + 11.53) = .79. About 79% of the unexplained variation is between students, which is why treating the rows as independent was a problem.</li>
+<li>There are no p-values here, because these are variance estimates.</li>
+</ul>
+<p><strong>Fixed effects table</strong></p>
+<ul>
+<li><code>(Intercept)</code> = 45.39: the average wellbeing of the Control group at week 1.</li>
+<li><code>week0</code> = -0.37: the Control group’s estimated change per week. We will return to how far to trust this p-value next week.</li>
+<li><code>conditionSleep hygiene</code> (0.66) and <code>conditionMindfulness</code> (1.25): differences from Control at week 1. Neither is significant, as we expect with random assignment.</li>
+<li><code>week0:conditionSleep hygiene</code> (1.54) and <code>week0:conditionMindfulness</code> (1.01): how much faster each group improves per week than Control (both p &lt; .001). The implied slopes are about 1.17 points per week for Sleep hygiene and 0.64 for Mindfulness.</li>
+<li>The <code>df</code> column: between-student terms have df of about 128, close to the number of students, whereas the terms involving week have df of about 690, close to the number of observations. Differences between groups rest on 120 students, while change over time uses the repeated measurements.</li>
+<li>Compare the SEs with the regression: between-student terms are larger here (e.g.&nbsp;1.57 vs 1.06 for the condition coefficients), because the regression wrongly treated 802 rows as independent. The week terms are smaller (e.g.&nbsp;0.14 vs 0.27), because the model has removed the differences between students.</li>
+</ul>
+<p><strong>Correlation of fixed effects</strong></p>
+<ul>
+<li>This is the correlation between the <em>estimates</em> of the coefficients, not between variables in the data. The large values are a side effect of the dummy coding and aren’t a concern here.</li>
+</ul>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script src="answer-gate.js"></script>
+
+
+
+
+</body></html>

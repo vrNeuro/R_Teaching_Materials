@@ -1,0 +1,776 @@
+---
+title: "PS71020_Unit6_Lab"
+subtitle: "Linear Mixed Effects Models 1"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+    css: worksheet.css 
+---
+
+### Learning Outcomes: \ 
+
+1 - Use RStudio to examine a mixed effects data set \ 
+
+2 - Understand different approaches to analysing this type of data \ 
+
+3 - Carry out regression with a mixed-effects model \ 
+
+4 - Understand how to interpret the output from a mixed-effects model \ 
+
+
+
+### Materials Used:
+
+We will use the packages **tidyr**, **ggplot2**, **lme4**, **lmerTest**, & **rstatix** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
+
+::: {.callout-note appearance="simple"}
+## Some general notes about the weekly labs
+
+You should go through the worksheet during the lab and try to complete as much of it during the lab as you can. You can work on the sheet individually or in small groups during the lab. Try to answer the lab worksheet questions in your own words however. If you are unable to finish the worksheet during the class, try to finish it outside class time. Try to attempt the answer before using the 'Show Answer' button.
+
+As you go through the sheet, copy the relevant lines of code to your own analysis script.
+
+A complete model answers script will be available on the VLE page from Fridays after the labs so you can check your own answers. 
+
+If you have any queries during the class, please feel free to ask your lab tutors. If your question relates specifically to the lecture content or the homework sheets, please contact Peter Holland by email or use the forum on the VLE page.*
+:::
+
+
+## CREATE A NEW PROJECT
+
+Just as we did in previous weeks we are going to start by creating a new project for this week's lab. Download the data from the VLE (In the Week 6 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: [Github Link](https://raw.githubusercontent.com/vrNeuro/R_Teaching_Materials/main/data/sleep_study_mixed.csv).
+
+If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.
+
+Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script. 
+
+**Given the list of packages above what code do we need to use to load them all?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+library(tidyr)
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+library(rstatix)
+```
+
+As you will have seen from the answer scripts from previous homeworks and labs it is good to do this at the top of your script instead of just before you use each package.
+
+Technically in this case we don't need to use `library(lme4)` as `library(lmerTest)` loads this automatically as it is a required package (**lmerTest** is an extension of **lme4**). However, it is important that if we do use both that `library(lmerTest)` is called second as it masks the `lmer()` function in **lme4**.
+
+In practice most of the time you would just use `library(lmerTest)` and let it automatically do things in the correct order. If for some reason you specifically wanted to use the **lme4** version of the `lmer()` function you could use the **package::function** syntax of `lme4::lmer()`.
+:::
+:::
+
+## SECTION A. THE DATASET
+
+The dataset is a more advanced version of the one that was discussed in the Week 1 Lecture when we discussed ways of plotting data.
+
+120 students take part in an 8-week study. Randomly assigned to one of three conditions: 
+a sleep hygiene programme, 
+a mindfulness app, 
+a control group. 
+
+Each week they log their wellbeing scores. We are interested in: \ 
+
+Do wellbeing scores change over time \ 
+
+Does the condition they are in affect wellbeing scores.
+
+However, as with many real world longitudinal data sets some students have dropped out of the study at different times, so we have missing data.
+
+
+Next we read the data.
+```{r}
+#| echo: false
+df <- read.csv("data/sleep_study_mixed.csv")
+```
+
+```{r}
+#| eval: false
+df <- read.csv("sleep_study_mixed.csv")
+```
+
+**Let's first examine the data, what are the two functions we can use to:** \ 
+
+**1 - See the first few rows of data** \ 
+
+**2 - Get some summary statistics of each variable in our data frame** \
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+head(df)
+summary(df)
+```
+
+:::
+:::
+
+**Is this data currently in wide or tall format? What does this organisation mean?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+It is currently in wide format, with one row per participant and then their 8 weeks of scores as separate variables.
+
+
+:::
+:::
+
+
+**What do you notice about the summary output in terms of missing data?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+There is no missing data for the condition variable or week 1 but there are increasing amounts of missing data in the subsequent weeks. This is what we'd expect if participants drop out and don't return.
+
+
+:::
+:::
+
+
+Our next step is to convert this data to long format, the code to do this is below:
+```{r}
+# Wide to long 
+df_long <- pivot_longer(df,
+                cols            = week_1:week_8,
+                names_to        = "week",
+                names_prefix    = "week_",
+                names_transform = as.integer,
+                values_to       = "wellbeing",
+                values_drop_na  = TRUE)
+```
+
+
+Before examining the new `df_long` dataframe let's look the code used. Look at the help for the `pivot_longer` function and what the different optional input arguments mean.
+
+**What does the `names_to = ` argument specify?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+It is the name of the column we will create using the column names in the `df` dataframe.
+
+In this case we will create `df_long$week`
+
+
+:::
+:::
+
+The `names_prefix = "week_"` and `names_transform = as.integer` means that we should take a column with a name "week_1" and turn it into a integer value of 1, "week_2" becomes 2 etc. in our new `df_long$week` variable.
+
+**What does the `values_to = ` argument specify?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+It is the name of the column we will create using the values in the `df` dataframe.
+
+In this case we will create `df_long$wellbeing` which will store the values extracted from the columns selected.
+
+
+:::
+:::
+
+**What does the `values_drop_na  = TRUE` argument specify?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+This means that instead of copying all the data and having rows in `df_long` with a NA in the `wellbeing` column, we will instead just drop (ignore) these rows when creating `df_long`. So that each row is now an observation with data.
+
+:::
+:::
+
+
+Now we can set up our variables as factors as we have done previously:
+```{r}
+#create a variable to store our condition labels
+cond_levels <- c("Control", "Sleep hygiene", "Mindfulness")
+
+#change the condition to a factor in the long data
+df_long$condition <- factor(df_long$condition, levels = cond_levels)
+
+#change the condition to a factor in the wide data
+df$condition <- factor(df$condition, levels = cond_levels)
+```
+
+
+In the long version of the data we are also going to make one other change, we are going to subtract 1 from all of the values in `df_long$week` and create a new variable called `df_long$week0`. We are doing this as we want the first week to act as the reference level (and intercept) when we perform our regressions
+
+See **XXX** for when we did something similar for dummy coding.
+
+```{r}
+# week0 = week - 1, so that week0 = 0 is the start of the study and the intercept
+# means "wellbeing at week 1". (Centring time is a decision we always have to make.)
+df_long$week0 <- df_long$week - 1
+
+```
+
+If we check the first few rows of our `df_long` dataframe we can see what this all looks like and that our first student completed all 8 weeks.
+```{r}
+head(df_long, n = 8)
+```
+
+
+We can check the pattern of missing data and see if this varies by condition. Look at the code below and try and understand what it is doing. 
+
+```{r}
+#students still in the study at each week
+colSums(!is.na(df[, paste0("week_", 1:8)]))   
+
+# TRUE = provided all 8 weeks
+has_all_weeks <- complete.cases(df)             
+
+#contingency table
+table(Condition = df$condition, `All 8 weeks` = has_all_weeks)
+```
+The first thing to notice is we are using `df` which is the wide format data.
+
+The code `paste0("week_", 1:8)` is a shorthand way of asking for all the columns `week_1`, `week_2`... `week_8`. Try running just this code in the console to see this working.
+
+We have come across the `is.na()` function before as way of finding missing data (`NA`). 
+
+**What does the `colSums()` function do in this situation?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+It returns the sum of non-NA values in each column of data in the columns `week_1`, `week_2`... `week_8`.
+
+:::
+:::
+
+The next section of code uses a function called `table()`, this builds something called a contingency table. Here it counts, for each condition, how many students have all 8 weeks (TRUE) and how many don’t (FALSE). We will come back to these in Week 8 when we look at analysing categorical data. 
+
+**What do you notice about the pattern of missing data?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+It seems like this is uneven with more students completing the full 8 weeks of data in the Mindfulness condition. We will ignore this in the current worksheet but this is something to think about and check when analysing real data.
+
+:::
+:::
+
+
+
+This line of code just sets up some reproducible colours for plotting. It uses HEX codes for the colours, previously we have used words for the colours but this is just another way of specifying them, you can find a conversion chart here: [Link](https://r-charts.com/colors/)
+```{r}
+cond_cols <- c("Control" = "#999999", "Sleep hygiene" = "#0072B2", "Mindfulness" = "#E69F00")
+
+```
+
+We will use some code to produce a  "spaghetti plot". This is the single most useful plot for repeated-measures data. It conveys a lot of information in a single figure.
+
+The code may seem complex at first but I've added comments to try and explain what each section does.
+
+```{r}
+
+ggplot(df_long, aes(x = week, y = wellbeing, group = id)) + #sets up the initial plot of wellbeing over weeks, split by individual ID
+  geom_line(alpha = 0.3, colour = "grey40") + #plots individuals as grey semi-opaque lines
+  stat_summary(aes(group = condition, colour = condition),
+               fun = mean, geom = "line", linewidth = 1.5) + #adds the mean of each group as a thicker line, coloured by the cond_cols (but with default ggplot2 colours)
+  facet_wrap(~ condition) + #splits into 3 subplots based on condition
+  scale_colour_manual(values = cond_cols) + #uses the actual colours we want
+  scale_x_continuous(breaks = 1:8) + #sets up the ticks on the x axis
+  labs(title = "Every student's wellbeing over the 8 weeks",
+       subtitle = "Thick line = group mean of the students observed that week",
+       x = "Week", y = "Wellbeing") + #adds labels
+  theme(legend.position = "none") #says not to plot a legend
+```
+
+**What are three things you notice about the data from the plot?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+1 - students start at very different heights, \ 
+
+2 - their slopes differ, \ 
+
+3 - some lines stop early (dropout). \ 
+
+:::
+:::
+
+These three different aspects are the key to why mixed-effects models are so useful for this type of data.
+
+
+## SECTION B. VARIOUS APPROACHES TO MODELLING
+
+### Repeated measures anova approach
+
+The first approach we could use is a repeated measures ANOVA. However, it needs every student to have a score at every week. Students with any missing weeks are dropped completely ("listwise deletion"). 
+
+Also, week must be treated as a FACTOR
+with 8 categories. Therefore, the model does not know that week 4 comes after week 3.
+
+**Here we will run a mixed ANOVA with one between subjects factor and one within subjects factor. Which is which?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+Our within subjects factor is week. \ 
+
+Our between subjects factor is condition, \ 
+
+:::
+:::
+
+```{r}
+#get participants with complete data
+completers <- df$id[has_all_weeks]
+#get complete data set
+cc <- df_long[df_long$id %in% completers, ]
+#set both ID and week as factors
+cc$id     <- factor(cc$id)
+cc$week_f <- factor(cc$week, levels = 1:8, labels = paste0("wk", 1:8))
+
+length(completers)           # students left (out of 120)
+nrow(cc)                     # observations left (out of 802)
+
+#use the rstatix::anova_test function to perform a mixed anova.
+rm_res <- anova_test(data = cc, dv = wellbeing, wid = id,
+                     between = condition, within = week_f)
+rm_res                       # includes Mauchly's test and the GG/HF corrections
+get_anova_table(rm_res)      # the ANOVA table, with the sphericity correction applied
+
+```
+
+**What do the results of the ANOVA tell us? What do they not tell us?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+1 - We have a main effect of our within subjects factor of week, \ 
+
+2 - We have a main effect of our between subjects factor of condition, \ 
+
+3 -  We have a significant interaction effect of week and condition. \ 
+
+4 - We violated the sphericity assumption and a GG correction was automatically applied. \ 
+
+However, we have no indication of which direction these effects are in so we don't know which condition is greater than which and we also don't know which week is different from which other weeks. 
+
+We also don't know if we are observing linear trends (such as wellbeing increasing over weeks) as to the ANOVA the week factor is categorical not ordinal. We could just be seeing one week in the middle being very different from all the others.
+
+We could follow this up with a series of post-hoc tests to try and understand the pattern in our data. However, if we expect **linear** patterns over weeks we are better using a regression based approach that can account for this. 
+
+:::
+:::
+
+### Standard Regression
+
+We could also model this data using a simple regression, in this case we ignore which student the data comes from and just look at the effect of condition and week and if these factors interact in how they predict wellbeing. 
+
+This is what we have done with data with multiple independent participants in weeks 4 and 5.
+
+NOTE: remember we are using `week0` since we made our weeks start at 0 earlier.
+```{r}
+# Ignores which student each row belongs to. Everyone in a condition gets the same line.
+m_complete <- lm(wellbeing ~ week0 * condition, data = df_long)
+summary(m_complete)
+```
+
+**What are the main results of this approach to modelling this data? Do these results match what you see in the plot above**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+1 - The overall model is significant, so this combination of predictors does explain some of the variance (~14%) in wellbeing scores \ 
+
+2 - The week0 coefficient (the Control group’s slope) is close to zero & The condition coefficients (differences from Control at week 1) are close to zero. \ 
+
+3 - There is no main effect of either condition group (compared to control) on wellbeing scores \ 
+
+4 - There are significant interactions for both conditions and week when explaining wellbeing scores (compared to control*week interaction) \ 
+
+Yes, roughly we can see that the effect of week on wellbeing is different in the two non-control conditions when compared to control (Control is flat but the other two increase steadily).
+
+The lack of overall effect of week or condition might seem surprising given this, however, the  reason is treatment coding: week0 is the slope for the Control group only, and the condition coefficients are group differences at week 1 (week0 = 0). Control doesn’t change over time, and the groups don’t differ at baseline because of random assignment, so both being near zero is expected.
+
+However, we should not trust these results since we are violating one of the key assumptions of linear regression which is independence of observations (or residuals) as we are ignoring the fact that our data is linked by student.
+
+
+:::
+:::
+
+
+**What do the residuals from a regression represent?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+They represent the errors of each data point from the predicted value generated by the regression model. The regression fits a straight line through the data that minimises these errors but it is never a perfect fit. 
+
+:::
+:::
+
+Look at the residuals of the regression, student by student.
+If the rows were independent these boxes would all sit around zero.
+Instead each student sits mostly above or below it: their rows are NOT independent. \ 
+
+NOTE: Uneven number of dots per student is because of missing data for some students.
+```{r}
+set.seed(3)
+some_students <- sample(unique(df_long$id), 25)
+resid_df <- data.frame(student = factor(df_long$id), resid = resid(m_complete))
+resid_df <- resid_df[resid_df$student %in% some_students, ]
+resid_df$student <- reorder(resid_df$student, resid_df$resid, FUN = median)
+
+ggplot(resid_df, aes(x = student, y = resid)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_boxplot(outlier.shape = NA, fill = "grey90") +
+  geom_jitter(width = 0.1, size = 1.3, colour = "#0072B2") +
+  labs(title = "Residuals from the ordinary regression, 25 students",
+       subtitle = "Each student's residuals sit together: the rows are not independent",
+       x = "Student (ordered by their median residual)", y = "Residual") +
+  theme(axis.text.x = element_blank())
+```
+
+
+### Individual Regressions
+
+Another approach to analysing data like this would be to fit a separate regression to each student and get the slope of the line over weeks and the intercept (their score at week 1 [`week0 = 0`]). 
+
+**What would the formula be to fit a regression to a single participant to examine the effect of week on wellbeing?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+wellbeing ~ week0
+
+We don't need to include condition here as each student only takes part in one condition.
+
+
+:::
+:::
+
+
+
+The function below does this and also extracts the ID, intercept, slope and number of observations for that participant:
+```{r}
+fit_one_student <- function(d) {
+  if (nrow(d) < 3) {
+    return(data.frame(id = d$id[1], intercept = NA, slope = NA, n_obs = nrow(d)))
+  }
+  b <- coef(lm(wellbeing ~ week0, data = d))
+  data.frame(id = d$id[1], intercept = b[[1]], slope = b[[2]], n_obs = nrow(d))
+}
+
+```
+
+This bit of code now runs this function, in effect doing 120 little regressions to get one intercept and one slope each.
+```{r}
+#apply individual regression function to each participant
+person_fits <- do.call(rbind, lapply(split(df_long, df_long$id), fit_one_student))
+
+#also get the condition for that participant and add it to our person_fits dataframe
+person_fits$condition <- df$condition[match(person_fits$id, df$id)]
+
+#examine the first few rows.
+head(person_fits)             
+```
+
+We need a minimum of 3 weeks of data to accurately fit a lm model so check how many satisfy this. The `lm()` function will still fit a line with two points exactly, with no residual df left. However, we need 3 points to have any error left to estimate. So the code above  modifies the regression output and returns `NA` if that student had less than 3 weeks data.
+
+So this next bit of code checks how many have values:
+(Remember this: the mixed model WILL be able to say something about these participants)
+```{r}
+fits_ok <- person_fits[!is.na(person_fits$slope), ]
+nrow(fits_ok)                 # students we could fit separately
+```
+
+If you check earlier on **TODO add link** this number of 103 matches the number of participants who completed at least 3 weeks of data collection.
+
+
+We can now plot the fits for each student:
+
+```{r}
+# Draw all the separate lines
+ggplot(fits_ok) +
+  geom_segment(aes(x = 1, xend = 8,
+                   y = intercept, yend = intercept + 7 * slope,
+                   colour = condition), alpha = 0.5) +
+  facet_wrap(~ condition) +
+  scale_colour_manual(values = cond_cols) +
+  scale_x_continuous(breaks = 1:8) +
+  labs(title = "No pooling: a separate regression line for each student",
+       x = "Week", y = "Wellbeing") +
+  theme(legend.position = "none")
+```
+
+We can see how much variability we have in the intercepts:
+```{r}
+# How much do the intercepts and slopes vary?
+ggplot(fits_ok, aes(x = intercept)) +
+  geom_histogram(binwidth = 2.5, fill = "#0072B2", colour = "white") +
+  labs(title = "Students' own starting levels (intercepts)",
+       x = "Wellbeing at week 1", y = "Number of students")
+```
+
+Also can do this split by condition, remember that condition was randomly assigned so hopefully these won't be too different:
+```{r}
+#same but split by group
+ggplot(fits_ok, aes(x = intercept, fill = condition)) +
+  geom_histogram(binwidth = 2.5, colour = "white") +
+  facet_wrap(~ condition, ncol = 1) +
+  scale_fill_manual(values = cond_cols) +
+  labs(title = "Students' own starting levels (intercepts)",
+       x = "Wellbeing at week 1", y = "Number of students") +
+  theme(legend.position = "none")
+
+```
+
+Generally the values for the intercepts are similar across the three conditions, which is what we would hope for with random assignment.
+
+However, if we look at the slope values split by condition we can see that these do seem to vary according to the condition.
+
+```{r}
+ggplot(fits_ok, aes(x = slope, fill = condition)) +
+  geom_histogram(binwidth = 0.5, colour = "white") +
+  facet_wrap(~ condition, ncol = 1) +
+  scale_fill_manual(values = cond_cols) +
+  labs(title = "Students' own rates of change (slopes)",
+       x = "Change in wellbeing per week", y = "Number of students") +
+  theme(legend.position = "none")
+
+```
+
+Two ideas to take away: \ 
+
+- Intercepts and slopes really do vary between students: a model with ONE line
+per group (ordinary regression) ignores this. \ 
+
+- However, these separate slopes are noisy: a line through 3 or 4 points is very unreliable
+ \ 
+
+Part of the spread is real variation, part of it is estimation error.
+
+However, our main question is whether the conditions change at different rates, and a separate regression per student can’t test that. We’d need a second stage: take the 103 slopes and compare them across conditions with a t-test or ANOVA. You will sometimes see this done.
+
+However, that treats each estimated slope as a known, exact number. A slope from 3 weeks of data is weighted the same as one from 8 weeks, and its uncertainty is ignored. The mixed model estimates the group differences and each student’s variation in one step, weighting each student by how much information they provide. This is the usual argument against two-stage analyses.
+
+Another benefit of the mixed-effects approach comes from something called **Shrinkage**, which we will examine in more detail next week.
+
+Individual regressions answer “what happened for this student?”, and the mixed model answers “what is going on in the population, and how much do students vary around it?”.
+
+### Mixed models approach
+
+Alternatively using a mixed model approach we can give every student their own intercept in the fitting process.
+```{r}
+#We can also fit a model that allows students to have their own intercept (1 | id)
+m_intercepts <- lmer(wellbeing ~ week0 * condition + (1 | id), data = df_long)
+summary(m_intercepts)
+```
+
+
+**Which part of the formula above indicates that the model should allow the intercept to vary per participant?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+(1 | id)
+
+The part to the left of the pipe `|` indicates what should vary according to the bit to the right side of the pipe. In regressions the intercept is denoted by the `1`. Both the `lm()` and `lmer()` function automatically include the intercept in the formula so when we use a formula like `wellbeing ~ week0 * condition` what the code actually runs is `wellbeing ~ 1 + week0 * condition`. With the `1` indicating that the model includes a intercept term. However, when specifying a mixed effects model with individual intercepts we need to include something on the left hand side of the pipe `|`, so here we use a `1`. 
+
+:::
+:::
+
+**In the formula above which are our fixed effects and which are our random effects?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+The fixed effects are `week0`, `condition` and their interaction, plus the overall intercept (the average Control wellbeing at week 1).
+
+The random effect is the intercept, which varies across `id`: each student gets their own starting level, shown by `(1 | id)`. Here `id` is the grouping factor, the thing the observations are clustered within.
+
+:::
+:::
+
+We can see the effects of this in the plot below:
+
+```{r}
+all_students <- expand.grid(id = unique(df_long$id), week0 = 0:7)
+all_students$condition    <- df$condition[match(all_students$id, df$id)]
+all_students$student_line <- predict(m_intercepts, newdata = all_students)
+all_students$week <- all_students$week0 + 1
+
+group_lines <- unique(all_students[, c("condition", "week0", "week")])
+group_lines$group_line <- predict(m_intercepts, newdata = group_lines, re.form = NA)
+
+ggplot() +
+  geom_line(data = all_students, aes(x = week, y = student_line, group = id, colour = condition), alpha = 0.3) +
+  geom_line(data = group_lines, aes(x = week, y = group_line, group = condition),
+            colour = "black", linewidth = 1.5) +
+  facet_wrap(~ condition) +
+  scale_colour_manual(values = cond_cols) +
+  scale_x_continuous(breaks = 1:8) +
+  labs(title = "Random intercepts model: one parallel line per student",
+       subtitle = "Thick black line = the group line from the fixed effects",
+       x = "Week", y = "Predicted wellbeing") +
+  theme(legend.position = "none")
+
+```
+
+Every student now has its own intercept (start at a different level in week 1) but all students within a condition are given the same slope. We will look at modelling random slopes next week.
+
+**How does this differ from the spaghetti plot from earlier?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+The model’s lines are all parallel, but the real students’ lines clearly aren’t, which is why we allow random slopes next week.
+
+:::
+:::
+
+
+
+
+The code below produces a comparison of the standard errors between the linear regression (`lm()`) version of our results and the mixed effects model (`lmer()`) version, which includes random  intercepts.
+
+```{r}
+  se_table <- data.frame(lm = coef(summary(m_complete))[, "Std. Error"],
+                         random_intercept = coef(summary(m_intercepts))[, "Std. Error"])
+  round(se_table, 2)
+```
+
+**What do you notice about how the SEs change between the two modelling approaches?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+With the mixed effects model:
+Between-student terms get larger SEs and within-student terms get smaller ones.
+
+:::
+:::
+
+
+
+
+The two kinds of term answer different questions, so the repeated measurements help one and hurt the other.
+
+Between-student terms (the intercept and the condition coefficients) compare different students. Students in a group are different people, so a group difference rests on 120 students, not 802 observations. The rows from one student are highly similar, so the extra rows add little new information. Eight weeks from one student tells you much less than eight different students would. `lm()` treats every row as independent, so it thinks it has about 802 pieces of information and reports SEs that are too small (1.06 for the condition coefficients). The mixed model knows the real sample size is closer to 120 and gives the larger, more honest SE (1.57). This is also why the df for these terms is about 128.
+
+Within-student terms (week0 and its interactions) compare each student with themselves over time. Here the repeated measurements are an advantage, as in a paired t-test compared with an independent-samples t-test. In `lm()`, the large differences between students (SD about 6.6) are left in the residual (the errors the model makes), which is why its SE is larger. The mixed model gives each student their own starting level, which removes that variation. What remains is the week-to-week noise, so the effect of week is measured against much less noise. That is why the SEs are smaller (0.14 vs 0.27 for the interaction), and why the df is about 690, close to the number of observations.
+
+However, the within-student SEs in the random-intercept model are still a bit too small, because the model assumes every student changes at exactly the same rate. Next week we will look to correct this by allowing random slopes for each student as well.
+
+
+**Examine the output from our Linear mixed model. What do the results in each of the tables tell us?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+**Header and fit statistics**
+
+- The model was fitted by REML, and the p-values come from **lmerTest**, which uses Satterthwaite's method to estimate the degrees of freedom.
+- The REML criterion (4612.4) is a measure of fit that is only useful for comparing models, so we don't interpret it on its own.
+- The scaled residuals (minimum -2.83, maximum 3.07) are standardised, so nothing here looks extreme.
+
+**Random effects table**
+
+- `id (Intercept)`: the SD of 6.61 tells us how much students' week 1 wellbeing varies around their group's average.
+- `Residual`: the SD of 3.40 is the week-to-week fluctuation around each student's own starting level.
+- `Number of obs: 802, groups: id, 120` confirms the model knows there are 802 observations from 120 students.
+- Student variance divided by total variance is 43.69 / (43.69 + 11.53) = .79. About 79% of the unexplained variation is between students, which is why treating the rows as independent was a problem.
+- There are no p-values here, because these are variance estimates.
+
+**Fixed effects table**
+
+- `(Intercept)` = 45.39: the average wellbeing of the Control group at week 1.
+- `week0` = -0.37: the Control group's estimated change per week. We will return to how far to trust this p-value next week.
+- `conditionSleep hygiene` (0.66) and `conditionMindfulness` (1.25): differences from Control at week 1. Neither is significant, as we expect with random assignment.
+- `week0:conditionSleep hygiene` (1.54) and `week0:conditionMindfulness` (1.01): how much faster each group improves per week than Control (both p < .001). The implied slopes are about 1.17 points per week for Sleep hygiene and 0.64 for Mindfulness.
+- The `df` column: between-student terms have df of about 128, close to the number of students, whereas the terms involving week have df of about 690, close to the number of observations. Differences between groups rest on 120 students, while change over time uses the repeated measurements.
+- Compare the SEs with the regression: between-student terms are larger here (e.g. 1.57 vs 1.06 for the condition coefficients), because the regression wrongly treated 802 rows as independent. The week terms are smaller (e.g. 0.14 vs 0.27), because the model has removed the differences between students.
+
+**Correlation of fixed effects**
+
+- This is the correlation between the *estimates* of the coefficients, not between variables in the data. The large values are a side effect of the dummy coding and aren't a concern here.
+
+:::
+:::
+
+
