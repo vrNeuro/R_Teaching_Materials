@@ -41,7 +41,7 @@ If you have any queries during the class, please feel free to ask your lab tutor
 
 ## CREATE A NEW PROJECT
 
-Just as we did in previous weeks we are going to start by creating a new project for this week's lab. Download the data from the VLE (In the Week 6 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: [Github Link](https://raw.githubusercontent.com/vrNeuro/R_Teaching_Materials/main/data/sleep_study_mixed.csv).
+Just as we did in previous weeks we are going to start by creating a new project for this week's lab. Download the data from the VLE (In the Week 6 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/sleep_study_mixed.csv).
 
 If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.
 
