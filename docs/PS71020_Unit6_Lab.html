@@ -158,6 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link active" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
   <li><a href="#section-a.-the-dataset" id="toc-section-a.-the-dataset" class="nav-link" data-scroll-target="#section-a.-the-dataset">SECTION A. THE DATASET</a></li>
   <li><a href="#section-b.-various-approaches-to-modelling" id="toc-section-b.-various-approaches-to-modelling" class="nav-link" data-scroll-target="#section-b.-various-approaches-to-modelling">SECTION B. VARIOUS APPROACHES TO MODELLING</a></li>
+  <li><a href="#section-c.-a-note-on-missing-data" id="toc-section-c.-a-note-on-missing-data" class="nav-link" data-scroll-target="#section-c.-a-note-on-missing-data">SECTION C. A NOTE ON MISSING DATA</a></li>
   </ul>
 </nav>
     </div>
@@ -185,7 +186,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <section id="learning-outcomes" class="level3">
-<h3 class="anchored" data-anchor-id="learning-outcomes">Learning Outcomes: &nbsp;</h3>
+<h3 class="anchored" data-anchor-id="learning-outcomes">Learning Outcomes:</h3>
 <p>1 - Use RStudio to examine a mixed effects data set &nbsp;</p>
 <p>2 - Understand different approaches to analysing this type of data &nbsp;</p>
 <p>3 - Carry out regression with a mixed-effects model &nbsp;</p>
@@ -213,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="create-a-new-project" class="level2">
 <h2 class="anchored" data-anchor-id="create-a-new-project">CREATE A NEW PROJECT</h2>
-<p>Just as we did in previous weeks we are going to start by creating a new project for this week’s lab. Download the data from the VLE (In the Week 6 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: <a href="https://raw.githubusercontent.com/vrNeuro/R_Teaching_Materials/main/data/sleep_study_mixed.csv">Github Link</a>.</p>
+<p>Just as we did in previous weeks we are going to start by creating a new project for this week’s lab. Download the data from the VLE (In the Week 6 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: <a href="https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/sleep_study_mixed.csv">Github Link</a>.</p>
 <p>If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.</p>
 <p>Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.</p>
 <p><strong>Given the list of packages above what code do we need to use to load them all?</strong></p>
@@ -395,7 +396,7 @@ Attaching package: 'rstatix'</code></pre>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>condition <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>condition, <span class="at">levels =</span> cond_levels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>In the long version of the data we are also going to make one other change, we are going to subtract 1 from all of the values in <code>df_long$week</code> and create a new variable called <code>df_long$week0</code>. We are doing this as we want the first week to act as the reference level (and intercept) when we perform our regressions</p>
-<p>See <strong>XXX</strong> for when we did something similar for dummy coding.</p>
+<p>See <a href="./PS71020_Unit5_Lab.html#sec-dummy-coding">Lab 5. Section C</a> for when we did something similar for dummy coding in a standard regression.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># week0 = week - 1, so that week0 = 0 is the start of the study and the intercept</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># means "wellbeing at week 1". (Centring time is a decision we always have to make.)</span></span>
@@ -454,7 +455,7 @@ Condition       FALSE TRUE
 <div class="answer-box">
 <p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
 <div class="answer">
-<p>It seems like this is uneven with more students completing the full 8 weeks of data in the Mindfulness condition. We will ignore this in the current worksheet but this is something to think about and check when analysing real data.</p>
+<p>It seems like this is uneven with more students completing the full 8 weeks of data in the Mindfulness condition. We will return to this later on.</p>
 </div>
 </div>
 <p>This line of code just sets up some reproducible colours for plotting. It uses HEX codes for the colours, previously we have used words for the colours but this is just another way of specifying them, you can find a conversion chart here: <a href="https://r-charts.com/colors/">Link</a></p>
@@ -609,7 +610,7 @@ Multiple R-squared:  0.1379,    Adjusted R-squared:  0.1325
 F-statistic: 25.47 on 5 and 796 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p><strong>What are the main results of this approach to modelling this data? Do these results match what you see in the plot above</strong></p>
+<p><strong>What are the main results of this approach to modelling this data? Do these results match what you see in the spaghetti plot above</strong></p>
 <div class="answer-box">
 <p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
 <div class="answer">
@@ -705,7 +706,7 @@ F-statistic: 25.47 on 5 and 796 DF,  p-value: &lt; 2.2e-16</code></pre>
 <pre><code>[1] 103</code></pre>
 </div>
 </div>
-<p>If you check earlier on <strong>TODO add link</strong> this number of 103 matches the number of participants who completed at least 3 weeks of data collection.</p>
+<p>If you check earlier on <strong>SECTION A</strong> this number of 103 matches the number of participants who completed at least 3 weeks of data collection.</p>
 <p>We can now plot the fits for each student:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw all the separate lines</span></span>
@@ -953,9 +954,39 @@ week0:conditionMindfulness   0.26             0.13</code></pre>
 </ul>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="section-c.-a-note-on-missing-data" class="level2">
+<h2 class="anchored" data-anchor-id="section-c.-a-note-on-missing-data">SECTION C. A NOTE ON MISSING DATA</h2>
+<p>Earlier, we noticed that the missing data did not seem to be Missing Completely at Random (MCAR), and drop-out seemed higher for the control group than the other groups. In Week 2 we heard that missing data is a problem when it isn’t MCAR.</p>
+<p>More precisely, it’s a problem for methods that only work if the missing data is a random subset of the whole sample, which is what complete-case analysis (like our repeated-measures ANOVA) assumes. Those methods give then give biased answers.</p>
+<p>Here the dropout is Missing At Random MAR, not MCAR: who leaves depends on scores we have observed. Likelihood-based methods like mixed models can cope, because they use every observation we do have.</p>
+<p>We can see the drop-out is predictable from the scores at week 1, which indicates we are not dealing with MCAR.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>completed <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(has_all_weeks, <span class="st">"Completed"</span>, <span class="st">"Dropped out"</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(df<span class="sc">$</span>week_1, df<span class="sc">$</span>completed, mean)       <span class="co"># 47.6 vs 41.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Completed Dropped out 
+   47.64045    40.96774 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(week_1 <span class="sc">~</span> completed, <span class="at">data =</span> df)       <span class="co"># p &lt; .001</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  week_1 by completed
+t = 4.4699, df = 50.57, p-value = 4.432e-05
+alternative hypothesis: true difference in means between group Completed and group Dropped out is not equal to 0
+95 percent confidence interval:
+ 3.675140 9.670275
+sample estimates:
+  mean in group Completed mean in group Dropped out 
+                 47.64045                  40.96774 </code></pre>
+</div>
+</div>
+<p>At first it seems problematic that we also observed a difference in drop out rate per group. However, MAR means missingness depends only on information we have observed and modelled. Everyone’s <code>condition</code> is observed, and <code>condition</code> and <code>week0:condition</code> are already in the model. The model fits a separate trajectory for each <code>condition</code> using each group’s own observed data. A <code>condition</code> that loses more students is estimated with less precision, but not with bias, as long as its dropout is explained by group and by scores we’ve seen. However, if we hadn’t included <code>condition</code> in our model then our model would be biased. Similarly, if missingness was predicted by some other factor that we hadn’t measured or included in the model the results would be biased.</p>
+
+
 </section>
 
 </main> <!-- /main -->

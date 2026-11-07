@@ -231,7 +231,7 @@ df$condition <- factor(df$condition, levels = cond_levels)
 
 In the long version of the data we are also going to make one other change, we are going to subtract 1 from all of the values in `df_long$week` and create a new variable called `df_long$week0`. We are doing this as we want the first week to act as the reference level (and intercept) when we perform our regressions
 
-See **XXX** for when we did something similar for dummy coding.
+See [Lab 5. Section C](PS71020_Unit5_Lab.qmd#sec-dummy-coding)    for when we did something similar for dummy coding in a standard regression.
 
 ```{r}
 # week0 = week - 1, so that week0 = 0 is the start of the study and the intercept
@@ -287,7 +287,7 @@ The next section of code uses a function called `table()`, this builds something
 
 ::: {.answer}
 
-It seems like this is uneven with more students completing the full 8 weeks of data in the Mindfulness condition. We will ignore this in the current worksheet but this is something to think about and check when analysing real data.
+It seems like this is uneven with more students completing the full 8 weeks of data in the Mindfulness condition. We will return to this later on.
 
 :::
 :::
@@ -421,7 +421,7 @@ m_complete <- lm(wellbeing ~ week0 * condition, data = df_long)
 summary(m_complete)
 ```
 
-**What are the main results of this approach to modelling this data? Do these results match what you see in the plot above**
+**What are the main results of this approach to modelling this data? Do these results match what you see in the spaghetti plot above**
 
 ::: {.answer-box}
 <input type="text" class="answer-input" placeholder="Type your answer here...">
@@ -540,7 +540,7 @@ fits_ok <- person_fits[!is.na(person_fits$slope), ]
 nrow(fits_ok)                 # students we could fit separately
 ```
 
-If you check earlier on **TODO add link** this number of 103 matches the number of participants who completed at least 3 weeks of data collection.
+If you check earlier on **SECTION A** this number of 103 matches the number of participants who completed at least 3 weeks of data collection.
 
 
 We can now plot the fits for each student:
@@ -772,5 +772,21 @@ However, the within-student SEs in the random-intercept model are still a bit to
 
 :::
 :::
+
+## SECTION C. A NOTE ON MISSING DATA
+
+Earlier, we noticed that the missing data did not seem to be Missing Completely at Random (MCAR), and drop-out seemed higher for the control group than the other groups. In Week 2 we heard that missing data is a problem when it isn’t MCAR. 
+
+More precisely, it’s a problem for methods that only work if the missing data is a random subset of the whole sample, which is what complete-case analysis (like our repeated-measures ANOVA) assumes. Those methods give then give biased answers.
+
+Here the dropout is Missing At Random MAR, not MCAR: who leaves depends on scores we have observed. Likelihood-based methods like mixed models can cope, because they use every observation we do have.
+
+We can see the drop-out is predictable from the scores at week 1, which indicates we are not dealing with MCAR.
+```{r}
+df$completed <- ifelse(has_all_weeks, "Completed", "Dropped out")
+tapply(df$week_1, df$completed, mean)       # 47.6 vs 41.0
+t.test(week_1 ~ completed, data = df)       # p < .001
+```
+At first it seems problematic that we also observed a difference in drop out rate per group. However, MAR means missingness depends only on information we have observed and modelled. Everyone’s `condition` is observed, and `condition` and `week0:condition` are already in the model. The model fits a separate trajectory for each `condition` using each group’s own observed data. A `condition` that loses more students is estimated with less precision, but not with bias, as long as its dropout is explained by group and by scores we’ve seen. However, if we hadn't included `condition` in our model then our model would be biased. Similarly, if missingness was predicted by some other factor that we hadn't measured or included in the model the results would be biased.
 
 

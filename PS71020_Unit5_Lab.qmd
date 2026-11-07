@@ -116,7 +116,7 @@ In **R**, a factor’s **levels** are the underlying category values (`levels(f)
 levels(df$inpaper)
 dfTrim <- subset(df,df$inpaper=="Include")
 ```
-## SECTION C. REGRESSION WITH CATEGORICAL VARIABLES
+## SECTION C. REGRESSION WITH CATEGORICAL VARIABLES {#sec-dummy-coding}
 
 One of the advantages of using the `factor()` function to correctly set up our categorical variables is that when we use `lm()` it treats it properly as a categorical variable. If we simply leave it as numeric and fit a model then the regression will treat it as continuous and fits a single slope, which is almost certainly not what we want. 
 
