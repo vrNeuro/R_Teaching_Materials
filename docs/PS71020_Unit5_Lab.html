@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link active" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
   <li><a href="#section-a.-the-dataset" id="toc-section-a.-the-dataset" class="nav-link" data-scroll-target="#section-a.-the-dataset">SECTION A. THE DATASET</a></li>
-  <li><a href="#section-c.-regression-with-categorical-variables" id="toc-section-c.-regression-with-categorical-variables" class="nav-link" data-scroll-target="#section-c.-regression-with-categorical-variables">SECTION C. REGRESSION WITH CATEGORICAL VARIABLES</a></li>
+  <li><a href="#sec-dummy-coding" id="toc-sec-dummy-coding" class="nav-link" data-scroll-target="#sec-dummy-coding">SECTION C. REGRESSION WITH CATEGORICAL VARIABLES</a></li>
   <li><a href="#section-c.-moderation-analysis" id="toc-section-c.-moderation-analysis" class="nav-link" data-scroll-target="#section-c.-moderation-analysis">SECTION C. MODERATION ANALYSIS</a></li>
   <li><a href="#section-d.-hierarchical-regression" id="toc-section-d.-hierarchical-regression" class="nav-link" data-scroll-target="#section-d.-hierarchical-regression">SECTION D. HIERARCHICAL REGRESSION</a></li>
   </ul>
@@ -258,8 +258,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dfTrim <span class="ot">&lt;-</span> <span class="fu">subset</span>(df,df<span class="sc">$</span>inpaper<span class="sc">==</span><span class="st">"Include"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="section-c.-regression-with-categorical-variables" class="level2">
-<h2 class="anchored" data-anchor-id="section-c.-regression-with-categorical-variables">SECTION C. REGRESSION WITH CATEGORICAL VARIABLES</h2>
+<section id="sec-dummy-coding" class="level2">
+<h2 class="anchored" data-anchor-id="sec-dummy-coding">SECTION C. REGRESSION WITH CATEGORICAL VARIABLES</h2>
 <p>One of the advantages of using the <code>factor()</code> function to correctly set up our categorical variables is that when we use <code>lm()</code> it treats it properly as a categorical variable. If we simply leave it as numeric and fit a model then the regression will treat it as continuous and fits a single slope, which is almost certainly not what we want.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>myFormula <span class="ot">&lt;-</span> rtmean <span class="sc">~</span> reinf</span>

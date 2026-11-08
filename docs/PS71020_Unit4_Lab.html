@@ -156,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul class="collapse">
   <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link active" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
-  <li><a href="#section-a.-the-data-set" id="toc-section-a.-the-data-set" class="nav-link" data-scroll-target="#section-a.-the-data-set">SECTION A. THE DATA SET</a></li>
+  <li><a href="#sec-fearfulface-data" id="toc-sec-fearfulface-data" class="nav-link" data-scroll-target="#sec-fearfulface-data">SECTION A. THE DATA SET</a></li>
   <li><a href="#sec-regression-assumptionchecks" id="toc-sec-regression-assumptionchecks" class="nav-link" data-scroll-target="#sec-regression-assumptionchecks">SECTION B. ASSUMPTION CHECKS</a></li>
   <li><a href="#section-c.-regression" id="toc-section-c.-regression" class="nav-link" data-scroll-target="#section-c.-regression">SECTION C. REGRESSION</a></li>
   <li><a href="#section-d.-semi-partial-correlations" id="toc-section-d.-semi-partial-correlations" class="nav-link" data-scroll-target="#section-d.-semi-partial-correlations">SECTION D. SEMI-PARTIAL CORRELATIONS</a></li>
@@ -219,8 +219,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.</p>
 <p>Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.</p>
 </section>
-<section id="section-a.-the-data-set" class="level2">
-<h2 class="anchored" data-anchor-id="section-a.-the-data-set">SECTION A. THE DATA SET</h2>
+<section id="sec-fearfulface-data" class="level2">
+<h2 class="anchored" data-anchor-id="sec-fearfulface-data">SECTION A. THE DATA SET</h2>
 <p>The face RT dataset was collected as a test of the role of trait anxiety in healthy participants (measured by the Spielberger Trait Anxiety Scale; variable name in dataset = <code>traitanx</code>) on the ability to identify the emotional expression on faces. The stimuli were taken from a standard library of head shots of people posing a variety of emotional expressions (happy, sad, angry, fearful etc). The particular focus was on the speed (reaction time; RT) to correctly identify faces with happy or fearful expressions. Fearful expressions are considered to signal the presence of threat. Anxiety is argued to reflect, amongst other things, a disorder of threat processing (in some way). Therefore, the research question was whether anxiety would be related to the RT taken to process fearful faces.</p>
 <p>The dependent variable (DV) of primary interest was the participants’ average RT (for correct responses) when shown fearful faces. In the task, they were shown either happy or fearful faces on each trial, and asked to press response keys to indicate, as quickly as possible while maintaining a high level of accuracy, whether the expression was fearful or happy.</p>
 <p>The researchers wondered whether any effect of anxiety on fearful faces might reflect a more general disturbance of attentional control in the presence of attention-grabbing stimuli (such as fearful faces). They therefore included a standard self-report questionnaire called the Attentional Control Scale (higher scores indicate better attentional control; variable name in dataset = <code>ACS</code>). The prediction here was that higher ACS scores would be present in people with higher trait anxiety, but it was unclear whether attentional control (as measured by the ACS) would make a contribution to the prediction of fearful faces RT, over and above any effect related to trait anxiety. For the final predictor, the researchers wanted to include age as a variable in the regression as this might impact on RT more generally.</p>

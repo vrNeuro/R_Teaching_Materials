@@ -1,0 +1,368 @@
+---
+title: "PS71020_Unit6_Homework"
+subtitle: "Linear Mixed Effects Models 1"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+    css: worksheet.css 
+---
+
+
+### Learning Outcomes: \ 
+
+1 - Use RStudio to create a null model \ 
+
+2 - Use RStudio to calculate the ICC  \ 
+
+3 - Use RStudio to perform different mixed effects models \ 
+
+4 - Compare these results to those of a standard linear regression \ 
+
+
+
+### Materials Used:
+
+We will use the packages **tidyr** and **lmerTest** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
+
+
+## CREATE A NEW PROJECT
+
+Just as we did in previous weeks we are going to start by creating a new project for this week's lab. Download the data from the VLE (In the Week 6 Homework Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/fearful_faces_trials.csv).
+
+If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.
+
+Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.
+
+Now let's load the packages that we will need for this analysis.
+```{r}
+library(tidyr)
+library(lmerTest)
+```
+
+
+## SECTION A. THE DATASET
+
+The data set we will use this week is a modified version of the one we used in the Week 4 Lab. The full explanation can be found there ([Lab 4. Section A](PS71020_Unit4_Lab.qmd#sec-fearfulface-data)) but here is a brief summary:
+
+The face RT dataset was collected as a test of the role of trait anxiety in healthy participants (measured by the Spielberger Trait Anxiety Scale; variable name in dataset = `traitanx`) on the ability to identify the emotional expression on faces.
+
+In the original data set we had only the mean for the response to fearful and happy faces for each participant as well as a few covariates:
+
+Attentional Control Scale (`ACS`) \ 
+
+Spielberger Trait Anxiety Scale (`traitanx`) \ 
+
+Age (`Age`) \ 
+
+Gender (`Gender`; 1 = male, 2 = female) \ 
+
+Handedness (`Handedness`; 1 = Right, 2 =Left) \ 
+
+However, in the new data set we have the data for every single trial. The trial-level data were simulated so that each participant’s means match the original dataset.
+
+```{r}
+#| echo: false
+df <- read.csv("data/fearful_faces_trials.csv")
+```
+
+```{r}
+#| eval: false
+df <- read.csv("fearful_faces_trials.csv")
+```
+
+Examine the first few rows of the data set:
+```{r}
+head(df)
+```
+
+**What is this format of data called?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+This is long format data, with each row representing an individual observation, in this case one row per trial.
+ 
+:::
+:::
+
+
+We can see we have two columns that describe the trial information, the first is `df$emotion` this is either `Happy` or `Fearful`. The second is `df$face_id`, this is because each participant saw each face with both a `Happy` and `Fearful` expression. 
+
+## SECTION B. RECREATING ORIGINAL DATA FORMAT
+
+The first thing we are going to do is to recreate the old data format and then re-run the analysis from the Week 4 lab to check we get the same results.
+
+The first thing we need to do is calculate the mean for each participant for each type of face. The `aggregate()` function is very useful for this, have a look at the help for it to understand what it is doing.
+
+```{r}
+#Recreate old data style
+# 1. participant means for each emotion (one row per participant x emotion)
+means <- aggregate(RT ~ subno + emotion, data = df, FUN = mean)
+
+```
+
+
+Previously, we have used the `pivot_longer()` function from **tidyr** to change from wide to long format, but here we are going to use the `pivot_wider()` function to go the opposite way.
+
+```{r}
+# 2. one row per participant, with a column for each emotion
+means_wide <- pivot_wider(means, names_from = emotion, values_from = RT,
+                          names_glue = "{emotion}_face_RT")
+```
+
+If we now examine the first few rows of the `means_wide`  dataframe we can see that we have a row for each participant with the mean for each face type as separate columns.
+
+```{r}
+head(means_wide)
+```
+
+However, we also need to copy across the information about the covariates if we want to perform a regression. We will use two very useful functions:
+
+1 - `unique()` - this can be used on multiple types of data to return only unique elements from a vector etc. In this case because the covariates for each participant are repeated on multiple rows of `df`, this returns a single row per participant. \ 
+
+2 - `merge()` - this takes two data frames and merges them by matching a column or columns that occur in both. In this case we will merge the `covs` and `means_wide` dataframe by matching the `subno` which appears in both to create `df_first`. The final part of adding a `trialnum` of 1 to every row is just to fully match the original data and is not necessary for the analysis.
+
+
+```{r}
+# 3. the participant-level variables (the same on every row of a participant, so unique() keeps one)
+covs <- unique(df[, c("subno", "Handedness", "Gender", "Age", "ACS", "traitanx")])
+
+# 4. put them together and add trialnum = 1, as in the original file
+df_first <- merge(covs, means_wide, by = "subno")
+df_first$trialnum <- 1
+df_first <- df_first[, c("subno", "trialnum", "Handedness", "Gender", "Age", "Fearful_face_RT", "Happy_face_RT", "ACS", "traitanx")]
+
+```
+
+We can now check our new `df_first` dataframe to see it matches the one we were using in week 4.
+```{r}
+head(df_first)
+```
+
+The main analysis we did there was to perform a regression with `traitanx`,   `ACS`, and `Age` as predictors of the reaction time to fearful faces.
+
+**Perform this regression and check the results against the ones from the Week 4 Lab, are they the same?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+```{r}
+#re-run old lm() from week4
+mdl <- lm(Fearful_face_RT ~ traitanx + ACS + Age, data = df_first)
+
+summary(mdl)
+```
+
+Yes the results are identical to when we performed this before:
+[Lab 4. Section C](PS71020_Unit4_Lab.qmd#sec-multiple-regression)
+:::
+:::
+
+
+## SECTION C. MIXED-MODEL ANALYSIS
+
+We are now going to analyse this data in a mixed models framework to see if our results differ from the original regression approach.
+
+The first thing we are going to create is the **null model**, this only has an intercept and random intercepts per participant for predicting the `RT`:
+
+```{r}
+m0 <- lmer(RT ~ 1 + (1 | subno), data = df)
+summary(m0)
+```
+
+**In the formula above what term is the intercept and what term is the random intercept per participant?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+`1` outside the brackets is the fixed intercept (the grand mean) and `(1 | subno)` is the random intercept per participant.
+
+In the null model, there are no predictors, so the model only splits the variance into between-participant and within-participant parts.
+
+It’s the mixed-model equivalent of an intercept-only regression. It’s called “null” because it’s the baseline that later models are compared against.
+ 
+:::
+:::
+
+
+The first thing we want to calculate is the ICC. 
+
+**What is the ICC and what does it represent in this design?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+It’s the proportion of the total variation in trial RTs that comes from stable differences between participants.
+ 
+:::
+:::
+
+**What are the two key numbers we need to extract from the `summary(m0)` output above? Use these to calculate the ICC**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+We need the variance of the two random effects:
+subno    (Intercept) 0.003564
+Residual             0.007543
+
+The formula for the ICC is:  
+between variance/(between variance + within variance)
+
+So in our case:
+
+```{r}
+0.003564/(0.003564+0.007543)
+```
+
+This means that about 32% of the variance in RTs is explained by who the participant is. Some people are simply faster/slower than others regardless of the contents of the trial.
+:::
+:::
+
+We can also use the function VarCorr to do this for us:
+
+```{r}
+vc0 <- as.data.frame(VarCorr(m0))
+vc0$vcov[1] / sum(vc0$vcov) 
+
+```
+
+The numbers are slightly different as when typing manually we don't use all the decimal places of the number.
+
+The next model we want to create is one that also includes a fixed effect for the emotion that the face is displaying, whilst still allowing random intercepts for participant.
+
+**What would the formula for this be? Perform this mixed effects model.**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+m1 <- lmer(RT ~ emotion + (1 | subno), data = df)
+print(summary(m1))
+
+```
+
+:::
+:::
+
+**What size of effect does the emotion of the face have on the RT in this model?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+In this case the emotion effect is -2.466e-03 which is -0.002466s, therefore the emotion of the face only has an effect of around 2.5ms with Happy faces being slightly (but not significantly faster).
+ 
+:::
+:::
+
+Another factor in this experiment is that  each of the 60 faces appears in both a happy and a fearful version, and each version is shown twice. 
+
+It could be the case that some of these faces produce faster reaction times in general than others. We could model this by also allowing a separate random intercept for each `face_id`. We can do this here as each participant sees every face (a crossed random effect design)
+
+**Perform this model, what do you notice about the fixed effect of emotion now?**
+
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+```{r}
+m2 <- lmer(RT ~ emotion + (1 | subno) + (1 | face_id), data = df)
+summary(m2)
+
+```
+
+
+
+The estimate hasn’t changed, but the standard error has got slightly smaller (from 0.00130 to 0.00125) because part of the unexplained variation is now attributed to faces. This nudges *p* from .057 to .049. A change this small across the .05 line shouldn’t be taken as meaningful. Next week we will see that this p-value is too small, because we haven’t yet allowed the emotion effect to vary between participants and faces.
+ 
+:::
+:::
+
+
+We also calculate the ICC separately for `face_id ` and `subno`. 
+
+**What are these values and what do they indicate?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+```{r}
+vc2 <- as.data.frame(VarCorr(m2))
+vc2$prop <- vc2$vcov / sum(vc2$vcov)
+vc2[, c("grp", "vcov", "prop")]
+```
+After accounting for the fixed effects, `subno` accounts for 32% of the remaining variance, `face_id` for 4%, and the residual for 64%.
+
+:::
+:::
+
+
+Finally we can analyse the data using a mixed effects model but using all the predictors that we used for our original regression model.
+
+```{r}
+m3 <- lmer(RT ~ emotion * traitanx + ACS + Age +
+             (1 | subno) + (1 | face_id), data = df)
+summary(m3)
+```
+What we can see here is that the effect of `traitanx` is very similar between the two models and is still the only significant predictor. For the mixed model the estimate is -0.001953 and for the original linear regression it was -0.0018929, so in both cases participants are about 2ms faster at responding to fearful faces for every 1 point increase in `traitanx`.
+
+The reason these two values are directly comparable is that because emotion interacts with traitanx, the mixed model’s `traitanx` row is the slope for the reference level, fearful faces.
+
+The estimates differ slightly because the mixed model forces `ACS` and `Age` to have the same effect for both emotions. If we had let them interact with emotion too, then the `traitanx` estimate matches the `lm()`. 
+
+With balanced data, a random-intercept model gives the same estimates for a between-participant predictor as the regression on participant means.
+
+The mixed model answers questions the participant-level `lm()` can’t. The `lm()` on fearful RT alone can’t say whether the anxiety effect is specific to fearful faces. The `emotionHappy:traitanx` interaction does this and shows (−0.00016, *p* = .22), so there’s no evidence that the relationship differs between emotions.
+
+One other thing changes between these two models and that is the estimate for `emotionHappy`, in `m2` it was −0.0025 and in `m3` it is +0.0043.
+
+**Why might the inclusion of `traitanx` and the `emtnHppy:traitanx` interaction caused this change?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+In `m3` it’s the happy-minus-fearful difference at `traitanx` = 0. However, this is impossible, because the scale starts at 20. We could have centered the `traitanx` variable and then the estimates of `emotionHappy` would match.
+
+:::
+:::
+
+
+
+
+However, what we have not yet done is to allow participants or `face_id` to also have random slopes. This would then be able to model if the effect of emotion was different in different participants and if this was different across different face stimuli. This is what we will do in next week's lab and homework.

@@ -47,7 +47,7 @@ If you are working on the RStudio Server, then you will need to download the fil
 Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script. 
 
 
-## SECTION A. THE DATA SET
+## SECTION A. THE DATA SET {#sec-fearfulface-data}
 
 The face RT dataset was collected as a test of the role of trait anxiety in healthy participants (measured by the Spielberger Trait Anxiety Scale; variable name in dataset = `traitanx`) on the ability to identify the emotional expression on faces. The stimuli were taken from a standard library of head shots of people posing a variety of emotional expressions (happy, sad, angry, fearful etc). The particular focus was on the speed (reaction time; RT) to correctly identify faces with happy or fearful expressions. Fearful expressions are considered to signal the presence of threat. Anxiety is argued to reflect, amongst other things, a disorder of threat processing (in some way). Therefore, the research question was whether anxiety would be related to the RT taken to process fearful faces. 
 
@@ -311,7 +311,7 @@ pairs.panels(dfClean, lm = TRUE, ellipses = FALSE, stars = TRUE)
 :::
 :::
 
-## SECTION C. REGRESSION
+## SECTION C. REGRESSION {#sec-multiple-regression}
 
 
 We can carry out regressions in **R** using the `lm()` function, which fits linear models to our data. This function is normally used with the the same `lm(formula, data)` syntax as we used with the `aov()` function for calculating ANOVAs. See [Lab 3. Section D](PS71020_Unit3_Lab.qmd#sec-ANOVAs).
