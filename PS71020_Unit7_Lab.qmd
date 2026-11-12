@@ -1,0 +1,78 @@
+---
+title: "PS71020_Unit7_Lab"
+subtitle: "Linear Mixed Effects Models 2"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+    css: worksheet.css 
+---
+
+### Learning Outcomes:  
+**TODO**
+
+Fitting models with random slopes and intercepts
+
+Looking at schrinkage
+
+Assumptions of mixed effects models
+
+APA writeup of mixed effects models
+
+Comparing models
+
+1 - Use RStudio to examine a mixed effects data set \ 
+
+2 - Understand different approaches to analysing this type of data \ 
+
+3 - Carry out regression with a mixed-effects model \ 
+
+4 - Understand how to interpret the output from a mixed-effects model \ 
+
+
+
+### Materials Used:
+
+We will use the packages **tidyr**, **ggplot2**, **lme4**, **lmerTest**, & **rstatix** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
+
+::: {.callout-note appearance="simple"}
+## Some general notes about the weekly labs
+
+You should go through the worksheet during the lab and try to complete as much of it during the lab as you can. You can work on the sheet individually or in small groups during the lab. Try to answer the lab worksheet questions in your own words however. If you are unable to finish the worksheet during the class, try to finish it outside class time. Try to attempt the answer before using the 'Show Answer' button.
+
+As you go through the sheet, copy the relevant lines of code to your own analysis script.
+
+A complete model answers script will be available on the VLE page from Fridays after the labs so you can check your own answers. 
+
+If you have any queries during the class, please feel free to ask your lab tutors. If your question relates specifically to the lecture content or the homework sheets, please contact Peter Holland by email or use the forum on the VLE page.*
+:::
+
+
+## CREATE A NEW PROJECT
+
+Just as we did in previous weeks we are going to start by creating a new project for this week's lab. Download the data from the VLE (In the Week 6 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/sleep_study_mixed.csv).
+
+If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.
+
+Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script. 
+
+**Given the list of packages above what code do we need to use to load them all?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+library(tidyr)
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+library(rstatix)
+```
+
+As you will have seen from the answer scripts from previous homeworks and labs it is good to do this at the top of your script instead of just before you use each package.

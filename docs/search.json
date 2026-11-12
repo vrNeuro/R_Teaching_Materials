@@ -1076,5 +1076,26 @@
     "title": "PS71020_Unit6_Homework",
     "section": "CREATE A NEW PROJECT",
     "text": "CREATE A NEW PROJECT\nJust as we did in previous weeks we are going to start by creating a new project for this week’s lab. Download the data from the VLE (In the Week 6 Homework Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: Github Link.\nIf you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.\nAlso create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.\nNow let’s load the packages that we will need for this analysis.\n\nlibrary(tidyr)\nlibrary(lmerTest)\n\nLoading required package: lme4\n\n\nLoading required package: Matrix\n\n\n\nAttaching package: 'Matrix'\n\n\nThe following objects are masked from 'package:tidyr':\n\n    expand, pack, unpack\n\n\n\nAttaching package: 'lmerTest'\n\n\nThe following object is masked from 'package:lme4':\n\n    lmer\n\n\nThe following object is masked from 'package:stats':\n\n    step"
+  },
+  {
+    "objectID": "index.html#choosing-a-statistical-test-flow-chart",
+    "href": "index.html#choosing-a-statistical-test-flow-chart",
+    "title": "Statistics in R",
+    "section": "Choosing a Statistical Test Flow Chart",
+    "text": "Choosing a Statistical Test Flow Chart\n\nFlow Chart"
+  },
+  {
+    "objectID": "PS71020_Unit7_Lab.html",
+    "href": "PS71020_Unit7_Lab.html",
+    "title": "PS71020_Unit7_Lab",
+    "section": "",
+    "text": "TODO\nFitting models with random slopes and intercepts\nLooking at schrinkage\nAssumptions of mixed effects models\nAPA writeup of mixed effects models\nComparing models\n1 - Use RStudio to examine a mixed effects data set  \n2 - Understand different approaches to analysing this type of data  \n3 - Carry out regression with a mixed-effects model  \n4 - Understand how to interpret the output from a mixed-effects model"
+  },
+  {
+    "objectID": "PS71020_Unit7_Lab.html#create-a-new-project",
+    "href": "PS71020_Unit7_Lab.html#create-a-new-project",
+    "title": "PS71020_Unit7_Lab",
+    "section": "CREATE A NEW PROJECT",
+    "text": "CREATE A NEW PROJECT\nJust as we did in previous weeks we are going to start by creating a new project for this week’s lab. Download the data from the VLE (In the Week 6 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: Github Link.\nIf you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.\nAlso create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.\nGiven the list of packages above what code do we need to use to load them all?\n\n Show answer\n\n\nlibrary(tidyr)\nlibrary(ggplot2)\nlibrary(lme4)\n\nLoading required package: Matrix\n\n\n\nAttaching package: 'Matrix'\n\n\nThe following objects are masked from 'package:tidyr':\n\n    expand, pack, unpack\n\nlibrary(lmerTest)\n\n\nAttaching package: 'lmerTest'\n\n\nThe following object is masked from 'package:lme4':\n\n    lmer\n\n\nThe following object is masked from 'package:stats':\n\n    step\n\nlibrary(rstatix)\n\nRegistered S3 method overwritten by 'car':\n  method           from\n  na.action.merMod lme4\n\n\n\nAttaching package: 'rstatix'\n\n\nThe following object is masked from 'package:stats':\n\n    filter\n\n\nAs you will have seen from the answer scripts from previous homeworks and labs it is good to do this at the top of your script instead of just before you use each package."
   }
 ]
