@@ -72,7 +72,7 @@ In practice most of the time you would just use `library(lmerTest)` and let it a
 :::
 :::
 
-## SECTION A. THE DATASET
+## SECTION A. THE DATASET {#sec-preparing-mmdata}
 
 The dataset is a more advanced version of the one that was discussed in the Week 1 Lecture when we discussed ways of plotting data.
 

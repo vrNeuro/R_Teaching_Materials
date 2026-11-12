@@ -1,0 +1,803 @@
+"","id","condition","week","wellbeing","week0"
+"1",1,"Control",1,42,0
+"2",1,"Control",2,44,1
+"3",1,"Control",3,41,2
+"4",1,"Control",4,41,3
+"5",1,"Control",5,40,4
+"6",1,"Control",6,37,5
+"7",1,"Control",7,29,6
+"8",1,"Control",8,34,7
+"9",2,"Control",1,53,0
+"10",2,"Control",2,45,1
+"11",2,"Control",3,53,2
+"12",2,"Control",4,47,3
+"13",2,"Control",5,44,4
+"14",2,"Control",6,43,5
+"15",2,"Control",7,40,6
+"16",2,"Control",8,38,7
+"17",3,"Control",1,48,0
+"18",3,"Control",2,38,1
+"19",3,"Control",3,43,2
+"20",4,"Control",1,48,0
+"21",4,"Control",2,41,1
+"22",4,"Control",3,41,2
+"23",4,"Control",4,45,3
+"24",4,"Control",5,45,4
+"25",4,"Control",6,40,5
+"26",5,"Control",1,50,0
+"27",5,"Control",2,54,1
+"28",5,"Control",3,57,2
+"29",5,"Control",4,51,3
+"30",5,"Control",5,56,4
+"31",5,"Control",6,55,5
+"32",5,"Control",7,53,6
+"33",5,"Control",8,52,7
+"34",6,"Control",1,63,0
+"35",6,"Control",2,64,1
+"36",6,"Control",3,66,2
+"37",6,"Control",4,59,3
+"38",6,"Control",5,53,4
+"39",6,"Control",6,59,5
+"40",6,"Control",7,57,6
+"41",6,"Control",8,55,7
+"42",7,"Control",1,51,0
+"43",7,"Control",2,48,1
+"44",7,"Control",3,54,2
+"45",7,"Control",4,49,3
+"46",7,"Control",5,48,4
+"47",7,"Control",6,51,5
+"48",7,"Control",7,58,6
+"49",7,"Control",8,49,7
+"50",8,"Control",1,49,0
+"51",8,"Control",2,52,1
+"52",8,"Control",3,54,2
+"53",8,"Control",4,51,3
+"54",8,"Control",5,50,4
+"55",8,"Control",6,51,5
+"56",8,"Control",7,50,6
+"57",8,"Control",8,53,7
+"58",9,"Control",1,48,0
+"59",9,"Control",2,46,1
+"60",9,"Control",3,40,2
+"61",9,"Control",4,40,3
+"62",9,"Control",5,43,4
+"63",9,"Control",6,42,5
+"64",9,"Control",7,43,6
+"65",9,"Control",8,43,7
+"66",10,"Control",1,47,0
+"67",10,"Control",2,49,1
+"68",10,"Control",3,41,2
+"69",10,"Control",4,48,3
+"70",10,"Control",5,45,4
+"71",10,"Control",6,43,5
+"72",10,"Control",7,41,6
+"73",10,"Control",8,42,7
+"74",11,"Control",1,47,0
+"75",11,"Control",2,49,1
+"76",11,"Control",3,54,2
+"77",11,"Control",4,49,3
+"78",11,"Control",5,47,4
+"79",11,"Control",6,52,5
+"80",11,"Control",7,51,6
+"81",12,"Control",1,52,0
+"82",12,"Control",2,49,1
+"83",12,"Control",3,47,2
+"84",12,"Control",4,42,3
+"85",12,"Control",5,44,4
+"86",12,"Control",6,41,5
+"87",12,"Control",7,35,6
+"88",12,"Control",8,37,7
+"89",13,"Control",1,45,0
+"90",13,"Control",2,47,1
+"91",13,"Control",3,43,2
+"92",13,"Control",4,51,3
+"93",13,"Control",5,48,4
+"94",14,"Control",1,46,0
+"95",14,"Control",2,42,1
+"96",14,"Control",3,51,2
+"97",14,"Control",4,46,3
+"98",14,"Control",5,52,4
+"99",14,"Control",6,45,5
+"100",14,"Control",7,48,6
+"101",14,"Control",8,45,7
+"102",15,"Control",1,67,0
+"103",15,"Control",2,68,1
+"104",15,"Control",3,59,2
+"105",15,"Control",4,59,3
+"106",15,"Control",5,61,4
+"107",15,"Control",6,55,5
+"108",15,"Control",7,59,6
+"109",15,"Control",8,60,7
+"110",16,"Control",1,34,0
+"111",16,"Control",2,35,1
+"112",16,"Control",3,35,2
+"113",16,"Control",4,32,3
+"114",16,"Control",5,34,4
+"115",16,"Control",6,39,5
+"116",16,"Control",7,39,6
+"117",16,"Control",8,44,7
+"118",17,"Control",1,40,0
+"119",18,"Control",1,48,0
+"120",18,"Control",2,39,1
+"121",18,"Control",3,39,2
+"122",18,"Control",4,40,3
+"123",18,"Control",5,46,4
+"124",18,"Control",6,43,5
+"125",18,"Control",7,38,6
+"126",18,"Control",8,42,7
+"127",19,"Control",1,50,0
+"128",19,"Control",2,49,1
+"129",19,"Control",3,47,2
+"130",19,"Control",4,49,3
+"131",19,"Control",5,46,4
+"132",19,"Control",6,47,5
+"133",19,"Control",7,44,6
+"134",19,"Control",8,43,7
+"135",20,"Control",1,39,0
+"136",20,"Control",2,42,1
+"137",20,"Control",3,37,2
+"138",21,"Control",1,48,0
+"139",21,"Control",2,47,1
+"140",21,"Control",3,50,2
+"141",21,"Control",4,49,3
+"142",21,"Control",5,47,4
+"143",21,"Control",6,43,5
+"144",21,"Control",7,48,6
+"145",21,"Control",8,47,7
+"146",22,"Control",1,48,0
+"147",22,"Control",2,47,1
+"148",22,"Control",3,47,2
+"149",22,"Control",4,44,3
+"150",22,"Control",5,48,4
+"151",22,"Control",6,52,5
+"152",22,"Control",7,45,6
+"153",22,"Control",8,48,7
+"154",23,"Control",1,53,0
+"155",23,"Control",2,50,1
+"156",23,"Control",3,52,2
+"157",23,"Control",4,47,3
+"158",23,"Control",5,50,4
+"159",23,"Control",6,51,5
+"160",23,"Control",7,48,6
+"161",23,"Control",8,44,7
+"162",24,"Control",1,34,0
+"163",24,"Control",2,37,1
+"164",24,"Control",3,41,2
+"165",25,"Control",1,44,0
+"166",25,"Control",2,42,1
+"167",26,"Control",1,29,0
+"168",26,"Control",2,28,1
+"169",27,"Control",1,33,0
+"170",27,"Control",2,35,1
+"171",28,"Control",1,50,0
+"172",28,"Control",2,44,1
+"173",28,"Control",3,42,2
+"174",28,"Control",4,45,3
+"175",28,"Control",5,41,4
+"176",28,"Control",6,42,5
+"177",28,"Control",7,39,6
+"178",28,"Control",8,44,7
+"179",29,"Control",1,43,0
+"180",29,"Control",2,38,1
+"181",29,"Control",3,41,2
+"182",29,"Control",4,42,3
+"183",29,"Control",5,37,4
+"184",29,"Control",6,43,5
+"185",29,"Control",7,42,6
+"186",29,"Control",8,36,7
+"187",30,"Control",1,31,0
+"188",30,"Control",2,35,1
+"189",31,"Control",1,50,0
+"190",31,"Control",2,43,1
+"191",31,"Control",3,49,2
+"192",31,"Control",4,44,3
+"193",31,"Control",5,49,4
+"194",31,"Control",6,47,5
+"195",31,"Control",7,46,6
+"196",31,"Control",8,47,7
+"197",32,"Control",1,43,0
+"198",32,"Control",2,50,1
+"199",32,"Control",3,48,2
+"200",32,"Control",4,41,3
+"201",32,"Control",5,43,4
+"202",32,"Control",6,42,5
+"203",32,"Control",7,43,6
+"204",32,"Control",8,43,7
+"205",33,"Control",1,46,0
+"206",33,"Control",2,39,1
+"207",33,"Control",3,44,2
+"208",33,"Control",4,45,3
+"209",33,"Control",5,45,4
+"210",33,"Control",6,40,5
+"211",33,"Control",7,39,6
+"212",33,"Control",8,48,7
+"213",34,"Control",1,45,0
+"214",34,"Control",2,43,1
+"215",34,"Control",3,41,2
+"216",34,"Control",4,42,3
+"217",34,"Control",5,41,4
+"218",34,"Control",6,41,5
+"219",34,"Control",7,41,6
+"220",34,"Control",8,41,7
+"221",35,"Control",1,46,0
+"222",35,"Control",2,43,1
+"223",35,"Control",3,47,2
+"224",35,"Control",4,39,3
+"225",36,"Control",1,40,0
+"226",36,"Control",2,33,1
+"227",37,"Control",1,42,0
+"228",37,"Control",2,42,1
+"229",37,"Control",3,38,2
+"230",38,"Control",1,49,0
+"231",38,"Control",2,50,1
+"232",38,"Control",3,53,2
+"233",38,"Control",4,54,3
+"234",38,"Control",5,56,4
+"235",38,"Control",6,53,5
+"236",38,"Control",7,53,6
+"237",38,"Control",8,56,7
+"238",39,"Control",1,39,0
+"239",39,"Control",2,46,1
+"240",39,"Control",3,40,2
+"241",39,"Control",4,42,3
+"242",39,"Control",5,44,4
+"243",39,"Control",6,45,5
+"244",39,"Control",7,44,6
+"245",39,"Control",8,39,7
+"246",40,"Control",1,47,0
+"247",40,"Control",2,47,1
+"248",40,"Control",3,47,2
+"249",40,"Control",4,48,3
+"250",40,"Control",5,51,4
+"251",40,"Control",6,44,5
+"252",40,"Control",7,55,6
+"253",40,"Control",8,48,7
+"254",41,"Sleep hygiene",1,55,0
+"255",41,"Sleep hygiene",2,57,1
+"256",41,"Sleep hygiene",3,50,2
+"257",41,"Sleep hygiene",4,55,3
+"258",41,"Sleep hygiene",5,53,4
+"259",41,"Sleep hygiene",6,53,5
+"260",41,"Sleep hygiene",7,58,6
+"261",41,"Sleep hygiene",8,48,7
+"262",42,"Sleep hygiene",1,44,0
+"263",42,"Sleep hygiene",2,43,1
+"264",42,"Sleep hygiene",3,46,2
+"265",42,"Sleep hygiene",4,43,3
+"266",42,"Sleep hygiene",5,46,4
+"267",42,"Sleep hygiene",6,52,5
+"268",42,"Sleep hygiene",7,54,6
+"269",42,"Sleep hygiene",8,58,7
+"270",43,"Sleep hygiene",1,49,0
+"271",43,"Sleep hygiene",2,52,1
+"272",43,"Sleep hygiene",3,54,2
+"273",43,"Sleep hygiene",4,61,3
+"274",43,"Sleep hygiene",5,60,4
+"275",43,"Sleep hygiene",6,62,5
+"276",43,"Sleep hygiene",7,66,6
+"277",43,"Sleep hygiene",8,65,7
+"278",44,"Sleep hygiene",1,43,0
+"279",44,"Sleep hygiene",2,43,1
+"280",45,"Sleep hygiene",1,52,0
+"281",45,"Sleep hygiene",2,49,1
+"282",45,"Sleep hygiene",3,51,2
+"283",46,"Sleep hygiene",1,34,0
+"284",47,"Sleep hygiene",1,38,0
+"285",47,"Sleep hygiene",2,47,1
+"286",47,"Sleep hygiene",3,40,2
+"287",47,"Sleep hygiene",4,42,3
+"288",47,"Sleep hygiene",5,44,4
+"289",48,"Sleep hygiene",1,45,0
+"290",48,"Sleep hygiene",2,54,1
+"291",48,"Sleep hygiene",3,52,2
+"292",48,"Sleep hygiene",4,52,3
+"293",48,"Sleep hygiene",5,53,4
+"294",48,"Sleep hygiene",6,56,5
+"295",48,"Sleep hygiene",7,57,6
+"296",48,"Sleep hygiene",8,60,7
+"297",49,"Sleep hygiene",1,43,0
+"298",49,"Sleep hygiene",2,42,1
+"299",49,"Sleep hygiene",3,42,2
+"300",49,"Sleep hygiene",4,43,3
+"301",49,"Sleep hygiene",5,48,4
+"302",49,"Sleep hygiene",6,47,5
+"303",49,"Sleep hygiene",7,49,6
+"304",49,"Sleep hygiene",8,55,7
+"305",50,"Sleep hygiene",1,41,0
+"306",50,"Sleep hygiene",2,39,1
+"307",50,"Sleep hygiene",3,51,2
+"308",50,"Sleep hygiene",4,45,3
+"309",50,"Sleep hygiene",5,50,4
+"310",50,"Sleep hygiene",6,53,5
+"311",50,"Sleep hygiene",7,52,6
+"312",50,"Sleep hygiene",8,56,7
+"313",51,"Sleep hygiene",1,57,0
+"314",51,"Sleep hygiene",2,56,1
+"315",51,"Sleep hygiene",3,57,2
+"316",51,"Sleep hygiene",4,57,3
+"317",51,"Sleep hygiene",5,62,4
+"318",51,"Sleep hygiene",6,62,5
+"319",51,"Sleep hygiene",7,62,6
+"320",51,"Sleep hygiene",8,60,7
+"321",52,"Sleep hygiene",1,45,0
+"322",52,"Sleep hygiene",2,45,1
+"323",52,"Sleep hygiene",3,44,2
+"324",52,"Sleep hygiene",4,52,3
+"325",52,"Sleep hygiene",5,49,4
+"326",52,"Sleep hygiene",6,55,5
+"327",52,"Sleep hygiene",7,58,6
+"328",52,"Sleep hygiene",8,58,7
+"329",53,"Sleep hygiene",1,55,0
+"330",53,"Sleep hygiene",2,54,1
+"331",53,"Sleep hygiene",3,56,2
+"332",53,"Sleep hygiene",4,53,3
+"333",54,"Sleep hygiene",1,43,0
+"334",54,"Sleep hygiene",2,46,1
+"335",54,"Sleep hygiene",3,45,2
+"336",54,"Sleep hygiene",4,44,3
+"337",54,"Sleep hygiene",5,54,4
+"338",54,"Sleep hygiene",6,50,5
+"339",54,"Sleep hygiene",7,47,6
+"340",54,"Sleep hygiene",8,52,7
+"341",55,"Sleep hygiene",1,50,0
+"342",55,"Sleep hygiene",2,51,1
+"343",55,"Sleep hygiene",3,52,2
+"344",55,"Sleep hygiene",4,53,3
+"345",55,"Sleep hygiene",5,53,4
+"346",55,"Sleep hygiene",6,61,5
+"347",55,"Sleep hygiene",7,55,6
+"348",55,"Sleep hygiene",8,50,7
+"349",56,"Sleep hygiene",1,50,0
+"350",56,"Sleep hygiene",2,47,1
+"351",56,"Sleep hygiene",3,53,2
+"352",56,"Sleep hygiene",4,54,3
+"353",56,"Sleep hygiene",5,56,4
+"354",56,"Sleep hygiene",6,55,5
+"355",56,"Sleep hygiene",7,49,6
+"356",56,"Sleep hygiene",8,52,7
+"357",57,"Sleep hygiene",1,53,0
+"358",57,"Sleep hygiene",2,59,1
+"359",57,"Sleep hygiene",3,59,2
+"360",57,"Sleep hygiene",4,57,3
+"361",57,"Sleep hygiene",5,59,4
+"362",57,"Sleep hygiene",6,60,5
+"363",57,"Sleep hygiene",7,66,6
+"364",57,"Sleep hygiene",8,70,7
+"365",58,"Sleep hygiene",1,51,0
+"366",58,"Sleep hygiene",2,56,1
+"367",58,"Sleep hygiene",3,61,2
+"368",58,"Sleep hygiene",4,60,3
+"369",58,"Sleep hygiene",5,58,4
+"370",58,"Sleep hygiene",6,51,5
+"371",58,"Sleep hygiene",7,56,6
+"372",58,"Sleep hygiene",8,64,7
+"373",59,"Sleep hygiene",1,44,0
+"374",59,"Sleep hygiene",2,46,1
+"375",59,"Sleep hygiene",3,43,2
+"376",59,"Sleep hygiene",4,47,3
+"377",59,"Sleep hygiene",5,43,4
+"378",59,"Sleep hygiene",6,45,5
+"379",59,"Sleep hygiene",7,44,6
+"380",59,"Sleep hygiene",8,43,7
+"381",60,"Sleep hygiene",1,52,0
+"382",60,"Sleep hygiene",2,53,1
+"383",60,"Sleep hygiene",3,55,2
+"384",60,"Sleep hygiene",4,51,3
+"385",60,"Sleep hygiene",5,53,4
+"386",60,"Sleep hygiene",6,56,5
+"387",60,"Sleep hygiene",7,53,6
+"388",60,"Sleep hygiene",8,57,7
+"389",61,"Sleep hygiene",1,46,0
+"390",61,"Sleep hygiene",2,50,1
+"391",61,"Sleep hygiene",3,51,2
+"392",61,"Sleep hygiene",4,48,3
+"393",61,"Sleep hygiene",5,54,4
+"394",61,"Sleep hygiene",6,55,5
+"395",61,"Sleep hygiene",7,55,6
+"396",61,"Sleep hygiene",8,51,7
+"397",62,"Sleep hygiene",1,43,0
+"398",62,"Sleep hygiene",2,45,1
+"399",62,"Sleep hygiene",3,47,2
+"400",62,"Sleep hygiene",4,44,3
+"401",62,"Sleep hygiene",5,45,4
+"402",62,"Sleep hygiene",6,45,5
+"403",62,"Sleep hygiene",7,45,6
+"404",62,"Sleep hygiene",8,47,7
+"405",63,"Sleep hygiene",1,44,0
+"406",63,"Sleep hygiene",2,52,1
+"407",63,"Sleep hygiene",3,51,2
+"408",64,"Sleep hygiene",1,50,0
+"409",64,"Sleep hygiene",2,44,1
+"410",64,"Sleep hygiene",3,50,2
+"411",64,"Sleep hygiene",4,46,3
+"412",64,"Sleep hygiene",5,46,4
+"413",64,"Sleep hygiene",6,52,5
+"414",64,"Sleep hygiene",7,52,6
+"415",64,"Sleep hygiene",8,47,7
+"416",65,"Sleep hygiene",1,55,0
+"417",65,"Sleep hygiene",2,57,1
+"418",65,"Sleep hygiene",3,55,2
+"419",65,"Sleep hygiene",4,57,3
+"420",65,"Sleep hygiene",5,60,4
+"421",65,"Sleep hygiene",6,63,5
+"422",65,"Sleep hygiene",7,60,6
+"423",65,"Sleep hygiene",8,60,7
+"424",66,"Sleep hygiene",1,45,0
+"425",66,"Sleep hygiene",2,51,1
+"426",67,"Sleep hygiene",1,55,0
+"427",67,"Sleep hygiene",2,55,1
+"428",67,"Sleep hygiene",3,57,2
+"429",67,"Sleep hygiene",4,58,3
+"430",67,"Sleep hygiene",5,60,4
+"431",67,"Sleep hygiene",6,56,5
+"432",67,"Sleep hygiene",7,58,6
+"433",67,"Sleep hygiene",8,59,7
+"434",68,"Sleep hygiene",1,42,0
+"435",68,"Sleep hygiene",2,33,1
+"436",68,"Sleep hygiene",3,38,2
+"437",68,"Sleep hygiene",4,38,3
+"438",68,"Sleep hygiene",5,45,4
+"439",68,"Sleep hygiene",6,45,5
+"440",68,"Sleep hygiene",7,47,6
+"441",68,"Sleep hygiene",8,46,7
+"442",69,"Sleep hygiene",1,54,0
+"443",69,"Sleep hygiene",2,54,1
+"444",69,"Sleep hygiene",3,54,2
+"445",69,"Sleep hygiene",4,53,3
+"446",69,"Sleep hygiene",5,51,4
+"447",69,"Sleep hygiene",6,51,5
+"448",69,"Sleep hygiene",7,52,6
+"449",69,"Sleep hygiene",8,57,7
+"450",70,"Sleep hygiene",1,46,0
+"451",70,"Sleep hygiene",2,44,1
+"452",71,"Sleep hygiene",1,35,0
+"453",72,"Sleep hygiene",1,44,0
+"454",72,"Sleep hygiene",2,49,1
+"455",72,"Sleep hygiene",3,49,2
+"456",72,"Sleep hygiene",4,48,3
+"457",72,"Sleep hygiene",5,53,4
+"458",72,"Sleep hygiene",6,51,5
+"459",72,"Sleep hygiene",7,54,6
+"460",72,"Sleep hygiene",8,48,7
+"461",73,"Sleep hygiene",1,39,0
+"462",73,"Sleep hygiene",2,42,1
+"463",74,"Sleep hygiene",1,55,0
+"464",74,"Sleep hygiene",2,52,1
+"465",74,"Sleep hygiene",3,52,2
+"466",74,"Sleep hygiene",4,53,3
+"467",74,"Sleep hygiene",5,57,4
+"468",74,"Sleep hygiene",6,60,5
+"469",74,"Sleep hygiene",7,54,6
+"470",74,"Sleep hygiene",8,58,7
+"471",75,"Sleep hygiene",1,36,0
+"472",75,"Sleep hygiene",2,47,1
+"473",75,"Sleep hygiene",3,44,2
+"474",75,"Sleep hygiene",4,44,3
+"475",75,"Sleep hygiene",5,49,4
+"476",75,"Sleep hygiene",6,50,5
+"477",75,"Sleep hygiene",7,56,6
+"478",75,"Sleep hygiene",8,56,7
+"479",76,"Sleep hygiene",1,45,0
+"480",76,"Sleep hygiene",2,45,1
+"481",76,"Sleep hygiene",3,56,2
+"482",76,"Sleep hygiene",4,53,3
+"483",76,"Sleep hygiene",5,47,4
+"484",76,"Sleep hygiene",6,48,5
+"485",76,"Sleep hygiene",7,50,6
+"486",76,"Sleep hygiene",8,49,7
+"487",77,"Sleep hygiene",1,26,0
+"488",77,"Sleep hygiene",2,33,1
+"489",77,"Sleep hygiene",3,32,2
+"490",77,"Sleep hygiene",4,32,3
+"491",77,"Sleep hygiene",5,36,4
+"492",77,"Sleep hygiene",6,32,5
+"493",77,"Sleep hygiene",7,42,6
+"494",77,"Sleep hygiene",8,45,7
+"495",78,"Sleep hygiene",1,36,0
+"496",78,"Sleep hygiene",2,37,1
+"497",78,"Sleep hygiene",3,43,2
+"498",78,"Sleep hygiene",4,52,3
+"499",78,"Sleep hygiene",5,50,4
+"500",78,"Sleep hygiene",6,52,5
+"501",78,"Sleep hygiene",7,62,6
+"502",78,"Sleep hygiene",8,57,7
+"503",79,"Sleep hygiene",1,50,0
+"504",79,"Sleep hygiene",2,44,1
+"505",79,"Sleep hygiene",3,49,2
+"506",79,"Sleep hygiene",4,49,3
+"507",79,"Sleep hygiene",5,61,4
+"508",79,"Sleep hygiene",6,56,5
+"509",79,"Sleep hygiene",7,58,6
+"510",79,"Sleep hygiene",8,56,7
+"511",80,"Sleep hygiene",1,41,0
+"512",80,"Sleep hygiene",2,45,1
+"513",81,"Mindfulness",1,58,0
+"514",81,"Mindfulness",2,56,1
+"515",81,"Mindfulness",3,54,2
+"516",81,"Mindfulness",4,61,3
+"517",81,"Mindfulness",5,51,4
+"518",81,"Mindfulness",6,55,5
+"519",81,"Mindfulness",7,51,6
+"520",81,"Mindfulness",8,54,7
+"521",82,"Mindfulness",1,35,0
+"522",82,"Mindfulness",2,37,1
+"523",82,"Mindfulness",3,40,2
+"524",82,"Mindfulness",4,35,3
+"525",82,"Mindfulness",5,37,4
+"526",82,"Mindfulness",6,38,5
+"527",82,"Mindfulness",7,40,6
+"528",82,"Mindfulness",8,39,7
+"529",83,"Mindfulness",1,52,0
+"530",83,"Mindfulness",2,52,1
+"531",83,"Mindfulness",3,51,2
+"532",83,"Mindfulness",4,54,3
+"533",83,"Mindfulness",5,52,4
+"534",83,"Mindfulness",6,56,5
+"535",83,"Mindfulness",7,57,6
+"536",83,"Mindfulness",8,61,7
+"537",84,"Mindfulness",1,61,0
+"538",84,"Mindfulness",2,54,1
+"539",84,"Mindfulness",3,58,2
+"540",84,"Mindfulness",4,59,3
+"541",84,"Mindfulness",5,59,4
+"542",84,"Mindfulness",6,65,5
+"543",84,"Mindfulness",7,61,6
+"544",84,"Mindfulness",8,62,7
+"545",85,"Mindfulness",1,48,0
+"546",85,"Mindfulness",2,48,1
+"547",85,"Mindfulness",3,47,2
+"548",85,"Mindfulness",4,49,3
+"549",85,"Mindfulness",5,52,4
+"550",85,"Mindfulness",6,52,5
+"551",85,"Mindfulness",7,50,6
+"552",85,"Mindfulness",8,54,7
+"553",86,"Mindfulness",1,41,0
+"554",86,"Mindfulness",2,36,1
+"555",86,"Mindfulness",3,41,2
+"556",86,"Mindfulness",4,40,3
+"557",86,"Mindfulness",5,37,4
+"558",86,"Mindfulness",6,36,5
+"559",86,"Mindfulness",7,36,6
+"560",86,"Mindfulness",8,37,7
+"561",87,"Mindfulness",1,48,0
+"562",88,"Mindfulness",1,50,0
+"563",88,"Mindfulness",2,52,1
+"564",88,"Mindfulness",3,54,2
+"565",88,"Mindfulness",4,50,3
+"566",88,"Mindfulness",5,55,4
+"567",88,"Mindfulness",6,56,5
+"568",88,"Mindfulness",7,56,6
+"569",88,"Mindfulness",8,51,7
+"570",89,"Mindfulness",1,38,0
+"571",89,"Mindfulness",2,39,1
+"572",89,"Mindfulness",3,40,2
+"573",89,"Mindfulness",4,36,3
+"574",89,"Mindfulness",5,42,4
+"575",89,"Mindfulness",6,43,5
+"576",89,"Mindfulness",7,44,6
+"577",90,"Mindfulness",1,31,0
+"578",91,"Mindfulness",1,53,0
+"579",91,"Mindfulness",2,61,1
+"580",91,"Mindfulness",3,67,2
+"581",91,"Mindfulness",4,62,3
+"582",91,"Mindfulness",5,60,4
+"583",91,"Mindfulness",6,57,5
+"584",91,"Mindfulness",7,68,6
+"585",91,"Mindfulness",8,63,7
+"586",92,"Mindfulness",1,35,0
+"587",92,"Mindfulness",2,39,1
+"588",92,"Mindfulness",3,34,2
+"589",92,"Mindfulness",4,35,3
+"590",92,"Mindfulness",5,39,4
+"591",92,"Mindfulness",6,40,5
+"592",92,"Mindfulness",7,37,6
+"593",92,"Mindfulness",8,43,7
+"594",93,"Mindfulness",1,46,0
+"595",93,"Mindfulness",2,50,1
+"596",93,"Mindfulness",3,53,2
+"597",93,"Mindfulness",4,48,3
+"598",93,"Mindfulness",5,63,4
+"599",93,"Mindfulness",6,57,5
+"600",93,"Mindfulness",7,55,6
+"601",93,"Mindfulness",8,56,7
+"602",94,"Mindfulness",1,35,0
+"603",94,"Mindfulness",2,40,1
+"604",94,"Mindfulness",3,44,2
+"605",94,"Mindfulness",4,37,3
+"606",94,"Mindfulness",5,42,4
+"607",94,"Mindfulness",6,41,5
+"608",94,"Mindfulness",7,47,6
+"609",94,"Mindfulness",8,47,7
+"610",95,"Mindfulness",1,55,0
+"611",95,"Mindfulness",2,63,1
+"612",95,"Mindfulness",3,64,2
+"613",95,"Mindfulness",4,61,3
+"614",95,"Mindfulness",5,65,4
+"615",95,"Mindfulness",6,61,5
+"616",95,"Mindfulness",7,63,6
+"617",95,"Mindfulness",8,61,7
+"618",96,"Mindfulness",1,48,0
+"619",96,"Mindfulness",2,49,1
+"620",96,"Mindfulness",3,48,2
+"621",96,"Mindfulness",4,45,3
+"622",96,"Mindfulness",5,43,4
+"623",96,"Mindfulness",6,45,5
+"624",96,"Mindfulness",7,45,6
+"625",96,"Mindfulness",8,50,7
+"626",97,"Mindfulness",1,52,0
+"627",97,"Mindfulness",2,54,1
+"628",97,"Mindfulness",3,53,2
+"629",97,"Mindfulness",4,54,3
+"630",97,"Mindfulness",5,53,4
+"631",97,"Mindfulness",6,51,5
+"632",97,"Mindfulness",7,53,6
+"633",97,"Mindfulness",8,57,7
+"634",98,"Mindfulness",1,45,0
+"635",98,"Mindfulness",2,52,1
+"636",98,"Mindfulness",3,49,2
+"637",98,"Mindfulness",4,54,3
+"638",98,"Mindfulness",5,47,4
+"639",98,"Mindfulness",6,48,5
+"640",98,"Mindfulness",7,49,6
+"641",98,"Mindfulness",8,51,7
+"642",99,"Mindfulness",1,54,0
+"643",99,"Mindfulness",2,53,1
+"644",99,"Mindfulness",3,54,2
+"645",99,"Mindfulness",4,56,3
+"646",99,"Mindfulness",5,47,4
+"647",99,"Mindfulness",6,51,5
+"648",99,"Mindfulness",7,48,6
+"649",99,"Mindfulness",8,54,7
+"650",100,"Mindfulness",1,44,0
+"651",100,"Mindfulness",2,51,1
+"652",100,"Mindfulness",3,43,2
+"653",100,"Mindfulness",4,38,3
+"654",100,"Mindfulness",5,39,4
+"655",100,"Mindfulness",6,46,5
+"656",100,"Mindfulness",7,35,6
+"657",100,"Mindfulness",8,44,7
+"658",101,"Mindfulness",1,38,0
+"659",101,"Mindfulness",2,39,1
+"660",101,"Mindfulness",3,38,2
+"661",101,"Mindfulness",4,43,3
+"662",101,"Mindfulness",5,48,4
+"663",101,"Mindfulness",6,42,5
+"664",101,"Mindfulness",7,47,6
+"665",101,"Mindfulness",8,43,7
+"666",102,"Mindfulness",1,50,0
+"667",102,"Mindfulness",2,54,1
+"668",102,"Mindfulness",3,56,2
+"669",102,"Mindfulness",4,53,3
+"670",102,"Mindfulness",5,57,4
+"671",102,"Mindfulness",6,56,5
+"672",102,"Mindfulness",7,65,6
+"673",102,"Mindfulness",8,64,7
+"674",103,"Mindfulness",1,50,0
+"675",103,"Mindfulness",2,50,1
+"676",103,"Mindfulness",3,51,2
+"677",103,"Mindfulness",4,51,3
+"678",103,"Mindfulness",5,49,4
+"679",103,"Mindfulness",6,50,5
+"680",103,"Mindfulness",7,51,6
+"681",103,"Mindfulness",8,60,7
+"682",104,"Mindfulness",1,51,0
+"683",104,"Mindfulness",2,56,1
+"684",104,"Mindfulness",3,57,2
+"685",104,"Mindfulness",4,56,3
+"686",104,"Mindfulness",5,60,4
+"687",104,"Mindfulness",6,57,5
+"688",104,"Mindfulness",7,59,6
+"689",104,"Mindfulness",8,58,7
+"690",105,"Mindfulness",1,36,0
+"691",105,"Mindfulness",2,42,1
+"692",105,"Mindfulness",3,49,2
+"693",105,"Mindfulness",4,43,3
+"694",105,"Mindfulness",5,41,4
+"695",105,"Mindfulness",6,43,5
+"696",106,"Mindfulness",1,43,0
+"697",106,"Mindfulness",2,42,1
+"698",106,"Mindfulness",3,42,2
+"699",106,"Mindfulness",4,42,3
+"700",106,"Mindfulness",5,43,4
+"701",106,"Mindfulness",6,44,5
+"702",106,"Mindfulness",7,40,6
+"703",106,"Mindfulness",8,44,7
+"704",107,"Mindfulness",1,58,0
+"705",107,"Mindfulness",2,51,1
+"706",107,"Mindfulness",3,56,2
+"707",107,"Mindfulness",4,59,3
+"708",107,"Mindfulness",5,60,4
+"709",107,"Mindfulness",6,58,5
+"710",107,"Mindfulness",7,63,6
+"711",107,"Mindfulness",8,67,7
+"712",108,"Mindfulness",1,38,0
+"713",108,"Mindfulness",2,34,1
+"714",108,"Mindfulness",3,39,2
+"715",108,"Mindfulness",4,42,3
+"716",108,"Mindfulness",5,40,4
+"717",108,"Mindfulness",6,45,5
+"718",108,"Mindfulness",7,43,6
+"719",108,"Mindfulness",8,52,7
+"720",109,"Mindfulness",1,53,0
+"721",109,"Mindfulness",2,60,1
+"722",109,"Mindfulness",3,53,2
+"723",109,"Mindfulness",4,47,3
+"724",109,"Mindfulness",5,53,4
+"725",109,"Mindfulness",6,53,5
+"726",109,"Mindfulness",7,55,6
+"727",109,"Mindfulness",8,55,7
+"728",110,"Mindfulness",1,54,0
+"729",110,"Mindfulness",2,58,1
+"730",110,"Mindfulness",3,50,2
+"731",110,"Mindfulness",4,52,3
+"732",110,"Mindfulness",5,58,4
+"733",110,"Mindfulness",6,49,5
+"734",110,"Mindfulness",7,54,6
+"735",110,"Mindfulness",8,55,7
+"736",111,"Mindfulness",1,59,0
+"737",111,"Mindfulness",2,56,1
+"738",111,"Mindfulness",3,55,2
+"739",111,"Mindfulness",4,58,3
+"740",111,"Mindfulness",5,57,4
+"741",111,"Mindfulness",6,58,5
+"742",111,"Mindfulness",7,62,6
+"743",111,"Mindfulness",8,50,7
+"744",112,"Mindfulness",1,51,0
+"745",112,"Mindfulness",2,46,1
+"746",112,"Mindfulness",3,54,2
+"747",112,"Mindfulness",4,55,3
+"748",112,"Mindfulness",5,61,4
+"749",112,"Mindfulness",6,52,5
+"750",112,"Mindfulness",7,53,6
+"751",112,"Mindfulness",8,55,7
+"752",113,"Mindfulness",1,53,0
+"753",113,"Mindfulness",2,46,1
+"754",114,"Mindfulness",1,39,0
+"755",114,"Mindfulness",2,37,1
+"756",114,"Mindfulness",3,44,2
+"757",114,"Mindfulness",4,49,3
+"758",114,"Mindfulness",5,43,4
+"759",114,"Mindfulness",6,50,5
+"760",114,"Mindfulness",7,52,6
+"761",114,"Mindfulness",8,54,7
+"762",115,"Mindfulness",1,45,0
+"763",115,"Mindfulness",2,46,1
+"764",115,"Mindfulness",3,49,2
+"765",115,"Mindfulness",4,52,3
+"766",115,"Mindfulness",5,52,4
+"767",115,"Mindfulness",6,55,5
+"768",115,"Mindfulness",7,56,6
+"769",115,"Mindfulness",8,57,7
+"770",116,"Mindfulness",1,46,0
+"771",116,"Mindfulness",2,49,1
+"772",116,"Mindfulness",3,46,2
+"773",116,"Mindfulness",4,47,3
+"774",116,"Mindfulness",5,39,4
+"775",116,"Mindfulness",6,47,5
+"776",116,"Mindfulness",7,45,6
+"777",116,"Mindfulness",8,50,7
+"778",117,"Mindfulness",1,48,0
+"779",117,"Mindfulness",2,50,1
+"780",117,"Mindfulness",3,47,2
+"781",117,"Mindfulness",4,53,3
+"782",117,"Mindfulness",5,50,4
+"783",117,"Mindfulness",6,53,5
+"784",117,"Mindfulness",7,58,6
+"785",117,"Mindfulness",8,62,7
+"786",118,"Mindfulness",1,35,0
+"787",118,"Mindfulness",2,42,1
+"788",118,"Mindfulness",3,38,2
+"789",118,"Mindfulness",4,46,3
+"790",118,"Mindfulness",5,39,4
+"791",118,"Mindfulness",6,41,5
+"792",118,"Mindfulness",7,40,6
+"793",118,"Mindfulness",8,38,7
+"794",119,"Mindfulness",1,26,0
+"795",120,"Mindfulness",1,50,0
+"796",120,"Mindfulness",2,49,1
+"797",120,"Mindfulness",3,47,2
+"798",120,"Mindfulness",4,53,3
+"799",120,"Mindfulness",5,54,4
+"800",120,"Mindfulness",6,53,5
+"801",120,"Mindfulness",7,52,6
+"802",120,"Mindfulness",8,49,7

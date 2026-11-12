@@ -32,7 +32,7 @@ Comparing models
 4 - Understand how to interpret the output from a mixed-effects model \ 
 
 
-
+**TODO**
 ### Materials Used:
 
 We will use the packages **tidyr**, **ggplot2**, **lme4**, **lmerTest**, & **rstatix** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
@@ -52,7 +52,7 @@ If you have any queries during the class, please feel free to ask your lab tutor
 
 ## CREATE A NEW PROJECT
 
-Just as we did in previous weeks we are going to start by creating a new project for this week's lab. Download the data from the VLE (In the Week 6 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/sleep_study_mixed.csv).
+Just as we did in previous weeks we are going to start by creating a new project for this week's lab. Download the data from the VLE (In the Week 7 Lab Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/sleep_study_mixed.csv).
 
 If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.
 
@@ -68,11 +68,421 @@ Also create a new script in this folder so you can copy the lines of code needed
 
 
 ```{r}
-library(tidyr)
+#library(tidyr)
 library(ggplot2)
 library(lme4)
 library(lmerTest)
-library(rstatix)
+library(knitr)
+#library(rstatix)
 ```
 
+:::
+:::
 As you will have seen from the answer scripts from previous homeworks and labs it is good to do this at the top of your script instead of just before you use each package.
+
+
+## SECTION A. THE DATASET
+
+The dataset is a the same as used in the Week 6 Lab (It is a more advanced version of the one that was discussed in the Week 1 Lecture when we discussed ways of plotting data).
+
+As a reminder from last week:
+
+120 students take part in an 8-week study. Randomly assigned to one of three conditions: 
+a sleep hygiene programme, 
+a mindfulness app, 
+a control group. 
+
+Each week they log their wellbeing scores. We are interested in: \ 
+
+Do wellbeing scores change over time \ 
+
+Does the condition they are in affect wellbeing scores.
+
+However, as with many real world longitudinal data sets some students have dropped out of the study at different times, so we have missing data.
+
+However, for this week we are going to skip the initial processing steps and load the data in it's mixed model ready format. To create this .csv file I used the code `write.csv(df_long,"sleep_study_mixed_long.csv")` after the processing steps in section end of [Lab 6. Section A](PS71020_Unit6_Lab.qmd#sec-preparing-mmdata).
+
+
+Next we read the data.
+```{r}
+#| echo: false
+df_long <- read.csv("data/sleep_study_mixed_long.csv")
+```
+
+```{r}
+#| eval: false
+df_long <- read.csv("sleep_study_mixed_long.csv")
+```
+
+
+**What is the code to check the first 10 rows of the data? What format is the data in? What crucial step needs to be repeated? Perform this step**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+head(df_long, n = 10)
+summary(df_long)
+```
+The data is in long format.
+
+However, if we check the summary we can see that the recoding of the `df_long$condition` to a factor has been lost in the process of writing/reading to a .csv file.
+
+```{r}
+#create a variable to store our condition labels
+cond_levels <- c("Control", "Sleep hygiene", "Mindfulness")
+
+#change the condition to a factor in the long data
+df_long$condition <- factor(df_long$condition, levels = cond_levels)
+
+#re-check
+levels(df_long$condition)
+```
+
+You might also notice that we now have an extra column `df_long$X`, this is just the row number. We can remove this in many different ways but one is to use `subset()` like we have done previously:
+
+```{r}
+df_long <- subset(df_long, select = -X )
+
+```
+
+This column wouldn't have caused any issues in further analysis but it is useful to see how to use the `-columnName` notation in `subset()` to remove columns from a dataframe.
+:::
+:::
+
+Let's recreate the spaghetti plot from last week. 
+
+NOTE: For these complex plots please do not worry about understanding how the code works (unless you want to!), they are for illustrative and educational purposes.
+
+```{r}
+#set up colours
+cond_cols <- c("Control" = "#999999", "Sleep hygiene" = "#0072B2", "Mindfulness" = "#E69F00")
+
+ggplot(df_long, aes(x = week, y = wellbeing, group = id)) + #sets up the initial plot of wellbeing over weeks, split by individual ID
+  geom_line(alpha = 0.3, colour = "grey40") + #plots individuals as grey semi-opaque lines
+  stat_summary(aes(group = condition, colour = condition),
+               fun = mean, geom = "line", linewidth = 1.5) + #adds the mean of each group as a thicker line, coloured by the cond_cols (but with default ggplot2 colours)
+  facet_wrap(~ condition) + #splits into 3 subplots based on condition
+  scale_colour_manual(values = cond_cols) + #uses the actual colours we want
+  scale_x_continuous(breaks = 1:8) + #sets up the ticks on the x axis
+  labs(title = "Every student's wellbeing over the 8 weeks",
+       subtitle = "Thick line = group mean of the students observed that week",
+       x = "Week", y = "Wellbeing") + #adds labels
+  theme(legend.position = "none") #says not to plot a legend
+```
+
+## SECTION B. RANDOM INTERCEPTS AND SLOPES
+
+Last week we created a mixed effects model which looked at the effect of week (`week0`), condition (`condition`), their interaction and also allowed random intercept for each participant (`id`).
+
+**What was the Wilkinson notation formula that we used for this? Create a mixed effects model called `m_intercepts` using this formula**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+The formula is `wellbeing ~ week0 * condition + (1 | id)`. Below is the code to create the model:
+
+```{r}
+#Fit a model that allows students to have their own intercept (1 | id)
+m_intercepts <- lmer(wellbeing ~ week0 * condition + (1 | id), data = df_long)
+summary(m_intercepts)
+```
+
+:::
+:::
+
+
+We can then use a slightly modified version of the plotting code from last week.
+
+NOTE: For those interested the only thing that has changed was how I matched `condition` to `id` as in the old version of the code this relied on the wide format `df`.
+```{r}
+all_students <- expand.grid(id = unique(df_long$id), week0 = 0:7)
+all_students$condition    <- df_long$condition[match(all_students$id, df_long$id)] #this line changed to use df_long instead of df
+all_students$student_line <- predict(m_intercepts, newdata = all_students)
+all_students$week <- all_students$week0 + 1
+
+group_lines <- unique(all_students[, c("condition", "week0", "week")])
+group_lines$group_line <- predict(m_intercepts, newdata = group_lines, re.form = NA)
+
+ggplot() +
+  geom_line(data = all_students, aes(x = week, y = student_line, group = id, colour = condition), alpha = 0.3) +
+  geom_line(data = group_lines, aes(x = week, y = group_line, group = condition),
+            colour = "black", linewidth = 1.5) +
+  facet_wrap(~ condition) +
+  scale_colour_manual(values = cond_cols) +
+  scale_x_continuous(breaks = 1:8) +
+  labs(title = "Random intercepts model: one parallel line per student",
+       subtitle = "Thick black line = the group line from the fixed effects",
+       x = "Week", y = "Predicted wellbeing") +
+  theme(legend.position = "none")
+
+```
+
+**What is the are the two key features of the modelling approach used here that are clearly visible from the plot?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+1 - Students all have their own intercept (start at different places on the y axis) \ 
+
+2 - All students within a condition have the same slope (the angle the lines point at the same for all students within a condition, but different conditions have different slopes) \ 
+
+
+:::
+:::
+
+Alternatively using a mixed model approach we can give every student their own intercept and their own slope in the fitting process. However, both the slope estimates and the intercept estimates are normally distributed.
+
+```{r}
+m_partial <- lmer(wellbeing ~ week0 * condition + (1 + week0 | id), data = df_long)
+summary(m_partial)
+
+```
+
+**What is the key difference between the two formula we have used and how does this specify that we are fitting random slopes and intercepts by participant?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+For random intercepts only we used `... + (1 | id)`
+
+For random slopes and intercepts we used `... + (1 + week0 | id)`
+
+One thing to be aware of is if you use `... + (week0 | id)`, then **R** will automatically include random intercepts as well and it is exactly the same model as when using `... + (1 + week0 | id)`. I've included the `1 + ` to make it explicit that we are doing both slopes and intercepts. 
+
+We will look at a slopes only model a bit later.
+
+:::
+:::
+
+**Compare the `Estimates` for the Fixed Effects in the output of the two models, what do you notice?** 
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+There isn't much difference in the estimates themselves:
+
+```{r}
+terms <- c("week0",
+           "week0:conditionSleep hygiene",
+           "week0:conditionMindfulness",
+           "conditionSleep hygiene",
+           "conditionMindfulness")
+
+comparison <- data.frame(
+  Term = c("week0 (Control slope)",
+           "week0 × Sleep hygiene",
+           "week0 × Mindfulness",
+           "Sleep hygiene (baseline)",
+           "Mindfulness (baseline)"),
+  `Random intercepts`  = fixef(m_intercepts)[terms],
+  `Intercepts + slopes` = fixef(m_partial)[terms],
+  check.names = FALSE,
+  row.names = NULL
+)
+kable(comparison, digits = 3)
+```
+
+:::
+:::
+
+However, if we look at the standard errors on these estimates there are big changes:
+
+```{r}
+se_comparison <- data.frame(
+  Term = comparison$Term,
+  `Random intercepts`  = coef(summary(m_intercepts))[terms, "Std. Error"],
+  `Intercepts + slopes` = coef(summary(m_partial))[terms, "Std. Error"],
+  check.names = FALSE,
+  row.names = NULL
+)
+
+kable(se_comparison, digits = 3)
+```
+Here we can see that the standard errors for the random intercepts and slopes model are much larger, particularly for any of the effects involving `week0`. 
+
+Adding random slopes doesn’t change what the model says the average trends are. It changes how confident we are in them.
+
+The random-intercept model assumes every student in a group improves at the same rate. It then treats the 802 observations as evidence about that one rate, which makes it overconfident. In the random-slopes model, students differ in their slopes, so the evidence about the group slope is closer to “120 students” than “802 observations”. The between-student terms (the intercept and the baseline condition differences) change much less, by about 7%.
+
+We can also see this in the degrees of freedom for each effect. The `week0` terms have df of about 690 (close to the number of observations) in the random-intercept model and about 100 (close to the number of students) in the random-slopes model. The baseline terms are about 128 against about 116, so they are always at the student level.
+
+The Control group’s slope goes from highly significant (*t* = −3.74, *p* = .0002) to marginal and not-significant (*t* = −1.84, *p* = .069). 
+
+With only random intercepts, we would have concluded that wellbeing declines in the Control group. With random slopes, the evidence for that is much weaker. The two interactions stay clearly significant (t falls from 11.2 to 6.7 and from 7.7 to 4.5). So the main finding, that both interventions differ from Control in slope, holds, but the p-values are now more honest.
+
+**Look at the random effects table from both models, what differences do you notice?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+The residual variance shrinks by about 26%. Differences in slope between students were being treated as noise in the first model. The random-slopes model moves them into their own term, so the residual gets smaller.
+
+The −0.44 correlation says that students who start higher improve less. Starting wellbeing and rate of change are related. It could be a ceiling effect or regression to the mean. It is also something the random-intercept model cannot show.
+
+```{r}
+get_re <- function(m) {
+  vc <- VarCorr(m)$id                      # random effects for the grouping factor `id`
+  s  <- attr(vc, "stddev")                 # SDs of the random intercept (and slope, if present)
+  r  <- if ("week0" %in% names(s)) attr(vc, "correlation")["(Intercept)", "week0"] else NA
+
+  c(unname(s["(Intercept)"])^2,            # intercept variance
+    unname(s["week0"])^2,                  # slope variance (NA if absent)
+    r,                                     # intercept-slope correlation
+    sigma(m)^2)                            # residual variance
+}
+
+re_comparison <- data.frame(
+  Quantity = c("Intercept variance",
+               "Slope variance",
+               "Intercept–slope correlation",
+               "Residual variance"),
+  `Random intercepts`   = get_re(m_intercepts),
+  `Intercepts + slopes` = get_re(m_partial),
+  check.names = FALSE
+)
+
+options(knitr.kable.NA = "not estimated")
+kable(re_comparison, digits = 3)
+```
+
+:::
+:::
+
+Finally if we look at a plot of this model we can see the effects of allowing random slopes:
+```{r}
+all_students <- expand.grid(id = unique(df_long$id), week0 = 0:7)
+all_students$condition    <- df_long$condition[match(all_students$id, df_long$id)]
+all_students$student_line <- predict(m_partial, newdata = all_students)
+all_students$week <- all_students$week0 + 1
+
+group_lines <- unique(all_students[, c("condition", "week0", "week")])
+group_lines$group_line <- predict(m_partial, newdata = group_lines, re.form = NA)
+
+ggplot() +
+  geom_line(data = all_students, aes(x = week, y = student_line, group = id, colour = condition), alpha = 0.3) +
+  geom_line(data = group_lines, aes(x = week, y = group_line, group = condition),
+            colour = "black", linewidth = 1.5) +
+  facet_wrap(~ condition) +
+  scale_colour_manual(values = cond_cols) +
+  scale_x_continuous(breaks = 1:8) +
+  labs(title = "Random intercepts and slopes model: one line per student",
+       subtitle = "Thick black line = the group line from the fixed effects",
+       x = "Week", y = "Predicted wellbeing") +
+  theme(legend.position = "none")
+```
+
+We can also fit a model in which we allow random slopes for participants but not random intercepts. Notice that in the formula the `1` within the brackets has been replaced with a `0` to indicate that we don't want random intercepts.
+
+```{r}
+m_slopes_only <- lmer(wellbeing ~ condition * week0 + (0 + week0 | id), data = df_long)
+summary(m_slopes_only)
+```
+However, this is rarely a sensible model. A slopes-only model forces every student to have the same true starting point. Because `week0` is 0 at week 1, all the individual lines fan out from a single point at baseline, with the fixed-effect intercept for each group. In these data that is clearly wrong, because baseline wellbeing differs a lot between students.
+
+We can see this at work from the plot below:
+```{r}
+all_students <- expand.grid(id = unique(df_long$id), week0 = 0:7)
+all_students$condition    <- df_long$condition[match(all_students$id, df_long$id)]
+all_students$student_line <- predict(m_slopes_only, newdata = all_students)
+all_students$week <- all_students$week0 + 1
+
+group_lines <- unique(all_students[, c("condition", "week0", "week")])
+group_lines$group_line <- predict(m_slopes_only, newdata = group_lines, re.form = NA)
+
+ggplot() +
+  geom_line(data = all_students, aes(x = week, y = student_line, group = id, colour = condition), alpha = 0.3) +
+  geom_line(data = group_lines, aes(x = week, y = group_line, group = condition),
+            colour = "black", linewidth = 1.5) +
+  facet_wrap(~ condition) +
+  scale_colour_manual(values = cond_cols) +
+  scale_x_continuous(breaks = 1:8) +
+  labs(title = "Random slopes only model: one slope per student, same starting point",
+       subtitle = "Thick black line = the group line from the fixed effects",
+       x = "Week", y = "Predicted wellbeing") +
+  theme(legend.position = "none")
+
+```
+
+## SECTION C. COMPARING MODEL FITS
+
+One thing that all of these models produce is the `REML criterion at convergence`. This is a measure of model fit. A lower value here indicates a better fitting model.
+
+We can test whether the difference in two models is significant using the `anova()` function:
+
+```{r}
+anova(m_intercepts, m_partial)  
+```
+
+**What key things do you notice about the model comparison test?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+The main thing is that the likelihood ratio test is significant χ²(2) = 83.0, *p* < .001. Indicating that adding a random slope for `week0` improves the fit far more than chance would.
+
+However, we have added more parameters to our second model so it is not surprising that the fit is better. This is where AIC and BIC are useful.
+
+AIC drops from 4625.7 to 4546.6 (a difference of about 79) and BIC from 4663.2 to 4593.5 (about 70). Lower is better, and differences above about 10 are usually treated as strong evidence. BIC penalises extra parameters more heavily and still prefers the more complex model, so the improvement isn’t a result of the extra parameters alone.
+
+One other thing to note is that the df of the likelihood ratio test is 2. This may seem surprising since the only thing we explicitly added to the model was the random slopes but as we saw above we also implicitly added a term for the intercept–slope correlation which is the second parameter.
+
+An APA style write-up of this would be:
+
+A likelihood ratio test showed that adding a random slope for week significantly improved model fit, χ²(2) = 83.05, p < .001, indicating that students differ in their rate of change in wellbeing. AIC (4546.6 vs. 4625.7) and BIC (4593.5 vs. 4663.2) also favoured the random-slopes model.
+
+One final thing to note is that the `anova()` function refits both models using Maximum Likelihood (ML) instead of the original REML. 
+
+:::
+:::
+
+
+We can also use this to test multiple models against each other:
+```{r}
+anova(m_slopes_only, m_intercepts, m_partial)  
+```
+
+One thing to notice here is that only the `m_intercepts` vs `m_partial` comparison gets a *p*-value. This is because to carry out a likelihood ratio test the two models being compared have to be nested. This means that one has to be a simpler form of the model compared to the other. In the `m_intercepts` vs `m_slopes_only` case both models have 8 df.
+
+We can test the `m_slopes_only` against `m_partial` as these are nested.
+
+```{r}
+anova(m_slopes_only, m_partial)  
+```
+
+The results show a significant improvement in fit from the slopes only model to the slopes and intercepts model.
+
+If we do want to compare non-nested models we can use the AIC and BIC values, either by checking them in the tables above or directly:
+
+```{r}
+AIC(m_slopes_only, m_intercepts, m_partial)
+BIC(m_slopes_only, m_intercepts, m_partial)
+```
+
+The AIC values (5132.3, 4625.7 and 4546.6) rank the models clearly: intercepts and slopes is best, then intercepts only, and slopes only is far worse.
+
+## SECTION D. SHRINKAGE
+
