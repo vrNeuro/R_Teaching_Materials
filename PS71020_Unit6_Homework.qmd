@@ -61,7 +61,7 @@ Gender (`Gender`; 1 = male, 2 = female) \
 
 Handedness (`Handedness`; 1 = Right, 2 =Left) \ 
 
-However, in the new data set we have the data for every single trial. The trial-level data were simulated so that each participant’s means match the original dataset.
+However, in the new data set we have the data for every single trial (240 per participant). The trial-level data were simulated so that each participant’s means match the original dataset.
 
 ```{r}
 #| echo: false
@@ -78,6 +78,7 @@ Examine the first few rows of the data set:
 head(df)
 ```
 
+
 **What is this format of data called?**
 
 ::: {.answer-box}
@@ -92,7 +93,17 @@ This is long format data, with each row representing an individual observation, 
 :::
 
 
-We can see we have two columns that describe the trial information, the first is `df$emotion` this is either `Happy` or `Fearful`. The second is `df$face_id`, this is because each participant saw each face with both a `Happy` and `Fearful` expression. 
+So in this version of the data set we have some additional variables that describe each trial: \ 
+
+`subno`  - The subject number of the participant (15-93) \ 
+
+`trialnum` - The number of this particular trial (1-240) \ 
+
+`emotion` -  The emotion of the face displayed on that trial (Happy or Fearful) \ 
+
+`face_id` - The ID of the particular face shown, each participant saw each face with both a Happy and Fearful emotion \ 
+ 
+`RT` - the reaction time in seconds on that particular trial 
 
 ## SECTION B. RECREATING ORIGINAL DATA FORMAT
 

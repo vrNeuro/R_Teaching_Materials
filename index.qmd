@@ -39,6 +39,9 @@ Welcome to the presessional materials.
 
 *More worksheets will be added here as the term progresses.*
 
+## Choosing a Statistical Test Flow Chart
+- [Flow Chart](flowchart.html)
+
 ## Specific skills
 TODO: build a list here linking to specific skills such as z-scoring etc.
 

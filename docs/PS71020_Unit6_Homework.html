@@ -246,7 +246,7 @@ Attaching package: 'lmerTest'</code></pre>
 <p>Age (<code>Age</code>) &nbsp;</p>
 <p>Gender (<code>Gender</code>; 1 = male, 2 = female) &nbsp;</p>
 <p>Handedness (<code>Handedness</code>; 1 = Right, 2 =Left) &nbsp;</p>
-<p>However, in the new data set we have the data for every single trial. The trial-level data were simulated so that each participant’s means match the original dataset.</p>
+<p>However, in the new data set we have the data for every single trial (240 per participant). The trial-level data were simulated so that each participant’s means match the original dataset.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"fearful_faces_trials.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -270,7 +270,12 @@ Attaching package: 'lmerTest'</code></pre>
 <p>This is long format data, with each row representing an individual observation, in this case one row per trial.</p>
 </div>
 </div>
-<p>We can see we have two columns that describe the trial information, the first is <code>df$emotion</code> this is either <code>Happy</code> or <code>Fearful</code>. The second is <code>df$face_id</code>, this is because each participant saw each face with both a <code>Happy</code> and <code>Fearful</code> expression.</p>
+<p>So in this version of the data set we have some additional variables that describe each trial: &nbsp;</p>
+<p><code>subno</code> - The subject number of the participant (15-93) &nbsp;</p>
+<p><code>trialnum</code> - The number of this particular trial (1-240) &nbsp;</p>
+<p><code>emotion</code> - The emotion of the face displayed on that trial (Happy or Fearful) &nbsp;</p>
+<p><code>face_id</code> - The ID of the particular face shown, each participant saw each face with both a Happy and Fearful emotion &nbsp;</p>
+<p><code>RT</code> - the reaction time in seconds on that particular trial</p>
 </section>
 <section id="section-b.-recreating-original-data-format" class="level2">
 <h2 class="anchored" data-anchor-id="section-b.-recreating-original-data-format">SECTION B. RECREATING ORIGINAL DATA FORMAT</h2>
