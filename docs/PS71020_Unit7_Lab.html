@@ -160,6 +160,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#section-b.-random-intercepts-and-slopes" id="toc-section-b.-random-intercepts-and-slopes" class="nav-link" data-scroll-target="#section-b.-random-intercepts-and-slopes">SECTION B. RANDOM INTERCEPTS AND SLOPES</a></li>
   <li><a href="#section-c.-comparing-model-fits" id="toc-section-c.-comparing-model-fits" class="nav-link" data-scroll-target="#section-c.-comparing-model-fits">SECTION C. COMPARING MODEL FITS</a></li>
   <li><a href="#section-d.-shrinkage" id="toc-section-d.-shrinkage" class="nav-link" data-scroll-target="#section-d.-shrinkage">SECTION D. SHRINKAGE</a></li>
+  <li><a href="#section-e.-assumptions-of-mixed-effects-models" id="toc-section-e.-assumptions-of-mixed-effects-models" class="nav-link" data-scroll-target="#section-e.-assumptions-of-mixed-effects-models">SECTION E. ASSUMPTIONS OF MIXED EFFECTS MODELS</a></li>
+  <li><a href="#section-f.-apa-write-up" id="toc-section-f.-apa-write-up" class="nav-link" data-scroll-target="#section-f.-apa-write-up">SECTION F. APA WRITE UP</a></li>
   </ul>
 </nav>
     </div>
@@ -190,10 +192,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="learning-outcomes">Learning Outcomes:</h3>
 <p><strong>TODO</strong></p>
 <p>Fitting models with random slopes and intercepts</p>
-<p>Looking at schrinkage</p>
-<p>Assumptions of mixed effects models</p>
-<p>APA writeup of mixed effects models</p>
 <p>Comparing models</p>
+<p>Looking at shrinkage</p>
+<p>APA writeup of mixed effects models</p>
+<p>Assumptions of mixed effects models</p>
 <p>1 - Use RStudio to examine a mixed effects data set &nbsp;</p>
 <p>2 - Understand different approaches to analysing this type of data &nbsp;</p>
 <p>3 - Carry out regression with a mixed-effects model &nbsp;</p>
@@ -888,6 +890,431 @@ m_partial     10 4593.540</code></pre>
 </section>
 <section id="section-d.-shrinkage" class="level2">
 <h2 class="anchored" data-anchor-id="section-d.-shrinkage">SECTION D. SHRINKAGE</h2>
+<p>So far we have compared models using fit statistics. Now we look at what the models actually do to each student’s estimates.</p>
+<section id="three-ways-to-estimate-a-students-line" class="level3">
+<h3 class="anchored" data-anchor-id="three-ways-to-estimate-a-students-line">Three ways to estimate a student’s line</h3>
+<p>Suppose we want to know how one student’s wellbeing changes over the weeks. There are three options:</p>
+<ul>
+<li><strong>No pooling:</strong> fit a separate regression to each student, using only that student’s data (our individual regressions from last week). This treats students as having nothing in common, so students with only a few data points get very noisy estimates, and students with one or two points can’t be fitted at all.</li>
+<li><strong>Complete pooling:</strong> fit one line per condition, ignoring which student each row belongs to (our ordinary regression from last week). This treats students as all the same.</li>
+<li><strong>Partial pooling:</strong> the mixed model. Each student gets their own line, but the estimate is informed by everyone else’s data too.</li>
+</ul>
+<p><strong>Shrinkage</strong> is what partial pooling does: each student’s estimate is pulled (“shrunk”) towards the average for their condition. The pull is stronger when a student has less data, because a few unusual scores are more likely to be chance than a real difference. A student with 8 weeks of data is described mostly by their own data. A student with 2 weeks is described mostly by their group.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Approach</th>
+<th>What it assumes about students</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Complete pooling</td>
+<td>Students are all the same (too rigid)</td>
+</tr>
+<tr class="even">
+<td>No pooling</td>
+<td>Students have nothing in common (too noisy)</td>
+</tr>
+<tr class="odd">
+<td>Random intercepts only</td>
+<td>Students differ in where they start, not in how fast they change</td>
+</tr>
+<tr class="even">
+<td>Random intercepts + slopes</td>
+<td>Students differ in both, but all come from the same population</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#This code reproduces some of these modesl that we looked at last week.</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignores which student each row belongs to. Everyone in a condition gets the same line.</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>m_complete <span class="ot">&lt;-</span> <span class="fu">lm</span>(wellbeing <span class="sc">~</span> week0 <span class="sc">*</span> condition, <span class="at">data =</span> df_long)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>fit_one_student <span class="ot">&lt;-</span> <span class="cf">function</span>(d) {</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(d) <span class="sc">&lt;</span> <span class="dv">3</span>) {</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">data.frame</span>(<span class="at">id =</span> d<span class="sc">$</span>id[<span class="dv">1</span>], <span class="at">intercept =</span> <span class="cn">NA</span>, <span class="at">slope =</span> <span class="cn">NA</span>, <span class="at">n_obs =</span> <span class="fu">nrow</span>(d)))</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  b <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">lm</span>(wellbeing <span class="sc">~</span> week0, <span class="at">data =</span> d))</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">id =</span> d<span class="sc">$</span>id[<span class="dv">1</span>], <span class="at">intercept =</span> b[[<span class="dv">1</span>]], <span class="at">slope =</span> b[[<span class="dv">2</span>]], <span class="at">n_obs =</span> <span class="fu">nrow</span>(d))</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="co">#apply individual regression function to each participant</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>person_fits <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(<span class="fu">split</span>(df_long, df_long<span class="sc">$</span>id), fit_one_student))</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a><span class="co">#also get the condition for that participant and add it to our person_fits dataframe</span></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>person_fits<span class="sc">$</span>condition <span class="ot">&lt;-</span> df_long<span class="sc">$</span>condition[<span class="fu">match</span>(person_fits<span class="sc">$</span>id, df_long<span class="sc">$</span>id)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>students <span class="ot">&lt;-</span> <span class="fu">unique</span>(df_long[, <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"condition"</span>)])</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>slope_from <span class="ot">&lt;-</span> <span class="cf">function</span>(model) {</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">transform</span>(students, <span class="at">week0 =</span> <span class="dv">1</span>)) <span class="sc">-</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">transform</span>(students, <span class="at">week0 =</span> <span class="dv">0</span>))</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>students<span class="sc">$</span>slope_partial    <span class="ot">&lt;-</span> <span class="fu">slope_from</span>(m_partial)      <span class="co"># random intercepts and slopes</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>students<span class="sc">$</span>slope_intercepts <span class="ot">&lt;-</span> <span class="fu">slope_from</span>(m_intercepts)   <span class="co"># random intercepts only: every student gets their group's slope</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>students<span class="sc">$</span>slope_group      <span class="ot">&lt;-</span> <span class="fu">slope_from</span>(m_complete)     <span class="co"># complete pooling (ordinary regression)</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>students<span class="sc">$</span>slope_none       <span class="ot">&lt;-</span> person_fits<span class="sc">$</span>slope[<span class="fu">match</span>(students<span class="sc">$</span>id, person_fits<span class="sc">$</span>id)]</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>students<span class="sc">$</span>n_obs            <span class="ot">&lt;-</span> person_fits<span class="sc">$</span>n_obs[<span class="fu">match</span>(students<span class="sc">$</span>id, person_fits<span class="sc">$</span>id)]</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>shrink <span class="ot">&lt;-</span> students[<span class="sc">!</span><span class="fu">is.na</span>(students<span class="sc">$</span>slope_none), ]       <span class="co"># students we could fit separately</span></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)                                            <span class="co"># keeps the jitter the same every time</span></span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>shrink<span class="sc">$</span>x_jit <span class="ot">&lt;-</span> shrink<span class="sc">$</span>n_obs <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">nrow</span>(shrink), <span class="sc">-</span><span class="fl">0.25</span>, <span class="fl">0.25</span>)</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>shrink_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"No pooling (separate regressions)"</span> <span class="ot">=</span> <span class="st">"#D55E00"</span>,</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"Random intercepts only"</span>            <span class="ot">=</span> <span class="st">"#CC79A7"</span>,</span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"Random intercepts and slopes"</span>      <span class="ot">=</span> <span class="st">"#009E73"</span>)</span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(shrink, <span class="fu">aes</span>(<span class="at">x =</span> x_jit)) <span class="sc">+</span></span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">xend =</span> x_jit, <span class="at">y =</span> slope_none, <span class="at">yend =</span> slope_partial), <span class="at">colour =</span> <span class="st">"grey60"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> slope_none,        <span class="at">colour =</span> <span class="st">"No pooling (separate regressions)"</span>), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> slope_intercepts,  <span class="at">colour =</span> <span class="st">"Random intercepts only"</span>),            <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> slope_partial,     <span class="at">colour =</span> <span class="st">"Random intercepts and slopes"</span>),      <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> shrink_cols, <span class="at">breaks =</span> <span class="fu">names</span>(shrink_cols)) <span class="sc">+</span></span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Shrinkage towards the group line"</span>,</span>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"The fewer weeks of data a student has, the bigger the pull"</span>,</span>
+<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Number of weeks of data for the student"</span>,</span>
+<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Estimated change in wellbeing per week"</span>, <span class="at">colour =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.direction =</span> <span class="st">"vertical"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Lab_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="how-to-read-this-plot" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-read-this-plot">How to read this plot</h3>
+<ul>
+<li>Each vertical grey line is one student. The x-axis is how many weeks of data they have.</li>
+<li>The y-axis is that student’s estimated change in wellbeing per week.</li>
+<li>The <strong>orange</strong> point is the slope from that student’s own separate regression (no pooling).</li>
+<li>The <strong>green</strong> point is the slope from the random intercepts and slopes model.</li>
+<li>The <strong>pink</strong> points are from the random-intercepts-only model.</li>
+<li>The grey line joins orange to green, so <strong>its length shows how much the student was shrunk</strong>.</li>
+</ul>
+<p><strong>Describe what has happened to the orange points in the green model, and how this depends on the number of weeks of data.</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The green points sit closer together than the orange points: they have been pulled towards their group’s slope. The grey lines are longest on the left (students with 3 or 4 weeks), where the separate regressions are least reliable, and shortest on the right (students with 8 weeks).</p>
+<p>The pink points sit on three flat bands, one per condition. With random intercepts only, every student in a condition has the same slope, so the slopes are completely pooled. The green points lie between the orange points (no pooling) and the pink bands (complete pooling of slopes).</p>
+</div>
+</div>
+</section>
+<section id="students-with-very-little-data" class="level3">
+<h3 class="anchored" data-anchor-id="students-with-very-little-data">Students with very little data</h3>
+<p>Students with fewer than 3 observations could not be fitted separately, but the mixed models still give them a line. The table shows their slopes, along with their first score:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Students with only 1 or 2 observations could not be fitted separately at all,</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># but the mixed models still give them a sensible line (mostly their group's line):</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>first <span class="ot">&lt;-</span> df_long[df_long<span class="sc">$</span>week0 <span class="sc">==</span> <span class="dv">0</span>, ]</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>students<span class="sc">$</span>first_score <span class="ot">&lt;-</span> first<span class="sc">$</span>wellbeing[<span class="fu">match</span>(students<span class="sc">$</span>id, first<span class="sc">$</span>id)]</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>low_data <span class="ot">&lt;-</span> students[students<span class="sc">$</span>n_obs <span class="sc">&lt;</span> <span class="dv">3</span>,</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"condition"</span>, <span class="st">"n_obs"</span>, <span class="st">"first_score"</span>, <span class="st">"slope_intercepts"</span>, <span class="st">"slope_partial"</span>)]</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>low_data[, <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(low_data[, <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>], <span class="dv">2</span>)</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(low_data, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id     condition n_obs first_score slope_intercepts slope_partial
+  17       Control     1          40            -0.37         -0.08
+  25       Control     2          44            -0.37         -0.25
+  26       Control     2          29            -0.37          0.31
+  27       Control     2          33            -0.37          0.19
+  30       Control     2          31            -0.37          0.28
+  36       Control     2          40            -0.37         -0.14
+  44 Sleep hygiene     2          43             1.17          1.30
+  46 Sleep hygiene     1          34             1.17          1.66
+  66 Sleep hygiene     2          45             1.17          1.27
+  70 Sleep hygiene     2          46             1.17          1.17
+  71 Sleep hygiene     1          35             1.17          1.62
+  73 Sleep hygiene     2          39             1.17          1.47
+  80 Sleep hygiene     2          41             1.17          1.40
+  87   Mindfulness     1          48             0.64          0.62
+  90   Mindfulness     1          31             0.64          1.27
+ 113   Mindfulness     2          53             0.64          0.38
+ 119   Mindfulness     1          26             0.64          1.47</code></pre>
+</div>
+</div>
+<p><strong>Compare slope_intercepts and slope_partial. What do you notice, and why might the two columns differ?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>In <code>slope_intercepts</code> every student has exactly their group’s slope (-0.37, 1.17 and 0.64), because that model gives everyone in a condition the same slope. In <code>slope_partial</code> the slopes are close to the group slope but not identical.</p>
+<p>The difference comes from the intercept–slope correlation (-0.44). In the sample as a whole, students who start low tend to improve more, and students who start high tend to improve less. A student with one low first score is therefore given a somewhat steeper slope than their group, and a student with a high first score a somewhat flatter one. For example, id 90 (first score 31) has a slope of 1.27, against a group slope of 0.64.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="section-e.-assumptions-of-mixed-effects-models" class="level2">
+<h2 class="anchored" data-anchor-id="section-e.-assumptions-of-mixed-effects-models">SECTION E. ASSUMPTIONS OF MIXED EFFECTS MODELS</h2>
+<p>The assumptions for a mixed effects model to be robust are very similar to that of a regression <a href="./PS71020_Unit4_Lab.html#sec-regression-assumptionchecks">Lab 4. Section B</a>.</p>
+<p>In this case:</p>
+<ol type="1">
+<li>Linearity</li>
+</ol>
+<p>The model assumes wellbeing changes in a straight line over weeks within each condition (and each student). If the real pattern curves, the straight line is misspecified.</p>
+<p>Check: plot residuals against fitted values and against week, and look for a curve.</p>
+<ol start="2" type="1">
+<li>Independence</li>
+</ol>
+<p>Observations from different students are independent, and within a student the residuals are independent once the random effects are in the model. The first part is a design question. The second means the random intercept and slope should soak up all the within-student dependence. With 8 weekly measurements, residuals from neighbouring weeks can still be correlated (autocorrelation).</p>
+<p>Check: this is mostly about how the data were collected. A plot of residuals by week for a few students can show runs of positive or negative values.</p>
+<ol start="3" type="1">
+<li>Constant residual variance (homoscedasticity)</li>
+</ol>
+<p>The residual SD should be the same across fitted values, across weeks and across conditions.</p>
+<p>Check: residuals against fitted values should look like a band of even width, not a funnel. Boxplots of residuals by week and by condition should be roughly the same height.</p>
+<p>The plots below check assumptions 1 and 3.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 &amp; 3. Linearity and constant variance: residuals vs fitted</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m_partial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Lab_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Residuals by week and by condition</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>df_long<span class="sc">$</span>resid <span class="ot">&lt;-</span> <span class="fu">resid</span>(m_partial)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(resid <span class="sc">~</span> week,      <span class="at">data =</span> df_long)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Lab_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(resid <span class="sc">~</span> condition, <span class="at">data =</span> df_long)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Lab_files/figure-html/unnamed-chunk-24-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Do you have any concerns based on this plot?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>No, the residuals against fitted values plot do not show a curved relationship.</p>
+<p>Also, the residuals split by condition or by week do not seem to differ in their variance according to the boxplots.</p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Normally distributed residuals</li>
+</ol>
+<p>The within-student residuals should be roughly normal.</p>
+<p>Check: a QQ plot of the residuals. The points should follow the line, apart from some deviation in the tails.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Normality of residuals</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">resid</span>(m_partial)); <span class="fu">qqline</span>(<span class="fu">resid</span>(m_partial))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Lab_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Do you have any concerns based on this plot?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>No, the points mainly fall along the theoretical line. Indicating that the residuals are close to normally distributed.</p>
+</div>
+</div>
+<p>Finally one assumption that is specific to mixed effects models is:</p>
+<ol start="5" type="1">
+<li>Normally distributed random effects</li>
+</ol>
+<p>The random intercepts and random slopes should each be roughly normal across students.</p>
+<p>Check: QQ plots of <code>ranef(m_partial)$id</code>. With 120 students these will look noisier than the residual QQ plot, so judge them loosely.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Normality of random effects</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>re <span class="ot">&lt;-</span> <span class="fu">ranef</span>(m_partial)<span class="sc">$</span>id</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(re[[<span class="st">"(Intercept)"</span>]], <span class="at">main =</span> <span class="st">"Random intercepts"</span>); <span class="fu">qqline</span>(re[[<span class="st">"(Intercept)"</span>]])</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(re[[<span class="st">"week0"</span>]],       <span class="at">main =</span> <span class="st">"Random slopes"</span>);     <span class="fu">qqline</span>(re[[<span class="st">"week0"</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Lab_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Do you have any concerns based on this plot?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>No, the points mainly fall along the theoretical lines. Indicating that the random slope and intercepts are close to normally distributed.</p>
+</div>
+</div>
+<p>Also, in common with a regression:</p>
+<p><strong>Not an assumption:</strong></p>
+<p>The outcome variable itself doesn’t have to be normal. Only the residuals and random effects do.</p>
+<p><strong>A Practical Note:</strong> These checks are judgement calls, not tests. Formal normality tests are overly sensitive with 802 observations. Students should be asking “is this a serious departure?” rather than “is <em>p</em> &lt; .05?”.</p>
+<p>Mixed models are fairly robust to mild non-normality. Standard errors for the fixed effects are more affected by clear heteroscedasticity or serious misspecification (a wrong trend, for example) than by slightly heavy tails.</p>
+</section>
+<section id="section-f.-apa-write-up" class="level2">
+<h2 class="anchored" data-anchor-id="section-f.-apa-write-up">SECTION F. APA WRITE UP</h2>
+<p>Below is a full APA write-up off the study and the methods (including how the final model was selected). It is quite long so it is more as a reference for you than an activity to do in the lab:</p>
+<p>Wellbeing was analysed with linear mixed-effects models fitted in R ([R version]) using the lme4 package (Bates et al., 2015). p-values used Satterthwaite’s approximation for degrees of freedom, via lmerTest (Kuznetsova et al., 2017). All models included condition (Control, Sleep hygiene, Mindfulness; treatment-coded with Control as the reference), time, and their interaction as fixed effects. Time was entered as week − 1, so that zero represents the first week and the intercept is the expected wellbeing in the Control group at the start of the study.</p>
+<p>The sample comprised 120 students (40 per condition) with 802 of a possible 960 observations (83.5%). Eighty-nine students completed all eight weeks, and 17 provided fewer than three observations. Because mixed models use all available observations from every student, no students or observations were excluded.</p>
+<p>Random-effects structure was selected by comparing three models that shared the same fixed effects: (a) random intercepts for student, (b) random slopes for time by student, and (c) both, with the intercept–slope correlation estimated. Models were compared using likelihood ratio tests (for nested models) and AIC and BIC (for all comparisons), with models refitted using maximum likelihood. The chosen model was then refitted using restricted maximum likelihood (REML) for estimation and inference. Including a random slope was also supported by the design, since the repeated measurements were taken over time and the hypotheses concern change over time (Barr et al., 2013).</p>
+<p>Results Model selection</p>
+<p>Table 1 Comparison of random-effects structures (fixed effects identical across models)</p>
+<div id="tbl-model-comparison" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-model-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Comparison of random-effects structures (fixed effects identical across models)
+</figcaption>
+<div aria-describedby="tbl-model-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Random effects</th>
+<th style="text-align: right;">Parameters</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+<th style="text-align: right;">−2 log-likelihood</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Slopes only</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5132.3</td>
+<td style="text-align: right;">5169.8</td>
+<td style="text-align: right;">5116.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Intercepts only</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4625.7</td>
+<td style="text-align: right;">4663.2</td>
+<td style="text-align: right;">4609.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Intercepts and slopes</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;"><strong>4546.6</strong></td>
+<td style="text-align: right;"><strong>4593.5</strong></td>
+<td style="text-align: right;"><strong>4526.6</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Adding a random slope for time to the random-intercepts model significantly improved fit, χ²(2) = 83.05, p &lt; .001, indicating that students differed in their rate of change in wellbeing. The model with random intercepts and slopes was also superior to the slopes-only model, χ²(2) = 589.73, p &lt; .001. The slopes-only and intercepts-only models are not nested, so they were compared using information criteria alone, and AIC and BIC both strongly favoured random intercepts (AIC = 4625.7 vs.&nbsp;5132.3). The model with both random intercepts and random slopes had the lowest AIC and BIC (Table 1) and was retained for inference. The assumptions of linearity, homoscedasticity and normality of the residuals and random effects were checked visually, and no serious departures were apparent.</p>
+<div id="tbl-fixed-effects" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fixed-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Fixed effects from the final linear mixed model
+</figcaption>
+<div aria-describedby="tbl-fixed-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;"><em>b</em></th>
+<th style="text-align: right;"><em>SE</em></th>
+<th style="text-align: right;">95% CI</th>
+<th style="text-align: right;"><em>df</em></th>
+<th style="text-align: right;"><em>t</em></th>
+<th style="text-align: right;"><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Intercept (Control, week 1)</td>
+<td style="text-align: right;">45.32</td>
+<td style="text-align: right;">1.18</td>
+<td style="text-align: right;">[43.01, 47.63]</td>
+<td style="text-align: right;">115.5</td>
+<td style="text-align: right;">38.41</td>
+<td style="text-align: right;">&lt; .001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Week (Control slope)</td>
+<td style="text-align: right;">−0.29</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">[−0.60, 0.02]</td>
+<td style="text-align: right;">102.0</td>
+<td style="text-align: right;">−1.84</td>
+<td style="text-align: right;">.069</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sleep hygiene (baseline difference)</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">1.67</td>
+<td style="text-align: right;">[−2.56, 3.99]</td>
+<td style="text-align: right;">115.6</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">.669</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mindfulness (baseline difference)</td>
+<td style="text-align: right;">1.29</td>
+<td style="text-align: right;">1.67</td>
+<td style="text-align: right;">[−1.98, 4.56]</td>
+<td style="text-align: right;">115.3</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">.442</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Week × Sleep hygiene</td>
+<td style="text-align: right;">1.48</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">[1.05, 1.91]</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">6.74</td>
+<td style="text-align: right;">&lt; .001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Week × Mindfulness</td>
+<td style="text-align: right;">0.96</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">[0.55, 1.38]</td>
+<td style="text-align: right;">97.3</td>
+<td style="text-align: right;">4.52</td>
+<td style="text-align: right;">&lt; .001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Note. Confidence intervals are Wald intervals. Reference group = Control.</p>
+<p>At the start of the study the three conditions did not differ significantly in wellbeing (Sleep hygiene: b = 0.72, 95% CI [−2.56, 3.99], p = .669; Mindfulness: b = 1.29, 95% CI [−1.98, 4.55], p = .442). In the Control condition, wellbeing did not change reliably over time (b = −0.29 points per week, 95% CI [−0.60, 0.02], p = .069).</p>
+<p>The rate of change differed between conditions. Relative to Control, the weekly change in wellbeing was 1.48 points greater in the Sleep hygiene condition (95% CI [1.05, 1.91], p &lt; .001) and 0.96 points greater in the Mindfulness condition (95% CI [0.55, 1.38], p &lt; .001). The estimated weekly slopes were therefore 1.19 points per week for Sleep hygiene (95% CI [0.89, 1.50]) and 0.67 points per week for Mindfulness (95% CI [0.39, 0.96]), corresponding to predicted gains of approximately 8.3 and 4.7 points respectively between the first and last weeks, compared with a predicted change of −2.0 points in the Control condition.</p>
+<p>Random effects</p>
+<p>Students varied substantially in their starting level (variance = 51.62, SD = 7.18) and in their rate of change (variance = 0.54, SD = 0.74 points per week). The correlation between the random intercepts and random slopes was negative (r = −.44), indicating that students who started with lower wellbeing tended to improve more. Residual variance was 8.57 (SD = 2.93).</p>
 
 
 </section>
