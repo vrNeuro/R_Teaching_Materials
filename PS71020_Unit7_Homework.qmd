@@ -1,0 +1,79 @@
+---
+title: "PS71020_Unit7_Homework"
+subtitle: "Linear Mixed Effects Models 2"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+    css: worksheet.css 
+---
+
+**TODO**
+### Learning Outcomes: \ 
+
+1 - Use RStudio to create a null model \ 
+
+2 - Use RStudio to calculate the ICC  \ 
+
+3 - Use RStudio to perform different mixed effects models \ 
+
+4 - Compare these results to those of a standard linear regression \ 
+
+
+**TODO**
+### Materials Used:
+
+We will use the packages **tidyr** and **lmerTest** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
+
+
+## CREATE A NEW PROJECT
+
+Just as we did in previous weeks we are going to start by creating a new project for this week's lab. Download the data from the VLE (In the Week 6 Homework Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: [Github Link](https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/fearful_faces_trials.csv).
+
+If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.
+
+Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.
+
+Now let's load the packages that we will need for this analysis.
+```{r}
+library(tidyr)
+library(lmerTest)
+```
+
+
+## SECTION A. THE DATASET
+
+The data set we will use this week is a modified version of the one we used in the Week 4 Lab. The full explanation can be found there ([Lab 4. Section A](PS71020_Unit4_Lab.qmd#sec-fearfulface-data)) but here is a brief summary:
+
+The face RT dataset was collected as a test of the role of trait anxiety in healthy participants (measured by the Spielberger Trait Anxiety Scale; variable name in dataset = `traitanx`) on the ability to identify the emotional expression on faces.
+
+In the original data set we had only the mean for the response to fearful and happy faces for each participant as well as a few covariates:
+
+Attentional Control Scale (`ACS`) \ 
+
+Spielberger Trait Anxiety Scale (`traitanx`) \ 
+
+Age (`Age`) \ 
+
+Gender (`Gender`; 1 = male, 2 = female) \ 
+
+Handedness (`Handedness`; 1 = Right, 2 =Left) \ 
+
+However, in the new data set we have the data for every single trial (240 per participant). The trial-level data were simulated so that each participant’s means match the original dataset.
+
+```{r}
+#| echo: false
+df <- read.csv("data/fearful_faces_trials.csv")
+```
+
+```{r}
+#| eval: false
+df <- read.csv("fearful_faces_trials.csv")
+```
+
+Examine the first few rows of the data set:
+```{r}
+head(df)
+```

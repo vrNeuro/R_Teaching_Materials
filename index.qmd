@@ -36,6 +36,7 @@ Welcome to the presessional materials.
 | 4 | Regression 1 | [Week 4 worksheet](PS71020_Unit4_Lab.qmd) |  [Week 4 homework](PS71020_Unit4_Homework.qmd)  |
 | 5 | Regression 2 | [Week 5 worksheet](PS71020_Unit5_Lab.qmd) |  [Week 5 homework](PS71020_Unit5_Homework.qmd)  |
 | 6 | Mixed-Effects Models 1 | [Week 6 worksheet](PS71020_Unit6_Lab.qmd) | [Week 6 homework](PS71020_Unit6_Homework.qmd)  |
+| 7 | Mixed-Effects Models 2 | [Week 7 worksheet](PS71020_Unit7_Lab.qmd) | [Week 7 homework](PS71020_Unit7_Homework.qmd)  |
 
 *More worksheets will be added here as the term progresses.*
 
