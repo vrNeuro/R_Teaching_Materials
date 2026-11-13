@@ -11,31 +11,23 @@ format:
 ---
 
 ### Learning Outcomes:  
-**TODO**
 
-Fitting models with random slopes and intercepts
+1 - Use RStudio to fit models with random slopes and intercepts
+ \ 
 
-Comparing models
+2 - Understand how to compare model fits \ 
 
-Looking at shrinkage
+3 - Understand the concept of shrinkage \ 
 
-APA writeup of mixed effects models
+4 - Understand how to check the assumptions of mixed effects models \ 
 
-Assumptions of mixed effects models
-
-1 - Use RStudio to examine a mixed effects data set \ 
-
-2 - Understand different approaches to analysing this type of data \ 
-
-3 - Carry out regression with a mixed-effects model \ 
-
-4 - Understand how to interpret the output from a mixed-effects model \ 
+5 - See an APA write up of mixed effects models \ 
 
 
-**TODO**
+
 ### Materials Used:
 
-We will use the packages **tidyr**, **ggplot2**, **lme4**, **lmerTest**, & **rstatix** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
+We will use the packages **ggplot2**, **lme4**, **lmerTest**, & **knitr** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
 
 ::: {.callout-note appearance="simple"}
 ## Some general notes about the weekly labs
@@ -68,12 +60,10 @@ Also create a new script in this folder so you can copy the lines of code needed
 
 
 ```{r}
-#library(tidyr)
 library(ggplot2)
 library(lme4)
 library(lmerTest)
 library(knitr)
-#library(rstatix)
 ```
 
 :::
@@ -83,7 +73,7 @@ As you will have seen from the answer scripts from previous homeworks and labs i
 
 ## SECTION A. THE DATASET
 
-The dataset is a the same as used in the Week 6 Lab (It is a more advanced version of the one that was discussed in the Week 1 Lecture when we discussed ways of plotting data).
+The dataset is the same as used in the Week 6 Lab (It is a more advanced version of the one that was discussed in the Week 1 Lecture when we discussed ways of plotting data).
 
 As a reminder from last week:
 
@@ -100,7 +90,7 @@ Does the condition they are in affect wellbeing scores.
 
 However, as with many real world longitudinal data sets some students have dropped out of the study at different times, so we have missing data.
 
-However, for this week we are going to skip the initial processing steps and load the data in it's mixed model ready format. To create this .csv file I used the code `write.csv(df_long,"sleep_study_mixed_long.csv")` after the processing steps in section end of [Lab 6. Section A](PS71020_Unit6_Lab.qmd#sec-preparing-mmdata).
+However, for this week we are going to skip the initial processing steps and load the data in its mixed model ready format. To create this .csv file I used the code `write.csv(df_long,"sleep_study_mixed_long.csv")` after the processing steps in section A of [Lab 6. Section A](PS71020_Unit6_Lab.qmd#sec-preparing-mmdata).
 
 
 Next we read the data.
@@ -226,7 +216,7 @@ ggplot() +
 
 ```
 
-**What is the are the two key features of the modelling approach used here that are clearly visible from the plot?**
+**What are the the two key features of the modelling approach used here that are clearly visible from the plot?**
 
 ::: {.answer-box}
 <input type="text" class="answer-input" placeholder="Type your answer here...">
@@ -242,7 +232,7 @@ ggplot() +
 :::
 :::
 
-Alternatively using a mixed model approach we can give every student their own intercept and their own slope in the fitting process. However, both the slope estimates and the intercept estimates are normally distributed.
+Alternatively using a mixed model approach we can give every student their own intercept and their own slope in the fitting process. The model assumes that students’ intercepts and slopes each come from a normal distribution, and it estimates the correlation between them.
 
 ```{r}
 m_partial <- lmer(wellbeing ~ week0 * condition + (1 + week0 | id), data = df_long)
@@ -280,7 +270,7 @@ We will look at a slopes only model a bit later.
 There isn't much difference in the estimates themselves:
 
 ```{r}
-terms <- c("week0",
+fe_terms <- c("week0",
            "week0:conditionSleep hygiene",
            "week0:conditionMindfulness",
            "conditionSleep hygiene",
@@ -292,8 +282,8 @@ comparison <- data.frame(
            "week0 × Mindfulness",
            "Sleep hygiene (baseline)",
            "Mindfulness (baseline)"),
-  `Random intercepts`  = fixef(m_intercepts)[terms],
-  `Intercepts + slopes` = fixef(m_partial)[terms],
+  `Random intercepts`  = fixef(m_intercepts)[fe_terms],
+  `Intercepts + slopes` = fixef(m_partial)[fe_terms],
   check.names = FALSE,
   row.names = NULL
 )
@@ -308,8 +298,8 @@ However, if we look at the standard errors on these estimates there are big chan
 ```{r}
 se_comparison <- data.frame(
   Term = comparison$Term,
-  `Random intercepts`  = coef(summary(m_intercepts))[terms, "Std. Error"],
-  `Intercepts + slopes` = coef(summary(m_partial))[terms, "Std. Error"],
+  `Random intercepts`  = coef(summary(m_intercepts))[fe_terms, "Std. Error"],
+  `Intercepts + slopes` = coef(summary(m_partial))[fe_terms, "Std. Error"],
   check.names = FALSE,
   row.names = NULL
 )
@@ -324,7 +314,7 @@ The random-intercept model assumes every student in a group improves at the same
 
 We can also see this in the degrees of freedom for each effect. The `week0` terms have df of about 690 (close to the number of observations) in the random-intercept model and about 100 (close to the number of students) in the random-slopes model. The baseline terms are about 128 against about 116, so they are always at the student level.
 
-The Control group’s slope goes from highly significant (*t* = −3.74, *p* = .0002) to marginal and not-significant (*t* = −1.84, *p* = .069). 
+The Control group’s slope goes from highly significant (*t* = −3.74, *p* = .0002) to not-significant (*t* = −1.84, *p* = .069). 
 
 With only random intercepts, we would have concluded that wellbeing declines in the Control group. With random slopes, the evidence for that is much weaker. The two interactions stay clearly significant (t falls from 11.2 to 6.7 and from 7.7 to 4.5). So the main finding, that both interventions differ from Control in slope, holds, but the p-values are now more honest.
 
@@ -338,7 +328,7 @@ With only random intercepts, we would have concluded that wellbeing declines in 
 
 The residual variance shrinks by about 26%. Differences in slope between students were being treated as noise in the first model. The random-slopes model moves them into their own term, so the residual gets smaller.
 
-The −0.44 correlation says that students who start higher improve less. Starting wellbeing and rate of change are related. It could be a ceiling effect or regression to the mean. It is also something the random-intercept model cannot show.
+The −0.44 correlation says that students  who start higher than others in their condition tend to improve less. Starting wellbeing and rate of change are related. It could reflect a ceiling effect, since students who start high have less room to improve. It is also something the random-intercept model cannot show.
 
 ```{r}
 get_re <- function(m) {
@@ -395,7 +385,7 @@ ggplot() +
 We can also fit a model in which we allow random slopes for participants but not random intercepts. Notice that in the formula the `1` within the brackets has been replaced with a `0` to indicate that we don't want random intercepts.
 
 ```{r}
-m_slopes_only <- lmer(wellbeing ~ condition * week0 + (0 + week0 | id), data = df_long)
+m_slopes_only <- lmer(wellbeing ~  week0*condition + (0 + week0 | id), data = df_long)
 summary(m_slopes_only)
 ```
 However, this is rarely a sensible model. A slopes-only model forces every student to have the same true starting point. Because `week0` is 0 at week 1, all the individual lines fan out from a single point at baseline, with the fixed-effect intercept for each group. In these data that is clearly wrong, because baseline wellbeing differs a lot between students.
@@ -465,7 +455,7 @@ We can also use this to test multiple models against each other:
 anova(m_slopes_only, m_intercepts, m_partial)  
 ```
 
-One thing to notice here is that only the `m_intercepts` vs `m_partial` comparison gets a *p*-value. This is because to carry out a likelihood ratio test the two models being compared have to be nested. This means that one has to be a simpler form of the model compared to the other. In the `m_intercepts` vs `m_slopes_only` case both models have 8 df.
+One thing to notice here is that only the `m_intercepts` vs `m_partial` comparison gets a *p*-value. This is because to carry out a likelihood ratio test the two models being compared have to be nested. This means that one has to be a simpler form of the model compared to the other. In the `m_intercepts` vs `m_slopes_only` case both models have 8 parameters.
 
 We can test the `m_slopes_only` against `m_partial` as these are nested.
 
@@ -482,7 +472,9 @@ AIC(m_slopes_only, m_intercepts, m_partial)
 BIC(m_slopes_only, m_intercepts, m_partial)
 ```
 
-The AIC values (5132.3, 4625.7 and 4546.6) rank the models clearly: intercepts and slopes is best, then intercepts only, and slopes only is far worse.
+The AIC values (5133.8, 4628.4 and 4546.7) rank the models clearly: intercepts and slopes is best, then intercepts only, and slopes only is far worse.
+
+These values differ slightly from the anova() table because AIC() uses the REML fits, whereas anova() refits with ML. Either is fine as long as you compare models in the same way.
 
 ## SECTION D. SHRINKAGE
 
@@ -507,9 +499,9 @@ Suppose we want to know how one student's wellbeing changes over the weeks. Ther
 
 
 ```{r}
-#This code reproduces some of these modesl that we looked at last week.
+#This code reproduces some of these models that we looked at last week.
 # Ignores which student each row belongs to. Everyone in a condition gets the same line.
-m_complete <- lm(wellbeing ~ week0 * condition, data = df_long)
+
 
 fit_one_student <- function(d) {
   if (nrow(d) < 3) {
@@ -527,7 +519,6 @@ person_fits$condition <- df_long$condition[match(person_fits$id, df_long$id)]
 
 ```
 
-
 ```{r}
 students <- unique(df_long[, c("id", "condition")])
 
@@ -537,15 +528,19 @@ slope_from <- function(model) {
 }
 
 students$slope_partial    <- slope_from(m_partial)      # random intercepts and slopes
-students$slope_intercepts <- slope_from(m_intercepts)   # random intercepts only: every student gets their group's slope
-students$slope_group      <- slope_from(m_complete)     # complete pooling (ordinary regression)
+students$slope_intercepts <- slope_from(m_intercepts)   # random intercepts only: every student gets their group's slope pooling (ordinary regression)
 students$slope_none       <- person_fits$slope[match(students$id, person_fits$id)]
 students$n_obs            <- person_fits$n_obs[match(students$id, person_fits$id)]
 
 shrink <- students[!is.na(students$slope_none), ]       # students we could fit separately
 
-set.seed(10)                                            # keeps the jitter the same every time
-shrink$x_jit <- shrink$n_obs + runif(nrow(shrink), -0.25, 0.25)
+#keep jitter same each time
+set.seed(10)     
+
+cond_shapes <- c("Control" = 16, "Sleep hygiene" = 17, "Mindfulness" = 15)   # circle, triangle, square
+
+              
+shrink$x_jit <- shrink$n_obs + runif(nrow(shrink), -0.35, 0.35)
 
 shrink_cols <- c("No pooling (separate regressions)" = "#D55E00",
                  "Random intercepts only"            = "#CC79A7",
@@ -553,28 +548,31 @@ shrink_cols <- c("No pooling (separate regressions)" = "#D55E00",
 
 ggplot(shrink, aes(x = x_jit)) +
   geom_segment(aes(xend = x_jit, y = slope_none, yend = slope_partial), colour = "grey60", alpha = 0.6) +
-  geom_point(aes(y = slope_none,        colour = "No pooling (separate regressions)"), size = 2, alpha = 0.8) +
-  geom_point(aes(y = slope_intercepts,  colour = "Random intercepts only"),            size = 2, alpha = 0.8) +
-  geom_point(aes(y = slope_partial,     colour = "Random intercepts and slopes"),      size = 2, alpha = 0.8) +
+  geom_point(aes(y = slope_none,       colour = "No pooling (separate regressions)", shape = condition), size = 2, alpha = 0.8) +
+  geom_point(aes(y = slope_intercepts, colour = "Random intercepts only",           shape = condition), size = 2, alpha = 0.8) +
+  geom_point(aes(y = slope_partial,    colour = "Random intercepts and slopes",     shape = condition), size = 2, alpha = 0.8) +
   scale_colour_manual(values = shrink_cols, breaks = names(shrink_cols)) +
+  scale_shape_manual(values = cond_shapes) +
   scale_x_continuous(breaks = 3:8) +
   labs(title = "Shrinkage towards the group line",
        subtitle = "The fewer weeks of data a student has, the bigger the pull",
        x = "Number of weeks of data for the student",
-       y = "Estimated change in wellbeing per week", colour = NULL) +
+       y = "Estimated change in wellbeing per week", colour = NULL, shape = NULL) +
   theme(legend.position = "bottom", legend.direction = "vertical")
-
-
-
 ```
+
+
+
 
 ### How to read this plot
 
 - Each vertical grey line is one student. The x-axis is how many weeks of data they have.
 - The y-axis is that student's estimated change in wellbeing per week.
-- The **orange** point is the slope from that student's own separate regression (no pooling).
-- The **green** point is the slope from the random intercepts and slopes model.
-- The **pink** points are from the random-intercepts-only model.
+- The **shape** shows the student's condition: circles are Control, triangles are Sleep hygiene and squares are Mindfulness.
+- The **colour** shows how the slope was estimated:
+  - **Orange** point is the slope from that student's own separate regression (no pooling).
+  - **Green** point is the slope from the random intercepts and slopes model.
+  - **Pink** points are from the random-intercepts-only model.
 - The grey line joins orange to green, so **its length shows how much the student was shrunk**.
 
 
@@ -589,7 +587,7 @@ ggplot(shrink, aes(x = x_jit)) +
 
 The green points sit closer together than the orange points: they have been pulled towards their group's slope. The grey lines are longest on the left (students with 3 or 4 weeks), where the separate regressions are least reliable, and shortest on the right (students with 8 weeks).
 
-The pink points sit on three flat bands, one per condition. With random intercepts only, every student in a condition has the same slope, so the slopes are completely pooled. The green points lie between the orange points (no pooling) and the pink bands (complete pooling of slopes).
+The pink points sit on three flat bands, one per condition (circles for Control, triangles for Sleep hygiene, squares for Mindfulness). With random intercepts only, every student in a condition has the same slope, so the slopes are completely pooled. The green points lie between the orange points (no pooling) and the pink bands (complete pooling of slopes).
 
 :::
 :::
@@ -601,7 +599,7 @@ Students with fewer than 3 observations could not be fitted separately, but the 
 
 ```{r}
 # Students with only 1 or 2 observations could not be fitted separately at all,
-# but the mixed models still give them a sensible line (mostly their group's line):
+# but the mixed models still give them a sensible line (close to their group’s line, adjusted for their first score):
 
 first <- df_long[df_long$week0 == 0, ]
 students$first_score <- first$wellbeing[match(students$id, first$id)]
@@ -643,7 +641,7 @@ In this case:
 
 The model assumes wellbeing changes in a straight line over weeks within each condition (and each student). If the real pattern curves, the straight line is misspecified.
 
-Check: plot residuals against fitted values and against week, and look for a curve.
+Check: plot residuals against fitted values and against week, and look for a curve. With boxplots of residuals per week the median should sit near 0 for each week.
 
 
 2. Independence
@@ -706,7 +704,7 @@ qqnorm(resid(m_partial)); qqline(resid(m_partial))
 
 ::: {.answer}
 
-No, the points mainly fall along the theoretical line. Indicating that the residuals are close to normally distributed.
+No, the points mainly fall along the theoretical line. Indicating that the residuals are close to normally distributed. We do see some slight deviations at the top tail with a slight upwards bend but this is mild and a small departure, not a serious one.
 
 :::
 :::
@@ -748,14 +746,16 @@ Also, in common with a regression:
 The outcome variable itself doesn’t have to be normal. Only the residuals and random effects do.
 
 **A Practical Note:**
-These checks are judgement calls, not tests. Formal normality tests are overly sensitive with 802 observations. Students should be asking “is this a serious departure?” rather than “is *p* < .05?”.
+These checks are judgement calls, not tests. Formal normality tests are overly sensitive with 802 observations. You should be asking “is this a serious departure?” rather than “is *p* < .05?”.
 
 Mixed models are fairly robust to mild non-normality. Standard errors for the fixed effects are more affected by clear heteroscedasticity or serious misspecification (a wrong trend, for example) than by slightly heavy tails.
+
+6. Missing Data - as discussed in the Week 6 Lab, this should be either MCAR or MAR given the model.
 
 
 ## SECTION F. APA WRITE UP
 
-Below is a full APA write-up off the study and the methods (including how the final model was selected). It is quite long so it is more as a reference for you than an activity to do in the lab:
+Below is a full APA write-up of the study and the methods (including how the final model was selected). It is quite long so it is more as a reference for you than an activity to do in the lab:
 
 Wellbeing was analysed with linear mixed-effects models fitted in R ([R version]) using the lme4 package (Bates et al., 2015). p-values used Satterthwaite’s approximation for degrees of freedom, via lmerTest (Kuznetsova et al., 2017). All models included condition (Control, Sleep hygiene, Mindfulness; treatment-coded with Control as the reference), time, and their interaction as fixed effects. Time was entered as week − 1, so that zero represents the first week and the intercept is the expected wellbeing in the Control group at the start of the study.
 
@@ -777,7 +777,7 @@ Comparison of random-effects structures (fixed effects identical across models)
 
 : Comparison of random-effects structures (fixed effects identical across models) {#tbl-model-comparison}
 
-Adding a random slope for time to the random-intercepts model significantly improved fit, χ²(2) = 83.05, p < .001, indicating that students differed in their rate of change in wellbeing. The model with random intercepts and slopes was also superior to the slopes-only model, χ²(2) = 589.73, p < .001. The slopes-only and intercepts-only models are not nested, so they were compared using information criteria alone, and AIC and BIC both strongly favoured random intercepts (AIC = 4625.7 vs. 5132.3). The model with both random intercepts and random slopes had the lowest AIC and BIC (Table 1) and was retained for inference. The assumptions of linearity, homoscedasticity and normality of the residuals and random effects were checked visually, and no serious departures were apparent.
+Adding a random slope for time to the random-intercepts model significantly improved fit, χ²(2) = 83.05, *p* < .001, indicating that students differed in their rate of change in wellbeing. The model with random intercepts and slopes was also superior to the slopes-only model, χ²(2) = 589.73, *p* < .001. The slopes-only and intercepts-only models are not nested, so they were compared using information criteria alone, and AIC and BIC both strongly favoured random intercepts (AIC = 4625.7 vs. 5132.3). The model with both random intercepts and random slopes had the lowest AIC and BIC (Table 1) and was retained for inference. The assumptions of linearity, homoscedasticity and normality of the residuals and random effects were checked visually, and no serious departures were apparent.
 
 
 | Term | *b* | *SE* | 95% CI | *df* | *t* | *p* |
@@ -795,10 +795,10 @@ Adding a random slope for time to the random-intercepts model significantly impr
 Note. Confidence intervals are Wald intervals. Reference group = Control.
 
 
-At the start of the study the three conditions did not differ significantly in wellbeing (Sleep hygiene: b = 0.72, 95% CI [−2.56, 3.99], p = .669; Mindfulness: b = 1.29, 95% CI [−1.98, 4.55], p = .442). In the Control condition, wellbeing did not change reliably over time (b = −0.29 points per week, 95% CI [−0.60, 0.02], p = .069).
+At the start of the study the three conditions did not differ significantly in wellbeing (Sleep hygiene: *b* = 0.72, 95% CI [−2.56, 3.99], p = .669; Mindfulness: b = 1.29, 95% CI [−1.98, 4.56], *p* = .442). In the Control condition, wellbeing did not change reliably over time (*b* = −0.29 points per week, 95% CI [−0.60, 0.02], *p* = .069).
 
-The rate of change differed between conditions. Relative to Control, the weekly change in wellbeing was 1.48 points greater in the Sleep hygiene condition (95% CI [1.05, 1.91], p < .001) and 0.96 points greater in the Mindfulness condition (95% CI [0.55, 1.38], p < .001). The estimated weekly slopes were therefore 1.19 points per week for Sleep hygiene (95% CI [0.89, 1.50]) and 0.67 points per week for Mindfulness (95% CI [0.39, 0.96]), corresponding to predicted gains of approximately 8.3 and 4.7 points respectively between the first and last weeks, compared with a predicted change of −2.0 points in the Control condition.
+The rate of change differed between conditions. Relative to Control, the weekly change in wellbeing was 1.48 points greater in the Sleep hygiene condition (95% CI [1.05, 1.91], *p* < .001) and 0.96 points greater in the Mindfulness condition (95% CI [0.55, 1.38], *p* < .001). The estimated weekly slopes were therefore 1.19 points per week for Sleep hygiene (95% CI [0.89, 1.50]) and 0.67 points per week for Mindfulness (95% CI [0.39, 0.96]), corresponding to predicted gains of approximately 8.3 and 4.7 points respectively between the first and last weeks, compared with a predicted change of −2.0 points in the Control condition.
 
 Random effects
 
-Students varied substantially in their starting level (variance = 51.62, SD = 7.18) and in their rate of change (variance = 0.54, SD = 0.74 points per week). The correlation between the random intercepts and random slopes was negative (r = −.44), indicating that students who started with lower wellbeing tended to improve more. Residual variance was 8.57 (SD = 2.93).
+Students varied substantially in their starting level (variance = 51.62, SD = 7.18) and in their rate of change (variance = 0.54, SD = 0.74 points per week). The correlation between the random intercepts and random slopes was negative (*r* = −.44), indicating that students who started with lower wellbeing tended to improve more. Residual variance was 8.57 (SD = 2.93).
