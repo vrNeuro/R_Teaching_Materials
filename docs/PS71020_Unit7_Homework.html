@@ -157,6 +157,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link active" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
   <li><a href="#section-a.-the-dataset" id="toc-section-a.-the-dataset" class="nav-link" data-scroll-target="#section-a.-the-dataset">SECTION A. THE DATASET</a></li>
+  <li><a href="#section-b.-visualising-the-data" id="toc-section-b.-visualising-the-data" class="nav-link" data-scroll-target="#section-b.-visualising-the-data">SECTION B. VISUALISING THE DATA</a></li>
+  <li><a href="#section-c.-mixed-effects-models" id="toc-section-c.-mixed-effects-models" class="nav-link" data-scroll-target="#section-c.-mixed-effects-models">SECTION C. MIXED-EFFECTS MODELS</a></li>
+  <li><a href="#section-d.-additional-predictors" id="toc-section-d.-additional-predictors" class="nav-link" data-scroll-target="#section-d.-additional-predictors">SECTION D. ADDITIONAL PREDICTORS</a></li>
+  <li><a href="#section-e.-assumption-checks" id="toc-section-e.-assumption-checks" class="nav-link" data-scroll-target="#section-e.-assumption-checks">SECTION E. ASSUMPTION CHECKS</a></li>
+  <li><a href="#section-f.-full-apa-write-up" id="toc-section-f.-full-apa-write-up" class="nav-link" data-scroll-target="#section-f.-full-apa-write-up">SECTION F. FULL APA WRITE-UP</a></li>
   </ul>
 </nav>
     </div>
@@ -183,13 +188,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><strong>TODO</strong> ### Learning Outcomes: &nbsp;</p>
-<p>1 - Use RStudio to create a null model &nbsp;</p>
-<p>2 - Use RStudio to calculate the ICC &nbsp;</p>
-<p>3 - Use RStudio to perform different mixed effects models &nbsp;</p>
-<p>4 - Compare these results to those of a standard linear regression &nbsp;</p>
-<p><strong>TODO</strong> ### Materials Used:</p>
-<p>We will use the packages <strong>tidyr</strong> and <strong>lmerTest</strong> these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them.</p>
+<section id="learning-outcomes" class="level3">
+<h3 class="anchored" data-anchor-id="learning-outcomes">Learning Outcomes: &nbsp;</h3>
+<p>Perform a complete mixed effects model analysis</p>
+<p>Write-up</p>
+<p>1 - Perform a complete mixed effects model analysis &nbsp;</p>
+<p>2 - Perform and interpret assumption checks &nbsp;</p>
+<p>3 - See a full APA write-up of a mixed effects analysis study &nbsp;</p>
+</section>
+<section id="materials-used" class="level3">
+<h3 class="anchored" data-anchor-id="materials-used">Materials Used:</h3>
+<p>We will use the packages <strong>ggplot2</strong>, <strong>lme4</strong>, <strong>lmerTest</strong> and <strong>knitr</strong>, these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them.</p>
+</section>
 <section id="create-a-new-project" class="level2">
 <h2 class="anchored" data-anchor-id="create-a-new-project">CREATE A NEW PROJECT</h2>
 <p>Just as we did in previous weeks we are going to start by creating a new project for this week’s lab. Download the data from the VLE (In the Week 6 Homework Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: <a href="https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/fearful_faces_trials.csv">Github Link</a>.</p>
@@ -197,23 +207,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.</p>
 <p>Now let’s load the packages that we will need for this analysis.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: lme4</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: Matrix</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'Matrix'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:tidyr':
-
-    expand, pack, unpack</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)      <span class="co"># load after lme4: adds Satterthwaite df and p-values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'lmerTest'</code></pre>
@@ -228,11 +227,13 @@ Attaching package: 'lmerTest'</code></pre>
 
     step</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="section-a.-the-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="section-a.-the-dataset">SECTION A. THE DATASET</h2>
-<p>The data set we will use this week is a modified version of the one we used in the Week 4 Lab. The full explanation can be found there (<a href="./PS71020_Unit4_Lab.html#sec-fearfulface-data">Lab 4. Section A</a>) but here is a brief summary:</p>
+<p>The data set we will use this week is a modified version of the one we used in the Week 4 Lab and the same as used in the Week 6 Homework (<a href="./PS71020_Unit6_Homework.html#sec-fearfulface-trialdata">Lab 6. Section A</a>).</p>
+<p>The full explanation can be found there (<a href="./PS71020_Unit4_Lab.html#sec-fearfulface-data">Lab 4. Section A</a>) but here is a brief summary:</p>
 <p>The face RT dataset was collected as a test of the role of trait anxiety in healthy participants (measured by the Spielberger Trait Anxiety Scale; variable name in dataset = <code>traitanx</code>) on the ability to identify the emotional expression on faces.</p>
 <p>In the original data set we had only the mean for the response to fearful and happy faces for each participant as well as a few covariates:</p>
 <p>Attentional Control Scale (<code>ACS</code>) &nbsp;</p>
@@ -241,12 +242,18 @@ Attaching package: 'lmerTest'</code></pre>
 <p>Gender (<code>Gender</code>; 1 = male, 2 = female) &nbsp;</p>
 <p>Handedness (<code>Handedness</code>; 1 = Right, 2 =Left) &nbsp;</p>
 <p>However, in the new data set we have the data for every single trial (240 per participant). The trial-level data were simulated so that each participant’s means match the original dataset.</p>
+<p>So in this version of the data set we have some additional variables that describe each trial: &nbsp;</p>
+<p><code>subno</code> - The subject number of the participant (15-93) &nbsp;</p>
+<p><code>trialnum</code> - The number of this particular trial (1-240) &nbsp;</p>
+<p><code>emotion</code> - The emotion of the face displayed on that trial (Happy or Fearful) &nbsp;</p>
+<p><code>face_id</code> - The ID of the particular face shown, each participant saw each face with both a Happy and Fearful emotion &nbsp;</p>
+<p><code>RT</code> - the reaction time in seconds on that particular trial</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"fearful_faces_trials.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"fearful_faces_trials.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Examine the first few rows of the data set:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  subno trialnum emotion face_id        RT Age Gender Handedness ACS traitanx
 1    15        1   Happy      13 0.4468802  21      2          1  42       66
@@ -257,8 +264,1295 @@ Attaching package: 'lmerTest'</code></pre>
 6    15        6   Happy      44 0.4691811  21      2          1  42       66</code></pre>
 </div>
 </div>
+<p>The first thing we need to do is set up our categorical variables (<code>subno</code>,<code>emotion</code>,<code>face_id</code>) as factors. We want to use the <code>Fearful</code> type as the reference level for <code>emotion</code>.</p>
+<p><strong>What is the code to do this?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>emotion <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>emotion, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Fearful"</span>, <span class="st">"Happy"</span>))   <span class="co"># Fearful = reference level</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>subno   <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>subno)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>face_id <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>face_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To check the reference level of a factor we can use <code>levels(df$emotion)</code> and the reference level is whichever is returned first.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(df<span class="sc">$</span>emotion)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Fearful" "Happy"  </code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>If we check the summary of the data set we can see we have some participants with missing data in <code>traitanx</code> and <code>ACS</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     subno          trialnum         emotion        face_id     
+ 15     :  240   Min.   :  1.00   Fearful:9000   1      :  300  
+ 16     :  240   1st Qu.: 60.75   Happy  :9000   2      :  300  
+ 17     :  240   Median :120.50                  3      :  300  
+ 19     :  240   Mean   :120.50                  4      :  300  
+ 20     :  240   3rd Qu.:180.25                  5      :  300  
+ 21     :  240   Max.   :240.00                  6      :  300  
+ (Other):16560                                   (Other):16200  
+       RT              Age            Gender        Handedness  
+ Min.   :0.1903   Min.   :18.00   Min.   :1.000   Min.   :1.00  
+ 1st Qu.:0.4168   1st Qu.:19.00   1st Qu.:2.000   1st Qu.:1.00  
+ Median :0.4793   Median :21.00   Median :2.000   Median :1.00  
+ Mean   :0.4902   Mean   :23.03   Mean   :1.813   Mean   :1.11  
+ 3rd Qu.:0.5537   3rd Qu.:25.00   3rd Qu.:2.000   3rd Qu.:1.00  
+ Max.   :1.1347   Max.   :57.00   Max.   :2.000   Max.   :2.00  
+                                                  NAs    :480   
+      ACS           traitanx    
+ Min.   :33.00   Min.   :20.00  
+ 1st Qu.:44.00   1st Qu.:34.00  
+ Median :50.00   Median :41.00  
+ Mean   :49.93   Mean   :41.95  
+ 3rd Qu.:55.00   3rd Qu.:47.00  
+ Max.   :66.00   Max.   :70.00  
+ NAs    :480     NAs    :240    </code></pre>
+</div>
+</div>
+<p>Because this data is in long format the NAs are for the number of trials instead of participants.</p>
+<p>We can use the <code>unique()</code> function to create a dataframe with one row per participant which makes it clearer in terms of number of participants.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">unique</span>(df[, <span class="fu">c</span>(<span class="st">"subno"</span>, <span class="st">"traitanx"</span>, <span class="st">"ACS"</span>, <span class="st">"Age"</span>)])        <span class="co"># one row per participant</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     subno       traitanx          ACS             Age       
+ 15     : 1   Min.   :20.00   Min.   :33.00   Min.   :18.00  
+ 16     : 1   1st Qu.:34.50   1st Qu.:44.00   1st Qu.:19.00  
+ 17     : 1   Median :41.00   Median :50.00   Median :21.00  
+ 19     : 1   Mean   :41.95   Mean   :49.93   Mean   :23.03  
+ 20     : 1   3rd Qu.:47.00   3rd Qu.:55.00   3rd Qu.:25.00  
+ 21     : 1   Max.   :70.00   Max.   :66.00   Max.   :57.00  
+ (Other):69   NAs    :1       NAs    :2                      </code></pre>
+</div>
+</div>
+<p>Mixed-effects models can handle participants having different numbers of observations, but they cannot use rows where a predictor is missing. Models containing these predictors drop those participants automatically, so models fitted to different data cannot be compared with likelihood ratio tests or AIC. To keep every comparison fair, we use the SAME participants for every model: those with complete data on the predictors.</p>
+<p>Previously we have used <code>subset()</code> and we will do so again, however, this time we will also use a function called <code>droplevels()</code>. Using <code>subset()</code> only leaves the three excluded participants as empty levels of <code>subno</code>, which can cause problems in later steps.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">subset</span>(df, <span class="sc">!</span><span class="fu">is.na</span>(traitanx) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(ACS)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The next thing we are going to do is to centre the data by subtracting the mean. The reason we want to centre is our model contains an interaction, <code>emotion * traitanx</code>. With an interaction, the coefficient for emotion is no longer “the effect of emotion”. It is the effect of emotion when trait anxiety is 0. The intercept has a similar meaning: it is the predicted RT for a fearful face when trait anxiety, attentional control and age are all 0. Nobody in our sample has a trait anxiety of 0 (the lowest score is 20), or an attentional control or age of 0, so these coefficients would describe people who don’t exist. They can even look misleading.</p>
+<p>Centring means subtracting the sample mean from each predictor, so that 0 now means “average”. Then: &nbsp;</p>
+<p>the intercept is the predicted RT for a fearful face for a participant with average trait anxiety, attentional control and age; &nbsp;</p>
+<p>the emotion coefficient is the happy–fearful difference for an average participant, which is what we actually want to know; &nbsp;</p>
+<p>the traitanx coefficient is its slope for fearful faces.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>traitanx_c <span class="ot">&lt;-</span> dat<span class="sc">$</span>traitanx <span class="sc">-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>traitanx)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>ACS_c      <span class="ot">&lt;-</span> dat<span class="sc">$</span>ACS      <span class="sc">-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>ACS)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>Age_c      <span class="ot">&lt;-</span> dat<span class="sc">$</span>Age      <span class="sc">-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>One thing to note is that this approach works because we have an equal number of trials for each participant. Therefore, the mean over rows equals the mean over participants. However, if we did have unequal numbers of trials per participant, the row mean would weight people with more trials more heavily. So we would want to calculate mean per participant.</p>
+<p>One final thing we are going to do is to change the units of our <code>RT</code> variable from seconds to milliseconds (ms), this will make it easier to see some of the effects on variance that would otherwise be very small numbers.</p>
+<p><strong>What is the code to do this and to create a new column in <code>dat</code> called <code>RT_ms</code>?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>RT_ms   <span class="ot">&lt;-</span> dat<span class="sc">$</span>RT <span class="sc">*</span> <span class="dv">1000</span>    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</section>
+<section id="section-b.-visualising-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="section-b.-visualising-the-data">SECTION B. VISUALISING THE DATA</h2>
+<p>Let’s first examine the distribution of our RT data but split by trial, below is the ggplot2 version of this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x =</span> RT_ms)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">60</span>, <span class="at">fill =</span> <span class="st">"grey70"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> emotion) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Reaction time (ms)"</span>, <span class="at">y =</span> <span class="st">"Number of trials"</span>, <span class="at">title =</span> <span class="st">"Trial-level reaction times"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Homework_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>But we could have used the base R <code>hist()</code> function like this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))   <span class="co"># two plots side by side</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dat<span class="sc">$</span>RT_ms[dat<span class="sc">$</span>emotion <span class="sc">==</span> <span class="st">"Fearful"</span>], <span class="at">breaks =</span> <span class="dv">60</span>, <span class="at">xlim =</span> <span class="fu">range</span>(dat<span class="sc">$</span>RT_ms),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Fearful"</span>, <span class="at">xlab =</span> <span class="st">"Reaction time (ms)"</span>, <span class="at">ylab =</span> <span class="st">"Number of trials"</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dat<span class="sc">$</span>RT_ms[dat<span class="sc">$</span>emotion <span class="sc">==</span> <span class="st">"Happy"</span>], <span class="at">breaks =</span> <span class="dv">60</span>, <span class="at">xlim =</span> <span class="fu">range</span>(dat<span class="sc">$</span>RT_ms),</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Happy"</span>, <span class="at">xlab =</span> <span class="st">"Reaction time (ms)"</span>, <span class="at">ylab =</span> <span class="st">"Number of trials"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Homework_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Using either approach we can see that trial-level RTs are right-skewed, as RT data usually are.</p>
+<p><strong>Is this an issue for mixed-effects models? Does it violate any of the assumptions?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Not directly: the assumptions concern the residuals and random effects, not the raw RTs. But skewed RTs often lead to skewed residuals, so we will check later.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descriptives</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(dat<span class="sc">$</span>RT_ms, dat<span class="sc">$</span>emotion, mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Fearful    Happy 
+491.0000 488.6118 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(dat<span class="sc">$</span>RT_ms, dat<span class="sc">$</span>emotion, sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Fearful    Happy 
+103.9485 103.9245 </code></pre>
+</div>
+</div>
+</section>
+<section id="section-c.-mixed-effects-models" class="level2">
+<h2 class="anchored" data-anchor-id="section-c.-mixed-effects-models">SECTION C. MIXED-EFFECTS MODELS</h2>
+<p>The first stage of modelling is to fit a null model that analyses how much variation in RT is between participants.</p>
+<p><strong>What would the formula for this be? Run the model</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 3a. Null model: how much of the variation is between participants? --------</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT_ms <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> subno), <span class="at">data =</span> dat)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m0)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT_ms ~ 1 + (1 | subno)
+   Data: dat
+
+REML criterion at convergence: 203569.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.6194 -0.6674 -0.0740  0.5697  6.4216 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ subno    (Intercept) 3342     57.81   
+ Residual             7507     86.65   
+Number of obs: 17280, groups:  subno, 72
+
+Fixed effects:
+            Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)  489.806      6.845  71.000   71.56   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p><strong>How would we calculate the ICC for this model? Calculate the ICC for both effects and interpret what the two numbers represent.</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>vc0 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(m0))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>vc0<span class="sc">$</span>vcov[<span class="dv">1</span>] <span class="sc">/</span> <span class="fu">sum</span>(vc0<span class="sc">$</span>vcov) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3080577</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>vc0<span class="sc">$</span>vcov[<span class="dv">2</span>] <span class="sc">/</span> <span class="fu">sum</span>(vc0<span class="sc">$</span>vcov) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6919423</code></pre>
+</div>
+</div>
+<p>30.8% of the variance in RT lies between participants and 69.2% is residual (trial-to-trial) variance.</p>
+</div>
+</div>
+<p>As this design is crossed (every participant sees every face), we can also fit a model in which we fit random intercepts for the <code>face_id</code> factor.</p>
+<p><strong>Perform this model and again calculate the ICC, for all three factors. What does the ICC indicate?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 3b. Faces: every participant sees every face, so participants and faces are CROSSED ---</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>m0b <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT_ms <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> subno) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> face_id), <span class="at">data =</span> dat)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m0b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT_ms ~ 1 + (1 | subno) + (1 | face_id)
+   Data: dat
+
+REML criterion at convergence: 202600.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8237 -0.6657 -0.0837  0.5518  6.3078 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ subno    (Intercept) 3344.4   57.83   
+ face_id  (Intercept)  491.1   22.16   
+ Residual             7022.5   83.80   
+Number of obs: 17280, groups:  subno, 72; face_id, 60
+
+Fixed effects:
+            Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)  489.806      7.419  94.163   66.02   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>vc0b <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(m0b))</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>vc0b<span class="sc">$</span>vcov[<span class="dv">1</span>] <span class="sc">/</span> <span class="fu">sum</span>(vc0b<span class="sc">$</span>vcov) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3080118</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>vc0b<span class="sc">$</span>vcov[<span class="dv">2</span>] <span class="sc">/</span> <span class="fu">sum</span>(vc0b<span class="sc">$</span>vcov) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04523247</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>vc0b<span class="sc">$</span>vcov[<span class="dv">3</span>] <span class="sc">/</span> <span class="fu">sum</span>(vc0b<span class="sc">$</span>vcov) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6467558</code></pre>
+</div>
+</div>
+<p>30.8% of the variance in RT lay between participants, 4.5% between faces, and 64.7% was residual (trial-to-trial) variance.</p>
+</div>
+</div>
+<p>Our next model will add <code>emotion</code> as a fixed effect, still with random intercepts for participants (<code>subno</code>) and <code>face_id</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 3c. Add emotion as a fixed effect (random intercepts only) -----------------</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT_ms <span class="sc">~</span> emotion <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> subno) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> face_id), <span class="at">data =</span> dat)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT_ms ~ emotion + (1 | subno) + (1 | face_id)
+   Data: dat
+
+REML criterion at convergence: 202594.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8098 -0.6645 -0.0833  0.5513  6.2940 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ subno    (Intercept) 3344.4   57.83   
+ face_id  (Intercept)  491.1   22.16   
+ Residual             7021.5   83.79   
+Number of obs: 17280, groups:  subno, 72; face_id, 60
+
+Fixed effects:
+              Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept)    491.000      7.446    95.561  65.939   &lt;2e-16 ***
+emotionHappy    -2.388      1.275 17148.000  -1.873   0.0611 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr)
+emotionHppy -0.086</code></pre>
+</div>
+</div>
+<p>Next we are going to fit a series of different models in which we allow different aspects to vary:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 3d. Let the effect of emotion vary -------------------------------------------</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The emotion effect might differ between PARTICIPANTS (some people show a bigger</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fearful-vs-happy difference) and between FACES (some faces are more effective).</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>m2a <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT_ms <span class="sc">~</span> emotion <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> emotion <span class="sc">|</span> subno) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> face_id), <span class="at">data =</span> dat)              <span class="co"># slopes by participant</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>m2b <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT_ms <span class="sc">~</span> emotion <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> emotion <span class="sc">|</span> subno) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> emotion <span class="sc">|</span> face_id), <span class="at">data =</span> dat)    </span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>m2c <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT_ms <span class="sc">~</span> emotion <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> subno) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> emotion <span class="sc">|</span> face_id), <span class="at">data =</span> dat)              </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>For each of the models (<code>m2a</code>,<code>m2b</code>,<code>m2c</code>) what are we fitting random slopes for?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>m2a - slopes by participant m2b - slopes by both m2c - slopes by face</p>
+</div>
+</div>
+<p>One important thing to test for in mixed model fitting is whether the fit is <strong>singular</strong>. A singular fit means a variance is estimated at (almost) zero or a correlation at +/-1. This occurs when the model is more complex than the data support.</p>
+<p>If you encounter singular fits in your own models you can attempt to find a different fitting algorithm using the <code>lme4::allFit()</code> function, but it is often a sign that your model is overly complex given your data and you should think about sticking with a simpler model with less parameters.</p>
+<p>Here we can see that none of our four models have singular fits.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="fu">list</span>(<span class="at">m1 =</span> m1, <span class="at">m2a =</span> m2a, <span class="at">m2c =</span> m2c, <span class="at">m2b =</span> m2b), isSingular)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   m1   m2a   m2c   m2b 
+FALSE FALSE FALSE FALSE </code></pre>
+</div>
+</div>
+<p>We can then test the models against each other to see which fits the data best:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m1, m2a, m2b)          <span class="co"># intercepts -&gt; + participant slopes -&gt; + face slopes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>refitting model(s) with ML (instead of REML)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data: dat
+Models:
+m1: RT_ms ~ emotion + (1 | subno) + (1 | face_id)
+m2a: RT_ms ~ emotion + (1 + emotion | subno) + (1 | face_id)
+m2b: RT_ms ~ emotion + (1 + emotion | subno) + (1 + emotion | face_id)
+    npar    AIC    BIC  logLik -2*log(L)  Chisq Df Pr(&gt;Chisq)    
+m1     5 202613 202652 -101301    202603                         
+m2a    7 202574 202629 -101280    202560 42.483  2  5.957e-10 ***
+m2b    9 202546 202616 -101264    202528 31.845  2  1.216e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m1, m2c, m2b)          <span class="co"># intercepts -&gt; + face slopes -&gt; + participant slopes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>refitting model(s) with ML (instead of REML)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data: dat
+Models:
+m1: RT_ms ~ emotion + (1 | subno) + (1 | face_id)
+m2c: RT_ms ~ emotion + (1 | subno) + (1 + emotion | face_id)
+m2b: RT_ms ~ emotion + (1 + emotion | subno) + (1 + emotion | face_id)
+    npar    AIC    BIC  logLik -2*log(L)  Chisq Df Pr(&gt;Chisq)    
+m1     5 202613 202652 -101301    202603                         
+m2c    7 202586 202640 -101286    202572 30.882  2  1.968e-07 ***
+m2b    9 202546 202616 -101264    202528 43.445  2  3.681e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><strong>Why can’t we directly compare <code>m2a</code> and <code>m2c</code> in this way? What method could be used to compare them?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p><code>m2a</code> and <code>m2c</code> have the same number of parameters and are not nested models so can’t be compared in this way.</p>
+<p>However, we can compare them using AIC and BIC.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m1, m2a, m2b, m2c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    df      AIC
+m1   5 202604.6
+m2a  7 202565.2
+m2b  9 202536.9
+m2c  7 202576.9</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(m1, m2a, m2b, m2c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    df      BIC
+m1   5 202643.4
+m2a  7 202619.5
+m2b  9 202606.7
+m2c  7 202631.2</code></pre>
+</div>
+</div>
+<p><strong>Why are the AIC and BIC numbers here slightly different from those in the model comparison output table above?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The <code>anova()</code> function refits using ML, instead of the original REML.</p>
+<p>If we wanted to get the values from the ML version we could use this code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>cmp <span class="ot">&lt;-</span> <span class="fu">anova</span>(m1, m2a, m2c, m2b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>refitting model(s) with ML (instead of REML)</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>model_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">m1  =</span> <span class="st">"Intercepts only (participant, face)"</span>,</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">m2a =</span> <span class="st">"+ emotion slopes by participant"</span>,</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">m2c =</span> <span class="st">"+ emotion slopes by face"</span>,</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">m2b =</span> <span class="st">"+ emotion slopes by both"</span>)</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="co">#create a nicer output using a dataframe</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">model =</span> model_labels[<span class="fu">rownames</span>(cmp)],</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">npar =</span> cmp<span class="sc">$</span>npar, <span class="at">AIC =</span> <span class="fu">round</span>(cmp<span class="sc">$</span>AIC, <span class="dv">1</span>), <span class="at">BIC =</span> <span class="fu">round</span>(cmp<span class="sc">$</span>BIC, <span class="dv">1</span>), <span class="at">row.names =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                model npar      AIC      BIC
+1 Intercepts only (participant, face)    5 202612.8 202651.6
+2     + emotion slopes by participant    7 202574.3 202628.6
+3            + emotion slopes by face    7 202585.9 202640.2
+4            + emotion slopes by both    9 202546.4 202616.3</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Which of the 4 models provides the best fit for the data?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The model with the lowest AIC and BIC values is <code>m2b</code> which allows random intercepts and emotion slopes by both participant and <code>face_id</code>.</p>
+<p>We can also see this from the log-likelihood tests where <code>m2b</code> was a significant improvement over both <code>m2a</code> and <code>m2c</code>, both of which were significant improvements on the intercepts only model <code>m1</code>.</p>
+</div>
+</div>
+<p>Finally we can examine how the Estimate, Standard Errors and <em>p</em> values change as we make the model more realistic.</p>
+<p><strong>Use the <code>summary()</code> function and find these statistics for the model with random intercepts, the model with random slopes and intercepts per participant, the model with randoms slopes and intercepts per <code>face_id</code>, and finally the model with random slopes and intercepts for both participants and <code>face_id</code>. What do you notice?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>We can use the <code>summary()</code> function on each of the models like this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1) <span class="co">#random intercepts</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT_ms ~ emotion + (1 | subno) + (1 | face_id)
+   Data: dat
+
+REML criterion at convergence: 202594.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8098 -0.6645 -0.0833  0.5513  6.2940 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ subno    (Intercept) 3344.4   57.83   
+ face_id  (Intercept)  491.1   22.16   
+ Residual             7021.5   83.79   
+Number of obs: 17280, groups:  subno, 72; face_id, 60
+
+Fixed effects:
+              Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept)    491.000      7.446    95.561  65.939   &lt;2e-16 ***
+emotionHappy    -2.388      1.275 17148.000  -1.873   0.0611 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr)
+emotionHppy -0.086</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2a) <span class="co">#+participants slopes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT_ms ~ emotion + (1 + emotion | subno) + (1 | face_id)
+   Data: dat
+
+REML criterion at convergence: 202551.2
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.7894 -0.6613 -0.0848  0.5490  6.3967 
+
+Random effects:
+ Groups   Name         Variance Std.Dev. Corr  
+ subno    (Intercept)  3455.7   58.79          
+          emotionHappy  179.8   13.41    -0.20 
+ face_id  (Intercept)   491.3   22.17          
+ Residual              6976.8   83.53          
+Number of obs: 17280, groups:  subno, 72; face_id, 60
+
+Fixed effects:
+             Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)   491.000      7.549  93.342  65.039   &lt;2e-16 ***
+emotionHappy   -2.388      2.028  71.000  -1.178    0.243    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr)
+emotionHppy -0.194</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2c) <span class="co">#+face slopes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT_ms ~ emotion + (1 | subno) + (1 + emotion | face_id)
+   Data: dat
+
+REML criterion at convergence: 202562.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8675 -0.6647 -0.0851  0.5489  6.2041 
+
+Random effects:
+ Groups   Name         Variance Std.Dev. Corr  
+ subno    (Intercept)  3344.0   57.83          
+ face_id  (Intercept)   552.9   23.51          
+          emotionHappy  137.7   11.73    -0.35 
+ Residual              6987.4   83.59          
+Number of obs: 17280, groups:  subno, 72; face_id, 60
+
+Fixed effects:
+             Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)   491.000      7.515  97.784  65.340   &lt;2e-16 ***
+emotionHappy   -2.388      1.978  58.992  -1.207    0.232    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr)
+emotionHppy -0.162</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2b) <span class="co">#+both slopes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT_ms ~ emotion + (1 + emotion | subno) + (1 + emotion | face_id)
+   Data: dat
+
+REML criterion at convergence: 202518.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8475 -0.6624 -0.0871  0.5461  6.3069 
+
+Random effects:
+ Groups   Name         Variance Std.Dev. Corr  
+ subno    (Intercept)  3455.8   58.79          
+          emotionHappy  180.4   13.43    -0.20 
+ face_id  (Intercept)   553.2   23.52          
+          emotionHappy  138.3   11.76    -0.35 
+ Residual              6942.4   83.32          
+Number of obs: 17280, groups:  subno, 72; face_id, 60
+
+Fixed effects:
+             Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)   491.000      7.617  95.519  64.460   &lt;2e-16 ***
+emotionHappy   -2.388      2.533  82.743  -0.943    0.349    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr)
+emotionHppy -0.237</code></pre>
+</div>
+</div>
+<p>However, the code below extracts the important statistics for this comparison so we can more easily compare them. Check that you can find where these statistics come from in the <code>summary()</code> output.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The emotion effect: compare what the p-value does as the model becomes more realistic</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="fu">list</span>(<span class="st">`</span><span class="at">random intercepts</span><span class="st">`</span> <span class="ot">=</span> m1, <span class="st">`</span><span class="at">+ participant slopes</span><span class="st">`</span> <span class="ot">=</span> m2a,</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">`</span><span class="at">+ face slopes</span><span class="st">`</span> <span class="ot">=</span> m2c, <span class="st">`</span><span class="at">+ both</span><span class="st">`</span> <span class="ot">=</span> m2b),</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>       <span class="cf">function</span>(m) <span class="fu">round</span>(<span class="fu">coef</span>(<span class="fu">summary</span>(m))[<span class="st">"emotionHappy"</span>, <span class="fu">c</span>(<span class="st">"Estimate"</span>, <span class="st">"Std. Error"</span>, <span class="st">"Pr(&gt;|t|)"</span>)], <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           random intercepts + participant slopes + face slopes  + both
+Estimate             -2.3881              -2.3881       -2.3881 -2.3881
+Std. Error            1.2749               2.0280        1.9780  2.5333
+Pr(&gt;|t|)              0.0611               0.2429        0.2321  0.3486</code></pre>
+</div>
+</div>
+<p><strong>The estimate.</strong> Every participant sees the same number of fearful and happy trials, and every face appears equally often in both expressions. In this balanced design the <code>emotionHappy</code> estimate is just the difference between the average happy and fearful RT (−2.39 ms), so it doesn’t depend on the random-effects structure.</p>
+<p><strong>The standard error.</strong> The random-intercepts model assumes that the effect of emotion is <em>identical</em> for every participant and every face. Under that assumption, all 17,280 trials are evidence about one single effect, so the estimate looks very precise (SE = 1.27). But the effect of emotion isn’t the same for everyone. It varies between participants and between faces. The average we estimate is only as precise as our samples of 72 people and 60 faces allow, however many trials each one completed. Collecting more trials from the same people doesn’t tell us whether a different sample of people would show a different average.</p>
+<p>The uncertainty from each source adds up. Squaring the standard error gives the variance of the estimate:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>Contribution to the variance of the estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Trial-to-trial noise (all that random intercepts counts)</td>
+<td>1.6</td>
+</tr>
+<tr class="even">
+<td>Participants differ in their emotion effect</td>
+<td>2.5</td>
+</tr>
+<tr class="odd">
+<td>Faces differ in their emotion effect</td>
+<td>2.3</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>6.4</strong> (and √6.4 = 2.53, the SE of the full model)</td>
+</tr>
+</tbody>
+</table>
+<p>The <em>p</em> values follow the same pattern, with the closest to significance being the random intercepts model, the others have higher <em>p</em> values. None of them show a significant <code>emotionHappy</code> effect.</p>
+<p><strong>Don’t choose a model because of its p-value.</strong> The random-intercepts model’s <em>p</em> = .061 isn’t “nearly significant”. It is too small, because the model assumes something the data contradict (The model comparison earlier showed that allowing the emotion effect to vary fits much better). Choose the model on the basis of the design and model comparison, then report whatever <em>p</em>-value it gives.</p>
+</div>
+</div>
+</section>
+<section id="section-d.-additional-predictors" class="level2">
+<h2 class="anchored" data-anchor-id="section-d.-additional-predictors">SECTION D. ADDITIONAL PREDICTORS</h2>
+<p>Once we have our best model we can add in the other predictors that the researchers were interested in <code>traitanx_c</code>, <code>ACS_c</code>, and <code>Age_c</code>. (We are using the <code>_c</code> versions because we mean centred them earlier).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>m_full <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT_ms <span class="sc">~</span> emotion <span class="sc">*</span> traitanx_c <span class="sc">+</span> ACS_c <span class="sc">+</span> Age_c <span class="sc">+</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>                 (<span class="dv">1</span> <span class="sc">+</span> emotion <span class="sc">|</span> subno) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> emotion <span class="sc">|</span> face_id), <span class="at">data =</span> dat)</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT_ms ~ emotion * traitanx_c + ACS_c + Age_c + (1 + emotion |  
+    subno) + (1 + emotion | face_id)
+   Data: dat
+
+REML criterion at convergence: 202505.1
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8456 -0.6628 -0.0871  0.5463  6.3055 
+
+Random effects:
+ Groups   Name         Variance Std.Dev. Corr  
+ subno    (Intercept)  3190.1   56.48          
+          emotionHappy  182.1   13.49    -0.25 
+ face_id  (Intercept)   553.2   23.52          
+          emotionHappy  138.3   11.76    -0.35 
+ Residual              6942.4   83.32          
+Number of obs: 17280, groups:  subno, 72; face_id, 60
+
+Fixed effects:
+                        Estimate Std. Error       df t value Pr(&gt;|t|)    
+(Intercept)             491.0000     7.3709  93.3001  66.613  &lt; 2e-16 ***
+emotionHappy             -2.3881     2.5380  82.3303  -0.941  0.34949    
+traitanx_c               -1.9917     0.7462  68.9177  -2.669  0.00947 ** 
+ACS_c                     0.2598     0.9144  67.9987   0.284  0.77719    
+Age_c                    -0.3368     1.0267  67.9987  -0.328  0.74389    
+emotionHappy:traitanx_c  -0.1629     0.2117  70.0026  -0.770  0.44414    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) emtnHp trtnx_ ACS_c  Age_c 
+emotionHppy -0.269                            
+traitanx_c   0.000  0.000                     
+ACS_c        0.000  0.000  0.325              
+Age_c        0.000  0.000  0.016 -0.334       
+emtnHppy:t_  0.000  0.000 -0.235  0.000  0.000</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">isSingular</span>(m_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>We can then perform <em>F</em> tests for each Fixed Effect using the <code>anova()</code> function:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Type III Analysis of Variance Table with Satterthwaite's method
+                   Sum Sq Mean Sq NumDF  DenDF F value   Pr(&gt;F)   
+emotion              6147    6147     1 82.330  0.8854 0.349487   
+traitanx_c          56208   56208     1 68.156  8.0964 0.005853 **
+ACS_c                 560     560     1 67.999  0.0807 0.777187   
+Age_c                 747     747     1 67.999  0.1076 0.743888   
+emotion:traitanx_c   4112    4112     1 70.003  0.5922 0.444144   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><strong>If you compare the p values for the <code>summary()</code> and <code>anova()</code> output do you notice any changes? Why might this be?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The only <em>p</em> value that changes is the one for the Fixed Effect of <code>traitanx_c</code>, it is 0.00947 for the <em>t</em> test and 0.005853 for the <em>F</em> test.</p>
+<p>When a model has an interaction, the F-test for trait anxiety here tests its AVERAGE slope across the two emotions, whereas the <code>traitanx_c</code> row of <code>summary()</code> is the slope for FEARFUL trials only (the reference level). So the two p-values for trait anxiety differ slightly. For emotion the two agree because, with trait anxiety centred, the effect of emotion for an average person is also its average effect.</p>
+</div>
+</div>
+<p>In the model above the interaction of <code>emotion:traitanx_c</code> was non-significant. Therefore we want to decide if it is useful to include in the model at all. We can build a model without this effect and then compare how well the two fit:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>m_noint <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT_ms <span class="sc">~</span> emotion <span class="sc">+</span> traitanx_c <span class="sc">+</span> ACS_c <span class="sc">+</span> Age_c <span class="sc">+</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>                  (<span class="dv">1</span> <span class="sc">+</span> emotion <span class="sc">|</span> subno) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> emotion <span class="sc">|</span> face_id), <span class="at">data =</span> dat)</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m_noint, m_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>refitting model(s) with ML (instead of REML)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data: dat
+Models:
+m_noint: RT_ms ~ emotion + traitanx_c + ACS_c + Age_c + (1 + emotion | subno) + (1 + emotion | face_id)
+m_full: RT_ms ~ emotion * traitanx_c + ACS_c + Age_c + (1 + emotion | subno) + (1 + emotion | face_id)
+        npar    AIC    BIC  logLik -2*log(L)  Chisq Df Pr(&gt;Chisq)
+m_noint   12 202542 202635 -101259    202518                     
+m_full    13 202544 202644 -101259    202518 0.6036  1     0.4372</code></pre>
+</div>
+</div>
+<p>If the interaction is not needed (here including it doesn’t improve the model fit), the model without it gives the trait anxiety effect averaged over both emotions (a single slope that applies to fearful and happy trials).</p>
+<p>Whether to keep the interaction term is a judgement call. The AIC and BIC both prefer the model without the interaction.</p>
+<p>However, here we will keep it in the final model because it is the hypothesis under test (not a term we are selecting on fit). Its estimate and confidence interval are part of the answer to the research question. The trait anxiety coefficient in m_full is the slope for FEARFUL trials only; <code>summary(m_noint)</code> gives the slope averaged over both emotions. Many analysts would instead say: “The interaction was not significant, so we removed it and interpreted the main effects.” Either choice is justifiable but be clear in your write-up what you did and why.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_noint)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT_ms ~ emotion + traitanx_c + ACS_c + Age_c + (1 + emotion |  
+    subno) + (1 + emotion | face_id)
+   Data: dat
+
+REML criterion at convergence: 202504.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8460 -0.6625 -0.0875  0.5462  6.3054 
+
+Random effects:
+ Groups   Name         Variance Std.Dev. Corr  
+ subno    (Intercept)  3188.9   56.47          
+          emotionHappy  180.4   13.43    -0.25 
+ face_id  (Intercept)   553.2   23.52          
+          emotionHappy  138.3   11.76    -0.35 
+ Residual              6942.4   83.32          
+Number of obs: 17280, groups:  subno, 72; face_id, 60
+
+Fixed effects:
+             Estimate Std. Error       df t value Pr(&gt;|t|)    
+(Intercept)  491.0000     7.3698  93.3719  66.623  &lt; 2e-16 ***
+emotionHappy  -2.3881     2.5334  82.7406  -0.943  0.34860    
+traitanx_c    -2.1268     0.7253  68.0012  -2.932  0.00458 ** 
+ACS_c          0.2597     0.9144  68.0012   0.284  0.77726    
+Age_c         -0.3368     1.0267  68.0012  -0.328  0.74386    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) emtnHp trtnx_ ACS_c 
+emotionHppy -0.269                     
+traitanx_c   0.000  0.000              
+ACS_c        0.000  0.000  0.334       
+Age_c        0.000  0.000  0.016 -0.334</code></pre>
+</div>
+</div>
+<p>Another comparison we want to make is if the addition of any of the new predictors improves the model fit when compared to the best fitting model based on <code>emotion</code> alone.</p>
+<p><strong>Perform this comparison and interpret the result</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m2b, m_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>refitting model(s) with ML (instead of REML)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data: dat
+Models:
+m2b: RT_ms ~ emotion + (1 + emotion | subno) + (1 + emotion | face_id)
+m_full: RT_ms ~ emotion * traitanx_c + ACS_c + Age_c + (1 + emotion | subno) + (1 + emotion | face_id)
+       npar    AIC    BIC  logLik -2*log(L)  Chisq Df Pr(&gt;Chisq)  
+m2b       9 202546 202616 -101264    202528                       
+m_full   13 202544 202644 -101259    202518 10.794  4    0.02898 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Here we see that the model fit is improved with the addition of the <code>traitanx_c</code>, <code>emotion:traitanx_c</code>, <code>ACS_c</code>, and <code>Age_c</code> Fixed Effects.</p>
+</div>
+</div>
+</section>
+<section id="section-e.-assumption-checks" class="level2">
+<h2 class="anchored" data-anchor-id="section-e.-assumption-checks">SECTION E. ASSUMPTION CHECKS</h2>
+<p>For many of the assumption checks we want to compare the residuals to the fitted values and then split these by various factors in the data (such as fixed effects). One way to make some of these checks easier to code is to create new columns in our <code>dat</code> dataframe that hold the residual and fitted value for each point:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>resid  <span class="ot">&lt;-</span> <span class="fu">resid</span>(m_full)</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>fitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(m_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The first plot we want to check is this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m_full, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"p"</span>, <span class="st">"smooth"</span>), <span class="at">alpha =</span> <span class="fl">0.2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Homework_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Which assumptions does this plot inform us about and do you have any concerns?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Linearity and constant variance by showing residuals against fitted values. Here we don’t have any evidence for non-linearity or a change in variance.</p>
+</div>
+</div>
+<p>Another check is performed by the code below:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(resid <span class="sc">~</span> emotion, <span class="at">data =</span> dat, <span class="at">ylab =</span> <span class="st">"Residual (ms)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Homework_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(dat<span class="sc">$</span>resid, dat<span class="sc">$</span>emotion, sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Fearful    Happy 
+82.27874 83.36941 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(resid <span class="sc">~</span> subno, <span class="at">data =</span> dat, <span class="at">las =</span> <span class="dv">2</span>, <span class="at">cex.axis =</span> <span class="fl">0.5</span>, <span class="at">ylab =</span> <span class="st">"Residual (ms)"</span>,</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Residuals by participant"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Homework_files/figure-html/unnamed-chunk-33-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>What do these results show and what do they tell us about the assumptions of the mixed effects model?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The residual spread is similar for fearful and happy trials. Across participants it is not constant: some participants are noticeably more variable than others. We can quantify this with:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>sd_by_participant <span class="ot">&lt;-</span> <span class="fu">tapply</span>(dat<span class="sc">$</span>resid, dat<span class="sc">$</span>subno, sd) </span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(sd_by_participant)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  56.79805 111.63375</code></pre>
+</div>
+</div>
+<p>This shows the SD ranging from about 57 to 112 ms, with slower participants more variable. This is typical of reaction time data. We will see whether it matters in the sensitivity analysis.</p>
+</div>
+</div>
+<p>A further check is shown below:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(dat<span class="sc">$</span>resid); </span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(dat<span class="sc">$</span>resid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Homework_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>What do these results show and what do they tell us about the assumptions of the mixed effects model? Why might this be?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>This check is for the normality of the residuals. Here we see a departure from normality as the right tail of the distribution is markedly higher than the theoretical quantiles of a normally distributed variable. This is because reaction times are right-skewed (a few very slow responses), so the largest residuals are bigger than a normal distribution allows. We will come back to how to check if this is important later. We saw this skew in the histograms of reaction time earlier.</p>
+</div>
+</div>
+<p>The final check we will perform is below:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>re_subno <span class="ot">&lt;-</span> <span class="fu">ranef</span>(m_full)<span class="sc">$</span>subno</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>re_face  <span class="ot">&lt;-</span> <span class="fu">ranef</span>(m_full)<span class="sc">$</span>face_id</span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(re_subno[[<span class="st">"(Intercept)"</span>]],  <span class="at">main =</span> <span class="st">"Participant intercepts"</span>); <span class="fu">qqline</span>(re_subno[[<span class="st">"(Intercept)"</span>]])</span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(re_subno[[<span class="st">"emotionHappy"</span>]], <span class="at">main =</span> <span class="st">"Participant emotion slopes"</span>); <span class="fu">qqline</span>(re_subno[[<span class="st">"emotionHappy"</span>]])</span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(re_face[[<span class="st">"(Intercept)"</span>]],   <span class="at">main =</span> <span class="st">"Face intercepts"</span>); <span class="fu">qqline</span>(re_face[[<span class="st">"(Intercept)"</span>]])</span>
+<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(re_face[[<span class="st">"emotionHappy"</span>]],  <span class="at">main =</span> <span class="st">"Face emotion slopes"</span>); <span class="fu">qqline</span>(re_face[[<span class="st">"emotionHappy"</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Homework_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>What do these plots test for and indicate?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Normality of the random effects (participants and faces). Here, the intercepts and slopes all seem to be normally distributed.</p>
+</div>
+</div>
+<p>To test whether the skew in the reaction times really is a problem for this analysis we can perform something called a <strong>sensitivity analysis</strong>. Here we will log transform the reaction times, re-run our model with these and check if any of our conclusions differ between the two models:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>logRT <span class="ot">&lt;-</span> <span class="fu">log</span>(dat<span class="sc">$</span>RT_ms) <span class="co">#log transform</span></span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="co">#run model with same parameters as m_full</span></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>m_log <span class="ot">&lt;-</span> <span class="fu">lmer</span>(logRT <span class="sc">~</span> emotion <span class="sc">*</span> traitanx_c <span class="sc">+</span> ACS_c <span class="sc">+</span> Age_c <span class="sc">+</span></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>                (<span class="dv">1</span> <span class="sc">+</span> emotion <span class="sc">|</span> subno) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> emotion <span class="sc">|</span> face_id), <span class="at">data =</span> dat)</span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: logRT ~ emotion * traitanx_c + ACS_c + Age_c + (1 + emotion |  
+    subno) + (1 + emotion | face_id)
+   Data: dat
+
+REML criterion at convergence: -12003.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.8408 -0.6397 -0.0033  0.6177  4.1173 
+
+Random effects:
+ Groups   Name         Variance  Std.Dev. Corr  
+ subno    (Intercept)  0.0132872 0.11527        
+          emotionHappy 0.0008711 0.02951  -0.25 
+ face_id  (Intercept)  0.0024986 0.04999        
+          emotionHappy 0.0005754 0.02399  -0.34 
+ Residual              0.0280555 0.16750        
+Number of obs: 17280, groups:  subno, 72; face_id, 60
+
+Fixed effects:
+                          Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)              6.1744352  0.0151471 95.1152601 407.631   &lt;2e-16 ***
+emotionHappy            -0.0051239  0.0053087 85.1652455  -0.965   0.3372    
+traitanx_c              -0.0042012  0.0015221 68.9184076  -2.760   0.0074 ** 
+ACS_c                    0.0004748  0.0018619 67.9988302   0.255   0.7995    
+Age_c                   -0.0008902  0.0020906 67.9988297  -0.426   0.6716    
+emotionHappy:traitanx_c -0.0004497  0.0004487 69.9999631  -1.002   0.3197    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) emtnHp trtnx_ ACS_c  Age_c 
+emotionHppy -0.275                            
+traitanx_c   0.000  0.000                     
+ACS_c        0.000  0.000  0.324              
+Age_c        0.000  0.000  0.016 -0.334       
+emtnHppy:t_  0.000  0.000 -0.242  0.000  0.000</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check normality of residuals</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">resid</span>(m_log)); <span class="fu">qqline</span>(<span class="fu">resid</span>(m_log))  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Homework_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see from the QQ plot that the log transform removed the skew and now only the extreme ends depart from the normal, and they do so in both directions: the lowest residuals sit below the line and the highest sit above it. So the tails are slightly heavier than a normal distribution allows (a few more very small and very large residuals than expected), but the plot is roughly symmetric. Although the residuals are not strictly normal, symmetric tail heaviness doesn’t bias the estimates. Skew pulls the means in one direction and makes the average a poor summary. Heavy tails on both sides mainly add noise, and with this much data the effect on the fixed-effect estimates is small. We can also see that the log transform has reduced the spread of the residuals across participants:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check the spread of residual per participant</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>sd_by_participant <span class="ot">&lt;-</span> <span class="fu">tapply</span>(<span class="fu">resid</span>(m_log), dat<span class="sc">$</span>subno, sd) </span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(sd_by_participant)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1430196 0.1858752</code></pre>
+</div>
+</div>
+<p>Finally we can compare the results for our main effects of interest:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># helper function used here and later</span></span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>fmt_p <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="fu">ifelse</span>(p <span class="sc">&lt;</span> .<span class="dv">001</span>, <span class="st">"&lt; .001"</span>, <span class="fu">sub</span>(<span class="st">"^0"</span>, <span class="st">""</span>, <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, p)))</span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="co"># side by side: the key terms in both analyses</span></span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>key <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"emotionHappy"</span>, <span class="st">"traitanx_c"</span>, <span class="st">"emotionHappy:traitanx_c"</span>)</span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">term =</span> key,</span>
+<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">t_RT_ms =</span> <span class="fu">round</span>(<span class="fu">coef</span>(<span class="fu">summary</span>(m_full))[key, <span class="st">"t value"</span>], <span class="dv">2</span>),</span>
+<span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">p_RT_ms =</span> <span class="fu">fmt_p</span>(<span class="fu">coef</span>(<span class="fu">summary</span>(m_full))[key, <span class="st">"Pr(&gt;|t|)"</span>]),</span>
+<span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">t_logRT =</span> <span class="fu">round</span>(<span class="fu">coef</span>(<span class="fu">summary</span>(m_log))[key, <span class="st">"t value"</span>], <span class="dv">2</span>),</span>
+<span id="cb100-10"><a href="#cb100-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">p_logRT =</span> <span class="fu">fmt_p</span>(<span class="fu">coef</span>(<span class="fu">summary</span>(m_log))[key, <span class="st">"Pr(&gt;|t|)"</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                           term t_RT_ms p_RT_ms t_logRT p_logRT
+emotionHappy                       emotionHappy   -0.94    .349   -0.97    .337
+traitanx_c                           traitanx_c   -2.67    .009   -2.76    .007
+emotionHappy:traitanx_c emotionHappy:traitanx_c   -0.77    .444   -1.00    .320</code></pre>
+</div>
+</div>
+<p>We can see that the same pattern of results is found, with only the <code>traitanx_c</code> effect being significant. The changes in <em>t</em> and <em>p</em> values are all relatively minor. These results indicate that our results are not sensitive to the skew in the original data. Given that it is easier to interpret the results in the original units we would stick to using the original model in our write-up but would include the fact that we performed this check.</p>
+</section>
+<section id="section-f.-full-apa-write-up" class="level2">
+<h2 class="anchored" data-anchor-id="section-f.-full-apa-write-up">SECTION F. FULL APA WRITE-UP</h2>
+<p>Here would be a full APA write-up including the methods. Note that normally you wouldn’t include the chunks of <strong>R</strong> code in the write-up and would just include the tables they produce but I have left them here to show how they were created.</p>
+<section id="method-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="method-analysis">Method (analysis)</h3>
+<p>Reaction times (RTs, in milliseconds) were analysed with linear mixed-effects models fitted in R ([R version]) using the lme4 package (Bates et al., 2015). p-values used Satterthwaite’s approximation for degrees of freedom, via lmerTest (Kuznetsova et al., 2017). Each participant completed 240 trials (120 with fearful faces and 120 with happy faces) using 60 face identities, each shown in both expressions and each face–expression combination presented twice. Three of the 75 participants had missing values on trait anxiety (n = 1) or attentional control (n = 2) and were excluded, leaving 72 participants and 17,280 trials. The same participants were used in every model so that models could be compared.</p>
+<p>Emotion was coded with fearful faces as the reference level. Trait anxiety (<em>M</em> = 41.33, <em>SD</em> = 9.68), attentional control (<em>M</em> = 49.99, <em>SD</em> = 8.14) and age (<em>M</em> = 23.01, <em>SD</em> = 6.84, range 18–57) were centred on their sample means, so that the emotion coefficient is the happy–fearful difference for a participant with average trait anxiety.</p>
+<p>Participants and faces were treated as crossed random factors, because every participant saw every face. The random-effects structure was selected before testing the predictors. Starting from a model with random intercepts for participants and faces and emotion as the only fixed effect, we added random slopes for emotion by participant, by face, and by both. Models were compared with likelihood ratio tests (for nested models), AIC and BIC, refitting with maximum likelihood. Allowing the effect of emotion to vary across participants and faces is also justified by the design, since each participant and each face contributes trials in both emotion conditions (Barr et al., 2013). The retained structure was then used in the full model, which contained emotion, trait anxiety, their interaction, attentional control and age. The interaction was tested with a likelihood ratio test, and the final model was estimated with restricted maximum likelihood (REML).</p>
+<p>Model assumptions (linearity, constant variance, and normality of the residuals and of the random effects) were checked visually. Because RTs are right-skewed, the final model was also refitted to log-transformed RTs as a sensitivity analysis.</p>
+</section>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results">Results</h3>
+<section id="variance-in-reaction-times" class="level4">
+<h4 class="anchored" data-anchor-id="variance-in-reaction-times">Variance in reaction times</h4>
+<p>In a model with random intercepts only, 30.8% of the variance in RT lay between participants, 4.5% between faces, and 64.7% was residual (trial-to-trial) variance.</p>
+</section>
+<section id="random-effects-structure" class="level4">
+<h4 class="anchored" data-anchor-id="random-effects-structure">Random-effects structure</h4>
+<p><strong>Table 1</strong> <em>Comparison of random-effects structures (emotion as the only fixed effect)</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Table 1: random-effects structures (labelled by model name)</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="co">#anova() re-orders models by number of parameters, so we label the rows by model name.</span></span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>tab1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Random effects</span><span class="st">`</span> <span class="ot">=</span> model_labels[<span class="fu">rownames</span>(cmp)],</span>
+<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Parameters =</span> cmp<span class="sc">$</span>npar, <span class="at">AIC =</span> cmp<span class="sc">$</span>AIC, <span class="at">BIC =</span> cmp<span class="sc">$</span>BIC, <span class="st">`</span><span class="at">−2 log-likelihood</span><span class="st">`</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> cmp<span class="sc">$</span>logLik,</span>
+<span id="cb102-8"><a href="#cb102-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">check.names =</span> <span class="cn">FALSE</span>, <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb102-9"><a href="#cb102-9" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab1, <span class="at">digits =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-random-structure" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-random-structure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Comparison of random-effects structures (labelled by model name)
+</figcaption>
+<div aria-describedby="tbl-random-structure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 43%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Random effects</th>
+<th style="text-align: right;">Parameters</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+<th style="text-align: right;">−2 log-likelihood</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Intercepts only (participant, face)</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">202612.8</td>
+<td style="text-align: right;">202651.6</td>
+<td style="text-align: right;">202602.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">+ emotion slopes by participant</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">202574.3</td>
+<td style="text-align: right;">202628.6</td>
+<td style="text-align: right;">202560.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">+ emotion slopes by face</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">202585.9</td>
+<td style="text-align: right;">202640.2</td>
+<td style="text-align: right;">202571.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">+ emotion slopes by both</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">202546.4</td>
+<td style="text-align: right;">202616.3</td>
+<td style="text-align: right;">202528.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Allowing the effect of emotion to vary significantly improved on random intercepts alone, whether the slopes were added for participants, χ²(2) = 42.48, <em>p</em> &lt; .001, for faces, χ²(2) = 30.88, <em>p</em> &lt; .001, or for both, χ²(4) = 74.33, <em>p</em> &lt; .001. The model with slopes for both was also superior to the model with slopes by participant only, χ²(2) = 31.85, <em>p</em> &lt; .001, and to the model with slopes by face only, χ²(2) = 43.45, <em>p</em> &lt; .001. It had the lowest AIC and BIC (Table 1), and none of the models had a singular fit, so it was retained.</p>
+<p>The choice of structure changed the inference about emotion. With random intercepts only, fearful faces were responded to 2.39 ms more slowly than happy faces, SE = 1.27, <em>p</em> = .061. With random slopes for both participants and faces the estimate was unchanged but its standard error doubled (SE = 2.53, <em>p</em> = .349), because participants and faces differed substantially in the size of the emotion effect.</p>
+</section>
+<section id="trait-anxiety-and-emotion" class="level4">
+<h4 class="anchored" data-anchor-id="trait-anxiety-and-emotion">Trait anxiety and emotion</h4>
+<p><strong>Table 2</strong> <em>Fixed effects from the final linear mixed model</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Table 2: fixed effects of the final model</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>co <span class="ot">&lt;-</span> <span class="fu">summary</span>(m_full)<span class="sc">$</span>coefficients</span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> <span class="fu">confint</span>(m_full, <span class="at">method =</span> <span class="st">"Wald"</span>)[<span class="fu">rownames</span>(co), ]</span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a>tab2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Term =</span> <span class="fu">c</span>(<span class="st">"Intercept (Fearful, average person)"</span>, <span class="st">"Emotion (Happy − Fearful)"</span>, <span class="st">"Trait anxiety (Fearful slope)"</span>,</span>
+<span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Attentional control"</span>, <span class="st">"Age"</span>, <span class="st">"Emotion × Trait anxiety"</span>),</span>
+<span id="cb103-7"><a href="#cb103-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">b  =</span> <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, co[, <span class="st">"Estimate"</span>]),</span>
+<span id="cb103-8"><a href="#cb103-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">SE =</span> <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, co[, <span class="st">"Std. Error"</span>]),</span>
+<span id="cb103-9"><a href="#cb103-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">CI =</span> <span class="fu">sprintf</span>(<span class="st">"[%.2f, %.2f]"</span>, ci[, <span class="dv">1</span>], ci[, <span class="dv">2</span>]),</span>
+<span id="cb103-10"><a href="#cb103-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">df =</span> <span class="fu">sprintf</span>(<span class="st">"%.1f"</span>, co[, <span class="st">"df"</span>]),</span>
+<span id="cb103-11"><a href="#cb103-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">t  =</span> <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, co[, <span class="st">"t value"</span>]),</span>
+<span id="cb103-12"><a href="#cb103-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">p  =</span> <span class="fu">fmt_p</span>(co[, <span class="st">"Pr(&gt;|t|)"</span>]))</span>
+<span id="cb103-13"><a href="#cb103-13" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: the order of the Term labels must match rownames(co); check with rownames(co)</span></span>
+<span id="cb103-14"><a href="#cb103-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(co)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "(Intercept)"             "emotionHappy"           
+[3] "traitanx_c"              "ACS_c"                  
+[5] "Age_c"                   "emotionHappy:traitanx_c"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab2, <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="fu">rep</span>(<span class="st">"r"</span>, <span class="dv">6</span>)),</span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Term"</span>, <span class="st">"*b*"</span>, <span class="st">"*SE*"</span>, <span class="st">"95% CI"</span>, <span class="st">"*df*"</span>, <span class="st">"*t*"</span>, <span class="st">"*p*"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-fixed-effects" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fixed-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Fixed effects from the final linear mixed model
+</figcaption>
+<div aria-describedby="tbl-fixed-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 43%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 20%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;"><em>b</em></th>
+<th style="text-align: right;"><em>SE</em></th>
+<th style="text-align: right;">95% CI</th>
+<th style="text-align: right;"><em>df</em></th>
+<th style="text-align: right;"><em>t</em></th>
+<th style="text-align: right;"><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Intercept (Fearful, average person)</td>
+<td style="text-align: right;">491.00</td>
+<td style="text-align: right;">7.37</td>
+<td style="text-align: right;">[476.55, 505.45]</td>
+<td style="text-align: right;">93.3</td>
+<td style="text-align: right;">66.61</td>
+<td style="text-align: right;">&lt; .001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Emotion (Happy − Fearful)</td>
+<td style="text-align: right;">-2.39</td>
+<td style="text-align: right;">2.54</td>
+<td style="text-align: right;">[-7.36, 2.59]</td>
+<td style="text-align: right;">82.3</td>
+<td style="text-align: right;">-0.94</td>
+<td style="text-align: right;">.349</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trait anxiety (Fearful slope)</td>
+<td style="text-align: right;">-1.99</td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;">[-3.45, -0.53]</td>
+<td style="text-align: right;">68.9</td>
+<td style="text-align: right;">-2.67</td>
+<td style="text-align: right;">.009</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Attentional control</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">[-1.53, 2.05]</td>
+<td style="text-align: right;">68.0</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">.777</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: right;">-0.34</td>
+<td style="text-align: right;">1.03</td>
+<td style="text-align: right;">[-2.35, 1.68]</td>
+<td style="text-align: right;">68.0</td>
+<td style="text-align: right;">-0.33</td>
+<td style="text-align: right;">.744</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Emotion × Trait anxiety</td>
+<td style="text-align: right;">-0.16</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">[-0.58, 0.25]</td>
+<td style="text-align: right;">70.0</td>
+<td style="text-align: right;">-0.77</td>
+<td style="text-align: right;">.444</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><em>Note</em>. Reaction times in ms. Predictors are mean-centred. Confidence intervals are Wald intervals.</p>
+<p>The relationship between trait anxiety and RT did not differ reliably between fearful and happy faces (emotion × trait anxiety: b = −0.16 ms per point, 95% CI [−0.58, 0.25], t(70.0) = −0.77, p = .444; likelihood ratio test, χ²(1) = 0.60, p = .437). The estimated slope of trait anxiety was −1.99 ms per point for fearful faces (95% CI [−3.45, −0.53]) and −2.15 ms per point for happy faces (95% CI [−3.58, −0.73]). In a model without the interaction, higher trait anxiety was associated with faster responses across both emotions, b = −2.13 ms per point, SE = 0.73, t(68.0) = −2.93, p = .005, so that a 10-point higher trait anxiety score corresponded to responses about 21 ms faster. Attentional control and age were not significant predictors (Table 2).</p>
+</section>
+<section id="random-effects" class="level4">
+<h4 class="anchored" data-anchor-id="random-effects">Random effects</h4>
+<p><strong>Table 3</strong> <em>Random effects of the final model</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Table 3: random effects of the final model</span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>vc <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(m_full))</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>fmt_r <span class="ot">&lt;-</span> <span class="cf">function</span>(r) <span class="fu">sub</span>(<span class="st">"^(-?)0</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1."</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, r))</span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a>   tab3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">Grouping    =</span> <span class="fu">c</span>(<span class="st">"Participant"</span>, <span class="st">""</span>, <span class="st">"Face"</span>, <span class="st">""</span>, <span class="st">"Residual"</span>),</span>
+<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">Term        =</span> <span class="fu">c</span>(<span class="st">"Intercept"</span>, <span class="st">"Emotion (happy − fearful)"</span>, <span class="st">"Intercept"</span>, <span class="st">"Emotion (happy − fearful)"</span>, <span class="st">""</span>),</span>
+<span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">Variance    =</span> <span class="fu">sprintf</span>(<span class="st">"%.1f"</span>, vc<span class="sc">$</span>vcov[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>)]),</span>
+<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">SD          =</span> <span class="fu">sprintf</span>(<span class="st">"%.1f"</span>, vc<span class="sc">$</span>sdcor[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>)]),</span>
+<span id="cb106-10"><a href="#cb106-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">Correlation =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="fu">fmt_r</span>(vc<span class="sc">$</span>sdcor[<span class="dv">3</span>]), <span class="st">""</span>, <span class="fu">fmt_r</span>(vc<span class="sc">$</span>sdcor[<span class="dv">6</span>]), <span class="st">""</span>))</span>
+<span id="cb106-11"><a href="#cb106-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">kable</span>(tab3, <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"l"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>), <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Grouping"</span>, <span class="st">"Term"</span>, <span class="st">"Variance"</span>, <span class="st">"*SD*"</span>, <span class="st">"Correlation"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-random-effects" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-random-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Random effects of the final model
+</figcaption>
+<div aria-describedby="tbl-random-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Grouping</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Variance</th>
+<th style="text-align: right;"><em>SD</em></th>
+<th style="text-align: right;">Correlation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Participant</td>
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: right;">3190.1</td>
+<td style="text-align: right;">56.5</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Emotion (happy − fearful)</td>
+<td style="text-align: right;">182.1</td>
+<td style="text-align: right;">13.5</td>
+<td style="text-align: right;">-.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Face</td>
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: right;">553.2</td>
+<td style="text-align: right;">23.5</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Emotion (happy − fearful)</td>
+<td style="text-align: right;">138.3</td>
+<td style="text-align: right;">11.8</td>
+<td style="text-align: right;">-.35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">6942.4</td>
+<td style="text-align: right;">83.3</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Participants differed in their average speed (<em>SD</em> = 56.5 ms) and in the size of their emotion effect (<em>SD</em> = 13.5 ms), which was much larger than the average emotion effect (−2.4 ms). Faces also differed in overall speed (<em>SD</em> = 23.5 ms) and in the size of the emotion effect (<em>SD</em> = 11.8 ms).</p>
+</section>
+<section id="assumptions-and-sensitivity-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="assumptions-and-sensitivity-analysis">Assumptions and sensitivity analysis</h4>
+<p>Plots of the residuals against the fitted values showed no clear curvature, but the spread of the residuals increased with the fitted values (residual SD of 69 ms for the lowest fifth of fitted values and 96 ms for the highest fifth), and participants who responded more slowly were more variable (residual SD ranged from 57 to 112 ms across participants, r = .88 with mean RT). The residual SD was similar for fearful (82.3 ms) and happy (83.4 ms) trials, and the random effects for participants and faces were approximately normal. The residuals were also positively skewed, as is typical of RT data. A model of log-transformed RTs, in which the residuals were closer to normal and their spread no longer depended on participant speed (SD range 0.14–0.19, <em>r</em> = .02), led to the same conclusions: the emotion × trait anxiety interaction was not significant, <em>t</em>(70.0) = −1.00, <em>p</em> = .320, and trait anxiety remained a significant predictor of faster responses, <em>t</em>(68.9) = −2.76, <em>p</em> = .007.</p>
+<p>Figure: model-predicted lines (fixed effects only) with the participant means:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># participant means for each emotion (one point per participant per emotion)</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>pm <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(RT_ms <span class="sc">~</span> subno <span class="sc">+</span> emotion <span class="sc">+</span> traitanx, <span class="at">data =</span> dat, <span class="at">FUN =</span> mean)</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a>newd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">traitanx_c =</span> <span class="fu">seq</span>(<span class="fu">min</span>(dat<span class="sc">$</span>traitanx_c), <span class="fu">max</span>(dat<span class="sc">$</span>traitanx_c), <span class="at">length.out =</span> <span class="dv">50</span>),</span>
+<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">emotion =</span> <span class="fu">c</span>(<span class="st">"Fearful"</span>, <span class="st">"Happy"</span>), <span class="at">ACS_c =</span> <span class="dv">0</span>, <span class="at">Age_c =</span> <span class="dv">0</span>)</span>
+<span id="cb107-7"><a href="#cb107-7" aria-hidden="true" tabindex="-1"></a>newd<span class="sc">$</span>emotion <span class="ot">&lt;-</span> <span class="fu">factor</span>(newd<span class="sc">$</span>emotion, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Fearful"</span>, <span class="st">"Happy"</span>))</span>
+<span id="cb107-8"><a href="#cb107-8" aria-hidden="true" tabindex="-1"></a>newd<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_full, <span class="at">newdata =</span> newd, <span class="at">re.form =</span> <span class="cn">NA</span>)</span>
+<span id="cb107-9"><a href="#cb107-9" aria-hidden="true" tabindex="-1"></a>newd<span class="sc">$</span>traitanx <span class="ot">&lt;-</span> newd<span class="sc">$</span>traitanx_c <span class="sc">+</span> <span class="fu">mean</span>(dat<span class="sc">$</span>traitanx)</span>
+<span id="cb107-10"><a href="#cb107-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-11"><a href="#cb107-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb107-12"><a href="#cb107-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> pm[pm<span class="sc">$</span>subno <span class="sc">%in%</span> dat<span class="sc">$</span>subno, ], <span class="fu">aes</span>(<span class="at">x =</span> traitanx, <span class="at">y =</span> RT_ms, <span class="at">colour =</span> emotion, <span class="at">shape =</span> emotion),</span>
+<span id="cb107-13"><a href="#cb107-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb107-14"><a href="#cb107-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> newd, <span class="fu">aes</span>(<span class="at">x =</span> traitanx, <span class="at">y =</span> pred, <span class="at">colour =</span> emotion), <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb107-15"><a href="#cb107-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Trait anxiety"</span>, <span class="at">y =</span> <span class="st">"Reaction time (ms)"</span>, <span class="at">colour =</span> <span class="cn">NULL</span>, <span class="at">shape =</span> <span class="cn">NULL</span>,</span>
+<span id="cb107-16"><a href="#cb107-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Trait anxiety and reaction time to fearful and happy faces"</span>,</span>
+<span id="cb107-17"><a href="#cb107-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Lines: model estimates (average age and attentional control). Points: participant means."</span>) <span class="sc">+</span></span>
+<span id="cb107-18"><a href="#cb107-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit7_Homework_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

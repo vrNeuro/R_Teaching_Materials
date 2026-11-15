@@ -10,22 +10,26 @@ format:
     css: worksheet.css 
 ---
 
-**TODO**
+
 ### Learning Outcomes: \ 
 
-1 - Use RStudio to create a null model \ 
-
-2 - Use RStudio to calculate the ICC  \ 
-
-3 - Use RStudio to perform different mixed effects models \ 
-
-4 - Compare these results to those of a standard linear regression \ 
+Perform a complete mixed effects model analysis
 
 
-**TODO**
+
+Write-up
+
+1 - Perform a complete mixed effects model analysis \ 
+
+2 - Perform and interpret assumption checks   \ 
+
+3 - See a full APA write-up of a mixed effects analysis study \ 
+
+
+
 ### Materials Used:
 
-We will use the packages **tidyr** and **lmerTest** these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
+We will use the packages **ggplot2**, **lme4**, **lmerTest** and **knitr**, these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them. 
 
 
 ## CREATE A NEW PROJECT
@@ -38,14 +42,18 @@ Also create a new script in this folder so you can copy the lines of code needed
 
 Now let's load the packages that we will need for this analysis.
 ```{r}
-library(tidyr)
-library(lmerTest)
+library(ggplot2)
+library(lme4)
+library(lmerTest)      # load after lme4: adds Satterthwaite df and p-values
+library(knitr)
 ```
 
 
 ## SECTION A. THE DATASET
 
-The data set we will use this week is a modified version of the one we used in the Week 4 Lab. The full explanation can be found there ([Lab 4. Section A](PS71020_Unit4_Lab.qmd#sec-fearfulface-data)) but here is a brief summary:
+The data set we will use this week is a modified version of the one we used in the Week 4 Lab and the same as used in the Week 6 Homework ([Lab 6. Section A](PS71020_Unit6_Homework.qmd#sec-fearfulface-trialdata)).
+
+The full explanation can be found there ([Lab 4. Section A](PS71020_Unit4_Lab.qmd#sec-fearfulface-data)) but here is a brief summary:
 
 The face RT dataset was collected as a test of the role of trait anxiety in healthy participants (measured by the Spielberger Trait Anxiety Scale; variable name in dataset = `traitanx`) on the ability to identify the emotional expression on faces.
 
@@ -63,6 +71,18 @@ Handedness (`Handedness`; 1 = Right, 2 =Left) \
 
 However, in the new data set we have the data for every single trial (240 per participant). The trial-level data were simulated so that each participant’s means match the original dataset.
 
+So in this version of the data set we have some additional variables that describe each trial: \ 
+
+`subno`  - The subject number of the participant (15-93) \ 
+
+`trialnum` - The number of this particular trial (1-240) \ 
+
+`emotion` -  The emotion of the face displayed on that trial (Happy or Fearful) \ 
+
+`face_id` - The ID of the particular face shown, each participant saw each face with both a Happy and Fearful emotion \ 
+ 
+`RT` - the reaction time in seconds on that particular trial 
+
 ```{r}
 #| echo: false
 df <- read.csv("data/fearful_faces_trials.csv")
@@ -76,4 +96,744 @@ df <- read.csv("fearful_faces_trials.csv")
 Examine the first few rows of the data set:
 ```{r}
 head(df)
+```
+
+The first thing we need to do is set up our categorical variables (`subno`,`emotion`,`face_id`) as factors. We want to use the `Fearful` type as the reference level for `emotion`.
+
+**What is the code to do this?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+```{r}
+df$emotion <- factor(df$emotion, levels = c("Fearful", "Happy"))   # Fearful = reference level
+df$subno   <- factor(df$subno)
+df$face_id <- factor(df$face_id)
+```
+
+To check the reference level of a factor we can use `levels(df$emotion)` and the reference level is whichever is returned first.
+
+```{r}
+levels(df$emotion)
+```
+
+:::
+:::
+
+
+If we check the summary of the data set we can see we have some participants with missing data in `traitanx` and `ACS`.
+
+```{r}
+summary(df)
+```
+
+Because this data is in long format the NAs are for the number of trials instead of participants. 
+
+We can use the `unique()` function to create a dataframe with one row per participant which makes it clearer in terms of number of participants. 
+```{r}
+pp <- unique(df[, c("subno", "traitanx", "ACS", "Age")])        # one row per participant
+summary(pp)
+```
+
+Mixed-effects models can handle participants having different numbers of observations, but they cannot use rows where a predictor is missing. Models containing these predictors drop those participants automatically, so models fitted to different data cannot be compared with likelihood ratio tests or AIC. To keep every comparison fair, we use the
+SAME participants for every model: those with complete data on the predictors.
+
+Previously we have used `subset()` and we will do so again, however, this time we will also use a function called `droplevels()`. Using `subset()` only leaves the three excluded participants as empty levels of `subno`, which can cause problems in later steps.
+
+```{r}
+dat <- droplevels(subset(df, !is.na(traitanx) & !is.na(ACS)))
+```
+
+The next thing we are going to do is to centre the data by subtracting the mean. The reason we want to centre is our model contains an interaction, `emotion * traitanx`. With an interaction, the coefficient for emotion is no longer “the effect of emotion”. It is the effect of emotion when trait anxiety is 0. The intercept has a similar meaning: it is the predicted RT for a fearful face when trait anxiety, attentional control and age are all 0. Nobody in our sample has a trait anxiety of 0 (the lowest score is 20), or an attentional control or age of 0, so these coefficients would describe people who don’t exist. They can even look misleading.
+
+Centring means subtracting the sample mean from each predictor, so that 0 now means “average”. Then: \ 
+
+
+the intercept is the predicted RT for a fearful face for a participant with average trait anxiety, attentional control and age; \ 
+
+the emotion coefficient is the happy–fearful difference for an average participant, which is what we actually want to know; \ 
+
+the traitanx coefficient is its slope for fearful faces.
+
+```{r}
+dat$traitanx_c <- dat$traitanx - mean(dat$traitanx)
+dat$ACS_c      <- dat$ACS      - mean(dat$ACS)
+dat$Age_c      <- dat$Age      - mean(dat$Age)
+```
+
+One thing to note is that this approach works because we have an equal number of trials for each participant. Therefore, the mean over rows equals the mean over participants. However, if we did have unequal numbers of trials per participant, the row mean would weight people with more trials more heavily. So we would want to calculate mean per participant.
+
+One final thing we are going to do is to change the units of our `RT` variable from seconds to milliseconds (ms), this will make it easier to see some of the effects on variance that would otherwise be very small numbers.
+
+**What is the code to do this and to create a new column in `dat` called `RT_ms`?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+```{r}
+dat$RT_ms   <- dat$RT * 1000    
+```
+
+:::
+:::
+
+
+
+
+## SECTION B. VISUALISING THE DATA
+
+Let's first examine the distribution of our RT data but split by trial, below is the ggplot2 version of this:
+```{r}
+ggplot(dat, aes(x = RT_ms)) +
+  geom_histogram(bins = 60, fill = "grey70", colour = "white") +
+  facet_wrap(~ emotion) +
+  labs(x = "Reaction time (ms)", y = "Number of trials", title = "Trial-level reaction times")
+```
+
+But we could have used the base R `hist()` function like this:
+
+```{r}
+par(mfrow = c(1, 2))   # two plots side by side
+
+hist(dat$RT_ms[dat$emotion == "Fearful"], breaks = 60, xlim = range(dat$RT_ms),
+     main = "Fearful", xlab = "Reaction time (ms)", ylab = "Number of trials")
+
+hist(dat$RT_ms[dat$emotion == "Happy"], breaks = 60, xlim = range(dat$RT_ms),
+     main = "Happy", xlab = "Reaction time (ms)", ylab = "Number of trials")
+```
+
+Using either approach we can see that trial-level RTs are right-skewed, as RT data usually are. 
+
+**Is this an issue for mixed-effects models? Does it violate any of the assumptions?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+Not directly: the assumptions concern the residuals and random effects, not the raw RTs. But skewed RTs often lead to skewed residuals, so we will check later.
+
+:::
+:::
+
+
+```{r}
+# Descriptives
+tapply(dat$RT_ms, dat$emotion, mean)
+tapply(dat$RT_ms, dat$emotion, sd)
+```
+
+
+## SECTION C. MIXED-EFFECTS MODELS
+
+The first stage of modelling is to fit a null model that analyses how much variation in RT is between participants. 
+
+**What would the formula for this be? Run the model**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+```{r}
+## 3a. Null model: how much of the variation is between participants? --------
+m0 <- lmer(RT_ms ~ 1 + (1 | subno), data = dat)
+summary(m0)
+```
+
+:::
+:::
+
+
+**How would we calculate the ICC for this model? Calculate the ICC for both effects and interpret what the two numbers represent.**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+```{r}
+vc0 <- as.data.frame(VarCorr(m0))
+vc0$vcov[1] / sum(vc0$vcov) 
+vc0$vcov[2] / sum(vc0$vcov) 
+```
+30.8% of the variance in RT lies between participants and 69.2% is residual (trial-to-trial) variance.
+:::
+:::
+
+As this design is crossed (every participant sees every face), we can also fit a model in which we fit random intercepts for the `face_id` factor.
+
+**Perform this model and again calculate the ICC, for all three factors. What does the ICC indicate?**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+```{r}
+## 3b. Faces: every participant sees every face, so participants and faces are CROSSED ---
+m0b <- lmer(RT_ms ~ 1 + (1 | subno) + (1 | face_id), data = dat)
+summary(m0b)
+
+
+vc0b <- as.data.frame(VarCorr(m0b))
+vc0b$vcov[1] / sum(vc0b$vcov) 
+vc0b$vcov[2] / sum(vc0b$vcov) 
+vc0b$vcov[3] / sum(vc0b$vcov) 
+```
+30.8% of the variance in RT lay between participants, 4.5% between faces, and 64.7% was residual (trial-to-trial) variance.
+
+:::
+:::
+
+
+Our next model will add `emotion` as a fixed effect, still with random intercepts for participants (`subno`) and `face_id`:
+
+```{r}
+## 3c. Add emotion as a fixed effect (random intercepts only) -----------------
+m1 <- lmer(RT_ms ~ emotion + (1 | subno) + (1 | face_id), data = dat)
+summary(m1)
+```
+
+Next we are going to fit a series of different models in which we allow different aspects to vary:
+
+```{r}
+## 3d. Let the effect of emotion vary -------------------------------------------
+# The emotion effect might differ between PARTICIPANTS (some people show a bigger
+# fearful-vs-happy difference) and between FACES (some faces are more effective).
+m2a <- lmer(RT_ms ~ emotion + (1 + emotion | subno) + (1 | face_id), data = dat)              # slopes by participant
+
+
+m2b <- lmer(RT_ms ~ emotion + (1 + emotion | subno) + (1 + emotion | face_id), data = dat)    
+
+
+m2c <- lmer(RT_ms ~ emotion + (1 | subno) + (1 + emotion | face_id), data = dat)              
+```
+
+
+**For each of the models (`m2a`,`m2b`,`m2c`) what are we fitting random slopes for?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+m2a - slopes by participant
+m2b - slopes by both
+m2c - slopes by face
+
+
+:::
+:::
+
+One important thing to test for in mixed model fitting is whether the fit is **singular**. A singular fit means a variance is estimated at (almost) zero or a correlation at +/-1. This occurs 
+when the model is more complex than the data support.
+
+If you encounter singular fits in your own models you can attempt to find a different fitting algorithm using the `lme4::allFit()` function, but it is often a sign that your model is overly complex given your data and you should think about sticking with a simpler model with less parameters.
+
+Here we can see that none of our four  models have singular fits.
+```{r}
+sapply(list(m1 = m1, m2a = m2a, m2c = m2c, m2b = m2b), isSingular)
+```
+We can then test the models against each other to see which fits the data best:
+
+```{r}
+
+anova(m1, m2a, m2b)          # intercepts -> + participant slopes -> + face slopes
+anova(m1, m2c, m2b)          # intercepts -> + face slopes -> + participant slopes
+
+```
+
+
+**Why can't we directly compare `m2a` and `m2c` in this way? What method could be used to compare them?**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+`m2a` and `m2c` have the same number of parameters and are not nested models so can't be compared in this way.
+
+However, we can compare them using AIC and BIC.
+
+:::
+:::
+
+
+```{r}
+AIC(m1, m2a, m2b, m2c)
+BIC(m1, m2a, m2b, m2c)
+```
+
+**Why are the AIC and BIC numbers here slightly different from those in the model comparison output table above?**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+The `anova()` function refits using ML, instead of the original REML. 
+
+If we wanted to get the values from the ML version we could use this code:
+
+```{r}
+cmp <- anova(m1, m2a, m2c, m2b)
+model_labels <- c(m1  = "Intercepts only (participant, face)",
+                  m2a = "+ emotion slopes by participant",
+                  m2c = "+ emotion slopes by face",
+                  m2b = "+ emotion slopes by both")
+
+#create a nicer output using a dataframe
+data.frame(model = model_labels[rownames(cmp)],
+           npar = cmp$npar, AIC = round(cmp$AIC, 1), BIC = round(cmp$BIC, 1), row.names = NULL)
+
+```
+
+:::
+:::
+
+**Which of the 4 models provides the best fit for the data?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+The model with the lowest AIC and BIC values is `m2b` which allows random intercepts and emotion slopes by both participant and `face_id`.
+
+We can also see this from the log-likelihood tests where `m2b` was a significant improvement over both `m2a` and `m2c`, both of which were significant improvements on the intercepts only model `m1`.
+
+:::
+:::
+
+
+Finally we can examine how the Estimate, Standard Errors and *p* values change as we make the model more realistic. 
+
+**Use the `summary()` function and find these statistics for the model with random intercepts, the model with random slopes and intercepts per participant, the model with randoms slopes and intercepts per `face_id`, and finally the model with random slopes and intercepts for both participants and `face_id`. What do you notice?**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+We can use the `summary()` function on each of the models like this:
+
+```{r}
+summary(m1) #random intercepts
+summary(m2a) #+participants slopes
+summary(m2c) #+face slopes
+summary(m2b) #+both slopes
+
+```
+
+However, the code below extracts the important statistics for this comparison so we can more easily compare them. Check that you can find where these statistics come from in the `summary()` output.
+
+```{r}
+# The emotion effect: compare what the p-value does as the model becomes more realistic
+sapply(list(`random intercepts` = m1, `+ participant slopes` = m2a,
+            `+ face slopes` = m2c, `+ both` = m2b),
+       function(m) round(coef(summary(m))["emotionHappy", c("Estimate", "Std. Error", "Pr(>|t|)")], 4))
+
+
+```
+
+**The estimate.** Every participant sees the same number of fearful and happy trials, and every face
+appears equally often in both expressions. In this balanced design the `emotionHappy` estimate is just the
+difference between the average happy and fearful RT (−2.39 ms), so it doesn't depend on the random-effects
+structure.
+
+**The standard error.** The random-intercepts model assumes that the effect of emotion is *identical* for
+every participant and every face. Under that assumption, all 17,280 trials are evidence about one single
+effect, so the estimate looks very precise (SE = 1.27). But the effect of emotion isn't the same for
+everyone. It varies between participants  and between faces. The average we
+estimate is only as precise as our samples of 72 people and 60 faces allow, however many trials each one
+completed. Collecting more trials from the same people doesn't tell us whether a different sample of people
+would show a different average.
+
+The uncertainty from each source adds up. Squaring the standard error gives the variance of the estimate:
+
+| Source | Contribution to the variance of the estimate |
+|---|---|
+| Trial-to-trial noise (all that random intercepts counts) | 1.6 |
+| Participants differ in their emotion effect | 2.5 |
+| Faces differ in their emotion effect | 2.3 |
+| **Total** | **6.4** (and √6.4 = 2.53, the SE of the full model) |
+
+The *p* values follow the same pattern, with the closest to significance being the random intercepts model, the others have higher *p* values. None of them show a significant `emotionHappy` effect.
+
+**Don't choose a model because of its p-value.** The random-intercepts model's *p* = .061 isn't "nearly
+significant". It is too small, because the model assumes something the data contradict (The model comparison earlier showed that
+allowing the emotion effect to vary fits much better). Choose the model on the basis of the design and
+model comparison, then report whatever *p*-value it gives.
+
+:::
+:::
+
+
+
+## SECTION D. ADDITIONAL PREDICTORS
+
+Once we have our best model we can add in the other predictors that the researchers were interested in `traitanx_c`, `ACS_c`, and `Age_c`. (We are using the `_c` versions because we mean centred them earlier).
+
+```{r}
+m_full <- lmer(RT_ms ~ emotion * traitanx_c + ACS_c + Age_c +
+                 (1 + emotion | subno) + (1 + emotion | face_id), data = dat)
+summary(m_full)
+isSingular(m_full)
+```
+We can then perform *F* tests for each Fixed Effect using the `anova()` function:
+```{r}
+anova(m_full)
+```
+
+**If you compare the p values for the `summary()` and `anova()` output do you notice any changes? Why might this be?**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+The only *p* value that changes is the one for the Fixed Effect of `traitanx_c`, it is 0.00947 for the *t* test and 0.005853 for the *F* test. 
+
+When a model has an interaction, the F-test for trait anxiety here tests its AVERAGE slope across the two emotions, whereas the `traitanx_c` row of `summary()` is the slope for FEARFUL trials only (the reference level). So the two p-values for trait anxiety differ slightly.
+For emotion the two agree because, with trait anxiety centred, the effect of emotion for an average person is also its average effect.
+
+
+:::
+:::
+
+In the model above the interaction of `emotion:traitanx_c` was non-significant. Therefore we want to decide if it is useful to include in the model at all. We can build a model without this effect and then compare how well the two fit: 
+
+```{r}
+m_noint <- lmer(RT_ms ~ emotion + traitanx_c + ACS_c + Age_c +
+                  (1 + emotion | subno) + (1 + emotion | face_id), data = dat)
+anova(m_noint, m_full)
+```
+
+If the interaction is not needed (here including it doesn't improve the model fit), the model without it gives the trait anxiety effect averaged over both emotions (a single slope that applies to fearful and happy trials).
+
+Whether to keep the interaction term is a judgement call. The AIC and BIC both prefer the model without the interaction.
+
+However, here we will keep it in the final model because it is the hypothesis under test (not a term we are selecting on fit). Its estimate and confidence interval are part of the answer to the research question. The trait anxiety coefficient in m_full is the slope for FEARFUL trials only; `summary(m_noint)` gives the slope averaged over both emotions. Many analysts would instead say: “The interaction was not significant, so we removed it and interpreted the main effects.” Either choice is justifiable but be clear in your write-up what you did and why.
+
+```{r}
+summary(m_noint)
+```
+
+Another comparison we want to make is if the addition of any of the new predictors improves the model fit when compared to the best fitting model based on `emotion` alone.
+
+**Perform this comparison and interpret the result**
+
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+
+```{r}
+anova(m2b, m_full)
+```
+Here we see that the model fit is improved with the addition of the `traitanx_c`, `emotion:traitanx_c`,  `ACS_c`, and `Age_c` Fixed Effects.
+
+:::
+:::
+
+## SECTION E. ASSUMPTION CHECKS
+
+For many of the assumption checks we want to compare the residuals to the fitted values and then split these by various factors in the data (such as fixed effects). One way to make some of these checks easier to code is to create new columns in our `dat` dataframe that hold the residual and fitted value for each point:
+
+```{r}
+dat$resid  <- resid(m_full)
+dat$fitted <- fitted(m_full)
+```
+
+
+The first plot we want to check is this:
+
+```{r}
+plot(m_full, type = c("p", "smooth"), alpha = 0.2)
+```
+
+**Which assumptions does this plot inform us about and do you have any concerns?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+Linearity and constant variance by showing residuals against fitted values. Here we don't have any evidence for non-linearity or a change in variance.
+
+
+:::
+:::
+
+Another check is performed by the code below:
+```{r}
+
+boxplot(resid ~ emotion, data = dat, ylab = "Residual (ms)")
+tapply(dat$resid, dat$emotion, sd)
+boxplot(resid ~ subno, data = dat, las = 2, cex.axis = 0.5, ylab = "Residual (ms)",
+        main = "Residuals by participant")
+```
+**What do these results show and what do they tell us about the assumptions of the mixed effects model?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+The residual spread is similar for fearful and happy trials. Across participants it is not constant: some participants are noticeably more variable than others. We can quantify this with:
+```{r}
+sd_by_participant <- tapply(dat$resid, dat$subno, sd) 
+
+range(sd_by_participant)
+```
+
+This shows the SD ranging from about 57 to 112 ms, with slower participants more variable. This is typical of reaction time data. We will see whether it matters in the sensitivity analysis.
+
+
+:::
+:::
+
+A further check is shown below:
+```{r}
+qqnorm(dat$resid); 
+qqline(dat$resid)
+```
+
+**What do these results show and what do they tell us about the assumptions of the mixed effects model? Why might this be?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+This check is for the normality of the residuals. Here we see a departure from normality as the right tail of the distribution is markedly higher than the theoretical quantiles of a normally distributed variable. This is because reaction times are right-skewed (a few very slow responses), so the largest residuals are bigger than a normal distribution allows. We will come back to how to check if this is important later. We saw this skew in the histograms of reaction time earlier.
+
+
+:::
+:::
+
+
+The final check we will perform is below:
+```{r}
+re_subno <- ranef(m_full)$subno
+re_face  <- ranef(m_full)$face_id
+par(mfrow = c(2, 2))
+qqnorm(re_subno[["(Intercept)"]],  main = "Participant intercepts"); qqline(re_subno[["(Intercept)"]])
+qqnorm(re_subno[["emotionHappy"]], main = "Participant emotion slopes"); qqline(re_subno[["emotionHappy"]])
+qqnorm(re_face[["(Intercept)"]],   main = "Face intercepts"); qqline(re_face[["(Intercept)"]])
+qqnorm(re_face[["emotionHappy"]],  main = "Face emotion slopes"); qqline(re_face[["emotionHappy"]])
+par(mfrow = c(1, 1))
+
+```
+
+**What do these plots test for and indicate?**
+
+::: {.answer-box}
+<input type="text" class="answer-input" placeholder="Type your answer here...">
+<button class="reveal-btn" disabled>Show answer</button>
+
+::: {.answer}
+
+Normality of the random effects (participants and faces). Here, the intercepts and slopes all seem to be normally distributed.
+
+
+:::
+:::
+
+
+To test whether the skew in the reaction times really is a problem for this analysis we can perform something called a **sensitivity analysis**. Here we will log transform the reaction times, re-run our model with these and check if any of our conclusions differ between the two models:
+
+```{r}
+dat$logRT <- log(dat$RT_ms) #log transform
+#run model with same parameters as m_full
+m_log <- lmer(logRT ~ emotion * traitanx_c + ACS_c + Age_c +
+                (1 + emotion | subno) + (1 + emotion | face_id), data = dat)
+summary(m_log)
+
+#check normality of residuals
+qqnorm(resid(m_log)); qqline(resid(m_log))  
+
+
+```
+We can see from the QQ plot that the log transform removed the skew and now only the extreme ends depart from the normal, and they do so in both directions: the lowest residuals sit below the line and the highest sit above it. So the tails are slightly heavier than a normal distribution allows (a few more very small and very large residuals than expected), but the plot is roughly symmetric. Although the residuals are not strictly normal, symmetric tail heaviness doesn’t bias the estimates. Skew pulls the means in one direction and makes the average a poor summary. Heavy tails on both sides mainly add noise, and with this much data the effect on the fixed-effect estimates is small. We can also see that the log transform has reduced the spread of the residuals across participants:
+
+```{r}
+
+# check the spread of residual per participant
+sd_by_participant <- tapply(resid(m_log), dat$subno, sd) 
+
+range(sd_by_participant)
+```
+
+
+Finally we can compare the results for our main effects of interest:
+```{r}
+# helper function used here and later
+fmt_p <- function(p) ifelse(p < .001, "< .001", sub("^0", "", sprintf("%.3f", p)))
+
+# side by side: the key terms in both analyses
+key <- c("emotionHappy", "traitanx_c", "emotionHappy:traitanx_c")
+data.frame(term = key,
+           t_RT_ms = round(coef(summary(m_full))[key, "t value"], 2),
+           p_RT_ms = fmt_p(coef(summary(m_full))[key, "Pr(>|t|)"]),
+           t_logRT = round(coef(summary(m_log))[key, "t value"], 2),
+           p_logRT = fmt_p(coef(summary(m_log))[key, "Pr(>|t|)"]))
+```
+
+We can see that the same pattern of results is found, with only the `traitanx_c` effect being significant. The changes in *t* and *p* values are all relatively minor. These results indicate that our results are not sensitive to the skew in the original data. Given that it is easier to interpret the results in the original units we would stick to using the original model in our write-up but would include the fact that we performed this check.
+
+## SECTION F. FULL APA WRITE-UP 
+
+
+
+
+Here would be a full APA write-up including the methods. Note that normally you wouldn't include the chunks of **R** code in the write-up and would just include the tables they produce but I have left them here to show how they were created.
+
+### Method (analysis)
+
+Reaction times (RTs, in milliseconds) were analysed with linear mixed-effects models fitted in R ([R version]) using the lme4 package (Bates et al., 2015). p-values used Satterthwaite's approximation for degrees of freedom, via lmerTest (Kuznetsova et al., 2017). Each participant completed 240 trials (120 with fearful faces and 120 with happy faces) using 60 face identities, each shown in both expressions and each face–expression combination presented twice. Three of the 75 participants had missing values on trait anxiety (n = 1) or attentional control (n = 2) and were excluded, leaving 72 participants and 17,280 trials. The same participants were used in every model so that models could be compared.
+
+Emotion was coded with fearful faces as the reference level. Trait anxiety (*M* = 41.33, *SD* = 9.68), attentional control (*M* = 49.99, *SD* = 8.14) and age (*M* = 23.01, *SD* = 6.84, range 18–57) were centred on their sample means, so that the emotion coefficient is the happy–fearful difference for a participant with average trait anxiety.
+
+Participants and faces were treated as crossed random factors, because every participant saw every face. The random-effects structure was selected before testing the predictors. Starting from a model with random intercepts for participants and faces and emotion as the only fixed effect, we added random slopes for emotion by participant, by face, and by both. Models were compared with likelihood ratio tests (for nested models), AIC and BIC, refitting with maximum likelihood. Allowing the effect of emotion to vary across participants and faces is also justified by the design, since each participant and each face contributes trials in both emotion conditions (Barr et al., 2013). The retained structure was then used in the full model, which contained emotion, trait anxiety, their interaction, attentional control and age. The interaction was tested with a likelihood ratio test, and the final model was estimated with restricted maximum likelihood (REML).
+
+Model assumptions (linearity, constant variance, and normality of the residuals and of the random effects) were checked visually. Because RTs are right-skewed, the final model was also refitted to log-transformed RTs as a sensitivity analysis.
+
+### Results
+#### Variance in reaction times
+
+In a model with random intercepts only, 30.8% of the variance in RT lay between participants, 4.5% between faces, and 64.7% was residual (trial-to-trial) variance.
+
+#### Random-effects structure
+
+
+**Table 1** *Comparison of random-effects structures (emotion as the only fixed effect)*
+```{r}
+#| label: tbl-random-structure
+#| tbl-cap: "Comparison of random-effects structures (labelled by model name)"
+#Table 1: random-effects structures (labelled by model name)
+
+#anova() re-orders models by number of parameters, so we label the rows by model name.
+
+tab1 <- data.frame(
+  `Random effects` = model_labels[rownames(cmp)],
+  Parameters = cmp$npar, AIC = cmp$AIC, BIC = cmp$BIC, `−2 log-likelihood` = -2 * cmp$logLik,
+  check.names = FALSE, row.names = NULL)
+kable(tab1, digits = 1)
+```
+
+Allowing the effect of emotion to vary significantly improved on random intercepts alone, whether the slopes were added for participants, χ²(2) = 42.48, *p* < .001, for faces, χ²(2) = 30.88, *p* < .001, or for both, χ²(4) = 74.33, *p* < .001. The model with slopes for both was also superior to the model with slopes by participant only, χ²(2) = 31.85, *p* < .001, and to the model with slopes by face only, χ²(2) = 43.45, *p* < .001. It had the lowest AIC and BIC (Table 1), and none of the models had a singular fit, so it was retained.
+
+The choice of structure changed the inference about emotion. With random intercepts only, fearful faces were responded to 2.39 ms more slowly than happy faces, SE = 1.27, *p* = .061. With random slopes for both participants and faces the estimate was unchanged but its standard error doubled (SE = 2.53, *p* = .349), because participants and faces differed substantially in the size of the emotion effect.
+
+#### Trait anxiety and emotion
+
+**Table 2** *Fixed effects from the final linear mixed model*
+
+```{r}
+#| label: tbl-fixed-effects
+#| tbl-cap: "Fixed effects from the final linear mixed model"
+ 
+#Table 2: fixed effects of the final model
+co <- summary(m_full)$coefficients
+ci <- confint(m_full, method = "Wald")[rownames(co), ]
+tab2 <- data.frame(
+  Term = c("Intercept (Fearful, average person)", "Emotion (Happy − Fearful)", "Trait anxiety (Fearful slope)",
+           "Attentional control", "Age", "Emotion × Trait anxiety"),
+  b  = sprintf("%.2f", co[, "Estimate"]),
+  SE = sprintf("%.2f", co[, "Std. Error"]),
+  CI = sprintf("[%.2f, %.2f]", ci[, 1], ci[, 2]),
+  df = sprintf("%.1f", co[, "df"]),
+  t  = sprintf("%.2f", co[, "t value"]),
+  p  = fmt_p(co[, "Pr(>|t|)"]))
+# NOTE: the order of the Term labels must match rownames(co); check with rownames(co)
+rownames(co)
+kable(tab2, row.names = FALSE, align = c("l", rep("r", 6)),
+      col.names = c("Term", "*b*", "*SE*", "95% CI", "*df*", "*t*", "*p*"))
+
+```
+
+*Note*. Reaction times in ms. Predictors are mean-centred. Confidence intervals are Wald intervals.
+
+The relationship between trait anxiety and RT did not differ reliably between fearful and happy faces (emotion × trait anxiety: b = −0.16 ms per point, 95% CI [−0.58, 0.25], t(70.0) = −0.77, p = .444; likelihood ratio test, χ²(1) = 0.60, p = .437). The estimated slope of trait anxiety was −1.99 ms per point for fearful faces (95% CI [−3.45, −0.53]) and −2.15 ms per point for happy faces (95% CI [−3.58, −0.73]). In a model without the interaction, higher trait anxiety was associated with faster responses across both emotions, b = −2.13 ms per point, SE = 0.73, t(68.0) = −2.93, p = .005, so that a 10-point higher trait anxiety score corresponded to responses about 21 ms faster. Attentional control and age were not significant predictors (Table 2).
+
+
+
+#### Random effects
+
+**Table 3** *Random effects of the final model*
+
+```{r}
+#| label: tbl-random-effects
+#| tbl-cap: "Random effects of the final model"
+#Table 3: random effects of the final model
+vc <- as.data.frame(VarCorr(m_full))
+
+fmt_r <- function(r) sub("^(-?)0\\.", "\\1.", sprintf("%.2f", r))
+   tab3 <- data.frame(
+     Grouping    = c("Participant", "", "Face", "", "Residual"),
+     Term        = c("Intercept", "Emotion (happy − fearful)", "Intercept", "Emotion (happy − fearful)", ""),
+     Variance    = sprintf("%.1f", vc$vcov[c(1, 2, 4, 5, 7)]),
+     SD          = sprintf("%.1f", vc$sdcor[c(1, 2, 4, 5, 7)]),
+     Correlation = c("", fmt_r(vc$sdcor[3]), "", fmt_r(vc$sdcor[6]), ""))
+   kable(tab3, align = c("l", "l", "r", "r", "r"), col.names = c("Grouping", "Term", "Variance", "*SD*", "Correlation"))
+```
+
+
+Participants differed in their average speed (*SD* = 56.5 ms) and in the size of their emotion effect (*SD* = 13.5 ms), which was much larger than the average emotion effect (−2.4 ms). Faces also differed in overall speed (*SD* = 23.5 ms) and in the size of the emotion effect (*SD* = 11.8 ms).
+
+#### Assumptions and sensitivity analysis
+
+Plots of the residuals against the fitted values showed no clear curvature, but the spread of the residuals increased with the fitted values (residual SD of 69 ms for the lowest fifth of fitted values and 96 ms for the highest fifth), and participants who responded more slowly were more variable (residual SD ranged from 57 to 112 ms across participants, r = .88 with mean RT). The residual SD was similar for fearful (82.3 ms) and happy (83.4 ms) trials, and the random effects for participants and faces were approximately normal. The residuals were also positively skewed, as is typical of RT data. A model of log-transformed RTs, in which the residuals were closer to normal and their spread no longer depended on participant speed (SD range 0.14–0.19, *r* = .02), led to the same conclusions: the emotion × trait anxiety interaction was not significant, *t*(70.0) = −1.00, *p* = .320, and trait anxiety remained a significant predictor of faster responses, *t*(68.9) = −2.76, *p* = .007.
+
+
+Figure: model-predicted lines (fixed effects only) with the participant means:
+```{r}
+# participant means for each emotion (one point per participant per emotion)
+pm <- aggregate(RT_ms ~ subno + emotion + traitanx, data = dat, FUN = mean)
+
+
+newd <- expand.grid(traitanx_c = seq(min(dat$traitanx_c), max(dat$traitanx_c), length.out = 50),
+                    emotion = c("Fearful", "Happy"), ACS_c = 0, Age_c = 0)
+newd$emotion <- factor(newd$emotion, levels = c("Fearful", "Happy"))
+newd$pred <- predict(m_full, newdata = newd, re.form = NA)
+newd$traitanx <- newd$traitanx_c + mean(dat$traitanx)
+
+ggplot() +
+  geom_point(data = pm[pm$subno %in% dat$subno, ], aes(x = traitanx, y = RT_ms, colour = emotion, shape = emotion),
+             size = 2, alpha = 0.6) +
+  geom_line(data = newd, aes(x = traitanx, y = pred, colour = emotion), linewidth = 1.2) +
+  labs(x = "Trait anxiety", y = "Reaction time (ms)", colour = NULL, shape = NULL,
+       title = "Trait anxiety and reaction time to fearful and happy faces",
+       subtitle = "Lines: model estimates (average age and attentional control). Points: participant means.") +
+  theme(legend.position = "bottom")
 ```

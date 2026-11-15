@@ -43,7 +43,7 @@ library(lmerTest)
 ```
 
 
-## SECTION A. THE DATASET
+## SECTION A. THE DATASET {#sec-fearfulface-trialdata}
 
 The data set we will use this week is a modified version of the one we used in the Week 4 Lab. The full explanation can be found there ([Lab 4. Section A](PS71020_Unit4_Lab.qmd#sec-fearfulface-data)) but here is a brief summary:
 
