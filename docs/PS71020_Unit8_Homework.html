@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>PS71020_Unit8_Homework – PG Stats Intro</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="worksheet.css">
+<link rel="stylesheet" href="answer-gate.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">PG Stats Intro</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Pre_sessional_0.html"> 
+<span class="menu-text">Unit 0</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link active" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
+  <li><a href="#section-a.-the-dataset" id="toc-section-a.-the-dataset" class="nav-link" data-scroll-target="#section-a.-the-dataset">SECTION A. THE DATASET</a></li>
+  <li><a href="#section-b.-contingency-table-chi-square" id="toc-section-b.-contingency-table-chi-square" class="nav-link" data-scroll-target="#section-b.-contingency-table-chi-square">SECTION B. CONTINGENCY TABLE &amp; CHI-SQUARE</a></li>
+  <li><a href="#section-c.-fishers-exact-test" id="toc-section-c.-fishers-exact-test" class="nav-link" data-scroll-target="#section-c.-fishers-exact-test">SECTION C. FISHER’S EXACT TEST</a></li>
+  <li><a href="#section-d.-logistic-regression" id="toc-section-d.-logistic-regression" class="nav-link" data-scroll-target="#section-d.-logistic-regression">SECTION D. LOGISTIC REGRESSION</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">PS71020_Unit8_Homework</h1>
+<p class="subtitle lead">Categorical Data</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-outcomes" class="level3">
+<h3 class="anchored" data-anchor-id="learning-outcomes">Learning Outcomes: &nbsp;</h3>
+<p>1 - Perform a chi-square test and see a full APA write-up &nbsp;</p>
+<p>2 - Perform a Fisher Exact test and see a full APA write-up &nbsp;</p>
+<p>3 - Perform a logistic regression and see a full APA write-up &nbsp;</p>
+</section>
+<section id="materials-used" class="level3">
+<h3 class="anchored" data-anchor-id="materials-used">Materials Used:</h3>
+<p>We will use the package <strong>ggplot2</strong> this is already installed on the RStudio Server but if you are working on your own Laptop you may need to install it.</p>
+</section>
+<section id="create-a-new-project" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-new-project">CREATE A NEW PROJECT</h2>
+<p>Just as we did in previous weeks we are going to start by creating a new project for this week’s homework. Download the data from the VLE (In the Week 8 Homework Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: <a href="https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/bystander_study.csv">Github Link</a>.</p>
+<p>If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.</p>
+<p>Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.</p>
+<p>Now let’s load the packages that we will need for this analysis.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="section-a.-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="section-a.-the-dataset">SECTION A. THE DATASET</h2>
+<p>This data set is generated data and comes from an imaginary study that investigates the factors that affect the likelihood of people intervening in an emergency medical situation in which they are a bystander.</p>
+<p>The data has 180 participants and these columns: <code>id</code> - Participant ID &nbsp;</p>
+<p><code>group_size</code> - The size of the group present at the incident (Alone / Small group (2–3) / Large group 4+) &nbsp;</p>
+<p><code>training</code> - What level of training the individual has (None / First aid / Medical professional) &nbsp;</p>
+<p><code>empathy</code> - A questionnaire that measures their empathy levels higher scores indicate greater empathy (0–28) &nbsp;</p>
+<p><code>response</code> - What they did in response to the situation (Did nothing / Told someone else / Helped directly). &nbsp;</p>
+<p>First we read the .csv file</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"bystander_study.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>And then we re-code categorical variables</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>group_size <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>group_size,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Alone"</span>, <span class="st">"Small group (2-3)"</span>, <span class="st">"Large group (4+)"</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>training   <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>training,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"None"</span>, <span class="st">"First aid"</span>, <span class="st">"Medical professional"</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>response   <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>response,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Did nothing"</span>, <span class="st">"Told someone else"</span>, <span class="st">"Helped directly"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then, check the first few rows of the data set:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id group_size             training empathy          response
+1  1      Alone                 None      17 Told someone else
+2  2      Alone                 None      18   Helped directly
+3  3      Alone            First aid      17   Helped directly
+4  4      Alone                 None      23   Helped directly
+5  5      Alone            First aid      21   Helped directly
+6  6      Alone Medical professional      14   Helped directly</code></pre>
+</div>
+</div>
+<p><strong>How could we check the counts in each of the categories of the outcome variable <code>response</code>?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>There are multiple ways of doing this but if we follow the method used in the lab the <code>table()</code> function is the easiest and also what we can use later to build contingency tables.:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>response)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+      Did nothing Told someone else   Helped directly 
+               34                56                90 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="section-b.-contingency-table-chi-square" class="level2">
+<h2 class="anchored" data-anchor-id="section-b.-contingency-table-chi-square">SECTION B. CONTINGENCY TABLE &amp; CHI-SQUARE</h2>
+<p>The first question that the researchers want to investigate is if the size of the group that the participant was related to the way that they responded.</p>
+<p><strong>Create a contingency table (with row and column sums) and also a proportions table</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tab_g <span class="ot">&lt;-</span> <span class="fu">table</span>(df<span class="sc">$</span>group_size, df<span class="sc">$</span>response)       <span class="co"># predictor first, so it forms the rows</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">addmargins</span>(tab_g)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   
+                    Did nothing Told someone else Helped directly Sum
+  Alone                       2                16              42  60
+  Small group (2-3)          12                20              28  60
+  Large group (4+)           20                20              20  60
+  Sum                        34                56              90 180</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proportions</span>(tab_g, <span class="at">margin =</span> <span class="dv">1</span>)   <span class="co"># row proportions</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   
+                    Did nothing Told someone else Helped directly
+  Alone              0.03333333        0.26666667      0.70000000
+  Small group (2-3)  0.20000000        0.33333333      0.46666667
+  Large group (4+)   0.33333333        0.33333333      0.33333333</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">proportions</span>(tab_g, <span class="at">margin =</span> <span class="dv">1</span>), <span class="dv">1</span>)   <span class="co"># row percentages</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   
+                    Did nothing Told someone else Helped directly
+  Alone                     3.3              26.7            70.0
+  Small group (2-3)        20.0              33.3            46.7
+  Large group (4+)         33.3              33.3            33.3</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>It would be good to visualise this, in the lab we created a stacked bar chart to illustrate how a binary outcome was related to a 3 level predictor.</p>
+<p><strong>Try to adapt that code to show how this 3-level outcome is related to the 3-level predictor</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> group_size, <span class="at">fill =</span> response)) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Did nothing"</span> <span class="ot">=</span> <span class="st">"#999999"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Told someone else"</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Helped directly"</span> <span class="ot">=</span> <span class="st">"#0072B2"</span>)) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Response to the emergency by number of bystanders"</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Bystanders present"</span>, <span class="at">y =</span> <span class="st">"Proportion of participants"</span>, <span class="at">fill =</span> <span class="st">"Response"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit8_Homework_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Perform a chi-square test, does this show a significant deviation from what would be expected under the null hypothesis?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>chi_g <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(tab_g)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>chi_g</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  tab_g
+X-squared = 23.191, df = 4, p-value = 0.000116</code></pre>
+</div>
+</div>
+<p>Yes, there is a significant result (<em>p</em> &lt; 0.001).</p>
+</div>
+</div>
+<p>However, before we trust the robustness of this result we should check the assumptions of expected counts being sufficient.</p>
+<p><strong>What are the two rules about expected counts? Check whether these are satisfied in this data.</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The rules are: 1 - Are all expected counts at least 1 &nbsp; 2 - Are at least 80% of the expected counts at least 5 &nbsp;</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(chi_g<span class="sc">$</span>expected, <span class="dv">2</span>) <span class="co">#display expected count table</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   
+                    Did nothing Told someone else Helped directly
+  Alone                   11.33             18.67              30
+  Small group (2-3)       11.33             18.67              30
+  Large group (4+)        11.33             18.67              30</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(chi_g<span class="sc">$</span>expected <span class="sc">&gt;=</span> <span class="dv">1</span>)        <span class="co"># if all are at least 1 then this returns TRUE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chi_g<span class="sc">$</span>expected <span class="sc">&gt;=</span> <span class="dv">5</span>)       <span class="co"># if the mean of this is at least 0.8 then at least 80% of cells have at least 5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Here: 1 (100%) means every cell at least 5, so the chi-square is valid</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We meet both of these assumptions, so the results of the chi-square test appear valid.</p>
+</div>
+</div>
+<p>Next we want to know which individual cells are different from the expected counts at the .05 level. We do this by checking another component of the <code>chisq.test()</code> output.</p>
+<p><strong>What is this component? What does it represent and which cells does it indicate a significantly different than expected?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>We want to check the standardised residuals, they are found in <code>chi_g$stdres</code>. We can print a table of their values like this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(chi_g<span class="sc">$</span>stdres, <span class="dv">2</span>)          <span class="co"># which cells differ from expected? (beyond +/- 1.96)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   
+                    Did nothing Told someone else Helped directly
+  Alone                   -3.77             -0.91            3.79
+  Small group (2-3)        0.27              0.46           -0.63
+  Large group (4+)         3.50              0.46           -3.16</code></pre>
+</div>
+</div>
+<p>To check which ones are outside of the +/- 1.96 boundary we can use:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abs</span>(<span class="fu">round</span>(chi_g<span class="sc">$</span>stdres, <span class="dv">2</span>)) <span class="sc">&gt;</span> <span class="fl">1.96</span>          <span class="co"># which cells differ from expected? (beyond +/- 1.96)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   
+                    Did nothing Told someone else Helped directly
+  Alone                    TRUE             FALSE            TRUE
+  Small group (2-3)       FALSE             FALSE           FALSE
+  Large group (4+)         TRUE             FALSE            TRUE</code></pre>
+</div>
+</div>
+<p>We can see that the Alone-Did Nothing, Alone-Helped Directly, Large Group-Did Nothing, and the Large Group-Helped Directly cells exceed these boundaries. Whereas the Told someone else response was always within the expected boundaries.</p>
+</div>
+</div>
+<p>Next we want to calculate the effect size measure for a chi-square test.</p>
+<p><strong>What is the appropriate effect size measure and how is it calculated? What size of effect is this according to the rules of thumb</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The effect size is Cramer’s V, the formula is: V = sqrt(chi-square / (N * (k - 1)))</p>
+<p>where k = smaller of rows and columns</p>
+<p>Here is the code to calculate it:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>chi_sq_g <span class="ot">&lt;-</span> <span class="fu">unname</span>(chi_g<span class="sc">$</span>statistic)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>N        <span class="ot">&lt;-</span> <span class="fu">sum</span>(tab_g)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>k        <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">dim</span>(tab_g))</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>V_g      <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(chi_sq_g <span class="sc">/</span> (N <span class="sc">*</span> (k <span class="sc">-</span> <span class="dv">1</span>)))</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(V_g, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.25</code></pre>
+</div>
+</div>
+<p>This is a medium effect, remember that in this case k = 3 so we use the second row of the table presented in the lecture slides.</p>
+</div>
+</div>
+<p>The code below produces an APA style write-up of the whole analysis:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Helper functions for APA formatting --------------------</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># APA: no leading zero for p and V, and p &lt; .001 rather than p = .000</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>apa_p <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="cf">if</span> (p <span class="sc">&lt;</span> .<span class="dv">001</span>) <span class="st">"&lt; .001"</span> <span class="cf">else</span> <span class="fu">paste0</span>(<span class="st">"= "</span>, <span class="fu">sub</span>(<span class="st">"^0"</span>, <span class="st">""</span>, <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, p)))</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>apa_2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sub</span>(<span class="st">"^0"</span>, <span class="st">""</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, x))</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"A chi-square test of independence showed that response to the emergency depended on the number of bystanders present, χ²(%d, N = %d) = %.2f, p %s, Cramer's V = %s. Participants who were alone were the least likely to do nothing (%.1f%%), compared with %.1f%% in small groups and %.1f%% in large groups. Adjusted standardised residuals showed that people alone helped directly more often than expected (z = %.2f), while people in large groups did nothing more often than expected (z = %.2f).</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  chi_g<span class="sc">$</span>parameter, N, chi_sq_g, <span class="fu">apa_p</span>(chi_g<span class="sc">$</span>p.value), <span class="fu">apa_2</span>(V_g),</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100</span> <span class="sc">*</span> <span class="fu">proportions</span>(tab_g, <span class="dv">1</span>)[<span class="st">"Alone"</span>, <span class="st">"Did nothing"</span>],</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100</span> <span class="sc">*</span> <span class="fu">proportions</span>(tab_g, <span class="dv">1</span>)[<span class="st">"Small group (2-3)"</span>, <span class="st">"Did nothing"</span>],</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100</span> <span class="sc">*</span> <span class="fu">proportions</span>(tab_g, <span class="dv">1</span>)[<span class="st">"Large group (4+)"</span>, <span class="st">"Did nothing"</span>],</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  chi_g<span class="sc">$</span>stdres[<span class="st">"Alone"</span>, <span class="st">"Helped directly"</span>],</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  chi_g<span class="sc">$</span>stdres[<span class="st">"Large group (4+)"</span>, <span class="st">"Did nothing"</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre class="wrap-output"><code>A chi-square test of independence showed that response to the emergency depended on the number of bystanders present, χ²(4, N = 180) = 23.19, p &lt; .001, Cramer's V = .25. Participants who were alone were the least likely to do nothing (3.3%), compared with 20.0% in small groups and 33.3% in large groups. Adjusted standardised residuals showed that people alone helped directly more often than expected (z = 3.79), while people in large groups did nothing more often than expected (z = 3.50).</code></pre>
+</div>
+</div>
+<p>When writing up your own tests there is no need to use code to do it but it does have the advantage of being able to automatically produce the output even if your data changes. However, the disadvantage is that some formatting specific such as using italics on the correct aspects and symbols are missed. Here would be a fully compliant way:</p>
+<p>A chi-square test of independence showed that response to the emergency depended on the number of bystanders present, <span class="math inline">\(\chi^2\)</span>(4, N = 180) = 23.19, <em>p</em> &lt; .001, Cramer’s <em>V</em> = .25. Participants who were alone were the least likely to do nothing (3.3%), compared with 20.0% in small groups and 33.3% in large groups. Adjusted standardised residuals showed that people alone helped directly more often than expected (<em>z</em> = 3.79), while people in large groups did nothing more often than expected (<em>z</em> = 3.50).</p>
+</section>
+<section id="section-c.-fishers-exact-test" class="level2">
+<h2 class="anchored" data-anchor-id="section-c.-fishers-exact-test">SECTION C. FISHER’S EXACT TEST</h2>
+<p>The next question the researchers wanted to answer is whether the <code>training</code> status of participants was related to how they would respond.</p>
+<p><strong>Using the code you used above as a guide run a chi-square test for this analysis and check the assumptions of the test. What do you notice and what should we do instead?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tab_t <span class="ot">&lt;-</span> <span class="fu">table</span>(df<span class="sc">$</span>training, df<span class="sc">$</span>response)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">addmargins</span>(tab_t)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      
+                       Did nothing Told someone else Helped directly Sum
+  None                          27                50              58 135
+  First aid                      6                 6              26  38
+  Medical professional           1                 0               6   7
+  Sum                           34                56              90 180</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">proportions</span>(tab_t, <span class="at">margin =</span> <span class="dv">1</span>), <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      
+                       Did nothing Told someone else Helped directly
+  None                        20.0              37.0            43.0
+  First aid                   15.8              15.8            68.4
+  Medical professional        14.3               0.0            85.7</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the chi-square FIRST to see why it can't be trusted: note the warning</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>chi_t <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(tab_t)      <span class="co"># R warns: "Chi-squared approximation may be incorrect"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in chisq.test(tab_t): Chi-squared approximation may be incorrect</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(chi_t<span class="sc">$</span>expected, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      
+                       Did nothing Told someone else Helped directly
+  None                       25.50             42.00            67.5
+  First aid                   7.18             11.82            19.0
+  Medical professional        1.32              2.18             3.5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(chi_t<span class="sc">$</span>expected <span class="sc">&gt;=</span> <span class="dv">1</span>)        <span class="co"># TRUE ... but</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chi_t<span class="sc">$</span>expected <span class="sc">&gt;=</span> <span class="dv">5</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6666667</code></pre>
+</div>
+</div>
+<p>Although all cells have at least 1 expected count in, only 66.7% have expected counts of at least 5. We can see this is due to the Medical Professional group generally having low numbers leading to low counts, which makes sense given the rarity of medical professionals to the general public and first-aid trained people.</p>
+<p>We can also see that the <code>chisq.test()</code> function itself produced a warning suggesting that it may be incorrect.</p>
+<p>The solution is to use a Fisher’s Exact Test.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>fisher_t <span class="ot">&lt;-</span> <span class="fu">fisher.test</span>(tab_t, <span class="at">workspace =</span> <span class="fl">2e7</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>fisher_t</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  tab_t
+p-value = 0.009493
+alternative hypothesis: two.sided</code></pre>
+</div>
+</div>
+<p>For tables bigger than 2 x 2 R uses the Freeman-Halton extension automatically. A larger ‘workspace’ stops R running out of memory on the exact calculation, this is what the <code>workspace = 2e7</code> input argument specifies. You can see this discussed in the help for the <code>fisher.test()</code> function.</p>
+<p>Fisher’s test gives no test statistic and no effect size, so the p-value is reported alone. (If the exact test were too slow you could use simulate.p.value = TRUE instead.)</p>
+<p>The chi-square <em>p</em> (.013) and the Fisher <em>p</em> (.009) are both significant and come to the same conclusion here, but the chi-square p can’t be trusted and wouldn’t always agree</p>
+</div>
+</div>
+<p>Here would be an APA format write up:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Because the expected counts were too small for a χ² test (only %.0f%% of cells had an expected count of at least 5), a Fisher-Freeman-Halton exact test was used. Response to the emergency was related to training, p %s. Medical professionals were the most likely to help directly (%d of %d, %.1f%%), followed by first aiders (%.1f%%) and untrained participants (%.1f%%); %.1f%% of untrained participants did nothing.</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(chi_t<span class="sc">$</span>expected <span class="sc">&gt;=</span> <span class="dv">5</span>), <span class="fu">apa_p</span>(fisher_t<span class="sc">$</span>p.value),</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  tab_t[<span class="st">"Medical professional"</span>, <span class="st">"Helped directly"</span>], <span class="fu">sum</span>(tab_t[<span class="st">"Medical professional"</span>, ]),</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100</span> <span class="sc">*</span> <span class="fu">proportions</span>(tab_t, <span class="dv">1</span>)[<span class="st">"Medical professional"</span>, <span class="st">"Helped directly"</span>],</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100</span> <span class="sc">*</span> <span class="fu">proportions</span>(tab_t, <span class="dv">1</span>)[<span class="st">"First aid"</span>, <span class="st">"Helped directly"</span>],</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100</span> <span class="sc">*</span> <span class="fu">proportions</span>(tab_t, <span class="dv">1</span>)[<span class="st">"None"</span>, <span class="st">"Helped directly"</span>],</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100</span> <span class="sc">*</span> <span class="fu">proportions</span>(tab_t, <span class="dv">1</span>)[<span class="st">"None"</span>, <span class="st">"Did nothing"</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre class="wrap-output"><code>Because the expected counts were too small for a χ² test (only 67% of cells had an expected count of at least 5), a Fisher-Freeman-Halton exact test was used. Response to the emergency was related to training, p = .009. Medical professionals were the most likely to help directly (6 of 7, 85.7%), followed by first aiders (68.4%) and untrained participants (43.0%); 20.0% of untrained participants did nothing.</code></pre>
+</div>
+</div>
+</section>
+<section id="section-d.-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="section-d.-logistic-regression">SECTION D. LOGISTIC REGRESSION</h2>
+<p>The final research question that they wanted to investigate in this study is if the empathy of participants is related to the chances of them helping.</p>
+<p><strong>Why can we not use a chi-square test in this situation?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Our predictor here is continuous and chi-square only deals with categorical predictors.</p>
+</div>
+</div>
+<p><strong>What issue do we have with our outcome variable if we want to perform a logistic regression?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Here our outcome has 3 levels, a binary logistic regression can only deal with an outcome with 2 levels. An extension to this called Multinomial regression could be used in this case but that will be covered in the Advanced Quantitative Methods module next term.</p>
+<p>Here we will collapse our outcome variable into a binary variable and use binomial logistic regression. In this case there is a logical way to collapse this variable, we will simply ask did the participant help in any way (“Helped directly” or “Told someone else”) or did they “Did Nothing”. We will create a new variable in our dataframe called <code>helped</code> to hold this and we will make sure this is set up as a factor:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Collapse the 3-level response into a yes/no variable.</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># "No" is first so that glm models the probability of "Yes".</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>helped <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(df<span class="sc">$</span>response <span class="sc">==</span> <span class="st">"Did nothing"</span>, <span class="st">"No"</span>, <span class="st">"Yes"</span>),</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>When recoding variables we should always check it worked in the way we intended:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Always check a recode worked</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>response, df<span class="sc">$</span>helped)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   
+                    No Yes
+  Did nothing       34   0
+  Told someone else  0  56
+  Helped directly    0  90</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>Let’s first look at the mean empathy scores when split by the <code>helped</code> variable:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the data first: mean empathy in each group</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(df<span class="sc">$</span>empathy, df<span class="sc">$</span>helped, mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      No      Yes 
+16.29412 18.23288 </code></pre>
+</div>
+</div>
+<p><strong>Does this suggest that there is much of a difference in empathy scores?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Not really but it is hard to tell without knowing how variable empathy is within each group. We could check by looking at a boxplot of this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(empathy <span class="sc">~</span> helped, df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit8_Homework_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This also suggests a great deal of overlap in empathy scores between those who helped and those who did not, although scores are higher in those who did help.</p>
+</div>
+</div>
+<p><strong>Perform a logistic regression with <code>empathy</code> predicting the odds of <code>helped</code>. What does this show</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>m_help <span class="ot">&lt;-</span> <span class="fu">glm</span>(helped <span class="sc">~</span> empathy, <span class="at">data =</span> df, <span class="at">family =</span> binomial)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_help)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = helped ~ empathy, family = binomial, data = df)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)  
+(Intercept) -0.84843    0.89929  -0.943   0.3455  
+empathy      0.13369    0.05268   2.538   0.0112 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 174.46  on 179  degrees of freedom
+Residual deviance: 167.51  on 178  degrees of freedom
+AIC: 171.51
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>We find a significant effect of empathy on the chance of helping.</p>
+</div>
+</div>
+<p><strong>What does the Estimate output of a logistic regression represent and how can we convert this into something more easily interpretable?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The estimate is the change in the log odds of helping for each 1-point increase in empathy (i.e.&nbsp;the log odds ratio).</p>
+<p>To put this in terms of an odds ratio with confidence intervals we can exponentiate this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(m_help))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)     empathy 
+  0.4280857   1.1430352 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint.default</span>(m_help))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %   97.5 %
+(Intercept) 0.07346032 2.494645
+empathy     1.03090160 1.267366</code></pre>
+</div>
+</div>
+<p>We can see that the odds ratio confidence intervals doesn’t include 1.</p>
+<p>Relating this back to the boxplot, we have a small (about 1.9 difference in empathy scores) but reliable effect.</p>
+</div>
+</div>
+<p>Because a 1 point change on the empathy scale is quite small we can instead look at how much the odds ratio changes when we increase empathy by 4 points, which is roughly the standard deviation of the empathy scores:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(df<span class="sc">$</span>empathy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.941471</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="dv">4</span> <span class="sc">*</span> <span class="fu">coef</span>(m_help)[<span class="st">"empathy"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> empathy 
+1.707019 </code></pre>
+</div>
+</div>
+<p>Here we get an odds ratio of 1.71.</p>
+<p>For a full APA write-up of a logistic regression we need some other statistics. The details of these will be covered in AQM next term. However, they are:</p>
+<p>1 - An overall model test, analogous to the F-test we use in a linear regression. &nbsp;</p>
+<p>Here we test the Deviance (a measure of error) in the full model against a null model that only contains the intercept. &nbsp;</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall model test: likelihood-ratio chi-square (null deviance - residual deviance)</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>lr_chi <span class="ot">&lt;-</span> m_help<span class="sc">$</span>null.deviance <span class="sc">-</span> m_help<span class="sc">$</span>deviance</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>lr_df  <span class="ot">&lt;-</span> m_help<span class="sc">$</span>df.null <span class="sc">-</span> m_help<span class="sc">$</span>df.residual</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>lr_p   <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(lr_chi, <span class="at">df =</span> lr_df, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">c</span>(lr_chi, lr_df, lr_p),<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.948 1.000 0.008</code></pre>
+</div>
+</div>
+<p>2 - A measure of how much variance is accounted for, analogous to R<sup>2</sup> in linear regression. &nbsp;</p>
+<p>Here we use something called McFadden’s Pseudo R<sup>2</sup></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># McFadden's pseudo R-squared = 1 - residual deviance / null deviance</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>mcf_r2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> m_help<span class="sc">$</span>deviance <span class="sc">/</span> m_help<span class="sc">$</span>null.deviance</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(mcf_r2, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04</code></pre>
+</div>
+</div>
+<p>A full APA write-up would be:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>co  <span class="ot">&lt;-</span> <span class="fu">summary</span>(m_help)<span class="sc">$</span>coefficients</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>ci  <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">confint.default</span>(m_help))[<span class="st">"empathy"</span>, ]</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"A logistic regression was used to test whether empathy predicted helping (taking any action, versus doing nothing). The model was significant, χ²(%d, N = %d) = %.2f, p %s, McFadden R² = %s. Higher empathy was associated with greater odds of helping, b = %.2f, SE = %.2f, Wald z = %.2f, p %s. Each additional point on the empathy scale multiplied the odds of helping by %.2f, OR = %.2f, 95%% CI [%.2f, %.2f]; equivalently, a 4-point increase in empathy (about one standard deviation) was associated with %.2f times the odds of helping.</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>  lr_df, <span class="fu">nrow</span>(df), lr_chi, <span class="fu">apa_p</span>(lr_p), <span class="fu">apa_2</span>(mcf_r2),</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>  co[<span class="st">"empathy"</span>, <span class="st">"Estimate"</span>], co[<span class="st">"empathy"</span>, <span class="st">"Std. Error"</span>], co[<span class="st">"empathy"</span>, <span class="st">"z value"</span>],</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apa_p</span>(co[<span class="st">"empathy"</span>, <span class="st">"Pr(&gt;|z|)"</span>]),</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(co[<span class="st">"empathy"</span>, <span class="st">"Estimate"</span>]), <span class="fu">exp</span>(co[<span class="st">"empathy"</span>, <span class="st">"Estimate"</span>]), ci[<span class="dv">1</span>], ci[<span class="dv">2</span>],</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="dv">4</span> <span class="sc">*</span> co[<span class="st">"empathy"</span>, <span class="st">"Estimate"</span>])))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre class="wrap-output"><code>A logistic regression was used to test whether empathy predicted helping (taking any action, versus doing nothing). The model was significant, χ²(1, N = 180) = 6.95, p = .008, McFadden R² = .04. Higher empathy was associated with greater odds of helping, b = 0.13, SE = 0.05, Wald z = 2.54, p = .011. Each additional point on the empathy scale multiplied the odds of helping by 1.14, OR = 1.14, 95% CI [1.03, 1.27]; equivalently, a 4-point increase in empathy (about one standard deviation) was associated with 1.71 times the odds of helping.</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script src="answer-gate.js"></script>
+
+
+
+
+</body></html>

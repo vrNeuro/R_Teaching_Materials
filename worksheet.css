@@ -12,3 +12,11 @@
 .figure-placeholder p {
   margin: 0.3em 0;
 }
+
+
+.wrap-output pre,
+.wrap-output pre code,
+pre.wrap-output,
+pre.wrap-output code {
+  white-space: pre-wrap;
+}
