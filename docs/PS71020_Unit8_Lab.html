@@ -1045,6 +1045,24 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <pre><code>[1] 0.0001964996</code></pre>
 </div>
 </div>
+<p>Another example of this effect is if we look at the effect of sleep on the odds of falling ill.&nbsp;Here we are looking at the effect of splitting a predictor instead of an outcome.</p>
+<p>If we use <code>fell_ill ~ sleep_hours</code> which uses <code>sleep_hours</code> as a continuous predictor we find a significant effect of <code>sleep_hours</code> (<em>p</em> = .026).</p>
+<p>However, if we use our <code>good_sleeper</code> binary variable, which we split the continuous <code>sleep_hours</code> into those who slept at least 7 hours (<code>good_sleeper</code> = Yes) and those who slept less that 7 hours (<code>good_sleeper</code> = No). We now see that the effect of sleep is not significant (<em>p</em> = .053):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>m_ill_split <span class="ot">&lt;-</span> <span class="fu">glm</span>(fell_ill <span class="sc">~</span> good_sleeper, <span class="at">data =</span> df, <span class="at">family =</span> binomial)</span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ill)<span class="sc">$</span>coefficients           <span class="co"># continuous sleep_hours </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Estimate Std. Error   z value   Pr(&gt;|z|)
+(Intercept)  2.6873368  1.3891555  1.934511 0.05305032
+sleep_hours -0.4429109  0.1983202 -2.233312 0.02552838</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ill_split)<span class="sc">$</span>coefficients     <span class="co"># sleep split into good / not good sleepers</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  Estimate Std. Error    z value  Pr(&gt;|z|)
+(Intercept)     -0.1758907  0.2659316 -0.6614132 0.5083473
+good_sleeperYes -0.4466389  0.3749192 -1.1912940 0.2335382</code></pre>
+</div>
+</div>
 <p>Unless there is a good reason for a binary outcome variable, such as with <code>fell_ill</code> and <code>attended_followup</code> here, it is only under exceptional circumstances that you want to perform a median split.</p>
 
 

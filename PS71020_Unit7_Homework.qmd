@@ -13,11 +13,6 @@ format:
 
 ### Learning Outcomes: \ 
 
-Perform a complete mixed effects model analysis
-
-
-
-Write-up
 
 1 - Perform a complete mixed effects model analysis \ 
 

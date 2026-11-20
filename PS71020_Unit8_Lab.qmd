@@ -861,4 +861,17 @@ p_cont_well
 p_split_well
 ```
 
+Another example of this effect is if we look at the effect of sleep on the odds of falling ill. Here we are looking at the effect of splitting a predictor instead of an outcome. 
+
+If we use `fell_ill ~ sleep_hours` which uses `sleep_hours` as a continuous predictor we find a significant effect of `sleep_hours` (*p* = .026). 
+
+However, if we use our `good_sleeper` binary variable, which we split the continuous `sleep_hours` into those who slept at least 7 hours (`good_sleeper` = Yes) and those who slept less that 7 hours (`good_sleeper` = No). We now see that the effect of sleep is not significant (*p* = .053):
+
+```{r}
+m_ill_split <- glm(fell_ill ~ good_sleeper, data = df, family = binomial)
+summary(m_ill)$coefficients           # continuous sleep_hours 
+summary(m_ill_split)$coefficients     # sleep split into good / not good sleepers
+```
+
+
 Unless there is a good reason for a binary outcome variable, such as with `fell_ill`  and `attended_followup` here, it is only under exceptional circumstances that you want to perform a median split.
