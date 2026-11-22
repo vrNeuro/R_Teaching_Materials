@@ -230,10 +230,7 @@ median(df$wellbeing_final)
 table(df$high_wellbeing)         # roughly half "Yes" (we split at the median)
 
 ```
-We can compare this to one of the original binary variables which has a less even split:
-```{r}
-table(df$fell_ill)               # a true yes/no variable: nobody split anything to make it
-```
+
 
 :::
 :::
@@ -865,7 +862,7 @@ Another example of this effect is if we look at the effect of sleep on the odds 
 
 If we use `fell_ill ~ sleep_hours` which uses `sleep_hours` as a continuous predictor we find a significant effect of `sleep_hours` (*p* = .026). 
 
-However, if we use our `good_sleeper` binary variable, which we split the continuous `sleep_hours` into those who slept at least 7 hours (`good_sleeper` = Yes) and those who slept less that 7 hours (`good_sleeper` = No). We now see that the effect of sleep is not significant (*p* = .053):
+However, if we use our `good_sleeper` binary variable, which we split the continuous `sleep_hours` into those who slept at least 7 hours (`good_sleeper` = Yes) and those who slept less that 7 hours (`good_sleeper` = No). We now see that the effect of sleep is not significant (*p* = .234):
 
 ```{r}
 m_ill_split <- glm(fell_ill ~ good_sleeper, data = df, family = binomial)
