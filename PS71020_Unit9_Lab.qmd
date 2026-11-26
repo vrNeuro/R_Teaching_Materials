@@ -38,7 +38,7 @@ As you go through the sheet, copy the relevant lines of code to your own analysi
 
 A complete model answers script will be available on the VLE page from Fridays after the labs so you can check your own answers. 
 
-If you have any queries during the class, please feel free to ask your lab tutors. If your question relates specifically to the lecture content or the homework sheets, please contact Peter Holland by email or use the forum on the VLE page.*
+If you have any queries during the class, please feel free to ask your lab tutors. If your question relates specifically to the lecture content or the homework sheets, please contact Peter Holland by email or use the forum on the VLE page.
 :::
 
 
@@ -79,7 +79,7 @@ As you will have seen from the answer scripts from previous homeworks and labs i
 
 This dataset is one of the data sets provided with Tabachnick and Fidell. It contains data from the responses of 369 middle-class, English-speaking women who completed the Bem Sex Roles Inventory. There are 44 items (one item from the original battery was omitted by mistake), 19 that reflect the stereotypical masculine sex role, 20 that reflect the feminine role, and 5 social desirability items. These items are all rated on a scale from 1 (never or almost never true of me) to 7 (always or almost always true of me). The other variables are *subno* (subject number), *mah_1* (the Mahalanobis distance for the 44 items, computed to screen for multivariate outliers), and *include* (= 1 if **NOT** a multivariate outlier; 0 if it is a multivariate outlier).
 
-All variables are continuous, but *include* can be treated as a categorical (nominal) variable.
+All survey item variables are ordinal but treated as continuous, but *include* can be treated as a categorical (nominal) variable.
 
 First we load the data as usual, notice that this time we've called the loaded data `bem`, you can use any name you want but remember to alter later code to match this:
 ```{r}
@@ -169,7 +169,7 @@ The simplest way to do this is in base R:
 ```{r}
 plot(bem_items$loyal,bem_items$masculin)
 ```
-However, if we look at the week 3 lab we can see a nicer way using compound plots using `ggpubr:scatterhist()`
+However, if we look at the week 3 lab we can see a nicer way using compound plots using `ggpubr::scatterhist()`
 
 ```{r}
 ggscatterhist(bem_items, x = "loyal", y = "masculin",
@@ -191,9 +191,9 @@ ggscatterhist(bem_items, x = "loyal", y = "masculin",
 
 ::: {.answer}
 
-For linearity, it is quite hard to tell, especially as the data only have a limited range of values so all cluster onto the same dots. This is typical of questionnaire data that uses likert scales. 
+For linearity, it is quite hard to tell, especially as the data only have a limited range of values so all cluster onto the same dots. This is typical of questionnaire data that uses Likert scales. 
 
-The question of if this is acceptable for a factor analysis is an interesting one. The basis of FA/PCA is the correlation matrix, the issue is that Likert items are ordinal, and Pearson correlations assume interval-level data. With ordinal items the correlations tend to be attenuated, especially when the items are skewed or have few response categories, and this can distort the factor structure. It can produce spurious "difficulty factors", where items cluster by skewness rather than by content. However, it's very common and generally accepted. Most personality questionnaires, including the Mini-IPIP, are factor analysed this way. However, if you have fewer than 5 likert levels it becomes more problematic. In that case you can use something called polychoric correlations which can be implemented in the `fa()` function we will use later. However, this is beyond this course and we will stick with the standard approach of pearson correlations.
+The question of if this is acceptable for a factor analysis is an interesting one. The basis of FA/PCA is the correlation matrix, the issue is that Likert items are ordinal, and Pearson correlations assume interval-level data. With ordinal items the correlations tend to be attenuated, especially when the items are skewed or have few response categories, and this can distort the factor structure. It can produce spurious "difficulty factors", where items cluster by skewness rather than by content. However, it's very common and generally accepted. Most personality questionnaires, including the Bem, are factor analysed this way. However, if you have fewer than 5 likert levels it becomes more problematic. In that case you can use something called polychoric correlations which can be implemented in the `fa()` function we will use later. However, this is beyond this course and since we have 7 levels we will stick with the standard approach of Pearson correlations.
 
 Tabachnick and Fidell’s verdict (5th ed., p. 652) is “Although the plot is far from pleasing and shows departure from linearity as well as the possibility of outliers, there is no evidence of true curvilinearity”
 
@@ -260,7 +260,7 @@ r <- cor(bem_items)      # 44 x 44 correlation matrix
 dim(r)
 ```
 
-However, printing an entire 44x44 matrix is hard to read, so we can take a look at only the top right corner:
+However, printing an entire 44x44 matrix is hard to read, so we can take a look at only the top left corner:
 ```{r}
 
 round(r[1:5, 1:5], 2)    # a peek at the top-left corner (printing all 44 columns is unwieldy)
@@ -283,7 +283,6 @@ We can now see that we do have some high correlations but not exceeding the *r* 
 We can also create a heatplot of the correlations which is a very good way to visually summarise them all, this is similar to what was shown in the lecture:
 
 ```{r}
-
 #| label: q5-heatmap
 #| fig-height: 7
 #| fig-width: 8
@@ -309,7 +308,7 @@ ggplot(r_long, aes(x = item1, y = item2, fill = r)) +
 
 ## SECTION C. FACTORISABILITY
 
-We are now going to run an initial exploratory factor analysis to check on the **factorisability** of the correlation matrix.
+Before we run the factor analysis we need to check on the **factorisability** of the correlation matrix.
 
 There are several tests we can consider as part of checking the factorisability of the correlation matrix.
 
@@ -419,7 +418,7 @@ pa <- fa.parallel(bem_items, fm = "pa", fa = "fa", n.iter = 100, plot = FALSE)
 pa$nfact          # number of factors suggested by the parallel analysis
 ```
 
-Here is the code we can use to create the scree plot:
+Here is the code we can use to create the parallel analysis scree plot:
 ```{r}
 #| fig-cap: "Scree plot with parallel analysis: eigenvalues from the real data and from simulated random data."
 
@@ -529,7 +528,7 @@ Next run a factor analysis with principal axis factoring (`fm = "pa"`), 4 factor
 fit <- fa(bem_items, nfactors = 4, fm = "pa", rotate = "varimax")
 ```
 
-fa() orders the factors by the variance they explain, but keeps the labels PA1-PA4 frombefore rotation, so they can appear out of order (PA1, PA4, PA2, PA3). We relabel them 1-4 in the order they now appear. Then print the loadings matrix:
+fa() orders the factors by the variance they explain, but keeps the labels PA1-PA4 from before rotation, so they can appear out of order (PA1, PA4, PA2, PA3). We relabel them 1-4 in the order they now appear. Then print the loadings matrix:
 ```{r}
 loadings_mat <- unclass(fit$loadings)               # items x factors matrix of loadings
 colnames(loadings_mat) <- paste("Factor", 1:4)
@@ -548,8 +547,9 @@ loadings_shown <- round(loadings_mat, 2)
 loadings_shown[abs(loadings_shown) < cutoff] <- NA
 
 # Add the uniqueness (see Q9) and print
-loadings_table <- data.frame(loadings_shown, Uniqueness = round(fit$uniquenesses, 2))
+loadings_table <- data.frame(loadings_shown, Uniqueness = round(fit$uniquenesses, 2), check.names = FALSE)
 kable(loadings_table)
+options(knitr.kable.NA = "")
 ```
 
 **How many uniqueness values are high (above 0.8)?**
@@ -585,6 +585,8 @@ sum(uniq == 0.8)    # exactly 0.8
 
 The uniqueness values for each of the items reflect the unique variance in each variable not accounted for by the factors extracted in the solution. This is calculated as 1 - communality, where the communality is the sum of the squared loadings across each row. In other words, low communalities (or high uniqueness) mean the variable is not very well accounted for by the factor solution.
 
+Here `foullang` has a uniqueness of 0.98 and the lowest KMO (0.65), so it is a candidate for removal and re-running the analysis without it. However, we will keep it here as this is a established scale.
+
 :::
 :::
 
@@ -611,14 +613,17 @@ Look at the rotated factor loading table above. We can also find complex variabl
 NOTE: if you changed the `cutoff` value in the code above then your answer will be different.
 
 ```{r}
-n_loadings <- rowSums(abs(loadings_mat) >= cutoff)   # how many factors each item loads on
+#create a rounded to 2 dp version so that this matches the table shown
+loadings_r <- round(loadings_mat, 2)               # keep loadings_mat unrounded for the communality check
+n_loadings <- rowSums(abs(loadings_r) >= cutoff) # how many factors each item loads on
+
 complex_items <- names(n_loadings)[n_loadings > 1]
 
 complex_items
 
 # Show their loadings on every factor (blank = below the cut-off)
 kable(loadings_table[complex_items, 1:4])
-
+options(knitr.kable.NA = "")
 ```
 
 With a cut-off of `r cutoff`, the complex variables are **`r paste(complex_items, collapse = ", ")`** (`r length(complex_items)` items). The clearest two, which have substantial loadings on two factors, are:
@@ -643,9 +648,9 @@ Look at the variables which load on each factor. List the items that load on eac
 
 We can do this with code as well:
 ```{r}
-
+#will use loadings_r (rounded to 2dp version so it matches the table above) `affect` has a loading of  0.3953 so if using raw loadings would not be included but as the table is rounded it is included.
 for (f in 1:4) {
-  keep <- abs(loadings_mat[, f]) >= cutoff
+  keep <- abs(loadings_r[, f]) >= cutoff
   cat("Factor", f, ":", paste(names(which(keep)), collapse = ", "), "\n\n")
 }
 ```
@@ -655,6 +660,8 @@ Good suggestions might be:
 -   Factor 2: *Empathy (or compassion)*
 -   Factor 3: *Positive affect (or agreeableness)*
 -   Factor 4: *Independence*
+
+Also notice that `gullible` and `childlik` are the opposite of the factor name of *Independence*, we can also see from the loadings table that they load negatively onto this factor.
 
 Notes:
 
@@ -690,7 +697,7 @@ Total: **`r sprintf("%.2f", 100 * sum(prop_var))`%** (the final value in the *Cu
 The largest % of variance is explained by factor 1: **`r sprintf("%.2f", 100 * prop_var[1])`%**.
 
 
-The proportion of covariance is the (Rotation) Sum of Squared Loadings for each factor, divided by the total.  It is therefore also equal to the proportion of variance in the solution accounted for by that factor. That is why the cumulative covariance by the time we include factor 4 is 100%.
+The proportion of covariance (Proportion Explained in the table) is the (Rotation) Sum of Squared Loadings for each factor, divided by the total Sum of Squared Loadings.  It is therefore also equal to the proportion of variance in the solution accounted for by that factor. That is why the cumulative covariance (Cumulative Proportion in the table) by the time we include factor 4 is 100%.
 
 :::
 :::
