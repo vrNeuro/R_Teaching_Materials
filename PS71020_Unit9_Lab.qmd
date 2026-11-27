@@ -548,8 +548,9 @@ loadings_shown[abs(loadings_shown) < cutoff] <- NA
 
 # Add the uniqueness (see Q9) and print
 loadings_table <- data.frame(loadings_shown, Uniqueness = round(fit$uniquenesses, 2), check.names = FALSE)
-kable(loadings_table)
 options(knitr.kable.NA = "")
+kable(loadings_table)
+
 ```
 
 **How many uniqueness values are high (above 0.8)?**
@@ -626,7 +627,7 @@ kable(loadings_table[complex_items, 1:4])
 options(knitr.kable.NA = "")
 ```
 
-With a cut-off of `r cutoff`, the complex variables are **`r paste(complex_items, collapse = ", ")`** (`r length(complex_items)` items). The clearest two, which have substantial loadings on two factors, are:
+With a cut-off of `r cutoff`, the complex variables are **`r paste(complex_items, collapse = ", ")`** (`r length(complex_items)` items). The clearest two, which have substantial loadings of > 0.45 on two factors, are:
 
 -   *Warm* loads onto factors 2 and 3
 -   *Independent* loads onto factors 1 and 4

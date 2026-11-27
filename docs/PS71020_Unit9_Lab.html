@@ -953,7 +953,8 @@ gentle       0.02     0.44     0.56    -0.08</code></pre>
 <span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the uniqueness (see Q9) and print</span></span>
 <span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>loadings_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(loadings_shown, <span class="at">Uniqueness =</span> <span class="fu">round</span>(fit<span class="sc">$</span>uniquenesses, <span class="dv">2</span>), <span class="at">check.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(loadings_table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">""</span>)</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(loadings_table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -969,360 +970,359 @@ gentle       0.02     0.44     0.56    -0.08</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">helpful</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.72</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">reliant</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.48</td>
 <td style="text-align: right;">0.60</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">defbel</td>
 <td style="text-align: right;">0.41</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.75</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">yielding</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.85</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">cheerful</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.56</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.64</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">indpt</td>
 <td style="text-align: right;">0.47</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.48</td>
 <td style="text-align: right;">0.55</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">athlet</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.82</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">shy</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.84</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">assert</td>
 <td style="text-align: right;">0.64</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.56</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">strpers</td>
 <td style="text-align: right;">0.71</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.48</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">forceful</td>
 <td style="text-align: right;">0.65</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.54</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">affect</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.40</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.52</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">flatter</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.80</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">loyal</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.71</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">analyt</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.84</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">feminine</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.84</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">sympathy</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.65</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.56</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">moody</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.73</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">sensitiv</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.66</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.56</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">undstand</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.73</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.42</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">compass</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.81</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.32</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">leaderab</td>
 <td style="text-align: right;">0.74</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.42</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">soothe</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.54</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.61</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">risk</td>
 <td style="text-align: right;">0.49</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.72</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">decide</td>
 <td style="text-align: right;">0.48</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.62</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">selfsuff</td>
 <td style="text-align: right;">0.42</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.66</td>
 <td style="text-align: right;">0.36</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">conscien</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.41</td>
 <td style="text-align: right;">0.65</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">dominant</td>
 <td style="text-align: right;">0.68</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.46</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">masculin</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.80</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">stand</td>
 <td style="text-align: right;">0.59</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.56</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">happy</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.64</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.56</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">softspok</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.72</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">warm</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.48</td>
 <td style="text-align: right;">0.60</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.37</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">truthful</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.83</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">tender</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.44</td>
 <td style="text-align: right;">0.55</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.47</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">gullible</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">-0.45</td>
 <td style="text-align: right;">0.78</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">leadact</td>
 <td style="text-align: right;">0.73</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.46</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">childlik</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">-0.42</td>
 <td style="text-align: right;">0.81</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">individ</td>
 <td style="text-align: right;">0.43</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.76</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">foullang</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.98</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">lovchil</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.86</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">compete</td>
 <td style="text-align: right;">0.54</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.66</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">ambitiou</td>
 <td style="text-align: right;">0.46</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.74</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">gentle</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.44</td>
 <td style="text-align: right;">0.56</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;">0.49</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>How many uniqueness values are high (above 0.8)?</strong></p>
 <div class="answer-box">
@@ -1330,20 +1330,20 @@ gentle       0.02     0.44     0.56    -0.08</code></pre>
 <div class="answer">
 <p>First, check out the uniqueness values (the last column of the table above). We round them to 2 decimal places, as in the table, before comparing with 0.8.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>uniq <span class="ot">&lt;-</span> <span class="fu">round</span>(fit<span class="sc">$</span>uniquenesses, <span class="dv">2</span>)</span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(uniq[uniq <span class="sc">&gt;=</span> <span class="fl">0.8</span>], <span class="at">decreasing =</span> <span class="cn">TRUE</span>)   <span class="co"># items at or above 0.8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>uniq <span class="ot">&lt;-</span> <span class="fu">round</span>(fit<span class="sc">$</span>uniquenesses, <span class="dv">2</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(uniq[uniq <span class="sc">&gt;=</span> <span class="fl">0.8</span>], <span class="at">decreasing =</span> <span class="cn">TRUE</span>)   <span class="co"># items at or above 0.8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>foullang  lovchil yielding      shy   analyt feminine truthful   athlet 
     0.98     0.86     0.85     0.84     0.84     0.84     0.83     0.82 
 childlik  flatter masculin 
     0.81     0.80     0.80 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(uniq <span class="sc">&gt;</span> <span class="fl">0.8</span>)     <span class="co"># strictly above 0.8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(uniq <span class="sc">&gt;</span> <span class="fl">0.8</span>)     <span class="co"># strictly above 0.8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 9</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(uniq <span class="sc">==</span> <span class="fl">0.8</span>)    <span class="co"># exactly 0.8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(uniq <span class="sc">==</span> <span class="fl">0.8</span>)    <span class="co"># exactly 0.8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
@@ -1361,16 +1361,16 @@ childlik  flatter masculin
 </div>
 <p>We can check this relationship for ourselves: the communality of an item is the sum of its squared loadings, and uniqueness is 1 minus that.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for one item, "foullang" (the item with the highest uniqueness)</span></span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(loadings_mat[<span class="st">"foullang"</span>, ]<span class="sc">^</span><span class="dv">2</span>)       <span class="co"># communality = sum of squared loadings across the row</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for one item, "foullang" (the item with the highest uniqueness)</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(loadings_mat[<span class="st">"foullang"</span>, ]<span class="sc">^</span><span class="dv">2</span>)       <span class="co"># communality = sum of squared loadings across the row</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.0242729</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(loadings_mat[<span class="st">"foullang"</span>, ]<span class="sc">^</span><span class="dv">2</span>)   <span class="co"># uniqueness</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(loadings_mat[<span class="st">"foullang"</span>, ]<span class="sc">^</span><span class="dv">2</span>)   <span class="co"># uniqueness</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9757271</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span>uniquenesses[<span class="st">"foullang"</span>]            <span class="co"># same value, as reported by fa()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span>uniquenesses[<span class="st">"foullang"</span>]            <span class="co"># same value, as reported by fa()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> foullang 
 0.9757271 </code></pre>
@@ -1382,18 +1382,18 @@ childlik  flatter masculin
 <div class="answer">
 <p>Look at the rotated factor loading table above. We can also find complex variables with code: for each item, count how many factors it loads on at or above the cut-off. NOTE: if you changed the <code>cutoff</code> value in the code above then your answer will be different.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create a rounded to 2 dp version so that this matches the table shown</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>loadings_r <span class="ot">&lt;-</span> <span class="fu">round</span>(loadings_mat, <span class="dv">2</span>)               <span class="co"># keep loadings_mat unrounded for the communality check</span></span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>n_loadings <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">abs</span>(loadings_r) <span class="sc">&gt;=</span> cutoff) <span class="co"># how many factors each item loads on</span></span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>complex_items <span class="ot">&lt;-</span> <span class="fu">names</span>(n_loadings)[n_loadings <span class="sc">&gt;</span> <span class="dv">1</span>]</span>
-<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>complex_items</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create a rounded to 2 dp version so that this matches the table shown</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>loadings_r <span class="ot">&lt;-</span> <span class="fu">round</span>(loadings_mat, <span class="dv">2</span>)               <span class="co"># keep loadings_mat unrounded for the communality check</span></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>n_loadings <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">abs</span>(loadings_r) <span class="sc">&gt;=</span> cutoff) <span class="co"># how many factors each item loads on</span></span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>complex_items <span class="ot">&lt;-</span> <span class="fu">names</span>(n_loadings)[n_loadings <span class="sc">&gt;</span> <span class="dv">1</span>]</span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>complex_items</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "indpt"    "selfsuff" "warm"     "tender"   "gentle"  </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show their loadings on every factor (blank = below the cut-off)</span></span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(loadings_table[complex_items, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show their loadings on every factor (blank = below the cut-off)</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(loadings_table[complex_items, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -1444,9 +1444,9 @@ childlik  flatter masculin
 </tbody>
 </table>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>With a cut-off of 0.4, the complex variables are <strong>indpt, selfsuff, warm, tender, gentle</strong> (5 items). The clearest two, which have substantial loadings on two factors, are:</p>
+<p>With a cut-off of 0.4, the complex variables are <strong>indpt, selfsuff, warm, tender, gentle</strong> (5 items). The clearest two, which have substantial loadings of &gt; 0.45 on two factors, are:</p>
 <ul>
 <li><em>Warm</em> loads onto factors 2 and 3</li>
 <li><em>Independent</em> loads onto factors 1 and 4</li>
@@ -1461,11 +1461,11 @@ childlik  flatter masculin
 <p>Look at the variables which load on each factor. List the items that load on each factor (at or above the cut-off) to help you come up with a label.</p>
 <p>We can do this with code as well:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co">#will use loadings_r (rounded to 2dp version so it matches the table above) `affect` has a loading of  0.3953 so if using raw loadings would not be included but as the table is rounded it is included.</span></span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (f <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
-<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>  keep <span class="ot">&lt;-</span> <span class="fu">abs</span>(loadings_r[, f]) <span class="sc">&gt;=</span> cutoff</span>
-<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Factor"</span>, f, <span class="st">":"</span>, <span class="fu">paste</span>(<span class="fu">names</span>(<span class="fu">which</span>(keep)), <span class="at">collapse =</span> <span class="st">", "</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co">#will use loadings_r (rounded to 2dp version so it matches the table above) `affect` has a loading of  0.3953 so if using raw loadings would not be included but as the table is rounded it is included.</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (f <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>  keep <span class="ot">&lt;-</span> <span class="fu">abs</span>(loadings_r[, f]) <span class="sc">&gt;=</span> cutoff</span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Factor"</span>, f, <span class="st">":"</span>, <span class="fu">paste</span>(<span class="fu">names</span>(<span class="fu">which</span>(keep)), <span class="at">collapse =</span> <span class="st">", "</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Factor 1 : defbel, indpt, assert, strpers, forceful, leaderab, risk, decide, selfsuff, dominant, stand, leadact, individ, compete, ambitiou 
 
@@ -1497,8 +1497,8 @@ Factor 4 : reliant, indpt, selfsuff, conscien, gullible, childlik </code></pre>
 <div class="answer">
 <p>The variance explained by each rotated factor is in the <code>Vaccounted</code> table of the <code>fa()</code> output.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fit<span class="sc">$</span>Vaccounted) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Factor"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(fit<span class="sc">$</span>Vaccounted, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fit<span class="sc">$</span>Vaccounted) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Factor"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(fit<span class="sc">$</span>Vaccounted, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      Factor 1 Factor 2 Factor 3 Factor 4
 SS loadings              6.036    3.980    3.429    2.229
@@ -1509,7 +1509,7 @@ Cumulative Proportion    0.385    0.639    0.858    1.000</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>prop_var <span class="ot">&lt;-</span> fit<span class="sc">$</span>Vaccounted[<span class="st">"Proportion Var"</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>prop_var <span class="ot">&lt;-</span> fit<span class="sc">$</span>Vaccounted[<span class="st">"Proportion Var"</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Total: <strong>35.62%</strong> (the final value in the <em>Cumulative Var</em> row).</p>
 <p>The largest % of variance is explained by factor 1: <strong>13.72%</strong>.</p>
