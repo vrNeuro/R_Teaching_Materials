@@ -38,7 +38,7 @@ Welcome to the presessional materials.
 | 6 | Mixed-Effects Models 1 | [Week 6 worksheet](PS71020_Unit6_Lab.qmd) | [Week 6 homework](PS71020_Unit6_Homework.qmd)  |
 | 7 | Mixed-Effects Models 2 | [Week 7 worksheet](PS71020_Unit7_Lab.qmd) | [Week 7 homework](PS71020_Unit7_Homework.qmd)  |
 | 8 | Categorical Data | [Week 8 worksheet](PS71020_Unit8_Lab.qmd) | [Week 8 homework](PS71020_Unit8_Homework.qmd)  |
-| 9 | FA and PCA | [Week 9 worksheet](PS71020_Unit9_Lab.qmd) |  |
+| 9 | FA and PCA | [Week 9 worksheet](PS71020_Unit9_Lab.qmd) | [Week 9 homework](PS71020_Unit9_Homework.qmd) |
 
 *More worksheets will be added here as the term progresses.*
 

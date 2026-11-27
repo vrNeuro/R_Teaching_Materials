@@ -1,0 +1,2303 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>PS71020_Unit9_Homework – PG Stats Intro</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="worksheet.css">
+<link rel="stylesheet" href="answer-gate.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">PG Stats Intro</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Pre_sessional_0.html"> 
+<span class="menu-text">Unit 0</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link active" data-scroll-target="#create-a-new-project">CREATE A NEW PROJECT</a></li>
+  <li><a href="#section-a.-the-dataset" id="toc-section-a.-the-dataset" class="nav-link" data-scroll-target="#section-a.-the-dataset">SECTION A. THE DATASET</a></li>
+  <li><a href="#section-b.-assumption-checks" id="toc-section-b.-assumption-checks" class="nav-link" data-scroll-target="#section-b.-assumption-checks">SECTION B. ASSUMPTION CHECKS</a></li>
+  <li><a href="#section-c.-pca" id="toc-section-c.-pca" class="nav-link" data-scroll-target="#section-c.-pca">SECTION C. PCA</a></li>
+  <li><a href="#section-d.-pca-with-orthogonal-rotation" id="toc-section-d.-pca-with-orthogonal-rotation" class="nav-link" data-scroll-target="#section-d.-pca-with-orthogonal-rotation">SECTION D. PCA WITH ORTHOGONAL ROTATION</a></li>
+  <li><a href="#section-e.-comparison-with-no-rotation" id="toc-section-e.-comparison-with-no-rotation" class="nav-link" data-scroll-target="#section-e.-comparison-with-no-rotation">SECTION E. COMPARISON WITH NO ROTATION</a></li>
+  <li><a href="#section-f.-component-scores" id="toc-section-f.-component-scores" class="nav-link" data-scroll-target="#section-f.-component-scores">SECTION F. COMPONENT SCORES</a></li>
+  <li><a href="#section-g.-write-up" id="toc-section-g.-write-up" class="nav-link" data-scroll-target="#section-g.-write-up">SECTION G. WRITE-UP</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">PS71020_Unit9_Homework</h1>
+<p class="subtitle lead">FA and PCA</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-outcomes" class="level3">
+<h3 class="anchored" data-anchor-id="learning-outcomes">Learning Outcomes: &nbsp;</h3>
+<p>1 - Perform a principal components analysis &nbsp;</p>
+<p>2 - Compare oblique and orthogonal rotations &nbsp;</p>
+<p>3 - Compare component scores &nbsp;</p>
+<p>4 - See an example write-up &nbsp;</p>
+</section>
+<section id="materials-used" class="level3">
+<h3 class="anchored" data-anchor-id="materials-used">Materials Used:</h3>
+<p>We will use the packages <strong>psych</strong>, <strong>ggplot2</strong>, <strong>knitr</strong>, &amp; <strong>GPArotation</strong> these are already installed on the RStudio Server but if you are working on your own Laptop you may need to install them.</p>
+</section>
+<section id="create-a-new-project" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-new-project">CREATE A NEW PROJECT</h2>
+<p>Just as we did in previous weeks we are going to start by creating a new project for this week’s homework. Download the data from the VLE (In the Week 9 Homework Materials section) and then copy it in the folder you created your project in. You can also find a direct download link for the data here: <a href="https://github.com/vrNeuro/R_Teaching_Materials/blob/main/data/arts_engagement.csv">Github Link</a>.</p>
+<p>If you are working on the RStudio Server, then you will need to download the file to your computer and then upload it to the correct folder on the server.</p>
+<p>Also create a new script in this folder so you can copy the lines of code needed to run this analysis yourself using just that script.</p>
+<p>Now let’s load the packages that we will need for this analysis.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych) </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'ggplot2'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:psych':
+
+    %+%, alpha</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'GPArotation'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:psych':
+
+    equamax, varimin</code></pre>
+</div>
+</div>
+</section>
+<section id="section-a.-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="section-a.-the-dataset">SECTION A. THE DATASET</h2>
+<p>In the lecture we used factor analysis on a personality questionnaire. Here we will use <strong>principal component analysis (PCA)</strong> on a different kind of data: <em>behaviours</em>. A (simulated) study asked 400 students how often they take part in 20 arts activities. Each variable is a measured frequency (hours per week, or events per month or year), not a questionnaire item.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 60%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Activity</th>
+<th style="text-align: left;">Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>listen_hrs</code></td>
+<td style="text-align: left;">Listening to music</td>
+<td style="text-align: left;">hours / week</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>new_music</code></td>
+<td style="text-align: left;">New artists or pieces discovered</td>
+<td style="text-align: left;">per month</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>art_media_hrs</code></td>
+<td style="text-align: left;">Watching or reading about music or art</td>
+<td style="text-align: left;">hours / week</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>gallery_visits</code></td>
+<td style="text-align: left;">Gallery or museum visits</td>
+<td style="text-align: left;">per year</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>radio_hrs</code></td>
+<td style="text-align: left;">Listening to the radio</td>
+<td style="text-align: left;">hours / week</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>practice_hrs</code></td>
+<td style="text-align: left;">Practising an instrument or voice</td>
+<td style="text-align: left;">hours / week</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>compose_hrs</code></td>
+<td style="text-align: left;">Composing or producing music</td>
+<td style="text-align: left;">hours / week</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>draw_hrs</code></td>
+<td style="text-align: left;">Drawing or painting</td>
+<td style="text-align: left;">hours / week</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>write_hrs</code></td>
+<td style="text-align: left;">Creative writing</td>
+<td style="text-align: left;">hours / week</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>craft_hrs</code></td>
+<td style="text-align: left;">Crafts or design</td>
+<td style="text-align: left;">hours / week</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>perform_n</code></td>
+<td style="text-align: left;">Public performances or exhibitions</td>
+<td style="text-align: left;">per year</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>group_hrs</code></td>
+<td style="text-align: left;">Time in group music or art activities</td>
+<td style="text-align: left;">hours / week</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>workshops</code></td>
+<td style="text-align: left;">Workshops or classes attended</td>
+<td style="text-align: left;">per year</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>concerts</code></td>
+<td style="text-align: left;">Live concerts attended</td>
+<td style="text-align: left;">per year</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>festivals</code></td>
+<td style="text-align: left;">Festival days attended</td>
+<td style="text-align: left;">per year</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>share_online</code></td>
+<td style="text-align: left;">Own work shared online</td>
+<td style="text-align: left;">per month</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>follow_artists</code></td>
+<td style="text-align: left;">Artists followed online</td>
+<td style="text-align: left;">number</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>online_comm_hrs</code></td>
+<td style="text-align: left;">Time in online arts communities</td>
+<td style="text-align: left;">hours / week</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>playlists_made</code></td>
+<td style="text-align: left;">Playlists or collections created</td>
+<td style="text-align: left;">per month</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>tutorials_hrs</code></td>
+<td style="text-align: left;">Online tutorials watched</td>
+<td style="text-align: left;">hours / week</td>
+</tr>
+</tbody>
+</table>
+<p>The other columns are <code>id</code>, <code>course</code> and <code>age</code>.</p>
+<p>The students came from two courses <code>Music</code> and <code>Art</code>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 400  23</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    id course age listen_hrs new_music art_media_hrs gallery_visits radio_hrs
+1 S362  Music  23       32.0        12           3.6             15       2.1
+2 S183    Art  21       30.1         9           7.7             14       3.0
+3 S055  Music  23       14.6         1           3.3              4       2.6
+4 S212  Music  19       12.6         9           3.4              8       2.4
+5 S350    Art  22       28.0        11           8.0             11       2.8
+6 S202    Art  18       28.7        12           7.2             13       2.4</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>arts_raw <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"arts_engagement.csv"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(arts_raw)            <span class="co"># 400 rows, 23 columns</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(arts_raw[, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>])</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Names of the 20 activity variables (every column except id, course and age)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>items <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">names</span>(arts_raw), <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"course"</span>, <span class="st">"age"</span>))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(items)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="section-b.-assumption-checks" class="level2">
+<h2 class="anchored" data-anchor-id="section-b.-assumption-checks">SECTION B. ASSUMPTION CHECKS</h2>
+<p><strong>Is there any missing data? How should we deal with it?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(arts_raw[, items]))[<span class="fu">colSums</span>(<span class="fu">is.na</span>(arts_raw[, items])) <span class="sc">&gt;</span> <span class="dv">0</span>]  <span class="co"># variables with missing values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     new_music  art_media_hrs      write_hrs      group_hrs      festivals 
+             1              1              1              1              1 
+follow_artists 
+             1 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(arts_raw[, items]))                                              <span class="co"># total missing values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="sc">!</span><span class="fu">complete.cases</span>(arts_raw))    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+</div>
+<p>Yes, there are missing values, with 6 missing values affecting 6 participants. With so little missing data, and a large sample, it is reasonable to delete these participants listwise. The missingness would need more thought if it were more widespread or clearly non-random (see the data screening lecture).</p>
+<p>Remove the participants with missing values (listwise deletion) and keep just the activity variables for the analysis:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>arts <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(arts_raw) <span class="co">#remove any rows with missing data</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>x    <span class="ot">&lt;-</span> arts[, items] <span class="co">#x is just the activity variables</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(arts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 394</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Check the descriptive statistics. Do the values look plausible? Is any variable strongly skewed?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>desc <span class="ot">&lt;-</span> <span class="fu">describe</span>(x)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#only select certain columns of dsc for display as a kable and round to 2 dp.</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">round</span>(desc[, <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>, <span class="st">"skew"</span>)], <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">skew</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">listen_hrs</td>
+<td style="text-align: right;">19.78</td>
+<td style="text-align: right;">6.76</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">42.4</td>
+<td style="text-align: right;">0.13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">new_music</td>
+<td style="text-align: right;">7.94</td>
+<td style="text-align: right;">2.99</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">-0.06</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">art_media_hrs</td>
+<td style="text-align: right;">4.99</td>
+<td style="text-align: right;">1.93</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">9.7</td>
+<td style="text-align: right;">-0.18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gallery_visits</td>
+<td style="text-align: right;">7.63</td>
+<td style="text-align: right;">3.06</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">16.0</td>
+<td style="text-align: right;">0.12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">radio_hrs</td>
+<td style="text-align: right;">2.96</td>
+<td style="text-align: right;">1.40</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">0.13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">practice_hrs</td>
+<td style="text-align: right;">6.39</td>
+<td style="text-align: right;">2.45</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">14.9</td>
+<td style="text-align: right;">0.13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">compose_hrs</td>
+<td style="text-align: right;">3.14</td>
+<td style="text-align: right;">1.44</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">0.21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">draw_hrs</td>
+<td style="text-align: right;">3.11</td>
+<td style="text-align: right;">1.35</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">0.14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">write_hrs</td>
+<td style="text-align: right;">2.60</td>
+<td style="text-align: right;">1.20</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">6.9</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">craft_hrs</td>
+<td style="text-align: right;">2.63</td>
+<td style="text-align: right;">1.21</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">0.17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">perform_n</td>
+<td style="text-align: right;">5.49</td>
+<td style="text-align: right;">2.51</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">13.0</td>
+<td style="text-align: right;">-0.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">group_hrs</td>
+<td style="text-align: right;">4.37</td>
+<td style="text-align: right;">1.78</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">0.35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">workshops</td>
+<td style="text-align: right;">4.33</td>
+<td style="text-align: right;">2.04</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">0.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">concerts</td>
+<td style="text-align: right;">7.43</td>
+<td style="text-align: right;">2.89</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">16.0</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">festivals</td>
+<td style="text-align: right;">3.14</td>
+<td style="text-align: right;">1.48</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">0.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">share_online</td>
+<td style="text-align: right;">5.15</td>
+<td style="text-align: right;">2.39</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">0.16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">follow_artists</td>
+<td style="text-align: right;">29.30</td>
+<td style="text-align: right;">12.07</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">67.0</td>
+<td style="text-align: right;">0.17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">online_comm_hrs</td>
+<td style="text-align: right;">3.95</td>
+<td style="text-align: right;">1.80</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">0.14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">playlists_made</td>
+<td style="text-align: right;">2.92</td>
+<td style="text-align: right;">1.42</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">0.08</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tutorials_hrs</td>
+<td style="text-align: right;">3.02</td>
+<td style="text-align: right;">1.38</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">6.9</td>
+<td style="text-align: right;">0.11</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The values are plausible: there are no negative hours or counts, and nothing impossible (such as more than 168 hours a week). The most skewed variable is <code>group_hrs</code> with a skew of 0.35, and every variable has an absolute skew below 0.4, so none is badly skewed. Unlike the Bem items in the Week 9 lab, these variables are continuous (hours and counts), so Pearson correlations are not a concern.</p>
+</div>
+</div>
+<p><strong>Is there any evidence of multicollinearity in the bivariate correlations?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>We can use similar code as in the lab to calculate the correlation matrix, extract the lower triangle and then look for those with absolute values greater than 0.3:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">cor</span>(x)                  <span class="co"># 20 x 20 correlation matrix</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>r_off <span class="ot">&lt;-</span> r[<span class="fu">lower.tri</span>(r)]     <span class="co"># each pair of variables once, without the diagonal of 1s</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">range</span>(r_off), <span class="dv">2</span>)       <span class="co"># smallest and largest correlation</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.05  0.59</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">abs</span>(r_off) <span class="sc">&gt;</span> .<span class="dv">3</span>)         <span class="co"># how many pairs correlate above .3 (in absolute value)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 47</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(r_off)                <span class="co"># total number of pairs</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 190</code></pre>
+</div>
+</div>
+<p>No.&nbsp;The correlations range from -0.05 to 0.59, so none approaches .9. 47 of the 190 pairs exceed .3.</p>
+</div>
+</div>
+<p>A heatplot is a good way to summarise all the correlations at once.</p>
+<p><strong>Try to use the code from the lab as a starting point and generate a heatplot for this correlation matrix. What does the pattern of results in the heatplot suggest?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>col_blue   <span class="ot">&lt;-</span> <span class="st">"#0072B2"</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>col_orange <span class="ot">&lt;-</span> <span class="st">"#E69F00"</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>r_long <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">as.table</span>(r))</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(r_long) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"var1"</span>, <span class="st">"var2"</span>, <span class="st">"r"</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>r_long<span class="sc">$</span>var1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(r_long<span class="sc">$</span>var1, <span class="at">levels =</span> items)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>r_long<span class="sc">$</span>var2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(r_long<span class="sc">$</span>var2, <span class="at">levels =</span> <span class="fu">rev</span>(items))</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(r_long, <span class="fu">aes</span>(<span class="at">x =</span> var1, <span class="at">y =</span> var2, <span class="at">fill =</span> r)) <span class="sc">+</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> col_blue, <span class="at">mid =</span> <span class="st">"white"</span>, <span class="at">high =</span> col_orange,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">midpoint =</span> <span class="dv">0</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">"r"</span>) <span class="sc">+</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>), <span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="PS71020_Unit9_Homework_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Correlations between the 20 arts activities. Orange = positive, blue = negative.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The heatplot shows the correlated variables sitting in blocks of the matrix, which suggests there are groups of related activities.</p>
+</div>
+</div>
+<p><strong>What are the two tests we use to check if the correlation matrix is factorisable? Perform these checks and comment on the results</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Bartlett’s test of sphericity and the Kaiser-Meyer-Olkin (KMO) measure of sampling adequacy.</p>
+<p>Bartlett’s test:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>bart <span class="ot">&lt;-</span> <span class="fu">cortest.bartlett</span>(r, <span class="at">n =</span> <span class="fu">nrow</span>(x))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>bart_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Chi-square</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(bart<span class="sc">$</span>chisq, <span class="dv">2</span>),</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">df           =</span> bart<span class="sc">$</span>df,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">p            =</span> <span class="fu">ifelse</span>(bart<span class="sc">$</span>p.value <span class="sc">&lt;</span> .<span class="dv">001</span>, <span class="st">"&lt; .001"</span>, <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, bart<span class="sc">$</span>p.value)),</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">check.names  =</span> <span class="cn">FALSE</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(bart_table, <span class="at">align =</span> <span class="st">"ccc"</span>, <span class="at">caption =</span> <span class="st">"Bartlett test of sphericity"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Bartlett test of sphericity</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Chi-square</th>
+<th style="text-align: center;">df</th>
+<th style="text-align: center;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">2800.21</td>
+<td style="text-align: center;">190</td>
+<td style="text-align: center;">&lt; .001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Bartlett’s test is significant (χ²(190) = 2800.21, <em>p</em> &lt; .001), although with a large sample it is very sensitive.</p>
+<p>Therefore, KMO values are a better guide:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>kmo <span class="ot">&lt;-</span> <span class="fu">KMO</span>(x)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>kmo_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item =</span> <span class="fu">c</span>(<span class="st">"Overall"</span>, <span class="fu">names</span>(<span class="fu">sort</span>(kmo<span class="sc">$</span>MSAi))),</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">MSA  =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, <span class="fu">c</span>(kmo<span class="sc">$</span>MSA, <span class="fu">sort</span>(kmo<span class="sc">$</span>MSAi)))</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(kmo_table, <span class="at">align =</span> <span class="st">"lc"</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Variable"</span>, <span class="st">"KMO (MSA)"</span>),</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Kaiser-Meyer-Olkin measure of sampling adequacy (variables sorted from lowest to highest)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Kaiser-Meyer-Olkin measure of sampling adequacy (variables sorted from lowest to highest)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: center;">KMO (MSA)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Overall</td>
+<td style="text-align: center;">0.852</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">radio_hrs</td>
+<td style="text-align: center;">0.777</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">listen_hrs</td>
+<td style="text-align: center;">0.789</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">festivals</td>
+<td style="text-align: center;">0.805</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gallery_visits</td>
+<td style="text-align: center;">0.813</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">new_music</td>
+<td style="text-align: center;">0.819</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">workshops</td>
+<td style="text-align: center;">0.822</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">group_hrs</td>
+<td style="text-align: center;">0.827</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">perform_n</td>
+<td style="text-align: center;">0.836</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">concerts</td>
+<td style="text-align: center;">0.842</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tutorials_hrs</td>
+<td style="text-align: center;">0.846</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">practice_hrs</td>
+<td style="text-align: center;">0.860</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">draw_hrs</td>
+<td style="text-align: center;">0.871</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">online_comm_hrs</td>
+<td style="text-align: center;">0.872</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">share_online</td>
+<td style="text-align: center;">0.874</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">write_hrs</td>
+<td style="text-align: center;">0.877</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">art_media_hrs</td>
+<td style="text-align: center;">0.880</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">follow_artists</td>
+<td style="text-align: center;">0.880</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">playlists_made</td>
+<td style="text-align: center;">0.886</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">compose_hrs</td>
+<td style="text-align: center;">0.888</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">craft_hrs</td>
+<td style="text-align: center;">0.893</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The overall KMO is 0.85, and every individual MSA is above .6 (the lowest is radio_hrs at 0.78). These are all considered good or excellent and therefore good evidence that the correlation matrix is factorisable.</p>
+</div>
+</div>
+</section>
+<section id="section-c.-pca" class="level2">
+<h2 class="anchored" data-anchor-id="section-c.-pca">SECTION C. PCA</h2>
+<p><strong>Why might PCA be a better choice than factor analysis for this dataset?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The 20 variables are observed behaviours, not questionnaire items that we think are caused by a hidden trait. Our aim is to summarise them into a smaller number of composite scores that describe how people engage with the arts. PCA does this directly, because each component is simply a weighted combination of the variables. Factor analysis assumes that unobserved factors cause the variables and analyses only the shared variance, which is a stronger claim than we want to make about, say, how many concerts someone attends. We don’t have an underlying theory about what might cause the relationships between the variables, which would be a clear indication that FA would be a better choice.</p>
+</div>
+</div>
+<p><strong>How many components should be retained?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>First, the eigenvalues of the full correlation matrix, which is what PCA uses. This is also the matrix that Kaiser’s rule (eigenvalues &gt; 1) was designed for.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ev <span class="ot">&lt;-</span> <span class="fu">eigen</span>(r)<span class="sc">$</span>values</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>eigen_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Component    =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Eigenvalue   =</span> ev[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>],</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Pct_variance =</span> ev[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="sc">/</span> <span class="fu">length</span>(ev) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Cumulative   =</span> <span class="fu">cumsum</span>(ev[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="sc">/</span> <span class="fu">length</span>(ev) <span class="sc">*</span> <span class="dv">100</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(eigen_table, <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="at">align =</span> <span class="st">"cccc"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Component"</span>, <span class="st">"Eigenvalue"</span>, <span class="st">"% of variance"</span>, <span class="st">"Cumulative %"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Component</th>
+<th style="text-align: center;">Eigenvalue</th>
+<th style="text-align: center;">% of variance</th>
+<th style="text-align: center;">Cumulative %</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4.805</td>
+<td style="text-align: center;">24.02</td>
+<td style="text-align: center;">24.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2.923</td>
+<td style="text-align: center;">14.61</td>
+<td style="text-align: center;">38.64</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2.098</td>
+<td style="text-align: center;">10.49</td>
+<td style="text-align: center;">49.13</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1.868</td>
+<td style="text-align: center;">9.34</td>
+<td style="text-align: center;">58.47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.939</td>
+<td style="text-align: center;">4.70</td>
+<td style="text-align: center;">63.16</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">0.739</td>
+<td style="text-align: center;">3.70</td>
+<td style="text-align: center;">66.86</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">0.672</td>
+<td style="text-align: center;">3.36</td>
+<td style="text-align: center;">70.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">0.623</td>
+<td style="text-align: center;">3.11</td>
+<td style="text-align: center;">73.33</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(ev <span class="sc">&gt;</span> <span class="dv">1</span>)     <span class="co"># Kaiser's rule: how many eigenvalues are greater than 1?</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>This suggests we should retain 4 components.</p>
+<p>Now a scree plot with a dashed line at 1, and the parallel analysis. We ask <code>fa.parallel()</code> for <strong>components</strong> (<code>fa = "pc"</code>) because we are doing a PCA. The line for the random data is the <em>average</em> eigenvalue from the simulated datasets.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)   <span class="co"># the simulated data are random - this makes the results reproducible</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>pa <span class="ot">&lt;-</span> <span class="fu">fa.parallel</span>(x, <span class="at">fa =</span> <span class="st">"pc"</span>, <span class="at">n.iter =</span> <span class="dv">100</span>, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Parallel analysis suggests that the number of factors =  NA  and the number of components =  4 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pa<span class="sc">$</span>ncomp         <span class="co"># number of components suggested by the parallel analysis</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>scree_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">component  =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="dv">2</span>),</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">eigenvalue =</span> <span class="fu">c</span>(pa<span class="sc">$</span>pc.values, pa<span class="sc">$</span>pc.sim),</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">source     =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Observed data"</span>, <span class="st">"Parallel analysis (random data)"</span>), <span class="at">each =</span> <span class="dv">20</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(scree_df, <span class="fu">aes</span>(<span class="at">x =</span> component, <span class="at">y =</span> eigenvalue, <span class="at">colour =</span> source, <span class="at">linetype =</span> source)) <span class="sc">+</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(col_blue, col_orange)) <span class="sc">+</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Component"</span>, <span class="at">y =</span> <span class="st">"Eigenvalue"</span>, <span class="at">colour =</span> <span class="cn">NULL</span>, <span class="at">linetype =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>, <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="PS71020_Unit9_Homework_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Scree plot with parallel analysis. The dashed grey line marks an eigenvalue of 1.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>All three methods agree on 4 components:</p>
+<p>Kaiser’s rule: 4 eigenvalues are greater than 1 (the fifth is 0.94). Scree plot: there is a clear elbow after component 4, with a large drop from 1.87 to 0.94. Parallel analysis: the first 4 observed eigenvalues are larger than the average eigenvalues from random data, and the fifth is not. Together the four components account for 58.5% of the variance. This is much clearer than in the Week 9 Lab example, where the methods disagreed.</p>
+<p>NOTE: You can ignore the <code>factors =  NA</code> part of the output of <code>fa.parallel()</code> this is to be expected when using <code>fa = "pc"</code>.</p>
+</div>
+</div>
+<p><strong>Here we will begin with an oblique rotation method, why might this be a good approach?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>We don’t know if our components are correlated and therefore forcing them to be uncorrelated with an orthogonal rotation might not be the best solution. Therefore, it is wise to let them be free to correlate to begin with and then examine the degree of correlation before deciding whether or not to proceed to an orthogonal rotation method.</p>
+</div>
+</div>
+<p><strong>Run a PCA with 4 components and an oblique (oblimin) rotation. What are the loadings?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>Use <code>principal()</code> from the psych package with <code>nfactors = 4</code> and <code>rotate = "oblimin"</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fit_ob <span class="ot">&lt;-</span> <span class="fu">principal</span>(x, <span class="at">nfactors =</span> <span class="dv">4</span>, <span class="at">rotate =</span> <span class="st">"oblimin"</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># psych orders the components by variance but keeps their original labels (TC1, TC3, ...).</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># We re-label them PC1-PC4 in the order they now appear.</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>ord_ob <span class="ot">&lt;-</span> <span class="fu">order</span>(fit_ob<span class="sc">$</span>Vaccounted[<span class="st">"SS loadings"</span>, ], <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>L_ob   <span class="ot">&lt;-</span> <span class="fu">unclass</span>(fit_ob<span class="sc">$</span>loadings)[, ord_ob]</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(L_ob) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Round once, so the table and all the counting below agree</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>L_ob_r <span class="ot">&lt;-</span> <span class="fu">round</span>(L_ob, <span class="dv">2</span>)</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>L_ob_r</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  PC1   PC2   PC3   PC4
+listen_hrs      -0.01  0.04  0.83  0.04
+new_music        0.07  0.01  0.79 -0.08
+art_media_hrs    0.00  0.00  0.73  0.06
+gallery_visits  -0.02 -0.04  0.76  0.00
+radio_hrs        0.03 -0.07  0.42 -0.09
+practice_hrs     0.83 -0.02  0.01  0.04
+compose_hrs      0.67  0.34  0.03 -0.05
+draw_hrs         0.80  0.02 -0.03  0.01
+write_hrs        0.75 -0.06  0.11 -0.01
+craft_hrs        0.74 -0.05 -0.04  0.06
+perform_n        0.02 -0.02  0.01  0.77
+group_hrs        0.28 -0.09  0.01  0.75
+workshops       -0.10  0.09 -0.02  0.74
+concerts        -0.15  0.03  0.35  0.60
+festivals       -0.02  0.08 -0.08  0.73
+share_online     0.31  0.70  0.04 -0.01
+follow_artists  -0.01  0.77  0.04 -0.10
+online_comm_hrs -0.02  0.78 -0.04  0.08
+playlists_made  -0.04  0.74  0.01  0.03
+tutorials_hrs   -0.09  0.76 -0.02  0.07</code></pre>
+</div>
+</div>
+<p>We can now apply a cut-off and create a kable to show only those with loadings higher than this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fl">0.30</span>                       <span class="co"># change this to see how the pattern changes</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>shown  <span class="ot">&lt;-</span> L_ob_r</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>shown[<span class="fu">abs</span>(shown) <span class="sc">&lt;</span> cutoff] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">""</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">data.frame</span>(shown, <span class="at">Uniqueness =</span> <span class="fu">round</span>(fit_ob<span class="sc">$</span>uniquenesses, <span class="dv">2</span>)),</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"PC1"</span>, <span class="st">"PC2"</span>, <span class="st">"PC3"</span>, <span class="st">"PC4"</span>, <span class="st">"Uniqueness"</span>),</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Oblimin pattern loadings (loadings below .30 hidden)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Oblimin pattern loadings (loadings below .30 hidden)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">PC1</th>
+<th style="text-align: right;">PC2</th>
+<th style="text-align: right;">PC3</th>
+<th style="text-align: right;">PC4</th>
+<th style="text-align: right;">Uniqueness</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">listen_hrs</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">new_music</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.38</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">art_media_hrs</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gallery_visits</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.43</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">radio_hrs</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.84</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">practice_hrs</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.31</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">compose_hrs</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.32</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">draw_hrs</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">write_hrs</td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.42</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">craft_hrs</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">perform_n</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">group_hrs</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;">0.34</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">workshops</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">0.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">concerts</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">0.41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">festivals</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">0.48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">share_online</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">follow_artists</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.41</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">online_comm_hrs</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.78</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">playlists_made</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.46</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tutorials_hrs</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.45</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can also then look at only the complex items:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complex variables: those with loadings at or above the cut-off on more than one component</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>complex_ob <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">which</span>(<span class="fu">rowSums</span>(<span class="fu">abs</span>(L_ob_r) <span class="sc">&gt;=</span> cutoff) <span class="sc">&gt;</span> <span class="dv">1</span>))</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>complex_ob</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "compose_hrs"  "concerts"     "share_online"</code></pre>
+</div>
+</div>
+<p>Every variable has a clear main loading on one component, ranging from 0.42 to 0.83. 3 variables are complex, with loadings of .30 or more on two components: compose_hrs, concerts, share_online. radio_hrs has the weakest main loading and the highest uniqueness (0.84).</p>
+</div>
+</div>
+<p><strong>Compare the results obtained with PCA to the original correlation matrix heatplot. Do you notice any similarities?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The first thing to notice is that in the correlation heatplot we can see 4 larger squares of variables that seem to correlate with each other but not the other variables. These are our four components and the variables with high loadings in each component match with the plot.</p>
+<p>e.g.&nbsp;listen_hrs, new_music, art_media_hrs, &amp; gallery_visits all load onto PC3. Notice that the PCs aren’t in the same order as the heatplot as they are ordered by variance accounted for.</p>
+<p>If we look at radio_hrs we can see that it is the weakest loading and also seems to stand apart from other variables in the heatplot.</p>
+<p>Also, our three complex items are those that show high correlations outside of their group in the heatplot.</p>
+</div>
+</div>
+<p><strong>How much variance do the components explain?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>ssl <span class="ot">&lt;-</span> fit_ob<span class="sc">$</span>Vaccounted[<span class="st">"SS loadings"</span>, ord_ob]</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>var_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Component    =</span> <span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">SS_loadings  =</span> ssl,</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Pct_variance =</span> ssl <span class="sc">/</span> <span class="dv">20</span> <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Cumulative   =</span> <span class="fu">cumsum</span>(ssl <span class="sc">/</span> <span class="dv">20</span> <span class="sc">*</span> <span class="dv">100</span>),</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">row.names    =</span> <span class="cn">NULL</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(var_table, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Component"</span>, <span class="st">"SS loadings"</span>, <span class="st">"% of variance"</span>, <span class="st">"Cumulative %"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Component</th>
+<th style="text-align: right;">SS loadings</th>
+<th style="text-align: right;">% of variance</th>
+<th style="text-align: right;">Cumulative %</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PC1</td>
+<td style="text-align: right;">3.18</td>
+<td style="text-align: right;">15.88</td>
+<td style="text-align: right;">15.88</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PC2</td>
+<td style="text-align: right;">3.03</td>
+<td style="text-align: right;">15.15</td>
+<td style="text-align: right;">31.04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PC3</td>
+<td style="text-align: right;">2.80</td>
+<td style="text-align: right;">14.00</td>
+<td style="text-align: right;">45.04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PC4</td>
+<td style="text-align: right;">2.69</td>
+<td style="text-align: right;">13.43</td>
+<td style="text-align: right;">58.47</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The four components explain 58.5% of the variance in total. PC1 explains the most (15.9%), but the four are quite similar in size. Dividing the SS loadings by 20 (the number of variables) gives the percentage of the total variance, because each standardised variable has a variance of 1.</p>
+</div>
+</div>
+<p><strong>What are the correlations between the components? Is an oblique rotation really needed?</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>phi <span class="ot">&lt;-</span> fit_ob<span class="sc">$</span>Phi[ord_ob, ord_ob]</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(phi) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>))</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">round</span>(phi, <span class="dv">2</span>), <span class="at">caption =</span> <span class="st">"Correlations between the oblimin components"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Correlations between the oblimin components</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">PC1</th>
+<th style="text-align: right;">PC2</th>
+<th style="text-align: right;">PC3</th>
+<th style="text-align: right;">PC4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PC1</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PC2</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PC3</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PC4</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(phi[<span class="fu">lower.tri</span>(phi)]))   <span class="co"># largest correlation between two components</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2721221</code></pre>
+</div>
+</div>
+<p>The correlations between components are small: the largest is 0.27, and all the others are below .3. A common rule of thumb is that correlations around .32 (about 10% shared variance) or more justify an oblique rotation, so here an orthogonal rotation is reasonable. It also gives a simpler solution, because the pattern and structure matrices are identical when components are uncorrelated.</p>
+</div>
+</div>
+</section>
+<section id="section-d.-pca-with-orthogonal-rotation" class="level2">
+<h2 class="anchored" data-anchor-id="section-d.-pca-with-orthogonal-rotation">SECTION D. PCA WITH ORTHOGONAL ROTATION</h2>
+<p><strong>Re-run the PCA with an orthogonal (varimax) rotation</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>The code to run the PCA is below.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>fit_vm <span class="ot">&lt;-</span> <span class="fu">principal</span>(x, <span class="at">nfactors =</span> <span class="dv">4</span>, <span class="at">rotate =</span> <span class="st">"varimax"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>However, the components can come out in a different order, and with flipped signs, in a different solution. We therefore match each varimax component to the oblimin component it most resembles. The order can change because rotation redistributes the variance between components, and psych sorts them by how much variance they explain.</p>
+<p>The sign of a component is arbitrary because a component is defined only by its direction, not by which end is “high”. If we multiply both a component’s loadings and its scores by −1, the data the solution reproduces, the variance explained and the communalities are exactly the same. Only the interpretation reverses, so that a high score now means a low score on the original component. Flipping a component so that most of its loadings are positive usually makes it easier to interpret.</p>
+<p>The code below matches them between the two solutions.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>cong   <span class="ot">&lt;-</span> <span class="fu">fa.congruence</span>(L_ob, <span class="fu">unclass</span>(fit_vm<span class="sc">$</span>loadings))   <span class="co"># similarity of every pair of components</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>ord_vm  <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="fu">abs</span>(cong), <span class="dv">1</span>, which.max)                  <span class="co"># best match for each oblimin component</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyDuplicated</span>(ord_vm))                          <span class="co"># check each is matched only once</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>flip   <span class="ot">&lt;-</span> <span class="fu">sign</span>(cong[<span class="fu">cbind</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, ord_vm)])                   <span class="co"># reverse any component whose sign is flipped</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>L_vm <span class="ot">&lt;-</span> <span class="fu">sweep</span>(<span class="fu">unclass</span>(fit_vm<span class="sc">$</span>loadings)[, ord_vm], <span class="dv">2</span>, flip, <span class="st">"*"</span>)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(L_vm) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>L_vm_r <span class="ot">&lt;-</span> <span class="fu">round</span>(L_vm, <span class="dv">2</span>)</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>shown_vm <span class="ot">&lt;-</span> L_vm_r</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>shown_vm[<span class="fu">abs</span>(shown_vm) <span class="sc">&lt;</span> cutoff] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">data.frame</span>(shown_vm, <span class="at">Uniqueness =</span> <span class="fu">round</span>(fit_vm<span class="sc">$</span>uniquenesses, <span class="dv">2</span>)),</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"PC1"</span>, <span class="st">"PC2"</span>, <span class="st">"PC3"</span>, <span class="st">"PC4"</span>, <span class="st">"Uniqueness"</span>),</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Varimax loadings (loadings below .30 hidden)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Varimax loadings (loadings below .30 hidden)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">PC1</th>
+<th style="text-align: right;">PC2</th>
+<th style="text-align: right;">PC3</th>
+<th style="text-align: right;">PC4</th>
+<th style="text-align: right;">Uniqueness</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">listen_hrs</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">new_music</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.38</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">art_media_hrs</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gallery_visits</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.43</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">radio_hrs</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.84</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">practice_hrs</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.31</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">compose_hrs</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.32</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">draw_hrs</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">write_hrs</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.42</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">craft_hrs</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">perform_n</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">group_hrs</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;">0.34</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">workshops</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">0.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">concerts</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.65</td>
+<td style="text-align: right;">0.41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">festivals</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">0.48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">share_online</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">follow_artists</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.41</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">online_comm_hrs</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">playlists_made</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.46</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tutorials_hrs</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.45</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>And again we can extract our complex components and check the variance accounted for:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>complex_vm <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">which</span>(<span class="fu">rowSums</span>(<span class="fu">abs</span>(L_vm_r) <span class="sc">&gt;=</span> cutoff) <span class="sc">&gt;</span> <span class="dv">1</span>))</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>complex_vm                                                    <span class="co"># complex variables after varimax</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "compose_hrs"  "group_hrs"    "concerts"     "share_online"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sum</span>(fit_vm<span class="sc">$</span>Vaccounted[<span class="st">"SS loadings"</span>, ]) <span class="sc">/</span> <span class="dv">20</span> <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>)   <span class="co"># total % variance, varimax</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 58.47</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sum</span>(fit_ob<span class="sc">$</span>Vaccounted[<span class="st">"SS loadings"</span>, ]) <span class="sc">/</span> <span class="dv">20</span> <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>)   <span class="co"># total % variance, oblimin</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 58.47</code></pre>
+</div>
+</div>
+<p>The overall pattern is the same, and the total variance explained is identical (58.5%) because rotation does not change how much variance four components account for, only how it is shared out between them. The uniqueness values are the same too, for the same reason. One difference is that group_hrs is now complex as well: its secondary loading rises just above the .30 cut-off.</p>
+</div>
+</div>
+<p>We can examine which loadings changed most when we moved from oblimin to varimax:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>change <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">variable  =</span> <span class="fu">rep</span>(<span class="fu">rownames</span>(L_ob), <span class="at">times =</span> <span class="dv">4</span>),</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">component =</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">each =</span> <span class="fu">nrow</span>(L_ob)),</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">oblimin   =</span> <span class="fu">as.vector</span>(L_ob),</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">varimax   =</span> <span class="fu">as.vector</span>(L_vm)</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>change<span class="sc">$</span>difference <span class="ot">&lt;-</span> change<span class="sc">$</span>varimax <span class="sc">-</span> change<span class="sc">$</span>oblimin</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>top <span class="ot">&lt;-</span> change[<span class="fu">order</span>(<span class="sc">-</span><span class="fu">abs</span>(change<span class="sc">$</span>difference)), ][<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, ]</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(top, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Variable"</span>, <span class="st">"Component"</span>, <span class="st">"Oblimin"</span>, <span class="st">"Varimax"</span>, <span class="st">"Change"</span>),</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"The 8 largest changes in loading"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>The 8 largest changes in loading</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Component</th>
+<th style="text-align: right;">Oblimin</th>
+<th style="text-align: right;">Varimax</th>
+<th style="text-align: right;">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">listen_hrs</td>
+<td style="text-align: left;">PC4</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">new_music</td>
+<td style="text-align: left;">PC4</td>
+<td style="text-align: right;">-0.08</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gallery_visits</td>
+<td style="text-align: left;">PC4</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">online_comm_hrs</td>
+<td style="text-align: left;">PC1</td>
+<td style="text-align: right;">-0.02</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">0.11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">art_media_hrs</td>
+<td style="text-align: left;">PC4</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tutorials_hrs</td>
+<td style="text-align: left;">PC1</td>
+<td style="text-align: right;">-0.09</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">practice_hrs</td>
+<td style="text-align: left;">PC2</td>
+<td style="text-align: right;">-0.02</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">0.11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">playlists_made</td>
+<td style="text-align: left;">PC1</td>
+<td style="text-align: right;">-0.04</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.11</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(change<span class="sc">$</span>difference))                           <span class="co"># largest change in any loading</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1306077</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">mean</span>(<span class="fu">abs</span>(change<span class="sc">$</span>difference)), <span class="dv">3</span>)                <span class="co"># average change</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.05</code></pre>
+</div>
+</div>
+<p>The changes are small overall (the average absolute change is 0.050 and the largest is 0.13), which is what we expect when the components are only weakly correlated. The largest changes are not in the main loadings. They are small increases in loadings that were close to zero under oblimin (for example, listen_hrs on PC4 goes from 0.04 to 0.17). The secondary loadings of the complex variables (compose_hrs, share_online, group_hrs and concerts) also get larger under varimax. This happens because the components are positively correlated. Oblimin takes that overlap into account when it estimates each loading, whereas varimax forces the components to be uncorrelated, so the overlap is pushed into small positive loadings on the “other” components instead.</p>
+<p>We can also examine these changes graphically, through either a heatplot:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One row per variable x component x solution</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>long <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">variable =</span> <span class="fu">rownames</span>(L_ob), <span class="at">component =</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">each =</span> <span class="dv">20</span>),</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">loading =</span> <span class="fu">as.vector</span>(L_ob), <span class="at">solution =</span> <span class="st">"Oblimin (oblique)"</span>),</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">variable =</span> <span class="fu">rownames</span>(L_vm), <span class="at">component =</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">each =</span> <span class="dv">20</span>),</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">loading =</span> <span class="fu">as.vector</span>(L_vm), <span class="at">solution =</span> <span class="st">"Varimax (orthogonal)"</span>)</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Order the variables by the component they load on most (in the oblimin solution)</span></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>main_comp <span class="ot">&lt;-</span> <span class="fu">max.col</span>(<span class="fu">abs</span>(L_ob))</span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>var_order <span class="ot">&lt;-</span> <span class="fu">rownames</span>(L_ob)[<span class="fu">order</span>(main_comp, <span class="sc">-</span><span class="fu">apply</span>(<span class="fu">abs</span>(L_ob), <span class="dv">1</span>, max))]</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>long<span class="sc">$</span>variable <span class="ot">&lt;-</span> <span class="fu">factor</span>(long<span class="sc">$</span>variable, <span class="at">levels =</span> <span class="fu">rev</span>(var_order))</span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(long, <span class="fu">aes</span>(<span class="at">x =</span> component, <span class="at">y =</span> variable, <span class="at">fill =</span> loading)) <span class="sc">+</span></span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, loading)), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> solution) <span class="sc">+</span></span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> col_blue, <span class="at">mid =</span> <span class="st">"white"</span>, <span class="at">high =</span> col_orange,</span>
+<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">midpoint =</span> <span class="dv">0</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">"Loading"</span>) <span class="sc">+</span></span>
+<span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="PS71020_Unit9_Homework_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="864"></p>
+<figcaption>Loadings under the oblique (oblimin) and orthogonal (varimax) rotations.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Or a “dumbell” plot:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>dumb <span class="ot">&lt;-</span> change</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>dumb<span class="sc">$</span>variable <span class="ot">&lt;-</span> <span class="fu">factor</span>(dumb<span class="sc">$</span>variable, <span class="at">levels =</span> <span class="fu">rev</span>(var_order))</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dumb, <span class="fu">aes</span>(<span class="at">y =</span> variable)) <span class="sc">+</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(<span class="sc">-</span>cutoff, cutoff), <span class="at">linetype =</span> <span class="st">"dotted"</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> oblimin, <span class="at">xend =</span> varimax, <span class="at">yend =</span> variable), <span class="at">colour =</span> <span class="st">"grey60"</span>) <span class="sc">+</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> oblimin, <span class="at">colour =</span> <span class="st">"Oblimin"</span>), <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> varimax, <span class="at">colour =</span> <span class="st">"Varimax"</span>), <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> component, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Oblimin"</span> <span class="ot">=</span> col_orange, <span class="st">"Varimax"</span> <span class="ot">=</span> col_blue)) <span class="sc">+</span></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Loading"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">colour =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="PS71020_Unit9_Homework_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>Change in each loading from oblimin (orange) to varimax (blue). The dotted lines mark the .30 cut-off.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In the heatmap the two panels look almost identical: each variable’s main loading is essentially unchanged. The dumbbell plot shows the differences more clearly. For the main loadings the two dots almost overlap, so there is hardly any segment. The visible segments are mostly small upward shifts of about 0.1 in loadings that were near zero (for example, online_comm_hrs on PC1), plus the larger secondary loadings of compose_hrs (PC2), share_online (PC1) and group_hrs (PC1). In each case the blue (varimax) dot sits to the right of the orange (oblimin) dot. The solutions are similar because the correlations between components are small.</p>
+<p><strong>Suggest a label for each component</strong></p>
+<div class="answer-box">
+<p><input type="text" class="answer-input" placeholder="Type your answer here..."> <button class="reveal-btn" disabled="">Show answer</button></p>
+<div class="answer">
+<p>List the variables that load on each component (at or above the cut-off) to help you decide.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (f <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  keep <span class="ot">&lt;-</span> <span class="fu">abs</span>(L_vm_r[, f]) <span class="sc">&gt;=</span> cutoff</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"PC"</span>, f, <span class="st">":"</span>, <span class="fu">paste</span>(<span class="fu">names</span>(<span class="fu">which</span>(keep)), <span class="at">collapse =</span> <span class="st">", "</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>PC 1 : practice_hrs, compose_hrs, draw_hrs, write_hrs, craft_hrs, group_hrs, share_online 
+
+PC 2 : compose_hrs, share_online, follow_artists, online_comm_hrs, playlists_made, tutorials_hrs 
+
+PC 3 : listen_hrs, new_music, art_media_hrs, gallery_visits, radio_hrs, concerts 
+
+PC 4 : perform_n, group_hrs, workshops, concerts, festivals </code></pre>
+</div>
+</div>
+<p>Good suggestions might be:</p>
+<p>PC1: Creative practice (practising, composing, drawing, writing, crafts) &nbsp;</p>
+<p>PC2: Digital engagement (sharing online, following artists, online communities, tutorials, playlists) &nbsp;</p>
+<p>PC3: Receptive engagement (listening, discovering, reading or watching about the arts, galleries) &nbsp;</p>
+<p>PC4: Social performance (performing, groups, workshops, concerts, festivals) &nbsp;</p>
+<p>Remember that the label should name something that can be given a score: you can have a score on social performance, but not on “performing”. The complex variables are worth discussing: for example, concerts mainly reflects social performance but also receptive engagement (going to a concert is both a social event and a form of listening). radio_hrs has the weakest loading, so radio listening is only loosely related to the rest of the receptive component.</p>
+</div>
+</div>
+</section>
+<section id="section-e.-comparison-with-no-rotation" class="level2">
+<h2 class="anchored" data-anchor-id="section-e.-comparison-with-no-rotation">SECTION E. COMPARISON WITH NO ROTATION</h2>
+<p>We have compared oblique and orthogonal rotations, but it is also possible to look at the effect of applying a rotation in general and why they are so useful.</p>
+<p>The code below performs the same PCA analysis with the same number of components <code>rotate = "none"</code> input argument to <code>principal()</code>.</p>
+<p>Instead of plotting loadings component by component, it plots each variable’s biggest cross-loading under the three solutions.</p>
+<p>In the plot, the unrotated dots (grey) sit at 0.2–0.5 for almost every variable, well past the dotted .30 line. Most of the oblimin (orange) and varimax (blue) dots sit at about 0.05–0.15, and only the complex variables (concerts, compose_hrs and share_online, plus group_hrs for varimax) stay near or above .30. The summary table gives 19, 3 and 4 complex variables, with mean cross-loadings of 0.42, 0.12 and 0.17.</p>
+<p>One thing to note is that <code>group_hrs</code> has the highest unrotated cross-loading (0.51), and it is the one variable that rotation doesn’t fully resolve.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. PCA with no rotation</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>fit_none <span class="ot">&lt;-</span> <span class="fu">principal</span>(x, <span class="at">nfactors =</span> <span class="dv">4</span>, <span class="at">rotate =</span> <span class="st">"none"</span>)</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>L_none   <span class="ot">&lt;-</span> <span class="fu">unclass</span>(fit_none<span class="sc">$</span>loadings)          <span class="co"># already ordered PC1-PC4 by variance</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(L_none) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Size of each variable's largest "other" loading (its biggest cross-loading):</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    sort each row's absolute loadings and take the second largest</span></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>second_largest <span class="ot">&lt;-</span> <span class="cf">function</span>(L) <span class="fu">apply</span>(<span class="fu">abs</span>(L), <span class="dv">1</span>, <span class="cf">function</span>(v) <span class="fu">sort</span>(v, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">2</span>])</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>cross <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">variable =</span> <span class="fu">rownames</span>(L_none),</span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">none     =</span> <span class="fu">second_largest</span>(L_none),</span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">oblimin  =</span> <span class="fu">second_largest</span>(L_ob),</span>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">varimax  =</span> <span class="fu">second_largest</span>(L_vm)</span>
+<span id="cb63-15"><a href="#cb63-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb63-16"><a href="#cb63-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-17"><a href="#cb63-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Order the variables by their unrotated cross-loading (largest at the top)</span></span>
+<span id="cb63-18"><a href="#cb63-18" aria-hidden="true" tabindex="-1"></a>cross<span class="sc">$</span>variable <span class="ot">&lt;-</span> <span class="fu">factor</span>(cross<span class="sc">$</span>variable, <span class="at">levels =</span> cross<span class="sc">$</span>variable[<span class="fu">order</span>(cross<span class="sc">$</span>none)])</span>
+<span id="cb63-19"><a href="#cb63-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-20"><a href="#cb63-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Dumbbell plot: one row per variable, one dot per solution</span></span>
+<span id="cb63-21"><a href="#cb63-21" aria-hidden="true" tabindex="-1"></a>cross<span class="sc">$</span>low  <span class="ot">&lt;-</span> <span class="fu">pmin</span>(cross<span class="sc">$</span>none, cross<span class="sc">$</span>oblimin, cross<span class="sc">$</span>varimax)   <span class="co"># ends of the connecting line</span></span>
+<span id="cb63-22"><a href="#cb63-22" aria-hidden="true" tabindex="-1"></a>cross<span class="sc">$</span>high <span class="ot">&lt;-</span> <span class="fu">pmax</span>(cross<span class="sc">$</span>none, cross<span class="sc">$</span>oblimin, cross<span class="sc">$</span>varimax)</span>
+<span id="cb63-23"><a href="#cb63-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-24"><a href="#cb63-24" aria-hidden="true" tabindex="-1"></a>cross_long <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb63-25"><a href="#cb63-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">variable =</span> <span class="fu">rep</span>(cross<span class="sc">$</span>variable, <span class="dv">3</span>),</span>
+<span id="cb63-26"><a href="#cb63-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">solution =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"No rotation"</span>, <span class="st">"Oblimin"</span>, <span class="st">"Varimax"</span>), <span class="at">each =</span> <span class="fu">nrow</span>(cross)),</span>
+<span id="cb63-27"><a href="#cb63-27" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"No rotation"</span>, <span class="st">"Oblimin"</span>, <span class="st">"Varimax"</span>)),</span>
+<span id="cb63-28"><a href="#cb63-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">value    =</span> <span class="fu">c</span>(cross<span class="sc">$</span>none, cross<span class="sc">$</span>oblimin, cross<span class="sc">$</span>varimax)</span>
+<span id="cb63-29"><a href="#cb63-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb63-30"><a href="#cb63-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-31"><a href="#cb63-31" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cross, <span class="fu">aes</span>(<span class="at">y =</span> variable)) <span class="sc">+</span></span>
+<span id="cb63-32"><a href="#cb63-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> cutoff, <span class="at">linetype =</span> <span class="st">"dotted"</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb63-33"><a href="#cb63-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> low, <span class="at">xend =</span> high, <span class="at">yend =</span> variable), <span class="at">colour =</span> <span class="st">"grey70"</span>) <span class="sc">+</span></span>
+<span id="cb63-34"><a href="#cb63-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> cross_long, <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">colour =</span> solution, <span class="at">shape =</span> solution), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb63-35"><a href="#cb63-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"No rotation"</span> <span class="ot">=</span> <span class="st">"grey30"</span>, <span class="st">"Oblimin"</span> <span class="ot">=</span> col_orange, <span class="st">"Varimax"</span> <span class="ot">=</span> col_blue)) <span class="sc">+</span></span>
+<span id="cb63-36"><a href="#cb63-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"No rotation"</span> <span class="ot">=</span> <span class="dv">16</span>, <span class="st">"Oblimin"</span> <span class="ot">=</span> <span class="dv">16</span>, <span class="st">"Varimax"</span> <span class="ot">=</span> <span class="dv">17</span>)) <span class="sc">+</span></span>
+<span id="cb63-37"><a href="#cb63-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Largest cross-loading (absolute value of the second-largest loading)"</span>,</span>
+<span id="cb63-38"><a href="#cb63-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">colour =</span> <span class="cn">NULL</span>, <span class="at">shape =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb63-39"><a href="#cb63-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit9_Homework_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Summary numbers: variables loading on 2+ components, and the average cross-loading</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Solution          =</span> <span class="fu">c</span>(<span class="st">"No rotation"</span>, <span class="st">"Oblimin"</span>, <span class="st">"Varimax"</span>),</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Complex_variables =</span> <span class="fu">c</span>(<span class="fu">sum</span>(cross<span class="sc">$</span>none <span class="sc">&gt;=</span> cutoff), <span class="fu">sum</span>(cross<span class="sc">$</span>oblimin <span class="sc">&gt;=</span> cutoff), <span class="fu">sum</span>(cross<span class="sc">$</span>varimax <span class="sc">&gt;=</span> cutoff)),</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Mean_cross        =</span> <span class="fu">round</span>(<span class="fu">c</span>(<span class="fu">mean</span>(cross<span class="sc">$</span>none), <span class="fu">mean</span>(cross<span class="sc">$</span>oblimin), <span class="fu">mean</span>(cross<span class="sc">$</span>varimax)), <span class="dv">2</span>)</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Solution Complex_variables Mean_cross
+1 No rotation                19       0.42
+2     Oblimin                 3       0.12
+3     Varimax                 4       0.17</code></pre>
+</div>
+</div>
+</section>
+<section id="section-f.-component-scores" class="level2">
+<h2 class="anchored" data-anchor-id="section-f.-component-scores">SECTION F. COMPONENT SCORES</h2>
+<p>One advantage of PCA is that each participant gets a component score, which we can use in further analyses. Compare the two courses on each (varimax) component score.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">unclass</span>(fit_vm<span class="sc">$</span>scores)[, ord_vm]          <span class="co"># same component order and labels as above</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">sweep</span>(scores, <span class="dv">2</span>, flip, <span class="st">"*"</span>)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(scores) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can then perform t-tests to see if the scores on each PC differ between the two courses and create some boxplots:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>score_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">course =</span> <span class="fu">factor</span>(arts<span class="sc">$</span>course, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Music"</span>, <span class="st">"Art"</span>)), scores)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>tests <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(<span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="cf">function</span>(pc) {</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  tt <span class="ot">&lt;-</span> <span class="fu">t.test</span>(score_df[[pc]] <span class="sc">~</span> score_df<span class="sc">$</span>course)    <span class="co"># Welch t-test</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">Component =</span> pc,</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">Mean_Music  =</span> tt<span class="sc">$</span>estimate[<span class="dv">1</span>],</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">Mean_Art  =</span> tt<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">t         =</span> tt<span class="sc">$</span>statistic,</span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">df        =</span> tt<span class="sc">$</span>parameter,</span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">p         =</span> <span class="fu">ifelse</span>(tt<span class="sc">$</span>p.value <span class="sc">&lt;</span> .<span class="dv">001</span>, <span class="st">"&lt; .001"</span>, <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, tt<span class="sc">$</span>p.value)))</span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>}))</span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tests, <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>), <span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Component"</span>, <span class="st">"Music"</span>, <span class="st">"Art"</span>, <span class="st">"t"</span>, <span class="st">"df"</span>, <span class="st">"p"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Component</th>
+<th style="text-align: right;">Music</th>
+<th style="text-align: right;">Art</th>
+<th style="text-align: right;">t</th>
+<th style="text-align: right;">df</th>
+<th style="text-align: left;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PC1</td>
+<td style="text-align: right;">-0.16</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">-3.28</td>
+<td style="text-align: right;">391.5</td>
+<td style="text-align: left;">0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PC2</td>
+<td style="text-align: right;">-0.07</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">-1.46</td>
+<td style="text-align: right;">392.0</td>
+<td style="text-align: left;">0.145</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PC3</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">391.8</td>
+<td style="text-align: left;">0.316</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PC4</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">-0.21</td>
+<td style="text-align: right;">4.31</td>
+<td style="text-align: right;">391.3</td>
+<td style="text-align: left;">&lt; .001</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>score_long <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">course =</span> <span class="fu">rep</span>(score_df<span class="sc">$</span>course, <span class="dv">4</span>),</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">component =</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">each =</span> <span class="fu">nrow</span>(score_df)),</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">score =</span> <span class="fu">as.vector</span>(scores))</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(score_long, <span class="fu">aes</span>(<span class="at">x =</span> course, <span class="at">y =</span> score, <span class="at">fill =</span> course)) <span class="sc">+</span></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">outlier.size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> component, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(col_orange, col_blue)) <span class="sc">+</span></span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Component score"</span>) <span class="sc">+</span></span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>, <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PS71020_Unit9_Homework_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The courses differ on PC1 and PC4. The Art students score higher on PC1 (Creative practice; <em>t</em>(391.5) = -3.28, <em>p</em> = .001), and the Music students score higher on PC4 (Social performance; <em>t</em>(391.3) = 4.31, <em>p</em> &lt; .001). There is no clear difference on Digital engagement or Receptive engagement. (The component scores have a mean of 0 and a standard deviation of 1 across all students, so the differences are in standard deviation units.)</p>
+</section>
+<section id="section-g.-write-up" class="level2">
+<h2 class="anchored" data-anchor-id="section-g.-write-up">SECTION G. WRITE-UP</h2>
+<p>Here is a short summary of the entire analysis:</p>
+<p>A principal component analysis was run on 20 arts-engagement variables from 394 students (6 participants with missing data were excluded). The correlation matrix was suitable for analysis (Bartlett’s test χ²(190) = 2800.21, <em>p</em> &lt; .001; overall KMO = 0.85). Kaiser’s rule, the scree plot and parallel analysis all supported retaining four components, which together explained 58.5% of the variance. An oblique (oblimin) rotation showed small correlations between the components (largest <em>r</em> = 0.27), so a varimax rotation was used. The components were labelled creative practice, digital engagement, receptive engagement and social performance. 3 variables (compose_hrs, concerts, share_online) loaded on more than one component under oblimin, and group_hrs also did after varimax. Art students scored higher on creative practice, and Music students scored higher on social performance.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script src="answer-gate.js"></script>
+
+
+
+
+</body></html>
